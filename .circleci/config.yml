@@ -1,0 +1,37 @@
+version: 2.1
+
+executors:
+  go:
+    docker:
+      - image: golang:1.16
+
+commands:
+  go_mod_download:
+    steps:
+      - restore_cache:
+          keys:
+            - go-mod-v1-{{ .Branch }}-{{ checksum "go.sum" }}
+      - run:
+          name: go mod download
+          command: go mod download -x
+      - save_cache:
+          paths:
+            - /go/pkg/mod
+          key: go-mod-v1-{{ .Branch }}-{{ checksum "go.sum" }}
+
+jobs:
+  backend_build:
+    working_directory: ~/project/backend
+    executor: go
+    steps:
+      - checkout:
+          path: ~/project
+      - go_mod_download
+      - run:
+          name: test
+          command: go test ./src/...
+
+workflows:
+  build:
+    jobs:
+      - backend_build
