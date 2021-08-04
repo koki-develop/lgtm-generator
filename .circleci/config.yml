@@ -1,9 +1,15 @@
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@2.0.3
+
 executors:
   go:
     docker:
       - image: golang:1.16
+  node:
+    docker:
+      - image: node:14
 
 commands:
   go_mod_download:
@@ -18,6 +24,15 @@ commands:
           paths:
             - /go/pkg/mod
           key: go-mod-v1-{{ .Branch }}-{{ checksum "go.sum" }}
+  yarn_install:
+    steps:
+      - restore_cache:
+          key: node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run: yarn install --check-files
+      - save_cache:
+          key: node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
 
 jobs:
   backend_build:
@@ -31,7 +46,24 @@ jobs:
           name: test
           command: go test ./src/...
 
+  backend_deploy:
+    working_directory: ~/project/backend
+    executor: node
+    parameters:
+      stage:
+        type: string
+    steps:
+      - checkout:
+          path: ~/project
+      - aws-cli/setup
+      - yarn_install
+      - run:
+          name: deploy
+          command: yarn run deploy --stage << parameters.stage >>
+
 workflows:
   build:
     jobs:
       - backend_build
+      - backend_deploy:
+          stage: dev
