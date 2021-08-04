@@ -67,3 +67,5 @@ workflows:
       - backend_build
       - backend_deploy:
           stage: dev
+          requires:
+            - backend_build
