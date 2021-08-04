@@ -3,6 +3,7 @@ package lgtms
 import (
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
 )
 
 type Controller struct {
@@ -22,6 +23,31 @@ func (ctrl *Controller) Index(ctx controllers.Context) {
 	ctrl.config.Renderer.OK(ctx, entities.LGTMs{})
 }
 
+type CreateInput struct {
+	Base64 *string `json:"base64"`
+}
+
 func (ctrl *Controller) Create(ctx controllers.Context) {
-	ctrl.config.Renderer.OK(ctx, entities.LGTM{})
+	var ipt CreateInput
+	if err := ctx.ShouldBindJSON(&ipt); err != nil {
+		ctrl.config.Renderer.BadRequest(ctx)
+		return
+	}
+
+	if ipt.Base64 != nil {
+		src, err := utils.Base64Decode(*ipt.Base64)
+		if err != nil {
+			ctrl.config.Renderer.BadRequest(ctx)
+			return
+		}
+		lgtm, err := ctrl.config.LGTMsRepository.Create(src)
+		if err != nil {
+			ctrl.config.Renderer.InternalServerError(ctx)
+			return
+		}
+		ctrl.config.Renderer.OK(ctx, lgtm)
+		return
+	}
+
+	ctrl.config.Renderer.BadRequest(ctx)
 }

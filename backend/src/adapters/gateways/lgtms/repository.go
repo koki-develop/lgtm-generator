@@ -13,6 +13,6 @@ func NewRepository(cfg *RepositoryConfig) *Repository {
 	return &Repository{config: cfg}
 }
 
-func (repo *Repository) Create(base64 string) (entities.LGTM, error) {
+func (repo *Repository) Create(src []byte) (entities.LGTM, error) {
 	return entities.LGTM{}, nil
 }
