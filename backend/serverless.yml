@@ -13,15 +13,9 @@ package:
     - ./bin/**
 
 functions:
-  hello:
-    handler: bin/hello
+  api:
+    handler: build/api
     events:
-      - httpApi:
-          path: /hello
+      - http:
           method: get
-  world:
-    handler: bin/world
-    events:
-      - httpApi:
-          path: /world
-          method: get
+          path: /v1/h
