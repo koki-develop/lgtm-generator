@@ -18,6 +18,7 @@ provider:
         path: ./
   apiName: ${self:custom.prefix}
   environment:
+    STAGE: ${self:provider.stage}
     GOOGLE_API_KEY: ${file(./secrets.yml):googleApiKey}
     GOOGLE_CUSTOM_SEARCH_ENGINE_ID: ${file(./secrets.yml):googleCustomSearchEngineId}
 
