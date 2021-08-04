@@ -2,6 +2,7 @@ package infrastructures
 
 import (
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
+	"github.com/pkg/errors"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/customsearch/v1"
 	"google.golang.org/api/option"
@@ -23,7 +24,7 @@ func NewGoogleImageSearchEngine(cfg *GoogleImageSearchEngineConfig) *GoogleImage
 func (e *GoogleImageSearchEngine) Search(q string) (entities.Images, error) {
 	svc, err := customsearch.NewService(oauth2.NoContext, option.WithAPIKey(e.config.APIKey))
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 	search := svc.Cse.List()
 	search.Cx(e.config.SearchEngineID)
@@ -35,7 +36,7 @@ func (e *GoogleImageSearchEngine) Search(q string) (entities.Images, error) {
 	search.Start(1)
 	resp, err := search.Do()
 	if err != nil {
-		return nil, err
+		return nil, errors.WithStack(err)
 	}
 
 	imgs := entities.Images{}
