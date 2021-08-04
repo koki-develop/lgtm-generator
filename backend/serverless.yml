@@ -1,20 +1,29 @@
 service: lgtm-generator-backend
 
-frameworkVersion: '2'
+frameworkVersion: "2"
 
 provider:
   name: aws
-  runtime: go1.x
+  profile: default
+  region: us-east-1
+  stage: ${opt:stage, "dev"}
   lambdaHashingVersion: 20201221
+  ecr:
+    images:
+      apiimage:
+        path: ./
 
 package:
   patterns:
-    - '!./**'
+    - "!./**"
     - ./bin/**
 
 functions:
   api:
-    handler: build/api
+    image:
+      name: apiimage
+      entryPoint:
+        - "/app/build/api"
     events:
       - http:
           method: get
