@@ -60,6 +60,7 @@ jobs:
       - jq/install
       - aws-cli/setup
       - docker/install-docker
+      - setup_remote_docker
       - yarn_install
       - run:
           name: deploy
