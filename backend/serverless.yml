@@ -12,6 +12,9 @@ provider:
     images:
       apiimage:
         path: ./
+  environment:
+    GOOGLE_API_KEY: ${file(./secrets.yml):googleApiKey}
+    GOOGLE_CUSTOM_SEARCH_ENGINE_ID: ${file(./secrets.yml):googleCustomSearchEngineId}
 
 package:
   patterns:
