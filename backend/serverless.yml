@@ -2,6 +2,10 @@ service: lgtm-generator-backend
 
 frameworkVersion: "2"
 
+custom:
+  product: ${self:service}
+  prefix: ${self:custom.product}-${self:provider.stage}
+
 provider:
   name: aws
   profile: default
