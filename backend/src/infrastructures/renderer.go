@@ -15,3 +15,15 @@ func NewRenderer() *Renderer {
 func (rdr *Renderer) OK(ctx controllers.Context, obj interface{}) {
 	ctx.JSON(http.StatusOK, obj)
 }
+
+func (rdr *Renderer) BadRequest(ctx controllers.Context) {
+	ctx.JSON(http.StatusBadRequest, map[string]string{
+		"code": "BAD_REQUEST",
+	})
+}
+
+func (rdr *Renderer) InternalServerError(ctx controllers.Context) {
+	ctx.JSON(http.StatusInternalServerError, map[string]string{
+		"code": "INTERNAL_SERVER_ERROR",
+	})
+}
