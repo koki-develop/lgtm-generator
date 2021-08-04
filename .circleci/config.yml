@@ -73,6 +73,11 @@ jobs:
       - setup_remote_docker
       - yarn_install
       - run:
+          name: create secrets.yml
+          command: |
+            echo "googleApiKey: ${GOOGLE_API_KEY}"                               >> secrets.yml
+            echo "googleCustomSearchEngineId: ${GOOGLE_CUSTOM_SEARCH_ENGINE_ID}" >> secrets.yml
+      - run:
           name: deploy
           command: yarn run deploy --stage << parameters.stage >>
       - notify_status
