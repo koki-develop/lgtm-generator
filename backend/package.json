@@ -2,6 +2,10 @@
   "name": "lgtm-generator-backend",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "predeploy": "./bin/build.sh",
+    "deploy": "serverless deploy --verbose"
+  },
   "devDependencies": {
     "serverless": "^2.52.1"
   }
