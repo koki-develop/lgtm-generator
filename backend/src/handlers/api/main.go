@@ -11,6 +11,7 @@ import (
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
 	healthctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/health"
 	imgsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/images"
+	lgtmsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/lgtms"
 	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
 )
@@ -55,6 +56,12 @@ func init() {
 			}),
 		})
 		v1.GET("/images", withContext(ctrl.Search))
+	}
+	{
+		ctrl := lgtmsctrl.NewController(&lgtmsctrl.ControllerConfig{
+			Renderer: rdr,
+		})
+		v1.GET("/lgtms", withContext(ctrl.Index))
 	}
 
 	ginLambda = ginadapter.New(r)

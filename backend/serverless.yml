@@ -38,3 +38,6 @@ functions:
             parameters:
               querystrings:
                 q: true
+      - http:
+          method: get
+          path: /v1/lgtms
