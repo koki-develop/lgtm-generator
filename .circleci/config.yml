@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@2.0.3
+  docker: circleci/docker@1.6.0
 
 executors:
   go:
@@ -56,6 +57,7 @@ jobs:
       - checkout:
           path: ~/project
       - aws-cli/setup
+      - docker/install-docker
       - yarn_install
       - run:
           name: deploy
