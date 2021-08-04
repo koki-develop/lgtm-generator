@@ -13,6 +13,7 @@ import (
 	imgsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/images"
 	lgtmsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/lgtms"
 	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
+	lgtmsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/lgtms"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
 )
 
@@ -59,7 +60,8 @@ func init() {
 	}
 	{
 		ctrl := lgtmsctrl.NewController(&lgtmsctrl.ControllerConfig{
-			Renderer: rdr,
+			Renderer:        rdr,
+			LGTMsRepository: lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{}),
 		})
 		v1.GET("/lgtms", withContext(ctrl.Index))
 		v1.POST("/lgtms", withContext(ctrl.Create))

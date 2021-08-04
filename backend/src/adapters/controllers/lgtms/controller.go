@@ -10,7 +10,8 @@ type Controller struct {
 }
 
 type ControllerConfig struct {
-	Renderer controllers.Renderer
+	Renderer        controllers.Renderer
+	LGTMsRepository controllers.LGTMsRepository
 }
 
 func NewController(cfg *ControllerConfig) *Controller {
