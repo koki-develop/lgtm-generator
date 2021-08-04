@@ -2,6 +2,7 @@ package images
 
 import (
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
+	"github.com/pkg/errors"
 )
 
 type Controller struct {
@@ -20,13 +21,13 @@ func NewController(cfg *ControllerConfig) *Controller {
 func (ctrl *Controller) Search(ctx controllers.Context) {
 	q := ctx.Query("q")
 	if q == "" {
-		ctrl.config.Renderer.BadRequest(ctx)
+		ctrl.config.Renderer.BadRequest(ctx, errors.New("empty query"))
 		return
 	}
 
 	imgs, err := ctrl.config.ImagesRepository.Search(q)
 	if err != nil {
-		ctrl.config.Renderer.InternalServerError(ctx)
+		ctrl.config.Renderer.InternalServerError(ctx, err)
 		return
 	}
 
