@@ -17,9 +17,7 @@ type GoogleImageSearchEngine struct {
 }
 
 func NewGoogleImageSearchEngine(cfg *GoogleImageSearchEngineConfig) *GoogleImageSearchEngine {
-	return &GoogleImageSearchEngine{
-		config: cfg,
-	}
+	return &GoogleImageSearchEngine{config: cfg}
 }
 
 func (e *GoogleImageSearchEngine) Search(q string) (entities.Images, error) {
