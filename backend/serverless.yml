@@ -41,3 +41,6 @@ functions:
       - http:
           method: get
           path: /v1/lgtms
+      - http:
+          method: post
+          path: /v1/lgtms

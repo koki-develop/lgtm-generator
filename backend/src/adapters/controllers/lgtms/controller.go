@@ -20,3 +20,7 @@ func NewController(cfg *ControllerConfig) *Controller {
 func (ctrl *Controller) Index(ctx controllers.Context) {
 	ctrl.config.Renderer.OK(ctx, entities.LGTMs{})
 }
+
+func (ctrl *Controller) Create(ctx controllers.Context) {
+	ctrl.config.Renderer.OK(ctx, entities.LGTM{})
+}

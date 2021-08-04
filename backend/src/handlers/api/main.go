@@ -62,6 +62,7 @@ func init() {
 			Renderer: rdr,
 		})
 		v1.GET("/lgtms", withContext(ctrl.Index))
+		v1.POST("/lgtms", withContext(ctrl.Create))
 	}
 
 	ginLambda = ginadapter.New(r)
