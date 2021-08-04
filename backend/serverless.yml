@@ -31,3 +31,10 @@ functions:
       - http:
           method: get
           path: /v1/h
+      - http:
+          method: get
+          path: /v1/images
+          request:
+            parameters:
+              querystrings:
+                q: true

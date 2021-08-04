@@ -2,13 +2,16 @@ package main
 
 import (
 	"context"
+	"os"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	ginadapter "github.com/awslabs/aws-lambda-go-api-proxy/gin"
 	"github.com/gin-gonic/gin"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/health"
+	healthctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/health"
+	imgsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/images"
+	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
 )
 
@@ -32,11 +35,26 @@ func init() {
 	r := gin.Default()
 
 	rdr := infrastructures.NewRenderer()
+	imgse := infrastructures.NewGoogleImageSearchEngine(&infrastructures.GoogleImageSearchEngineConfig{
+		APIKey:         os.Getenv("GOOGLE_API_KEY"),
+		SearchEngineID: os.Getenv("GOOGLE_CUSTOM_SEARCH_ENGINE_ID"),
+	})
 
 	v1 := r.Group("/v1")
 	{
-		ctrl := health.NewController(&health.ControllerConfig{Renderer: rdr})
+		ctrl := healthctrl.NewController(&healthctrl.ControllerConfig{
+			Renderer: rdr,
+		})
 		v1.GET("/h", withContext(ctrl.Standard))
+	}
+	{
+		ctrl := imgsctrl.NewController(&imgsctrl.ControllerConfig{
+			Renderer: rdr,
+			ImagesRepository: imgsrepo.NewRepository(&imgsrepo.RepositoryConfig{
+				ImageSearchEngine: imgse,
+			}),
+		})
+		v1.GET("/images", withContext(ctrl.Search))
 	}
 
 	ginLambda = ginadapter.New(r)

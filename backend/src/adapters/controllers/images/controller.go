@@ -2,7 +2,6 @@ package images
 
 import (
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
 )
 
 type Controller struct {
@@ -11,7 +10,7 @@ type Controller struct {
 
 type ControllerConfig struct {
 	Renderer         controllers.Renderer
-	ImagesRepository images.Repository
+	ImagesRepository controllers.ImagesRepository
 }
 
 func NewController(cfg *ControllerConfig) *Controller {
