@@ -1,6 +1,8 @@
 package lgtms
 
 import (
+	"github.com/pkg/errors"
+
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
@@ -30,24 +32,24 @@ type CreateInput struct {
 func (ctrl *Controller) Create(ctx controllers.Context) {
 	var ipt CreateInput
 	if err := ctx.ShouldBindJSON(&ipt); err != nil {
-		ctrl.config.Renderer.BadRequest(ctx)
+		ctrl.config.Renderer.BadRequest(ctx, err)
 		return
 	}
 
 	if ipt.Base64 != nil {
 		src, err := utils.Base64Decode(*ipt.Base64)
 		if err != nil {
-			ctrl.config.Renderer.BadRequest(ctx)
+			ctrl.config.Renderer.BadRequest(ctx, err)
 			return
 		}
 		lgtm, err := ctrl.config.LGTMsRepository.Create(src)
 		if err != nil {
-			ctrl.config.Renderer.InternalServerError(ctx)
+			ctrl.config.Renderer.InternalServerError(ctx, err)
 			return
 		}
 		ctrl.config.Renderer.OK(ctx, lgtm)
 		return
 	}
 
-	ctrl.config.Renderer.BadRequest(ctx)
+	ctrl.config.Renderer.BadRequest(ctx, errors.New("empty parameter"))
 }

@@ -1,6 +1,7 @@
 package infrastructures
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
@@ -16,13 +17,15 @@ func (rdr *Renderer) OK(ctx controllers.Context, obj interface{}) {
 	ctx.JSON(http.StatusOK, obj)
 }
 
-func (rdr *Renderer) BadRequest(ctx controllers.Context) {
+func (rdr *Renderer) BadRequest(ctx controllers.Context, err error) {
+	fmt.Printf("error: %+v\n", err)
 	ctx.JSON(http.StatusBadRequest, map[string]string{
 		"code": "BAD_REQUEST",
 	})
 }
 
-func (rdr *Renderer) InternalServerError(ctx controllers.Context) {
+func (rdr *Renderer) InternalServerError(ctx controllers.Context, err error) {
+	fmt.Printf("error: %+v\n", err)
 	ctx.JSON(http.StatusInternalServerError, map[string]string{
 		"code": "INTERNAL_SERVER_ERROR",
 	})
