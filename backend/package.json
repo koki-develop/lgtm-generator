@@ -3,7 +3,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "deploy": "serverless deploy --verbose"
+    "deploy": "serverless deploy --verbose",
+    "remove": "serverless remove --verbose"
   },
   "devDependencies": {
     "serverless": "^2.52.1"
