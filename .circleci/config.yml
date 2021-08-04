@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@2.0.3
   docker: circleci/docker@1.6.0
+  jq: circleci/jq@2.2.0
 
 executors:
   go:
@@ -56,6 +57,7 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - jq/install
       - aws-cli/setup
       - docker/install-docker
       - yarn_install
