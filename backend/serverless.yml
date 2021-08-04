@@ -49,3 +49,32 @@ functions:
       - http:
           method: post
           path: /v1/lgtms
+
+resources:
+  Resources:
+    LgtmsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.prefix}-lgtms
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: created_at
+            AttributeType: S
+          - AttributeName: status
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: created_at
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: index_by_status
+            KeySchema:
+              - AttributeName: status
+                KeyType: HASH
+              - AttributeName: created_at
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
