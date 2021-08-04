@@ -3,7 +3,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "predeploy": "./bin/build.sh",
     "deploy": "serverless deploy --verbose"
   },
   "devDependencies": {
