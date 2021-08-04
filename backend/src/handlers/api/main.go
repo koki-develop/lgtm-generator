@@ -31,9 +31,11 @@ func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 func init() {
 	r := gin.Default()
 
+	rdr := infrastructures.NewRenderer()
+
 	v1 := r.Group("/v1")
 	{
-		ctrl := health.NewController()
+		ctrl := health.NewController(&health.ControllerConfig{Renderer: rdr})
 		v1.GET("/h", withContext(ctrl.Standard))
 	}
 
