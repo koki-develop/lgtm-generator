@@ -1,5 +1,8 @@
 {
   "name": "lgtm-generator-backend",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "devDependencies": {
+    "serverless": "^2.52.1"
+  }
 }
