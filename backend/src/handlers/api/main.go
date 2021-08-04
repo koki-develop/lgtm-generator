@@ -2,15 +2,23 @@ package main
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	ginadapter "github.com/awslabs/aws-lambda-go-api-proxy/gin"
 	"github.com/gin-gonic/gin"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/health"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
 )
 
 var ginLambda *ginadapter.GinLambda
+
+func withContext(h func(ctx controllers.Context)) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		h(infrastructures.NewContextFromGin(ctx))
+	}
+}
 
 func main() {
 	lambda.Start(handler)
@@ -25,11 +33,8 @@ func init() {
 
 	v1 := r.Group("/v1")
 	{
-		v1.GET("/h", func(ctx *gin.Context) {
-			ctx.JSON(http.StatusOK, map[string]int{
-				"status": http.StatusOK,
-			})
-		})
+		ctrl := health.NewController()
+		v1.GET("/h", withContext(ctrl.Standard))
 	}
 
 	ginLambda = ginadapter.New(r)
