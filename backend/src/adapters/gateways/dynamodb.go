@@ -13,6 +13,7 @@ type DynamoDB interface {
 
 type DynamoDBTable interface {
 	Get(name string, value interface{}) DynamoDBQuery
+	Put(item interface{}) DynamoDBPut
 }
 
 type DynamoDBQuery interface {
@@ -20,4 +21,8 @@ type DynamoDBQuery interface {
 	Index(name string) DynamoDBQuery
 	Order(order Order) DynamoDBQuery
 	Limit(limit int64) DynamoDBQuery
+}
+
+type DynamoDBPut interface {
+	Run() error
 }
