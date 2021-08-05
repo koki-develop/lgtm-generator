@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"os"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -41,6 +42,7 @@ func init() {
 		APIKey:         os.Getenv("GOOGLE_API_KEY"),
 		SearchEngineID: os.Getenv("GOOGLE_CUSTOM_SEARCH_ENGINE_ID"),
 	})
+	db := infrastructures.NewGureguDynamoDB()
 
 	v1 := r.Group("/v1")
 	{
@@ -60,8 +62,11 @@ func init() {
 	}
 	{
 		ctrl := lgtmsctrl.NewController(&lgtmsctrl.ControllerConfig{
-			Renderer:        rdr,
-			LGTMsRepository: lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{}),
+			Renderer: rdr,
+			LGTMsRepository: lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{
+				DynamoDB: db,
+				DBPrefix: fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
+			}),
 		})
 		v1.GET("/lgtms", withContext(ctrl.Index))
 		v1.POST("/lgtms", withContext(ctrl.Create))

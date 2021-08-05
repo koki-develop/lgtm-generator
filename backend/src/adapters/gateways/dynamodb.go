@@ -19,4 +19,5 @@ type DynamoDBQuery interface {
 	All(out interface{}) error
 	Index(name string) DynamoDBQuery
 	Order(order Order) DynamoDBQuery
+	Limit(limit int64) DynamoDBQuery
 }

@@ -63,3 +63,7 @@ func (q *GureguDynamoDBQuery) Order(order gateways.Order) gateways.DynamoDBQuery
 
 	return dynamoDBQueryFromGuregu(q.guregu().Order(dynamoorder))
 }
+
+func (q *GureguDynamoDBQuery) Limit(limit int64) gateways.DynamoDBQuery {
+	return dynamoDBQueryFromGuregu(q.guregu().Limit(limit))
+}
