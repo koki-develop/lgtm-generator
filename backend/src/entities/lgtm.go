@@ -10,9 +10,9 @@ const (
 )
 
 type LGTM struct {
-	ID        string     `json:"id"`
-	Status    LGTMStatus `json:"-"`
-	CreatedAt time.Time  `json:"created_at"`
+	ID        string     `json:"id"         dynamo:"id"`
+	Status    LGTMStatus `json:"-"          dynamo:"status"`
+	CreatedAt time.Time  `json:"created_at" dynamo:"created_at"`
 }
 
 type LGTMs []*LGTM
