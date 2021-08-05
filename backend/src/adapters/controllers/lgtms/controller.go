@@ -4,7 +4,6 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
 )
 
@@ -22,7 +21,12 @@ func NewController(cfg *ControllerConfig) *Controller {
 }
 
 func (ctrl *Controller) Index(ctx controllers.Context) {
-	ctrl.config.Renderer.OK(ctx, entities.LGTMs{})
+	lgtms, err := ctrl.config.LGTMsRepository.FindAll()
+	if err != nil {
+		ctrl.config.Renderer.InternalServerError(ctx, errors.WithStack(err))
+		return
+	}
+	ctrl.config.Renderer.OK(ctx, lgtms)
 }
 
 type CreateInput struct {
@@ -32,19 +36,19 @@ type CreateInput struct {
 func (ctrl *Controller) Create(ctx controllers.Context) {
 	var ipt CreateInput
 	if err := ctx.ShouldBindJSON(&ipt); err != nil {
-		ctrl.config.Renderer.BadRequest(ctx, err)
+		ctrl.config.Renderer.BadRequest(ctx, errors.WithStack(err))
 		return
 	}
 
 	if ipt.Base64 != nil {
 		src, err := utils.Base64Decode(*ipt.Base64)
 		if err != nil {
-			ctrl.config.Renderer.BadRequest(ctx, err)
+			ctrl.config.Renderer.BadRequest(ctx, errors.WithStack(err))
 			return
 		}
 		lgtm, err := ctrl.config.LGTMsRepository.Create(src)
 		if err != nil {
-			ctrl.config.Renderer.InternalServerError(ctx, err)
+			ctrl.config.Renderer.InternalServerError(ctx, errors.WithStack(err))
 			return
 		}
 		ctrl.config.Renderer.OK(ctx, lgtm)
