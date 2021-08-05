@@ -34,7 +34,7 @@ func (repo *Repository) FindAll() (entities.LGTMs, error) {
 	return lgtms, nil
 }
 
-func (repo *Repository) Create(src []byte) (*entities.LGTM, error) {
+func (repo *Repository) Create(src []byte, contentType string) (*entities.LGTM, error) {
 	id := utils.UUIDV4()
 	now := time.Now()
 

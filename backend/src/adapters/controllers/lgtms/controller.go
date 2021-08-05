@@ -62,7 +62,7 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 			ctrl.config.Renderer.BadRequest(ctx, errors.WithStack(err))
 			return
 		}
-		lgtm, err := ctrl.config.LGTMsRepository.Create(src)
+		lgtm, err := ctrl.config.LGTMsRepository.Create(src, ipt.ContentType)
 		if err != nil {
 			ctrl.config.Renderer.InternalServerError(ctx, errors.WithStack(err))
 			return
