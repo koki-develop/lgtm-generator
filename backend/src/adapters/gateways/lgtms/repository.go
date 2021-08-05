@@ -39,12 +39,16 @@ func (repo *Repository) Create(src []byte) (*entities.LGTM, error) {
 
 	lgtm := &entities.LGTM{
 		ID:        id,
-		Status:    entities.LGTMStatusOK,
+		Status:    entities.LGTMStatusPending,
 		CreatedAt: now,
 	}
 
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
 	if err := tbl.Put(&lgtm).Run(); err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	if err := tbl.Update("id", lgtm.ID).Range("created_at", lgtm.CreatedAt).Set("status", entities.LGTMStatusOK).Run(); err != nil {
 		return nil, errors.WithStack(err)
 	}
 
