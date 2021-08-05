@@ -122,6 +122,10 @@ func (u *GureguDynamoDBUpdate) Run() error {
 	return u.guregu().Run()
 }
 
+func (u *GureguDynamoDBUpdate) Range(name string, value interface{}) gateways.DynamoDBUpdate {
+	return dynamoDBUpdateFromGuregu(u.guregu().Range(name, value))
+}
+
 func (u *GureguDynamoDBUpdate) Set(path string, value interface{}) gateways.DynamoDBUpdate {
 	return dynamoDBUpdateFromGuregu(u.guregu().Set(path, value))
 }

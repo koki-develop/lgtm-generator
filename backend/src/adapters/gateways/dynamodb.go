@@ -30,5 +30,6 @@ type DynamoDBPut interface {
 
 type DynamoDBUpdate interface {
 	Run() error
+	Range(name string, value interface{}) DynamoDBUpdate
 	Set(path string, value interface{}) DynamoDBUpdate
 }
