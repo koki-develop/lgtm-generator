@@ -18,6 +18,7 @@ type RepositoryConfig struct {
 	LGTMGenerator gateways.LGTMGenerator
 	DynamoDB      gateways.DynamoDB
 	DBPrefix      string
+	FileStorage   gateways.FileStorage
 }
 
 func NewRepository(cfg *RepositoryConfig) *Repository {
