@@ -38,9 +38,7 @@ provider:
     GOOGLE_CUSTOM_SEARCH_ENGINE_ID: ${file(./secrets.yml):googleCustomSearchEngineId}
 
 package:
-  patterns:
-    - "!./**"
-    - ./bin/**
+  individually: true
 
 functions:
   api:
