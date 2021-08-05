@@ -30,7 +30,8 @@ func (ctrl *Controller) Index(ctx controllers.Context) {
 }
 
 type CreateInput struct {
-	Base64 *string `json:"base64"`
+	ContentType string  `json:"content_type"`
+	Base64      *string `json:"base64"`
 }
 
 func (ctrl *Controller) Create(ctx controllers.Context) {
@@ -40,9 +41,14 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 		return
 	}
 
+	if ipt.ContentType == "" {
+		ctrl.config.Renderer.BadRequest(ctx, errors.New("content type is empty"))
+		return
+	}
+
 	if ipt.Base64 != nil {
 		if *ipt.Base64 == "" {
-			ctrl.config.Renderer.BadRequest(ctx, errors.New("empty base64 string"))
+			ctrl.config.Renderer.BadRequest(ctx, errors.New("base64 string is empty"))
 			return
 		}
 		src, err := utils.Base64Decode(*ipt.Base64)
@@ -59,5 +65,5 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 		return
 	}
 
-	ctrl.config.Renderer.BadRequest(ctx, errors.New("empty parameter"))
+	ctrl.config.Renderer.BadRequest(ctx, errors.New("image source is empty"))
 }
