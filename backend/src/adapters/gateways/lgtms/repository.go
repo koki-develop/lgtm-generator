@@ -15,8 +15,9 @@ type Repository struct {
 }
 
 type RepositoryConfig struct {
-	DynamoDB gateways.DynamoDB
-	DBPrefix string
+	LGTMGenerator gateways.LGTMGenerator
+	DynamoDB      gateways.DynamoDB
+	DBPrefix      string
 }
 
 func NewRepository(cfg *RepositoryConfig) *Repository {
@@ -45,6 +46,12 @@ func (repo *Repository) Create(src []byte) (*entities.LGTM, error) {
 
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
 	if err := tbl.Put(&lgtm).Run(); err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	// FIXME: LGTM 画像の保存を行うようにする
+	_, err := repo.config.LGTMGenerator.Generate(src)
+	if err != nil {
 		return nil, errors.WithStack(err)
 	}
 
