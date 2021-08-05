@@ -26,3 +26,8 @@ type DynamoDBQuery interface {
 type DynamoDBPut interface {
 	Run() error
 }
+
+type DynamoDBUpdate interface {
+	Run() error
+	Set(path string, value interface{}) DynamoDBUpdate
+}

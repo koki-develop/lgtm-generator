@@ -11,6 +11,11 @@ type GureguDynamoDB dynamo.DB
 type GureguDynamoDBTable dynamo.Table
 type GureguDynamoDBQuery dynamo.Query
 type GureguDynamoDBPut dynamo.Put
+type GureguDynamoDBUpdate dynamo.Update
+
+/*
+ * db
+ */
 
 func NewGureguDynamoDB() *GureguDynamoDB {
 	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String("us-east-1")}))
@@ -24,6 +29,10 @@ func (db *GureguDynamoDB) guregu() *dynamo.DB {
 func (db *GureguDynamoDB) Table(name string) gateways.DynamoDBTable {
 	return dynamoDBTableFromGuregu(db.guregu().Table(name))
 }
+
+/*
+ * table
+ */
 
 func dynamoDBTableFromGuregu(tbl dynamo.Table) GureguDynamoDBTable {
 	return (GureguDynamoDBTable)(tbl)
@@ -40,6 +49,10 @@ func (tbl GureguDynamoDBTable) Get(name string, value interface{}) gateways.Dyna
 func (tbl GureguDynamoDBTable) Put(item interface{}) gateways.DynamoDBPut {
 	return dynamoDBPutFromGuregu(tbl.guregu().Put(item))
 }
+
+/*
+ * query
+ */
 
 func dynamoDBQueryFromGuregu(q *dynamo.Query) *GureguDynamoDBQuery {
 	return (*GureguDynamoDBQuery)(q)
@@ -73,14 +86,38 @@ func (q *GureguDynamoDBQuery) Limit(limit int64) gateways.DynamoDBQuery {
 	return dynamoDBQueryFromGuregu(q.guregu().Limit(limit))
 }
 
-func (p *GureguDynamoDBPut) guregu() *dynamo.Put {
-	return (*dynamo.Put)(p)
-}
+/*
+ * put
+ */
 
 func dynamoDBPutFromGuregu(p *dynamo.Put) *GureguDynamoDBPut {
 	return (*GureguDynamoDBPut)(p)
 }
 
+func (p *GureguDynamoDBPut) guregu() *dynamo.Put {
+	return (*dynamo.Put)(p)
+}
+
 func (p *GureguDynamoDBPut) Run() error {
 	return p.guregu().Run()
+}
+
+/*
+ * update
+ */
+
+func dynamoDBUpdateFromGuregu(u *dynamo.Update) gateways.DynamoDBUpdate {
+	return (*GureguDynamoDBUpdate)(u)
+}
+
+func (u *GureguDynamoDBUpdate) guregu() *dynamo.Update {
+	return (*dynamo.Update)(u)
+}
+
+func (u *GureguDynamoDBUpdate) Run() error {
+	return u.guregu().Run()
+}
+
+func (u *GureguDynamoDBUpdate) Set(path string, value interface{}) gateways.DynamoDBUpdate {
+	return dynamoDBUpdateFromGuregu(u.guregu().Set(path, value))
 }
