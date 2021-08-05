@@ -29,7 +29,7 @@ provider:
                   - table/${self:custom.prefix}-*
   ecr:
     images:
-      apiimage:
+      appimage:
         path: ./
   apiName: ${self:custom.prefix}
   environment:
@@ -43,7 +43,7 @@ package:
 functions:
   api:
     image:
-      name: apiimage
+      name: appimage
       entryPoint:
         - "/app/build/api"
     events:
