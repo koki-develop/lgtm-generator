@@ -41,6 +41,10 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 	}
 
 	if ipt.Base64 != nil {
+		if *ipt.Base64 == "" {
+			ctrl.config.Renderer.BadRequest(ctx, errors.New("empty base64 string"))
+			return
+		}
 		src, err := utils.Base64Decode(*ipt.Base64)
 		if err != nil {
 			ctrl.config.Renderer.BadRequest(ctx, errors.WithStack(err))
