@@ -1,10 +1,10 @@
 package gateways
 
-type Order string
+type DynamoDBOrder string
 
 const (
-	OrderAsc  = "ASC"
-	OrderDesc = "DESC"
+	DynamoDBOrderAsc  = "ASC"
+	DynamoDBOrderDesc = "DESC"
 )
 
 type DynamoDB interface {
@@ -20,7 +20,7 @@ type DynamoDBTable interface {
 type DynamoDBQuery interface {
 	All(out interface{}) error
 	Index(name string) DynamoDBQuery
-	Order(order Order) DynamoDBQuery
+	Order(order DynamoDBOrder) DynamoDBQuery
 	Limit(limit int64) DynamoDBQuery
 }
 

@@ -27,7 +27,7 @@ func (repo *Repository) FindAll() (entities.LGTMs, error) {
 	var lgtms entities.LGTMs
 
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
-	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.OrderDesc).Limit(20).All(&lgtms); err != nil {
+	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(20).All(&lgtms); err != nil {
 		return nil, errors.WithStack(err)
 	}
 	return lgtms, nil

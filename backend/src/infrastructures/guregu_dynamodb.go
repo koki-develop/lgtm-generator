@@ -74,12 +74,12 @@ func (q *GureguDynamoDBQuery) Index(name string) gateways.DynamoDBQuery {
 	return dynamoDBQueryFromGuregu(q.guregu().Index(name))
 }
 
-func (q *GureguDynamoDBQuery) Order(order gateways.Order) gateways.DynamoDBQuery {
+func (q *GureguDynamoDBQuery) Order(order gateways.DynamoDBOrder) gateways.DynamoDBQuery {
 	var dynamoorder dynamo.Order
 	switch order {
-	case gateways.OrderAsc:
+	case gateways.DynamoDBOrderAsc:
 		dynamoorder = dynamo.Ascending
-	case gateways.OrderDesc:
+	case gateways.DynamoDBOrderDesc:
 		dynamoorder = dynamo.Descending
 	}
 
