@@ -19,6 +19,7 @@ provider:
           Action:
             - dynamodb:Query
             - dynamodb:PutItem
+            - dynamodb:UpdateItem
           Resource:
             - Fn::Join:
                 - ":"
