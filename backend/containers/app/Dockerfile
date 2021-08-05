@@ -1,5 +1,12 @@
 FROM golang:1.16-alpine3.13 as build
 WORKDIR /app
+
+RUN apk add --update \
+      bash \
+      gcc \
+      imagemagick6 \
+      imagemagick6-dev
+
 COPY go.mod go.sum ./
 RUN go mod download -x
 COPY . .
