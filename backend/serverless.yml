@@ -18,6 +18,7 @@ provider:
         - Effect: Allow
           Action:
             - dynamodb:Query
+            - dynamodb:PutItem
           Resource:
             - Fn::Join:
                 - ":"
