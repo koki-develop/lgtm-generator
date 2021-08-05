@@ -2,9 +2,11 @@ package lgtms
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
 	"github.com/pkg/errors"
 )
 
@@ -32,5 +34,19 @@ func (repo *Repository) FindAll() (entities.LGTMs, error) {
 }
 
 func (repo *Repository) Create(src []byte) (*entities.LGTM, error) {
-	return &entities.LGTM{}, nil
+	id := utils.UUIDV4()
+	now := time.Now()
+
+	lgtm := &entities.LGTM{
+		ID:        id,
+		Status:    entities.LGTMStatusOK,
+		CreatedAt: now,
+	}
+
+	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
+	if err := tbl.Put(&lgtm).Run(); err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return lgtm, nil
 }
