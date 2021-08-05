@@ -51,3 +51,15 @@ func (q *GureguDynamoDBQuery) All(out interface{}) error {
 func (q *GureguDynamoDBQuery) Index(name string) gateways.DynamoDBQuery {
 	return dynamoDBQueryFromGuregu(q.guregu().Index(name))
 }
+
+func (q *GureguDynamoDBQuery) Order(order gateways.Order) gateways.DynamoDBQuery {
+	var dynamoorder dynamo.Order
+	switch order {
+	case gateways.OrderAsc:
+		dynamoorder = dynamo.Ascending
+	case gateways.OrderDesc:
+		dynamoorder = dynamo.Descending
+	}
+
+	return dynamoDBQueryFromGuregu(q.guregu().Order(dynamoorder))
+}
