@@ -50,6 +50,10 @@ func (tbl GureguDynamoDBTable) Put(item interface{}) gateways.DynamoDBPut {
 	return dynamoDBPutFromGuregu(tbl.guregu().Put(item))
 }
 
+func (tbl GureguDynamoDBTable) Update(hashKey string, value interface{}) gateways.DynamoDBUpdate {
+	return dynamoDBUpdateFromGuregu(tbl.guregu().Update(hashKey, value))
+}
+
 /*
  * query
  */

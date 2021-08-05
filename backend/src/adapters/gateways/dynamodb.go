@@ -14,6 +14,7 @@ type DynamoDB interface {
 type DynamoDBTable interface {
 	Get(name string, value interface{}) DynamoDBQuery
 	Put(item interface{}) DynamoDBPut
+	Update(hashKey string, value interface{}) DynamoDBUpdate
 }
 
 type DynamoDBQuery interface {
