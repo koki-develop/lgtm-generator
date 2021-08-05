@@ -45,6 +45,7 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - jq/install
       - run:
           name: install required packages
           command: |
