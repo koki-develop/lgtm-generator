@@ -12,6 +12,19 @@ provider:
   region: us-east-1
   stage: ${opt:stage, "dev"}
   lambdaHashingVersion: 20201221
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+          Resource:
+            - Fn::Join:
+                - ":"
+                - - arn:aws:dynamodb
+                  - Ref: AWS::Region
+                  - Ref: AWS::AccountId
+                  - table/${self:custom.prefix}-*
   ecr:
     images:
       apiimage:
