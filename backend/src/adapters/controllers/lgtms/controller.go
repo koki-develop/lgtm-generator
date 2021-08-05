@@ -1,6 +1,8 @@
 package lgtms
 
 import (
+	"regexp"
+
 	"github.com/pkg/errors"
 
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
@@ -43,6 +45,10 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 
 	if ipt.ContentType == "" {
 		ctrl.config.Renderer.BadRequest(ctx, errors.New("content type is empty"))
+		return
+	}
+	if regexp.MustCompile(`\Aimage/.+\z`).Match([]byte(ipt.ContentType)) {
+		ctrl.config.Renderer.BadRequest(ctx, errors.Errorf("invalid content type: %s", ipt.ContentType))
 		return
 	}
 
