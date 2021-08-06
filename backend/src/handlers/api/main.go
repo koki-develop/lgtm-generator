@@ -17,6 +17,7 @@ import (
 	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
 	lgtmsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/lgtms"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
+	imgsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/images"
 	lgtmsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/lgtms"
 )
 
@@ -49,14 +50,22 @@ func init() {
 		Bucket: fmt.Sprintf("lgtm-generator-backend-%s-lgtms", os.Getenv("STAGE")),
 	})
 	lgtmgen := infrastructures.NewLGTMGenerator()
+
 	lgtmsrepo := lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{
 		LGTMGenerator: lgtmgen,
 		DynamoDB:      db,
 		DBPrefix:      fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
 		FileStorage:   s3lgtms,
 	})
+	imgsrepo := imgsrepo.NewRepository(&imgsrepo.RepositoryConfig{
+		ImageSearchEngine: imgse,
+	})
+
 	lgtmsuc := lgtmsuc.NewUsecase(&lgtmsuc.UsecaseConfig{
 		LGTMsRepository: lgtmsrepo,
+	})
+	imgsuc := imgsuc.NewUsecase(&imgsuc.UsecaseConfig{
+		ImagesRepository: imgsrepo,
 	})
 
 	v1 := r.Group("/v1")
@@ -68,10 +77,8 @@ func init() {
 	}
 	{
 		ctrl := imgsctrl.NewController(&imgsctrl.ControllerConfig{
-			Renderer: rdr,
-			ImagesRepository: imgsrepo.NewRepository(&imgsrepo.RepositoryConfig{
-				ImageSearchEngine: imgse,
-			}),
+			Renderer:      rdr,
+			ImagesUsecase: imgsuc,
 		})
 		v1.GET("/images", withContext(ctrl.Search))
 	}

@@ -11,8 +11,8 @@ type Controller struct {
 }
 
 type ControllerConfig struct {
-	Renderer         controllers.Renderer
-	ImagesRepository controllers.ImagesRepository
+	Renderer      controllers.Renderer
+	ImagesUsecase controllers.ImagesUsecase
 }
 
 func NewController(cfg *ControllerConfig) *Controller {
@@ -20,13 +20,13 @@ func NewController(cfg *ControllerConfig) *Controller {
 }
 
 func (ctrl *Controller) Search(ctx controllers.Context) {
-	q := ctx.Query("q")
-	if q == "" {
-		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeQueryIsEmpty, errors.New("query is empty"))
+	var ipt entities.ImagesSearchInput
+	if err := ctx.ShouldBindQuery(&ipt); err != nil {
+		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidParameter, errors.WithStack(err))
 		return
 	}
 
-	imgs, err := ctrl.config.ImagesRepository.Search(q)
+	imgs, err := ctrl.config.ImagesUsecase.Search(&ipt)
 	if err != nil {
 		ctrl.config.Renderer.InternalServerError(ctx, errors.WithStack(err))
 		return
