@@ -10,6 +10,7 @@ const (
 	ErrCodeInvalidJSON        ErrCode = "INVALID_JSON"
 	ErrCodeInvalidContentType ErrCode = "INVALID_CONTENT_TYPE"
 	ErrCodeInvalidBase64      ErrCode = "INVALID_BASE64"
+	ErrCodeInvalidReportType  ErrCode = "INVALID_REPORT_TYPE"
 
 	ErrCodeQueryIsEmpty       ErrCode = "QUERY_IS_EMPTY"
 	ErrCodeContentTypeIsEmpty ErrCode = "CONTENT_TYPE_IS_EMPTY"
@@ -21,4 +22,5 @@ const (
 
 var (
 	ErrUnsupportedImageFormat = errors.New("unsupported image format")
+	ErrInvalidReportType      = errors.New("invalid report type")
 )
