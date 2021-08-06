@@ -3,6 +3,8 @@ package entities
 import (
 	"regexp"
 	"time"
+
+	"github.com/pkg/errors"
 )
 
 type LGTMStatus string
@@ -25,19 +27,19 @@ type LGTMCreateInput struct {
 	Base64      *string `json:"base64"`
 }
 
-func (ipt *LGTMCreateInput) IsValid() bool {
+func (ipt *LGTMCreateInput) Valid() error {
 	if ipt.ContentType == "" {
-		return false
+		return errors.New("content type is empty")
 	}
 	if !regexp.MustCompile(`\Aimage/.+\z`).Match([]byte(ipt.ContentType)) {
-		return false
+		return errors.Errorf("invalid content type: %s", ipt.ContentType)
 	}
 	if ipt.Base64 != nil {
 		if *ipt.Base64 == "" {
-			return false
+			return errors.New("base64 is empty")
 		}
-		return true
+		return nil
 	}
 
-	return false
+	return errors.New("image source is empty")
 }

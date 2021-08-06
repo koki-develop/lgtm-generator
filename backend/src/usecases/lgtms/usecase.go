@@ -28,8 +28,8 @@ func (uc *Usecase) FindAll() (entities.LGTMs, error) {
 }
 
 func (uc *Usecase) Create(ipt *entities.LGTMCreateInput) (*entities.LGTM, error) {
-	if !ipt.IsValid() {
-		return nil, errors.WithStack(entities.ErrInvalidParameter)
+	if err := ipt.Valid(); err != nil {
+		return nil, errors.Wrap(entities.ErrInvalidParameter, err.Error())
 	}
 	if ipt.Base64 != nil {
 		src, err := utils.Base64Decode(*ipt.Base64)

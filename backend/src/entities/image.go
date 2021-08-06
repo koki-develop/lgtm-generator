@@ -1,5 +1,9 @@
 package entities
 
+import (
+	"github.com/pkg/errors"
+)
+
 type Image struct {
 	Title string `json:"title"`
 	URL   string `json:"url"`
@@ -11,9 +15,9 @@ type ImagesSearchInput struct {
 	Query string `json:"q"`
 }
 
-func (ipt *ImagesSearchInput) IsValid() bool {
+func (ipt *ImagesSearchInput) Valid() error {
 	if ipt.Query == "" {
-		return false
+		return errors.New("query is empty")
 	}
-	return true
+	return nil
 }

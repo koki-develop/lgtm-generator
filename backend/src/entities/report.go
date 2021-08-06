@@ -4,16 +4,17 @@ import (
 	"time"
 
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
+	"github.com/pkg/errors"
 )
 
 type ReportType string
 
-func (t ReportType) IsValid() bool {
+func (t ReportType) Valid() error {
 	switch t {
 	case ReportTypeIllegal, ReportTypeInappropriate, ReportTypeOther:
-		return true
+		return nil
 	default:
-		return false
+		return errors.Errorf("invalid report type: %s", t)
 	}
 }
 
@@ -37,16 +38,16 @@ type ReportCreateInput struct {
 	Text   string     `json:"type"`
 }
 
-func (ipt *ReportCreateInput) IsValid() bool {
+func (ipt *ReportCreateInput) Valid() error {
 	if !utils.IsLowerUUID(ipt.LGTMID) {
-		return false
+		return errors.Errorf("invalid lgtm id format: %s", ipt.LGTMID)
 	}
-	if !ipt.Type.IsValid() {
-		return false
+	if err := ipt.Type.Valid(); err != nil {
+		return errors.WithStack(err)
 	}
 	if len(ipt.Text) > 1000 {
-		return false
+		return errors.New("text too long")
 	}
 
-	return true
+	return nil
 }

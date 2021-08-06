@@ -19,8 +19,8 @@ func NewUsecase(cfg *UsecaseConfig) *Usecase {
 }
 
 func (uc *Usecase) Search(ipt *entities.ImagesSearchInput) (entities.Images, error) {
-	if !ipt.IsValid() {
-		return nil, errors.WithStack(entities.ErrInvalidParameter)
+	if err := ipt.Valid(); err != nil {
+		return nil, errors.Wrap(entities.ErrInvalidParameter, err.Error())
 	}
 	imgs, err := uc.config.ImagesRepository.Search(ipt.Query)
 	if err != nil {

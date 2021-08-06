@@ -20,8 +20,8 @@ func NewUsecase(cfg *UsecaseConfig) *Usecase {
 }
 
 func (uc *Usecase) Create(ipt *entities.ReportCreateInput) (*entities.Report, error) {
-	if !ipt.IsValid() {
-		return nil, errors.WithStack(entities.ErrInvalidParameter)
+	if err := ipt.Valid(); err != nil {
+		return nil, errors.Wrap(entities.ErrInvalidParameter, err.Error())
 	}
 
 	if _, err := uc.config.LGTMsRepository.Find(ipt.LGTMID); err != nil {
