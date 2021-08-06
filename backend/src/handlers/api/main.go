@@ -53,8 +53,15 @@ func init() {
 		Bucket: fmt.Sprintf("lgtm-generator-backend-%s-lgtms", os.Getenv("STAGE")),
 	})
 	lgtmgen := infrastructures.NewLGTMGenerator()
+	slack := infrastructures.NewSlack(&infrastructures.SlackConfig{
+		AccessToken: os.Getenv("SLACK_ACCESS_TOKEN"),
+	})
 
-	n := notifier.New(&notifier.Config{})
+	n := notifier.New(&notifier.Config{
+		Slack:       slack,
+		Channel:     fmt.Sprintf("lgtm-generator-backend-%s-reports", os.Getenv("STAGE")),
+		FileStorage: s3lgtms,
+	})
 	lgtmsrepo := lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{
 		LGTMGenerator: lgtmgen,
 		DynamoDB:      db,

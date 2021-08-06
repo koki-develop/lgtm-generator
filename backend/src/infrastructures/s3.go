@@ -2,9 +2,12 @@ package infrastructures
 
 import (
 	"bytes"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 	"github.com/pkg/errors"
 )
@@ -14,6 +17,7 @@ type S3Uploader interface {
 }
 
 type S3 struct {
+	api      s3iface.S3API
 	uploader S3Uploader
 	config   *S3Config
 }
@@ -25,6 +29,7 @@ type S3Config struct {
 func NewS3(cfg *S3Config) *S3 {
 	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String("us-east-1")}))
 	return &S3{
+		api:      s3.New(sess),
 		uploader: s3manager.NewUploader(sess),
 		config:   cfg,
 	}
@@ -43,4 +48,16 @@ func (c *S3) Save(path, contentType string, data []byte) error {
 		return errors.WithStack(err)
 	}
 	return nil
+}
+
+func (c *S3) IssueSignedURL(key string) (string, error) {
+	req, _ := c.api.GetObjectRequest(&s3.GetObjectInput{
+		Bucket: aws.String(c.config.Bucket),
+		Key:    aws.String(key),
+	})
+	url, err := req.Presign(time.Minute * 5)
+	if err != nil {
+		return "", errors.WithStack(err)
+	}
+	return url, nil
 }
