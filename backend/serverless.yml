@@ -45,6 +45,7 @@ provider:
     STAGE: ${self:provider.stage}
     GOOGLE_API_KEY: ${file(./secrets.yml):googleApiKey}
     GOOGLE_CUSTOM_SEARCH_ENGINE_ID: ${file(./secrets.yml):googleCustomSearchEngineId}
+    SLACK_ACCESS_TOKEN: ${file(./secrets.yml):slackAccessToken}
 
 package:
   individually: true
