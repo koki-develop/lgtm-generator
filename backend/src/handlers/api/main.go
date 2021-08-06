@@ -13,6 +13,7 @@ import (
 	healthctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/health"
 	imgsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/images"
 	lgtmsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/lgtms"
+	rptsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/reports"
 	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
 	lgtmsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/lgtms"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
@@ -76,6 +77,12 @@ func init() {
 		})
 		v1.GET("/lgtms", withContext(ctrl.Index))
 		v1.POST("/lgtms", withContext(ctrl.Create))
+	}
+	{
+		ctrl := rptsctrl.NewController(&rptsctrl.ControllerConfig{
+			Renderer: rdr,
+		})
+		v1.POST("/reports", withContext(ctrl.Create))
 	}
 
 	ginLambda = ginadapter.New(r)

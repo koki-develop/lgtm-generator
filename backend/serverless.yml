@@ -72,6 +72,9 @@ functions:
       - http:
           method: post
           path: /v1/lgtms
+      - http:
+          method: post
+          path: /v1/reports
 
 resources:
   Resources:
