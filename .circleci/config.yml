@@ -41,19 +41,10 @@ jobs:
   backend_build:
     working_directory: ~/project/backend
     docker:
-      - image: public.ecr.aws/lambda/provided:al2
+      - image: lambci/lambda:build-go1.x
     steps:
       - checkout:
           path: ~/project
-      - jq/install
-      - run:
-          name: install required packages
-          command: |
-            yum -y update
-            yum -y install \
-              golang \
-              ImageMagick \
-              ImageMagick-devel
       - go_mod_download
       - run:
           name: test
