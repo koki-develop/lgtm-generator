@@ -7,6 +7,7 @@ type ErrCode string
 const (
 	ErrCodeUnsupportedImageFormat ErrCode = "UNSUPPORTED_IMAGE_FORMAT"
 
+	ErrCodeInvalidParameter   ErrCode = "INVALID_PARAMETER"
 	ErrCodeInvalidJSON        ErrCode = "INVALID_JSON"
 	ErrCodeInvalidContentType ErrCode = "INVALID_CONTENT_TYPE"
 	ErrCodeInvalidBase64      ErrCode = "INVALID_BASE64"

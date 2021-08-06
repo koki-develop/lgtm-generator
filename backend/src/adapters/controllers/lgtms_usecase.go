@@ -2,7 +2,7 @@ package controllers
 
 import "github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
 
-type LGTMsRepository interface {
+type LGTMsUsecase interface {
 	FindAll() (entities.LGTMs, error)
-	Create(src []byte, contentType string) (*entities.LGTM, error)
+	Create(ipt *entities.LGTMCreateInput) (*entities.LGTM, error)
 }

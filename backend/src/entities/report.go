@@ -37,7 +37,7 @@ type ReportCreateInput struct {
 	Text   string     `json:"type"`
 }
 
-func (ipt ReportCreateInput) IsValid() bool {
+func (ipt *ReportCreateInput) IsValid() bool {
 	if !utils.IsLowerUUID(ipt.LGTMID) {
 		return false
 	}

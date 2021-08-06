@@ -1,6 +1,9 @@
 package entities
 
-import "time"
+import (
+	"regexp"
+	"time"
+)
 
 type LGTMStatus string
 
@@ -16,3 +19,25 @@ type LGTM struct {
 }
 
 type LGTMs []*LGTM
+
+type LGTMCreateInput struct {
+	ContentType string  `json:"content_type"`
+	Base64      *string `json:"base64"`
+}
+
+func (ipt *LGTMCreateInput) IsValid() bool {
+	if ipt.ContentType == "" {
+		return false
+	}
+	if !regexp.MustCompile(`\Aimage/.+\z`).Match([]byte(ipt.ContentType)) {
+		return false
+	}
+	if ipt.Base64 != nil {
+		if *ipt.Base64 == "" {
+			return false
+		}
+		return true
+	}
+
+	return false
+}

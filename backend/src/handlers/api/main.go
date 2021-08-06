@@ -17,6 +17,7 @@ import (
 	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
 	lgtmsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/lgtms"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
+	lgtmsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/lgtms"
 )
 
 var ginLambda *ginadapter.GinLambda
@@ -48,6 +49,15 @@ func init() {
 		Bucket: fmt.Sprintf("lgtm-generator-backend-%s-lgtms", os.Getenv("STAGE")),
 	})
 	lgtmgen := infrastructures.NewLGTMGenerator()
+	lgtmsrepo := lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{
+		LGTMGenerator: lgtmgen,
+		DynamoDB:      db,
+		DBPrefix:      fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
+		FileStorage:   s3lgtms,
+	})
+	lgtmsuc := lgtmsuc.NewUsecase(&lgtmsuc.UsecaseConfig{
+		LGTMsRepository: lgtmsrepo,
+	})
 
 	v1 := r.Group("/v1")
 	{
@@ -67,13 +77,8 @@ func init() {
 	}
 	{
 		ctrl := lgtmsctrl.NewController(&lgtmsctrl.ControllerConfig{
-			Renderer: rdr,
-			LGTMsRepository: lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{
-				LGTMGenerator: lgtmgen,
-				DynamoDB:      db,
-				DBPrefix:      fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
-				FileStorage:   s3lgtms,
-			}),
+			Renderer:     rdr,
+			LGTMsUsecase: lgtmsuc,
 		})
 		v1.GET("/lgtms", withContext(ctrl.Index))
 		v1.POST("/lgtms", withContext(ctrl.Create))
