@@ -1,6 +1,7 @@
 package infrastructures
 
 import (
+	"github.com/pkg/errors"
 	"github.com/slack-go/slack"
 )
 
@@ -21,6 +22,8 @@ func NewSlack(cfg *SlackConfig) *Slack {
 }
 
 func (c *Slack) PostMessage(ch string, blocks ...slack.Block) error {
-	c.api.PostMessage(ch, slack.MsgOptionBlocks(blocks...))
+	if _, _, err := c.api.PostMessage(ch, slack.MsgOptionBlocks(blocks...)); err != nil {
+		return errors.WithStack(err)
+	}
 	return nil
 }
