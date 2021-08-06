@@ -15,7 +15,7 @@ func NewController(cfg *ControllerConfig) *Controller {
 }
 
 func (ctrl *Controller) Create(ctx controllers.Context) {
-	ctrl.config.Renderer.OK(ctx, map[string]interface{}{
+	ctrl.config.Renderer.Created(ctx, map[string]interface{}{
 		"message": "hello",
 	})
 }

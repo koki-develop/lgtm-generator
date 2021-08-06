@@ -72,7 +72,7 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 			ctrl.config.Renderer.InternalServerError(ctx, errors.WithStack(err))
 			return
 		}
-		ctrl.config.Renderer.OK(ctx, lgtm)
+		ctrl.config.Renderer.Created(ctx, lgtm)
 		return
 	}
 
