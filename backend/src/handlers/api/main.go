@@ -75,6 +75,7 @@ func init() {
 	})
 	rptsuc := rptsuc.NewUsecase(&rptsuc.UsecaseConfig{
 		ReportsRepository: rptsrepo,
+		LGTMsRepository:   lgtmsrepo,
 	})
 
 	v1 := r.Group("/v1")
