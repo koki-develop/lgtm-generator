@@ -19,6 +19,7 @@ type DynamoDBTable interface {
 
 type DynamoDBQuery interface {
 	All(out interface{}) error
+	One(out interface{}) error
 	Index(name string) DynamoDBQuery
 	Order(order DynamoDBOrder) DynamoDBQuery
 	Limit(limit int64) DynamoDBQuery
