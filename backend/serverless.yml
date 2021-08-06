@@ -27,6 +27,14 @@ provider:
                   - Ref: AWS::Region
                   - Ref: AWS::AccountId
                   - table/${self:custom.prefix}-*
+        - Effect: Allow
+          Action: s3:PutObject
+          Resource:
+            Fn::Join:
+              - ""
+              - - "arn:aws:s3:::"
+                - ${self:custom.prefix}-lgtms
+                - /*
   ecr:
     images:
       appimage:
