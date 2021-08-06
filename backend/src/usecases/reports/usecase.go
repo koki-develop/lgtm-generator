@@ -11,7 +11,8 @@ type Usecase struct {
 }
 
 type UsecaseConfig struct {
-	LGTMsRepository usecases.LGTMsRepository
+	ReportsRepository usecases.ReportsRepository
+	LGTMsRepository   usecases.LGTMsRepository
 }
 
 func NewUsecase(cfg *UsecaseConfig) *Usecase {
@@ -34,6 +35,10 @@ func (uc *Usecase) Create(ipt *entities.ReportCreateInput) (*entities.Report, er
 		LGTMID: ipt.LGTMID,
 		Type:   ipt.Type,
 		Text:   ipt.Text,
+	}
+
+	if err := uc.config.ReportsRepository.Create(&rpt); err != nil {
+		return nil, errors.WithStack(err)
 	}
 
 	return &rpt, nil

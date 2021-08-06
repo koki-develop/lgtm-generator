@@ -16,9 +16,11 @@ import (
 	rptsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/reports"
 	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
 	lgtmsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/lgtms"
+	rptsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/reports"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
 	imgsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/images"
 	lgtmsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/lgtms"
+	rptsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/reports"
 )
 
 var ginLambda *ginadapter.GinLambda
@@ -60,12 +62,19 @@ func init() {
 	imgsrepo := imgsrepo.NewRepository(&imgsrepo.RepositoryConfig{
 		ImageSearchEngine: imgse,
 	})
+	rptsrepo := rptsrepo.NewRepository(&rptsrepo.RepositoryConfig{
+		DynamoDB: db,
+		DBPrefix: fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
+	})
 
 	lgtmsuc := lgtmsuc.NewUsecase(&lgtmsuc.UsecaseConfig{
 		LGTMsRepository: lgtmsrepo,
 	})
 	imgsuc := imgsuc.NewUsecase(&imgsuc.UsecaseConfig{
 		ImagesRepository: imgsrepo,
+	})
+	rptsuc := rptsuc.NewUsecase(&rptsuc.UsecaseConfig{
+		ReportsRepository: rptsrepo,
 	})
 
 	v1 := r.Group("/v1")
@@ -92,7 +101,8 @@ func init() {
 	}
 	{
 		ctrl := rptsctrl.NewController(&rptsctrl.ControllerConfig{
-			Renderer: rdr,
+			Renderer:       rdr,
+			ReportsUsecase: rptsuc,
 		})
 		v1.POST("/reports", withContext(ctrl.Create))
 	}
