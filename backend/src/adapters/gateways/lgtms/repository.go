@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/guregu/dynamo"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
@@ -23,6 +24,20 @@ type RepositoryConfig struct {
 
 func NewRepository(cfg *RepositoryConfig) *Repository {
 	return &Repository{config: cfg}
+}
+
+func (repo *Repository) Find(id string) (*entities.LGTM, error) {
+	var lgtm entities.LGTM
+
+	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
+	if err := tbl.Get("id", id).One(&lgtm); err != nil {
+		if errors.Is(err, dynamo.ErrNotFound) {
+			return nil, errors.WithStack(entities.ErrNotFound)
+		}
+		return nil, errors.WithStack(err)
+	}
+
+	return &lgtm, nil
 }
 
 func (repo *Repository) FindAll() (entities.LGTMs, error) {
