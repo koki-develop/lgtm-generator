@@ -25,10 +25,13 @@ func (uc *Usecase) Create(ipt *entities.ReportCreateInput) (*entities.Report, er
 		Text:   ipt.Text,
 	}
 
-	if err := rpt.Type.IsValid(); err != nil {
-		return nil, errors.WithStack(err)
+	if !rpt.Type.IsValid() {
+		return nil, errors.WithStack(entities.ErrInvalidParameter)
 	}
 	if _, err := uc.config.LGTMsRepository.Find(rpt.LGTMID); err != nil {
+		if errors.Is(err, entities.ErrNotFound) {
+			return nil, errors.WithStack(entities.ErrInvalidParameter)
+		}
 		return nil, errors.WithStack(err)
 	}
 	if len(ipt.Text) > 1000 {
