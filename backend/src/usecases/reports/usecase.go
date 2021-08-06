@@ -19,24 +19,22 @@ func NewUsecase(cfg *UsecaseConfig) *Usecase {
 }
 
 func (uc *Usecase) Create(ipt *entities.ReportCreateInput) (*entities.Report, error) {
-	rpt := &entities.Report{
-		LGTMID: ipt.LGTMID,
-		Type:   ipt.Type,
-		Text:   ipt.Text,
-	}
-
-	if !rpt.Type.IsValid() {
+	if !ipt.IsValid() {
 		return nil, errors.WithStack(entities.ErrInvalidParameter)
 	}
-	if _, err := uc.config.LGTMsRepository.Find(rpt.LGTMID); err != nil {
+
+	if _, err := uc.config.LGTMsRepository.Find(ipt.LGTMID); err != nil {
 		if errors.Is(err, entities.ErrNotFound) {
 			return nil, errors.WithStack(entities.ErrInvalidParameter)
 		}
 		return nil, errors.WithStack(err)
 	}
-	if len(ipt.Text) > 1000 {
-		return nil, errors.WithStack(entities.ErrInvalidParameter)
+
+	rpt := entities.Report{
+		LGTMID: ipt.LGTMID,
+		Type:   ipt.Type,
+		Text:   ipt.Text,
 	}
 
-	return rpt, nil
+	return &rpt, nil
 }

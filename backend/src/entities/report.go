@@ -3,17 +3,17 @@ package entities
 import (
 	"time"
 
-	"github.com/pkg/errors"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
 )
 
 type ReportType string
 
-func (t ReportType) IsValid() error {
+func (t ReportType) IsValid() bool {
 	switch t {
 	case ReportTypeIllegal, ReportTypeInappropriate, ReportTypeOther:
-		return nil
+		return true
 	default:
-		return errors.Wrap(ErrInvalidReportType, string(t))
+		return false
 	}
 }
 
@@ -35,4 +35,18 @@ type ReportCreateInput struct {
 	LGTMID string     `json:"lgtm_id"`
 	Type   ReportType `json:"created_at"`
 	Text   string     `json:"type"`
+}
+
+func (ipt ReportCreateInput) IsValid() bool {
+	if !utils.IsLowerUUID(ipt.LGTMID) {
+		return false
+	}
+	if !ipt.Type.IsValid() {
+		return false
+	}
+	if len(ipt.Text) > 1000 {
+		return false
+	}
+
+	return true
 }
