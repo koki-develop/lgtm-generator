@@ -54,7 +54,7 @@ functions:
     image:
       name: appimage
       entryPoint:
-        - "/app/build/api"
+        - "/var/task/build/api"
     events:
       - http:
           method: get

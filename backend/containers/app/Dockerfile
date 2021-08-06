@@ -1,5 +1,5 @@
 FROM lambci/lambda:build-go1.x as build
-WORKDIR /app
+WORKDIR /var/task
 
 COPY go.mod go.sum ./
 RUN go mod download -x
@@ -12,7 +12,7 @@ ENTRYPOINT []
 FROM lambci/lambda:build-go1.x
 WORKDIR /var/task
 
-COPY --from=build /app/src/static/ /app/src/static/
-COPY --from=build /app/build/api /app/build/api
+COPY --from=build /var/task/src/static/ /var/task/src/static/
+COPY --from=build /var/task/build/api /var/task/build/api
 
 ENTRYPOINT []
