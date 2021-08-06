@@ -23,4 +23,6 @@ const (
 var (
 	ErrUnsupportedImageFormat = errors.New("unsupported image format")
 	ErrInvalidReportType      = errors.New("invalid report type")
+	ErrNotFound               = errors.New("not found")
+	ErrInvalidParameter       = errors.New("invalid parameter")
 )
