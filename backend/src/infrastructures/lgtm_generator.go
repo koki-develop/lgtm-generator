@@ -2,7 +2,9 @@ package infrastructures
 
 import (
 	"math"
+	"strings"
 
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
 	"github.com/pkg/errors"
 	"gopkg.in/gographics/imagick.v2/imagick"
 )
@@ -20,6 +22,9 @@ func (g *LGTMGenerator) Generate(src []byte) ([]byte, error) {
 	tmp := imagick.NewMagickWand()
 	defer tmp.Destroy()
 	if err := tmp.ReadImageBlob(src); err != nil {
+		if strings.HasPrefix(err.Error(), "ERROR_MISSING_DELEGATE") {
+			return nil, errors.WithStack(entities.ErrUnsupportedImageFormat)
+		}
 		return nil, errors.WithStack(err)
 	}
 	w := tmp.GetImageWidth()

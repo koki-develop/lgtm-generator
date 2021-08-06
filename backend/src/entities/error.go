@@ -1,8 +1,12 @@
 package entities
 
+import "errors"
+
 type ErrCode string
 
 const (
+	ErrCodeUnsupportedImageFormat ErrCode = "UNSUPPORTED_IMAGE_FORMAT"
+
 	ErrCodeInvalidJSON        ErrCode = "INVALID_JSON"
 	ErrCodeInvalidContentType ErrCode = "INVALID_CONTENT_TYPE"
 	ErrCodeInvalidBase64      ErrCode = "INVALID_BASE64"
@@ -13,4 +17,8 @@ const (
 	ErrCodeImageSourceIsEmpty ErrCode = "IMAGE_SOURCE_IS_EMPTY"
 
 	ErrCodeInternalServerError ErrCode = "INTERNAL_SERVER_ERROR"
+)
+
+var (
+	ErrUnsupportedImageFormat = errors.New("unsupported image format")
 )

@@ -65,6 +65,10 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 		}
 		lgtm, err := ctrl.config.LGTMsRepository.Create(src, ipt.ContentType)
 		if err != nil {
+			if errors.Is(err, entities.ErrUnsupportedImageFormat) {
+				ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeUnsupportedImageFormat, errors.WithStack(err))
+				return
+			}
 			ctrl.config.Renderer.InternalServerError(ctx, errors.WithStack(err))
 			return
 		}
