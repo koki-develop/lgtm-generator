@@ -43,6 +43,9 @@ func init() {
 		SearchEngineID: os.Getenv("GOOGLE_CUSTOM_SEARCH_ENGINE_ID"),
 	})
 	db := infrastructures.NewGureguDynamoDB()
+	s3 := infrastructures.NewS3(&infrastructures.S3Config{
+		Bucket: fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
+	})
 	lgtmgen := infrastructures.NewLGTMGenerator()
 
 	v1 := r.Group("/v1")
@@ -68,6 +71,7 @@ func init() {
 				LGTMGenerator: lgtmgen,
 				DynamoDB:      db,
 				DBPrefix:      fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
+				FileStorage:   s3,
 			}),
 		})
 		v1.GET("/lgtms", withContext(ctrl.Index))

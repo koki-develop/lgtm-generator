@@ -1,5 +1,5 @@
 package gateways
 
 type FileStorage interface {
-	Save(path, contentType string, data []byte)
+	Save(path, contentType string, data []byte) error
 }

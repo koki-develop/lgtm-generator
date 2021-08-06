@@ -50,9 +50,11 @@ func (repo *Repository) Create(src []byte, contentType string) (*entities.LGTM, 
 		return nil, errors.WithStack(err)
 	}
 
-	// FIXME: LGTM 画像の保存を行うようにする
-	_, err := repo.config.LGTMGenerator.Generate(src)
+	lgtmsrc, err := repo.config.LGTMGenerator.Generate(src)
 	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	if err := repo.config.FileStorage.Save(lgtm.ID, contentType, lgtmsrc); err != nil {
 		return nil, errors.WithStack(err)
 	}
 
