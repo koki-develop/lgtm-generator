@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
 )
 
@@ -39,27 +40,27 @@ type CreateInput struct {
 func (ctrl *Controller) Create(ctx controllers.Context) {
 	var ipt CreateInput
 	if err := ctx.ShouldBindJSON(&ipt); err != nil {
-		ctrl.config.Renderer.BadRequest(ctx, errors.WithStack(err))
+		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidJSON, errors.WithStack(err))
 		return
 	}
 
 	if ipt.ContentType == "" {
-		ctrl.config.Renderer.BadRequest(ctx, errors.New("content type is empty"))
+		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeContentTypeIsEmpty, errors.New("content type is empty"))
 		return
 	}
 	if !regexp.MustCompile(`\Aimage/.+\z`).Match([]byte(ipt.ContentType)) {
-		ctrl.config.Renderer.BadRequest(ctx, errors.Errorf("invalid content type: %s", ipt.ContentType))
+		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidContentType, errors.Errorf("invalid content type: %s", ipt.ContentType))
 		return
 	}
 
 	if ipt.Base64 != nil {
 		if *ipt.Base64 == "" {
-			ctrl.config.Renderer.BadRequest(ctx, errors.New("base64 string is empty"))
+			ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeBase64IsEmpty, errors.New("base64 is empty"))
 			return
 		}
 		src, err := utils.Base64Decode(*ipt.Base64)
 		if err != nil {
-			ctrl.config.Renderer.BadRequest(ctx, errors.WithStack(err))
+			ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidBase64, errors.WithStack(err))
 			return
 		}
 		lgtm, err := ctrl.config.LGTMsRepository.Create(src, ipt.ContentType)
@@ -71,5 +72,5 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 		return
 	}
 
-	ctrl.config.Renderer.BadRequest(ctx, errors.New("image source is empty"))
+	ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeImageSourceIsEmpty, errors.New("image source is empty"))
 }
