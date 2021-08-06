@@ -47,7 +47,7 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 		ctrl.config.Renderer.BadRequest(ctx, errors.New("content type is empty"))
 		return
 	}
-	if regexp.MustCompile(`\Aimage/.+\z`).Match([]byte(ipt.ContentType)) {
+	if !regexp.MustCompile(`\Aimage/.+\z`).Match([]byte(ipt.ContentType)) {
 		ctrl.config.Renderer.BadRequest(ctx, errors.Errorf("invalid content type: %s", ipt.ContentType))
 		return
 	}
