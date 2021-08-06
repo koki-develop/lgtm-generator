@@ -72,6 +72,7 @@ jobs:
           command: |
             echo "googleApiKey: ${GOOGLE_API_KEY}"                               >> secrets.yml
             echo "googleCustomSearchEngineId: ${GOOGLE_CUSTOM_SEARCH_ENGINE_ID}" >> secrets.yml
+            echo "slackAccessToken: ${APP_SLACK_ACCESS_TOKEN}"                   >> secrets.yml
       - run:
           name: deploy
           command: yarn run deploy --stage << parameters.stage >>
