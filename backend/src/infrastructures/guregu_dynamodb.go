@@ -70,10 +70,6 @@ func (q *GureguDynamoDBQuery) All(out interface{}) error {
 	return q.guregu().All(out)
 }
 
-func (q *GureguDynamoDBQuery) One(out interface{}) error {
-	return q.guregu().One(out)
-}
-
 func (q *GureguDynamoDBQuery) Index(name string) gateways.DynamoDBQuery {
 	return dynamoDBQueryFromGuregu(q.guregu().Index(name))
 }
