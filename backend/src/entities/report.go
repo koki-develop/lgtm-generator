@@ -25,11 +25,11 @@ const (
 )
 
 type Report struct {
-	ID        string     `json:"id"`
-	LGTMID    string     `json:"lgtm_id"`
-	Type      ReportType `json:"type"`
-	Text      string     `json:"text"`
-	CreatedAt time.Time  `json:"created_at"`
+	ID        string     `json:"id"         dynamo:"id"`
+	LGTMID    string     `json:"lgtm_id"    dynamo:"lgtm_id"`
+	Type      ReportType `json:"type"       dynamo:"type"`
+	Text      string     `json:"text"       dynamo:"text"`
+	CreatedAt time.Time  `json:"created_at" dynamo:"created_at"`
 }
 
 type ReportCreateInput struct {
