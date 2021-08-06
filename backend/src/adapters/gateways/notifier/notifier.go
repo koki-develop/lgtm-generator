@@ -33,9 +33,12 @@ func (n *Notifier) NotifyReport(rpt *entities.Report) error {
 	blocks := []slack.Block{
 		slack.NewDividerBlock(),
 
-		&slack.TextBlockObject{
-			Type: slack.PlainTextType,
-			Text: fmt.Sprintf("ReportType - %s", rpt.Type),
+		&slack.SectionBlock{
+			Type: slack.MBTSection,
+			Text: &slack.TextBlockObject{
+				Type: slack.PlainTextType,
+				Text: fmt.Sprintf("ReportType - %s", rpt.Type),
+			},
 		},
 
 		slack.NewImageBlock(
@@ -45,9 +48,12 @@ func (n *Notifier) NotifyReport(rpt *entities.Report) error {
 			&slack.TextBlockObject{Type: slack.PlainTextType, Text: rpt.LGTMID},
 		),
 
-		&slack.TextBlockObject{
-			Type: slack.PlainTextType,
-			Text: strings.NewReplacer("\r", "", "\n", "  ").Replace(rpt.Text),
+		&slack.SectionBlock{
+			Type: slack.MBTSection,
+			Text: &slack.TextBlockObject{
+				Type: slack.PlainTextType,
+				Text: strings.NewReplacer("\r", "", "\n", "  ").Replace(rpt.Text),
+			},
 		},
 
 		slack.NewDividerBlock(),
