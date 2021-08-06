@@ -27,15 +27,15 @@ const (
 type Report struct {
 	ID        string     `json:"id"`
 	LGTMID    string     `json:"lgtm_id"`
-	Type      ReportType `json:"created_at"`
-	Text      string     `json:"type"`
-	CreatedAt time.Time  `json:"text"`
+	Type      ReportType `json:"type"`
+	Text      string     `json:"text"`
+	CreatedAt time.Time  `json:"created_at"`
 }
 
 type ReportCreateInput struct {
 	LGTMID string     `json:"lgtm_id"`
-	Type   ReportType `json:"created_at"`
-	Text   string     `json:"type"`
+	Type   ReportType `json:"type"`
+	Text   string     `json:"text"`
 }
 
 func (ipt *ReportCreateInput) Valid() error {
