@@ -88,8 +88,16 @@ jobs:
 workflows:
   build:
     jobs:
+      # build
       - backend_build
-      - backend_deploy:
-          stage: dev
+
+      # approval
+      - approval_deploy_dev:
+          type: approval
           requires:
             - backend_build
+
+      # deploy
+      - backend_deploy:
+          stage: dev
+          requires: [approval_deploy_dev]
