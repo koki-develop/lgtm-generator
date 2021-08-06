@@ -13,6 +13,7 @@ type Usecase struct {
 type UsecaseConfig struct {
 	ReportsRepository usecases.ReportsRepository
 	LGTMsRepository   usecases.LGTMsRepository
+	Notifier          usecases.Notifier
 }
 
 func NewUsecase(cfg *UsecaseConfig) *Usecase {
@@ -38,6 +39,10 @@ func (uc *Usecase) Create(ipt *entities.ReportCreateInput) (*entities.Report, er
 	}
 
 	if err := uc.config.ReportsRepository.Create(&rpt); err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	if err := uc.config.Notifier.NotifyReport(&rpt); err != nil {
 		return nil, errors.WithStack(err)
 	}
 

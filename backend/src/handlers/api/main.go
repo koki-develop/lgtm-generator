@@ -16,6 +16,7 @@ import (
 	rptsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/reports"
 	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
 	lgtmsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/lgtms"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/notifier"
 	rptsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/reports"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
 	imgsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/images"
@@ -53,6 +54,7 @@ func init() {
 	})
 	lgtmgen := infrastructures.NewLGTMGenerator()
 
+	n := notifier.New(&notifier.Config{})
 	lgtmsrepo := lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{
 		LGTMGenerator: lgtmgen,
 		DynamoDB:      db,
@@ -76,6 +78,7 @@ func init() {
 	rptsuc := rptsuc.NewUsecase(&rptsuc.UsecaseConfig{
 		ReportsRepository: rptsrepo,
 		LGTMsRepository:   lgtmsrepo,
+		Notifier:          n,
 	})
 
 	v1 := r.Group("/v1")
