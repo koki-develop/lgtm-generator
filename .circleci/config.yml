@@ -45,6 +45,7 @@ jobs:
     steps:
       - checkout:
           path: ~/project
+      - jq/install
       - go_mod_download
       - run:
           name: test
