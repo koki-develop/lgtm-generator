@@ -54,15 +54,14 @@ jobs:
 
   backend_deploy:
     working_directory: ~/project/backend
-    docker:
-      - image: node:14
+    machine: true
     parameters:
       stage:
         type: string
     steps:
       - checkout:
           path: ~/project
-      - jq/install
+      # - jq/install
       - aws-cli/setup
       - docker/install-docker
       - setup_remote_docker
