@@ -22,10 +22,10 @@ commands:
   yarn_install:
     steps:
       - restore_cache:
-          key: node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: node-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run: yarn install --check-files
       - save_cache:
-          key: node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          key: node-v2-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
   notify_status:
