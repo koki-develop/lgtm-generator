@@ -17,7 +17,7 @@ func NewContextFromGin(ctx *gin.Context) *GinContext {
 }
 
 func (ctx *GinContext) GetAPIGatewayProxyRequestContext() (events.APIGatewayProxyRequestContext, bool) {
-	return core.GetAPIGatewayContextFromContext(ctx.Context)
+	return core.GetAPIGatewayContextFromContext(ctx.Context.Request.Context())
 }
 
 func (ctx *GinContext) GetRequestID() string {
