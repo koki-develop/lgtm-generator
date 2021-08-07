@@ -22,7 +22,6 @@ import (
 	imgsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/images"
 	lgtmsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/lgtms"
 	rptsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/reports"
-	"github.com/slack-go/slack"
 )
 
 var ginLambda *ginadapter.GinLambda
@@ -44,7 +43,7 @@ func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 func init() {
 	r := gin.Default()
 
-	s := slack.New(os.Getenv("SLACK_ACCESS_TOKEN"))
+	s := infrastructures.NewSlackClient(&infrastructures.SlackClientConfig{AccessToken: os.Getenv("SLACK_ACCESS_TOKEN")})
 	rdr := infrastructures.NewRenderer(&infrastructures.RendererConfig{SlackAPI: s})
 	imgse := infrastructures.NewGoogleImageSearchEngine(&infrastructures.GoogleImageSearchEngineConfig{
 		APIKey:         os.Getenv("GOOGLE_API_KEY"),
