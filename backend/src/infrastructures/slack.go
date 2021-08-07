@@ -12,7 +12,7 @@ import (
 )
 
 type SlackAPI interface {
-	PostMessage(channelID string, options ...slack.MsgOption) (string, string, error)
+	PostMessage(msg *slack.Msg) error
 }
 
 type SlackClient struct {
