@@ -65,10 +65,8 @@ jobs:
       # - jq/install
       - aws-cli/setup
       # - docker/install-docker
-      - node/install:
-          node-version: 14.17.4
-          install-yarn: true
-          yarn-version: 1.22.11
+      - node/install-yarn:
+          version: 1.22.11
       - yarn_install
       - run:
           name: create secrets.yml
