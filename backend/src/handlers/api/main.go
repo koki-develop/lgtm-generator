@@ -22,6 +22,7 @@ import (
 	imgsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/images"
 	lgtmsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/lgtms"
 	rptsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/reports"
+	"github.com/slack-go/slack"
 )
 
 var ginLambda *ginadapter.GinLambda
@@ -53,12 +54,9 @@ func init() {
 		Bucket: fmt.Sprintf("lgtm-generator-backend-%s-lgtms", os.Getenv("STAGE")),
 	})
 	lgtmgen := infrastructures.NewLGTMGenerator()
-	slack := infrastructures.NewSlack(&infrastructures.SlackConfig{
-		AccessToken: os.Getenv("SLACK_ACCESS_TOKEN"),
-	})
 
 	n := notifier.New(&notifier.Config{
-		Slack:       slack,
+		Slack:       slack.New(os.Getenv("SLACK_ACCESS_TOKEN")),
 		Channel:     fmt.Sprintf("lgtm-generator-backend-%s-reports", os.Getenv("STAGE")),
 		FileStorage: s3lgtms,
 	})
