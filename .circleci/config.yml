@@ -99,4 +99,5 @@ workflows:
       # deploy
       - backend_deploy:
           stage: dev
-          requires: [approval_deploy_dev]
+          # FIXME: コメント解除
+          # requires: [approval_deploy_dev]
