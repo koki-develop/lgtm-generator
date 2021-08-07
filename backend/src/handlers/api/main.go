@@ -44,7 +44,8 @@ func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 func init() {
 	r := gin.Default()
 
-	rdr := infrastructures.NewRenderer()
+	s := slack.New(os.Getenv("SLACK_ACCESS_TOKEN"))
+	rdr := infrastructures.NewRenderer(&infrastructures.RendererConfig{SlackAPI: s})
 	imgse := infrastructures.NewGoogleImageSearchEngine(&infrastructures.GoogleImageSearchEngineConfig{
 		APIKey:         os.Getenv("GOOGLE_API_KEY"),
 		SearchEngineID: os.Getenv("GOOGLE_CUSTOM_SEARCH_ENGINE_ID"),
@@ -56,7 +57,7 @@ func init() {
 	lgtmgen := infrastructures.NewLGTMGenerator()
 
 	n := notifier.New(&notifier.Config{
-		Slack:       slack.New(os.Getenv("SLACK_ACCESS_TOKEN")),
+		Slack:       s,
 		Channel:     fmt.Sprintf("lgtm-generator-backend-%s-reports", os.Getenv("STAGE")),
 		FileStorage: s3lgtms,
 	})
