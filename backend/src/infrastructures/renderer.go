@@ -40,7 +40,15 @@ func (rdr *Renderer) BadRequest(ctx controllers.Context, code entities.ErrCode, 
 
 func (rdr *Renderer) InternalServerError(ctx controllers.Context, err error) {
 	fmt.Printf("error: %+v\n", err)
-	if _, _, err := rdr.config.SlackAPI.PostMessage(fmt.Sprintf("lgtm-generator-backend-%s-errors", os.Getenv("STAGE")), slack.MsgOptionText(err.Error(), true)); err != nil {
+	if _, _, err := rdr.config.SlackAPI.PostMessage(
+		fmt.Sprintf("lgtm-generator-backend-%s-errors", os.Getenv("STAGE")),
+		slack.MsgOptionBlocks(
+			&slack.SectionBlock{
+				Type: slack.MBTSection,
+				Text: &slack.TextBlockObject{Type: slack.PlainTextType, Text: err.Error()},
+			},
+		),
+	); err != nil {
 		fmt.Printf("error: %+v\n", errors.WithStack(err))
 	}
 
