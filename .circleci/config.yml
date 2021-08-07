@@ -5,7 +5,6 @@ orbs:
   docker: circleci/docker@1.6.0
   jq: circleci/jq@2.2.0
   slack: circleci/slack@4.4.2
-  node: circleci/node@4.6.0
 
 commands:
   go_mod_download:
@@ -65,8 +64,6 @@ jobs:
       # - jq/install
       - aws-cli/setup
       # - docker/install-docker
-      - node/install-yarn:
-          version: 1.22.11
       - yarn_install
       - run:
           name: create secrets.yml
