@@ -65,9 +65,9 @@ jobs:
       - jq/install
       - aws-cli/setup
       - docker/install-docker:
-          version: v18.09.3
+          version: v19.03.14
       - setup_remote_docker:
-          version: 18.09.3
+          version: 19.03.14
       - yarn_install
       - run:
           name: create secrets.yml
