@@ -87,6 +87,9 @@ workflows:
           type: approval
           requires:
             - backend_build
+      - slack/on-hold:
+          requires:
+            - backend_build
 
       # deploy
       - backend_deploy:
