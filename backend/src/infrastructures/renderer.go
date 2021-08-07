@@ -45,6 +45,10 @@ func (rdr *Renderer) InternalServerError(ctx controllers.Context, err error) {
 		slack.MsgOptionBlocks(
 			&slack.SectionBlock{
 				Type: slack.MBTSection,
+				Text: &slack.TextBlockObject{Type: slack.PlainTextType, Text: fmt.Sprintf("request id: %s", ctx.GetRequestID())},
+			},
+			&slack.SectionBlock{
+				Type: slack.MBTSection,
 				Text: &slack.TextBlockObject{Type: slack.PlainTextType, Text: err.Error()},
 			},
 		),
