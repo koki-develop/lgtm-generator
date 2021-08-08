@@ -1,6 +1,9 @@
 {
   "name": "lgtm-generator-frontend",
   "license": "MIT",
+  "scripts": {
+    "dev": "next dev"
+  },
   "dependencies": {
     "next": "^11.0.1",
     "react": "^17.0.2",
