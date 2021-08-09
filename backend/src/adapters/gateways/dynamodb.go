@@ -1,5 +1,9 @@
 package gateways
 
+import "github.com/aws/aws-sdk-go/service/dynamodb"
+
+type LastEvaluatedKey map[string]*dynamodb.AttributeValue
+
 type DynamoDBOrder string
 
 const (
@@ -22,6 +26,7 @@ type DynamoDBQuery interface {
 	Index(name string) DynamoDBQuery
 	Order(order DynamoDBOrder) DynamoDBQuery
 	Limit(limit int64) DynamoDBQuery
+	StartFrom(key LastEvaluatedKey) DynamoDBQuery
 }
 
 type DynamoDBPut interface {

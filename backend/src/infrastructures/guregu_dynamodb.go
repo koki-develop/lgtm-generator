@@ -90,6 +90,10 @@ func (q *GureguDynamoDBQuery) Limit(limit int64) gateways.DynamoDBQuery {
 	return dynamoDBQueryFromGuregu(q.guregu().Limit(limit))
 }
 
+func (q *GureguDynamoDBQuery) StartFrom(key gateways.LastEvaluatedKey) gateways.DynamoDBQuery {
+	return dynamoDBQueryFromGuregu(q.guregu().StartFrom(dynamo.PagingKey(key)))
+}
+
 /*
  * put
  */
