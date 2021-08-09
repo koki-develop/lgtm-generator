@@ -15,6 +15,11 @@ type SlackAPI interface {
 	PostMessage(msg *slack.Msg) error
 }
 
+type SlackPostMessageResponse struct {
+	OK    bool   `json:"ok"`
+	Error string `json:"error"`
+}
+
 type SlackClient struct {
 	config *SlackClientConfig
 }
@@ -42,18 +47,28 @@ func (c *SlackClient) PostMessage(msg *slack.Msg) error {
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.config.AccessToken))
 
-	resp, err := c.config.HTTPAPI.Do(req)
+	httpresp, err := c.config.HTTPAPI.Do(req)
 	if err != nil {
 		return errors.WithStack(err)
 	}
-	defer resp.Body.Close()
+	defer httpresp.Body.Close()
 
-	if resp.StatusCode != http.StatusOK {
-		b, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			return errors.WithStack(err)
-		}
+	b, err := ioutil.ReadAll(httpresp.Body)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	if httpresp.StatusCode != http.StatusOK {
 		return errors.New(string(b))
+	}
+
+	var resp SlackPostMessageResponse
+	if err := json.Unmarshal(b, &resp); err != nil {
+		return errors.WithStack(err)
+	}
+
+	if !resp.OK {
+		return errors.New(resp.Error)
 	}
 
 	return nil
