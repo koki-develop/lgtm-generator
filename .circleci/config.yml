@@ -92,8 +92,8 @@ jobs:
       - run:
           name: install required commands
           command: |
-            yum -y update
-            yum -y install jq
+            apt update
+            apt install -y jq
       - aws_setup
       - docker/install-docker:
           version: v19.03.14
