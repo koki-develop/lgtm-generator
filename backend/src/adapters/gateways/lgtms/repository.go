@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
@@ -44,6 +45,24 @@ func (repo *Repository) FindAll() (entities.LGTMs, error) {
 
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
 	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(20).All(&lgtms); err != nil {
+		return nil, errors.WithStack(err)
+	}
+	return lgtms, nil
+}
+
+func (repo *Repository) FindAllAfter(id string) (entities.LGTMs, error) {
+	lgtm, err := repo.Find(id)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	key, err := dynamodbattribute.MarshalMap(lgtm)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	var lgtms entities.LGTMs
+	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
+	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(20).StartFrom(key).All(&lgtms); err != nil {
 		return nil, errors.WithStack(err)
 	}
 	return lgtms, nil

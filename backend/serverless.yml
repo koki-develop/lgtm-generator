@@ -70,6 +70,10 @@ functions:
       - http:
           method: get
           path: /v1/lgtms
+          request:
+            parameters:
+              querystrings:
+                after: false
       - http:
           method: post
           path: /v1/lgtms

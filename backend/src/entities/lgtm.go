@@ -15,12 +15,16 @@ const (
 )
 
 type LGTM struct {
-	ID        string     `json:"id"         dynamo:"id"`
-	Status    LGTMStatus `json:"-"          dynamo:"status"`
-	CreatedAt time.Time  `json:"created_at" dynamo:"created_at"`
+	ID        string     `json:"id"         dynamo:"id"         dynamodbav:"id"`
+	Status    LGTMStatus `json:"-"          dynamo:"status"     dynamodbav:"status"`
+	CreatedAt time.Time  `json:"created_at" dynamo:"created_at" dynamodbav:"created_at"`
 }
 
 type LGTMs []*LGTM
+
+type LGTMsFindAllInput struct {
+	After string `form:"after"`
+}
 
 type LGTMCreateInput struct {
 	ContentType string  `json:"content_type"`

@@ -19,7 +19,15 @@ func NewUsecase(cfg *UsecaseConfig) *Usecase {
 	return &Usecase{config: cfg}
 }
 
-func (uc *Usecase) FindAll() (entities.LGTMs, error) {
+func (uc *Usecase) FindAll(ipt *entities.LGTMsFindAllInput) (entities.LGTMs, error) {
+	if ipt.After != "" {
+		lgtms, err := uc.config.LGTMsRepository.FindAllAfter(ipt.After)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		return lgtms, nil
+	}
+
 	lgtms, err := uc.config.LGTMsRepository.FindAll()
 	if err != nil {
 		return nil, errors.WithStack(err)

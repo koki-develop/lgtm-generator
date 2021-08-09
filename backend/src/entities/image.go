@@ -12,7 +12,7 @@ type Image struct {
 type Images []*Image
 
 type ImagesSearchInput struct {
-	Query string `json:"q"`
+	Query string `form:"q"`
 }
 
 func (ipt *ImagesSearchInput) Valid() error {

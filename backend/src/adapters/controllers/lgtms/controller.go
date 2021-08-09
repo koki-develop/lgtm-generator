@@ -21,7 +21,13 @@ func NewController(cfg *ControllerConfig) *Controller {
 }
 
 func (ctrl *Controller) Index(ctx controllers.Context) {
-	lgtms, err := ctrl.config.LGTMsUsecase.FindAll()
+	var ipt entities.LGTMsFindAllInput
+	if err := ctx.ShouldBindQuery(&ipt); err != nil {
+		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidParameter, errors.WithStack(err))
+		return
+	}
+
+	lgtms, err := ctrl.config.LGTMsUsecase.FindAll(&ipt)
 	if err != nil {
 		ctrl.config.Renderer.InternalServerError(ctx, errors.WithStack(err))
 		return
