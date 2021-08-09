@@ -5,6 +5,7 @@ orbs:
   docker: circleci/docker@1.6.0
   jq: circleci/jq@2.2.0
   slack: circleci/slack@4.4.2
+  terraform: circleci/terraform@2.1.0
 
 commands:
   go_mod_download:
@@ -80,11 +81,30 @@ jobs:
           command: yarn run deploy --stage << parameters.stage >>
       - notify_status
 
+  backend_terraform_plan:
+    parameters:
+      stage:
+        type: string
+    docker:
+      - image: hashicorp/terraform:1.0.4
+    steps:
+      - checkout
+      - aws-cli/setup
+      - terraform/init:
+          path: ./terraform/envs/<< parameters.stage >>
+      - terraform/validate:
+          path: ./terraform/envs/<< parameters.stage >>
+      - terraform/plan:
+          path: ./terraform/envs/<< parameters.stage >>
+      - notify_status
+
 workflows:
   build:
     jobs:
       # build
       - backend_build
+      - backend_terraform_plan:
+          stage: dev
 
       # approval
       - approval_deploy_dev:
