@@ -1,13 +1,24 @@
 version: 2.1
 
 orbs:
-  aws-cli: circleci/aws-cli@2.0.3
   docker: circleci/docker@1.6.0
   jq: circleci/jq@2.2.0
   slack: circleci/slack@4.4.2
   terraform: circleci/terraform@2.1.0
 
 commands:
+  aws_setup:
+    steps:
+      - run:
+          name: create aws/credentials aws/config
+          command: |
+            mkdir -p ~/.aws
+            echo '[default]'                                       > ~/.aws/credentials
+            echo "aws_access_key_id=${AWS_ACCESS_KEY_ID}"         >> ~/.aws/credentials
+            echo "aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
+            echo '[default]'                                       > ~/.aws/config
+            echo "region = us-east-1"                             >> ~/.aws/config
+
   go_mod_download:
     steps:
       - restore_cache:
@@ -64,7 +75,7 @@ jobs:
       - checkout:
           path: ~/project
       - jq/install
-      - aws-cli/setup
+      - aws_setup
       - docker/install-docker:
           version: v19.03.14
       - setup_remote_docker:
@@ -89,7 +100,7 @@ jobs:
       - image: hashicorp/terraform:1.0.4
     steps:
       - checkout
-      - aws-cli/setup
+      - aws_setup
       - terraform/init:
           path: ./terraform/envs/<< parameters.stage >>
       - terraform/validate:
