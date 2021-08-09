@@ -159,13 +159,20 @@ jobs:
           command: apply -auto-approve
       - notify_status
 
-  frontend:
+  frontend_build:
     working_directory: ~/project/frontend
     docker:
       - image: node:14
     steps:
       - checkout:
           path: ~/project
+      - yarn_install
+      - run:
+          name: lint
+          command: yarn run lint
+      - run:
+          name: build
+          command: yarn run build
 
 workflows:
   build:
@@ -174,6 +181,7 @@ workflows:
       - backend_build
       - backend_terraform_plan:
           stage: dev
+      - frontend_build
 
       # approval
       - approval_deploy_dev:
