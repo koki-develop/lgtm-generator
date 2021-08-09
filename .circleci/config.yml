@@ -4,7 +4,6 @@ orbs:
   docker: circleci/docker@1.6.0
   jq: circleci/jq@2.2.0
   slack: circleci/slack@4.4.2
-  terraform: circleci/terraform@2.1.0
 
 commands:
   aws_setup:
@@ -18,6 +17,19 @@ commands:
             echo "aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
             echo '[default]'                                       > ~/.aws/config
             echo "region = us-east-1"                             >> ~/.aws/config
+
+  terraform:
+    parameters:
+      path:
+        type: string
+      command:
+        type: string
+    steps:
+      - run:
+          name: terraform << parameters.command >> at << parameters.path >>
+          command: |
+            cd << parameters.path >>
+            terraform << parameters.command >>
 
   go_mod_download:
     steps:
@@ -108,12 +120,15 @@ jobs:
             apk --update add \
               curl
       - aws_setup
-      - terraform/init:
+      - terraform:
           path: ./terraform/envs/<< parameters.stage >>
-      - terraform/validate:
+          command: init
+      - terraform:
           path: ./terraform/envs/<< parameters.stage >>
-      - terraform/plan:
+          command: validate
+      - terraform:
           path: ./terraform/envs/<< parameters.stage >>
+          command: plan
       - notify_status
 
 workflows:
