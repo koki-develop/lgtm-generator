@@ -23,6 +23,7 @@ module.exports = {
     'semi': ['error', 'always'],
     'comma-dangle': ['error', 'always-multiline'],
     'quotes': ['error', 'single'],
+    'react/jsx-tag-spacing': ['error'],
   },
   'overrides': [
     {
@@ -33,7 +34,10 @@ module.exports = {
       'plugins': [
         '@typescript-eslint',
       ],
-      parser: '@typescript-eslint/parser',
+      'parser': '@typescript-eslint/parser',
+      'rules': {
+        '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
+      },
     },
   ],
 };
