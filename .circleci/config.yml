@@ -93,13 +93,15 @@ jobs:
       - notify_status
 
   backend_terraform_plan:
+    working_directory: ~/project/backend
     parameters:
       stage:
         type: string
     docker:
       - image: hashicorp/terraform:1.0.4
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - run:
           name: install required commands
           command: |
