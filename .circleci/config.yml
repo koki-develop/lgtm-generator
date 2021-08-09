@@ -118,6 +118,7 @@ jobs:
           name: install required commands
           command: |
             apk --update add \
+              jq \
               curl
       - aws_setup
       - terraform:
