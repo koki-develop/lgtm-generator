@@ -43,6 +43,7 @@ commands:
           paths:
             - /go/pkg/mod
           key: go-mod-v1-{{ .Branch }}-{{ checksum "go.sum" }}
+
   yarn_install:
     steps:
       - restore_cache:
@@ -52,6 +53,7 @@ commands:
           key: node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
+
   notify_status:
     steps:
       - slack/notify:
@@ -156,6 +158,14 @@ jobs:
           path: ./terraform/envs/<< parameters.stage >>
           command: apply -auto-approve
       - notify_status
+
+  frontend:
+    working_directory: ~/project/frontend
+    docker:
+      - image: node:14
+    steps:
+      - checkout:
+          path: ~/project
 
 workflows:
   build:
