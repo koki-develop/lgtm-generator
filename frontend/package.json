@@ -2,7 +2,8 @@
   "name": "lgtm-generator-frontend",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "lint": "eslint --max-warnings 0 --ext .js,.ts,.tsx ."
   },
   "dependencies": {
     "next": "^11.0.1",
