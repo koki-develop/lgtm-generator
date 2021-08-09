@@ -46,6 +46,7 @@ func (c *SlackClient) PostMessage(msg *slack.Msg) error {
 		return errors.WithStack(err)
 	}
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", c.config.AccessToken))
+	req.Header.Set("Content-Type", "application/json")
 
 	httpresp, err := c.config.HTTPAPI.Do(req)
 	if err != nil {
