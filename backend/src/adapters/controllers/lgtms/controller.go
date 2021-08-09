@@ -29,6 +29,10 @@ func (ctrl *Controller) Index(ctx controllers.Context) {
 
 	lgtms, err := ctrl.config.LGTMsUsecase.FindAll(&ipt)
 	if err != nil {
+		if errors.Is(err, entities.ErrResourceNotFound) {
+			ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeResourceNotFound, errors.WithStack(err))
+			return
+		}
 		ctrl.config.Renderer.InternalServerError(ctx, errors.WithStack(err))
 		return
 	}

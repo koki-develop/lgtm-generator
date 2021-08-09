@@ -7,6 +7,8 @@ type ErrCode string
 const (
 	ErrCodeUnsupportedImageFormat ErrCode = "UNSUPPORTED_IMAGE_FORMAT"
 
+	ErrCodeResourceNotFound = "RESOURCE_NOT_FOUND"
+
 	ErrCodeInvalidParameter   ErrCode = "INVALID_PARAMETER"
 	ErrCodeInvalidJSON        ErrCode = "INVALID_JSON"
 	ErrCodeInvalidContentType ErrCode = "INVALID_CONTENT_TYPE"
@@ -24,6 +26,6 @@ const (
 var (
 	ErrUnsupportedImageFormat = errors.New("unsupported image format")
 	ErrInvalidReportType      = errors.New("invalid report type")
-	ErrNotFound               = errors.New("not found")
+	ErrResourceNotFound       = errors.New("resource not found")
 	ErrInvalidParameter       = errors.New("invalid parameter")
 )

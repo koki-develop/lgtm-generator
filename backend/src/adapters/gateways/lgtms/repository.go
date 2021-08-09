@@ -34,7 +34,7 @@ func (repo *Repository) Find(id string) (*entities.LGTM, error) {
 		return nil, errors.WithStack(err)
 	}
 	if len(lgtms) == 0 {
-		return nil, errors.WithStack(entities.ErrNotFound)
+		return nil, errors.WithStack(entities.ErrResourceNotFound)
 	}
 
 	return lgtms[0], nil

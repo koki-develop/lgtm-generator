@@ -26,7 +26,7 @@ func (uc *Usecase) Create(ipt *entities.ReportCreateInput) (*entities.Report, er
 	}
 
 	if _, err := uc.config.LGTMsRepository.Find(ipt.LGTMID); err != nil {
-		if errors.Is(err, entities.ErrNotFound) {
+		if errors.Is(err, entities.ErrResourceNotFound) {
 			return nil, errors.WithStack(entities.ErrInvalidParameter)
 		}
 		return nil, errors.WithStack(err)
