@@ -57,9 +57,15 @@ functions:
       entryPoint:
         - "/var/task/build/api"
     events:
+      # health check
       - http:
           method: get
           path: /v1/h
+
+      # images
+      - http:
+          method: options
+          path: /v1/images
       - http:
           method: get
           path: /v1/images
@@ -67,6 +73,11 @@ functions:
             parameters:
               querystrings:
                 q: true
+
+      # lgtms
+      - http:
+          method: options
+          path: /v1/lgtms
       - http:
           method: get
           path: /v1/lgtms
@@ -77,6 +88,10 @@ functions:
       - http:
           method: post
           path: /v1/lgtms
+      # reports
+      - http:
+          method: options
+          path: /v1/reports
       - http:
           method: post
           path: /v1/reports
