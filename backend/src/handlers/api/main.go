@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -43,7 +44,10 @@ func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 func init() {
 	r := gin.Default()
 
-	s := infrastructures.NewSlackClient(&infrastructures.SlackClientConfig{AccessToken: os.Getenv("SLACK_ACCESS_TOKEN")})
+	s := infrastructures.NewSlackClient(&infrastructures.SlackClientConfig{
+		AccessToken: os.Getenv("SLACK_ACCESS_TOKEN"),
+		HTTPAPI:     http.DefaultClient,
+	})
 	rdr := infrastructures.NewRenderer(&infrastructures.RendererConfig{SlackAPI: s})
 	imgse := infrastructures.NewGoogleImageSearchEngine(&infrastructures.GoogleImageSearchEngineConfig{
 		APIKey:         os.Getenv("GOOGLE_API_KEY"),
