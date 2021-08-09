@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   docker: circleci/docker@1.6.0
-  jq: circleci/jq@2.2.0
   slack: circleci/slack@4.4.2
 
 commands:
@@ -69,7 +68,11 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - jq/install
+      - run:
+          name: install required commands
+          command: |
+            yum -y update
+            yum -y install jq
       - go_mod_download
       - run:
           name: test
@@ -86,7 +89,11 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - jq/install
+      - run:
+          name: install required commands
+          command: |
+            yum -y update
+            yum -y install jq
       - aws_setup
       - docker/install-docker:
           version: v19.03.14
