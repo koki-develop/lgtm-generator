@@ -139,6 +139,31 @@ jobs:
           command: plan
       - notify_status
 
+  backend_terraform_apply:
+    working_directory: ~/project/backend
+    parameters:
+      stage:
+        type: string
+    docker:
+      - image: hashicorp/terraform:1.0.4
+    steps:
+      - checkout:
+          path: ~/project
+      - run:
+          name: install required commands
+          command: |
+            apk --update add \
+              jq \
+              curl
+      - aws_setup
+      - terraform:
+          path: ./terraform/envs/<< parameters.stage >>
+          command: init
+      - terraform:
+          path: ./terraform/envs/<< parameters.stage >>
+          command: apply -auto-approve
+      - notify_status
+
 workflows:
   build:
     jobs:
@@ -158,5 +183,11 @@ workflows:
 
       # deploy
       - backend_deploy:
+          name: backend_deploy_dev
           stage: dev
-          requires: [approval_deploy_dev]
+          requires:
+            - approval_deploy_dev
+      - backend_terraform_apply:
+          stage: dev
+          requires:
+            - backend_deploy_dev
