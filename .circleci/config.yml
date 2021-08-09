@@ -100,6 +100,11 @@ jobs:
       - image: hashicorp/terraform:1.0.4
     steps:
       - checkout
+      - run:
+          name: install required commands
+          command: |
+            apk --update add \
+              curl
       - aws_setup
       - terraform/init:
           path: ./terraform/envs/<< parameters.stage >>
