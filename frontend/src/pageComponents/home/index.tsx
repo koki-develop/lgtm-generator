@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Lgtm } from '../../types/lgtm';
 import { ApiClient } from '../../lib/apiClient';
+import urlJoin from 'url-join';
 
 const Home: React.VFC = () => {
   const [lgtms, setLgtms] = useState<Lgtm[]>([]);
@@ -13,7 +14,10 @@ const Home: React.VFC = () => {
     <div>
       {lgtms.map(lgtm => (
         <div key={lgtm.id}>
-          <p>{lgtm.id}</p>
+          <img
+            src={`${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, lgtm.id)}`}
+            style={{ width: 300 }}
+          />
         </div>
       ))}
     </div>
