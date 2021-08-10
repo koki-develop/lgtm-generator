@@ -31,8 +31,8 @@ func (c *CORS) Apply(ctx controllers.Context) {
 	// FIXME: validate origin
 
 	ctx.Header("Access-Control-Allow-Origin", strings.Join(c.config.AllowOrigins, ","))
-	ctx.Header("Access-Control-Allow-Methods", strings.Join([]string{"GET", "POST", "OPTIONS"}, ","))
-	ctx.Header("Access-Control-Allow-Headers", strings.Join([]string{"Origin", "Content-Length", "Content-Type"}, ","))
+	ctx.Header("Access-Control-Allow-Methods", strings.Join(c.config.AllowMethods, ","))
+	ctx.Header("Access-Control-Allow-Headers", strings.Join(c.config.AllowHeaders, ","))
 
 	if req.Method == "OPTIONS" {
 		c.config.Renderer.NoContent(ctx)
