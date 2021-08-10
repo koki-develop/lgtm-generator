@@ -9,12 +9,12 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	ginadapter "github.com/awslabs/aws-lambda-go-api-proxy/gin"
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
 	healthctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/health"
 	imgsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/images"
 	lgtmsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/lgtms"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/middlewares/cors"
 	rptsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/reports"
 	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
 	lgtmsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/lgtms"
@@ -42,29 +42,8 @@ func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 	return ginLambda.ProxyWithContext(ctx, req)
 }
 
-func corsConfig() cors.Config {
-	cfg := cors.Config{
-		AllowOrigins: []string{},
-		AllowMethods: []string{"GET", "POST", "OPTIONS"},
-		AllowHeaders: []string{"Origin", "Content-Length", "Content-Type", "Accept-Encoding"},
-	}
-
-	stg := os.Getenv("STAGE")
-	switch stg {
-	case "dev":
-		cfg.AllowOrigins = []string{"http://localhost"}
-	case "prod":
-		cfg.AllowOrigins = []string{"https://*"} // FIXME: 適切に設定
-	default:
-		panic(fmt.Sprintf("unknown stage: %s", stg))
-	}
-
-	return cfg
-}
-
 func init() {
 	r := gin.Default()
-	r.Use(cors.New(corsConfig()))
 
 	s := infrastructures.NewSlackClient(&infrastructures.SlackClientConfig{
 		AccessToken: os.Getenv("SLACK_ACCESS_TOKEN"),
@@ -111,6 +90,24 @@ func init() {
 		LGTMsRepository:   lgtmsrepo,
 		Notifier:          n,
 	})
+
+	{
+		cfg := &cors.Config{
+			Renderer:     rdr,
+			AllowOrigins: []string{},
+			AllowMethods: []string{"GET", "POST", "OPTIONS"},
+			AllowHeaders: []string{"Origin", "Content-Length", "Content-Type", "Accept-Encoding"},
+		}
+		stg := os.Getenv("STAGE")
+		switch stg {
+		case "dev":
+			cfg.AllowOrigins = []string{"http://localhost:3000"}
+		default:
+			panic(fmt.Sprintf("unknown stage: %s", stg))
+		}
+		cors := cors.New(cfg)
+		r.Use(withContext(cors.Apply))
+	}
 
 	v1 := r.Group("/v1")
 	{
