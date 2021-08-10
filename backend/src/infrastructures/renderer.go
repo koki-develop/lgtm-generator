@@ -31,6 +31,10 @@ func (rdr *Renderer) Created(ctx controllers.Context, obj interface{}) {
 	ctx.JSON(http.StatusCreated, obj)
 }
 
+func (rdr *Renderer) NoContent(ctx controllers.Context) {
+	ctx.Status(http.StatusNoContent)
+}
+
 func (rdr *Renderer) BadRequest(ctx controllers.Context, code entities.ErrCode, err error) {
 	fmt.Printf("error: %+v\n", err)
 	ctx.JSON(http.StatusBadRequest, map[string]string{

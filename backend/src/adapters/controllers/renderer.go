@@ -7,6 +7,8 @@ type Renderer interface {
 	OK(ctx Context, obj interface{})
 	// 201
 	Created(ctx Context, obj interface{})
+	// 204
+	NoContent(ctx Context)
 	// 400
 	BadRequest(ctx Context, code entities.ErrCode, err error)
 	// 500
