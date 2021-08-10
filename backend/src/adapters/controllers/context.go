@@ -1,6 +1,7 @@
 package controllers
 
 type Context interface {
+	Next()
 	Abort()
 	JSON(code int, obj interface{})
 	Status(code int)
