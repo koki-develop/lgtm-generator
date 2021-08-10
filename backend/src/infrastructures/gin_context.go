@@ -1,6 +1,8 @@
 package infrastructures
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,4 +14,8 @@ func NewContextFromGin(ctx *gin.Context) *GinContext {
 	return &GinContext{
 		Context: ctx,
 	}
+}
+
+func (ctx *GinContext) GetRequest() *http.Request {
+	return ctx.Context.Request
 }
