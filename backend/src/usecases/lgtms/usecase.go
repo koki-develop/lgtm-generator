@@ -20,15 +20,20 @@ func NewUsecase(cfg *UsecaseConfig) *Usecase {
 }
 
 func (uc *Usecase) FindAll(ipt *entities.LGTMsFindAllInput) (entities.LGTMs, error) {
+	var lmt int64 = 100
+	if ipt.Limit != nil && *ipt.Limit >= 0 {
+		lmt = *ipt.Limit
+	}
+
 	if ipt.After != "" {
-		lgtms, err := uc.config.LGTMsRepository.FindAllAfter(ipt.After)
+		lgtms, err := uc.config.LGTMsRepository.FindAllAfter(ipt.After, lmt)
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
 		return lgtms, nil
 	}
 
-	lgtms, err := uc.config.LGTMsRepository.FindAll()
+	lgtms, err := uc.config.LGTMsRepository.FindAll(lmt)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}

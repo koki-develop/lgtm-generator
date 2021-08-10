@@ -23,6 +23,7 @@ type LGTM struct {
 type LGTMs []*LGTM
 
 type LGTMsFindAllInput struct {
+	Limit *int64 `form:"limit"`
 	After string `form:"after"`
 }
 

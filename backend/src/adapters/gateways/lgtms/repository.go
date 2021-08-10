@@ -40,17 +40,17 @@ func (repo *Repository) Find(id string) (*entities.LGTM, error) {
 	return lgtms[0], nil
 }
 
-func (repo *Repository) FindAll() (entities.LGTMs, error) {
+func (repo *Repository) FindAll(limit int64) (entities.LGTMs, error) {
 	var lgtms entities.LGTMs
 
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
-	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(20).All(&lgtms); err != nil {
+	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(limit).All(&lgtms); err != nil {
 		return nil, errors.WithStack(err)
 	}
 	return lgtms, nil
 }
 
-func (repo *Repository) FindAllAfter(id string) (entities.LGTMs, error) {
+func (repo *Repository) FindAllAfter(id string, limit int64) (entities.LGTMs, error) {
 	lgtm, err := repo.Find(id)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -62,7 +62,7 @@ func (repo *Repository) FindAllAfter(id string) (entities.LGTMs, error) {
 
 	var lgtms entities.LGTMs
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
-	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(20).StartFrom(key).All(&lgtms); err != nil {
+	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(limit).StartFrom(key).All(&lgtms); err != nil {
 		return nil, errors.WithStack(err)
 	}
 	return lgtms, nil

@@ -6,7 +6,7 @@ import (
 
 type LGTMsRepository interface {
 	Find(id string) (*entities.LGTM, error)
-	FindAll() (entities.LGTMs, error)
-	FindAllAfter(id string) (entities.LGTMs, error)
+	FindAll(limit int64) (entities.LGTMs, error)
+	FindAllAfter(id string, limit int64) (entities.LGTMs, error)
 	Create(src []byte, contentType string) (*entities.LGTM, error)
 }
