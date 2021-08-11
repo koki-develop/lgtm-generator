@@ -96,11 +96,11 @@ jobs:
           version: 19.03.14
       - yarn_install
       - run:
-          name: create secrets.yml
+          name: create .env
           command: |
-            echo "googleApiKey: ${GOOGLE_API_KEY}"                               >> secrets.yml
-            echo "googleCustomSearchEngineId: ${GOOGLE_CUSTOM_SEARCH_ENGINE_ID}" >> secrets.yml
-            echo "slackAccessToken: ${APP_SLACK_ACCESS_TOKEN}"                   >> secrets.yml
+            echo "GOOGLE_API_KEY=${GOOGLE_API_KEY}"                                 >> .env
+            echo "GOOGLE_CUSTOM_SEARCH_ENGINE_ID=${GOOGLE_CUSTOM_SEARCH_ENGINE_ID}" >> .env
+            echo "SLACK_ACCESS_TOKEN=${APP_SLACK_ACCESS_TOKEN}"                     >> .env
       - run:
           name: deploy
           command: yarn run deploy --stage << parameters.stage >>
