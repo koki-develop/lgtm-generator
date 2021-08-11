@@ -9,6 +9,13 @@ plugins:
 custom:
   product: ${self:service}
   prefix: ${self:custom.product}-${self:provider.stage}
+  dynamodb:
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
 
 provider:
   name: aws
