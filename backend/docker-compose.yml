@@ -11,7 +11,7 @@ services:
       - .:/app
       - go_mod:/go/pkg/mod
     environment:
-      STAGE: dev
+      STAGE: local
     env_file: .env
 
 volumes:

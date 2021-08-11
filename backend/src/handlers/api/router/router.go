@@ -86,6 +86,8 @@ func New() *gin.Engine {
 		}
 		stg := os.Getenv("STAGE")
 		switch stg {
+		case "local":
+			cfg.AllowOrigins = []string{"http://localhost:3000"}
 		case "dev":
 			cfg.AllowOrigins = []string{"http://localhost:3000"}
 		default:
