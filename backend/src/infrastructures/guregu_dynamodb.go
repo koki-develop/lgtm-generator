@@ -1,7 +1,10 @@
 package infrastructures
 
 import (
+	"os"
+
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/guregu/dynamo"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways"
@@ -18,7 +21,14 @@ type GureguDynamoDBUpdate dynamo.Update
  */
 
 func NewGureguDynamoDB() *GureguDynamoDB {
-	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String("us-east-1")}))
+	cfg := &aws.Config{Region: aws.String("us-east-1")}
+
+	if os.Getenv("STAGE") == "local" {
+		cfg.Endpoint = aws.String("http://dynamodb:8000")
+		cfg.Credentials = credentials.NewStaticCredentials("DUMMY_AWS_ACCESS_KEY_ID", "DUMMY_AWS_SECRET_ACCESS_KEY", "")
+	}
+
+	sess := session.Must(session.NewSession(cfg))
 	return (*GureguDynamoDB)(dynamo.New(sess))
 }
 
