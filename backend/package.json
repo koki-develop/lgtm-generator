@@ -7,6 +7,7 @@
     "remove": "serverless remove --verbose"
   },
   "devDependencies": {
-    "serverless": "^2.52.1"
+    "serverless": "^2.52.1",
+    "serverless-dynamodb-local": "^0.2.40"
   }
 }
