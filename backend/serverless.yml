@@ -3,6 +3,9 @@ service: lgtm-generator-backend
 frameworkVersion: "2"
 useDotenv: true
 
+plugins:
+  - serverless-dynamodb-local
+
 custom:
   product: ${self:service}
   prefix: ${self:custom.product}-${self:provider.stage}
