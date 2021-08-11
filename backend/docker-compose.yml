@@ -13,6 +13,8 @@ services:
     environment:
       STAGE: local
     env_file: .env
+    depends_on:
+      - dynamodb
 
   dynamodb:
     command: yarn run sls dynamodb start
