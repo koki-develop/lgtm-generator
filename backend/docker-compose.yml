@@ -17,7 +17,7 @@ services:
       - dynamodb
 
   dynamodb:
-    command: yarn run sls dynamodb start
+    command: yarn run sls dynamodb start --stage local
     ports:
       - 8000:8000
     build:
