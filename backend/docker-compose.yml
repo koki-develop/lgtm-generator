@@ -2,7 +2,7 @@ version: '3'
 
 services:
   api:
-    command: go run ./src/handlers/api/local/main.go
+    command: go run github.com/cosmtrek/air
     image: lambci/lambda:build-go1.x
     working_dir: /app
     ports:
