@@ -21,7 +21,6 @@ vendor
 *.out
 
 /node_modules/
-/secrets.yml
 /.env
 
 # Created by https://www.toptal.com/developers/gitignore/api/terraform
