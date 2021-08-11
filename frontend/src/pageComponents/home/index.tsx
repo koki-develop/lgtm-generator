@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Lgtm } from '../../types/lgtm';
-import { ApiClient } from '../../lib/apiClient';
-import LgtmCard from '../../components/lgtmCard';
+import { Lgtm } from '~/types/lgtm';
+import { ApiClient } from '~/lib/apiClient';
+import LgtmCardList from './lgtmCardList';
 
 const Home: React.VFC = () => {
   const [lgtms, setLgtms] = useState<Lgtm[]>([]);
@@ -12,12 +12,7 @@ const Home: React.VFC = () => {
 
   return (
     <div>
-      {lgtms.map(lgtm => (
-        <LgtmCard
-          key={lgtm.id}
-          lgtm={lgtm}
-        />
-      ))}
+      <LgtmCardList items={lgtms} />
     </div>
   );
 };

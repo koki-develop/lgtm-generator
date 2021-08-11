@@ -1,12 +1,12 @@
 import React from 'react';
-import { Lgtm } from '../types/lgtm';
+import { Lgtm } from '~/types/lgtm';
 import urlJoin from 'url-join';
 
-type LgtmCardProps = {
+type LgtmCardListItemProps = {
   lgtm: Lgtm;
 };
 
-const LgtmCard: React.VFC<LgtmCardProps> = (props: LgtmCardProps) => {
+const LgtmCardListItem: React.VFC<LgtmCardListItemProps> = (props: LgtmCardListItemProps) => {
   return (
     <img
       src={`${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.lgtm.id)}`}
@@ -16,4 +16,4 @@ const LgtmCard: React.VFC<LgtmCardProps> = (props: LgtmCardProps) => {
   );
 };
 
-export default LgtmCard;
+export default LgtmCardListItem;

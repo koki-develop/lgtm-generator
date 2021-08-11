@@ -1,6 +1,6 @@
 import axios from 'axios';
 import urlJoin from 'url-join';
-import { Lgtm } from '../types/lgtm';
+import { Lgtm } from '~/types/lgtm';
 
 type LgtmRaw = {
   id: string;
