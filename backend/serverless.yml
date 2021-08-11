@@ -11,7 +11,7 @@ custom:
   prefix: ${self:custom.product}-${self:provider.stage}
   dynamodb:
     stages:
-      - dev
+      - local
     start:
       port: 8000
       inMemory: true

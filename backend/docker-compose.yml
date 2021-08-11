@@ -14,5 +14,18 @@ services:
       STAGE: local
     env_file: .env
 
+  dynamodb:
+    command: yarn run sls dynamodb start
+    ports:
+      - 8000:8000
+    build:
+      context: .
+      dockerfile: ./containers/dynamodb/Dockerfile
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+
 volumes:
   go_mod:
+  dynamodb_data:
+  node_modules:
