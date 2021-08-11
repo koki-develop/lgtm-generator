@@ -12,10 +12,10 @@ export default class Document extends NextDocument {
   render(): JSX.Element {
     return (
       <Html>
-        <Head/>
+        <Head />
         <body>
-          <Main/>
-          <NextScript/>
+          <Main />
+          <NextScript />
         </body>
       </Html>
     );
@@ -28,7 +28,7 @@ Document.getInitialProps = async (ctx: DocumentContext) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props}/>),
+      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
     });
 
   const initialProps = await NextDocument.getInitialProps(ctx);

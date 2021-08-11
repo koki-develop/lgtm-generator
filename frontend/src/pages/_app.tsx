@@ -8,7 +8,7 @@ const App: React.VFC<AppProps> = ({ Component, pageProps }: AppProps) => {
   }, []);
 
   return (
-    <Component {...pageProps}/>
+    <Component {...pageProps} />
   );
 };
 
