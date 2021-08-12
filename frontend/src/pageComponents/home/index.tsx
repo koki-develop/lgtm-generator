@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Layout from '~/layout';
 import { Lgtm } from '~/types/lgtm';
 import { ApiClient } from '~/lib/apiClient';
 import LgtmCardList from './lgtmCardList';
@@ -11,9 +12,9 @@ const Home: React.VFC = () => {
   }, []);
 
   return (
-    <div>
+    <Layout>
       <LgtmCardList items={lgtms} />
-    </div>
+    </Layout>
   );
 };
 
