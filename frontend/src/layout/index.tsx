@@ -1,7 +1,9 @@
 import React from 'react';
 import Header from './header';
+import Footer from './footer';
 import {
   Box,
+  Container,
   CssBaseline,
   ThemeProvider,
 } from '@material-ui/core';
@@ -24,7 +26,10 @@ const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
     <Box>
       <CssBaseline />
       <Header />
-      {props.children}
+      <Container component='main'>
+        {props.children}
+      </Container>
+      <Footer />
     </Box>
   );
 };

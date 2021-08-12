@@ -8,6 +8,10 @@ export const theme = createTheme({
           color: 'inherit',
           textDecoration: 'none',
         },
+        ul: {
+          listStyle: 'none',
+          padding: 0,
+        },
       },
     },
   },
