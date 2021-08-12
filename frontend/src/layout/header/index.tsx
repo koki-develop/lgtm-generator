@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     logo: {
       fontFamily: 'ArchivoBlack',
-      fontSize: 30,
-      [theme.breakpoints.down('sm')]: {
-        fontSize: 24,
+      fontSize: theme.typography.h4.fontSize,
+      [theme.breakpoints.down('xs')]: {
+        fontSize: theme.typography.h5.fontSize,
       },
     },
   }),
