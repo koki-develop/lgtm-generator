@@ -7,6 +7,10 @@ export const theme = createTheme({
         a: {
           color: 'inherit',
           textDecoration: 'none',
+          transition: '0.15s',
+          '&:hover': {
+            opacity: 0.6,
+          },
         },
         ul: {
           listStyle: 'none',
