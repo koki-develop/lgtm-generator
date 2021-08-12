@@ -2,9 +2,11 @@ package infrastructures
 
 import (
 	"bytes"
+	"os"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
@@ -27,7 +29,14 @@ type S3Config struct {
 }
 
 func NewS3(cfg *S3Config) *S3 {
-	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String("us-east-1")}))
+	awscfg := &aws.Config{Region: aws.String("us-east-1")}
+	if os.Getenv("STAGE") == "local" {
+		awscfg.Endpoint = aws.String("http://bucket:9000")
+		awscfg.Credentials = credentials.NewStaticCredentials("DUMMY_AWS_ACCESS_KEY_ID", "DUMMY_AWS_SECRET_ACCESS_KEY", "")
+		awscfg.S3ForcePathStyle = aws.Bool(true)
+	}
+
+	sess := session.Must(session.NewSession(awscfg))
 	return &S3{
 		api:      s3.New(sess),
 		uploader: s3manager.NewUploader(sess),
@@ -36,10 +45,7 @@ func NewS3(cfg *S3Config) *S3 {
 }
 
 func (c *S3) Save(path, contentType string, data []byte) error {
-	sess := session.Must(session.NewSession(&aws.Config{Region: aws.String("us-east-1")}))
-	u := s3manager.NewUploader(sess)
-
-	if _, err := u.Upload(&s3manager.UploadInput{
+	if _, err := c.uploader.Upload(&s3manager.UploadInput{
 		Body:        bytes.NewReader(data),
 		Bucket:      aws.String(c.config.Bucket),
 		Key:         aws.String(path),
