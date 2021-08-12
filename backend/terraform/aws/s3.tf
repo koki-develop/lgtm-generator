@@ -14,8 +14,8 @@ resource "aws_s3_bucket_policy" "lgtms" {
 data "aws_iam_policy_document" "lgtms_bucket_policy" {
   statement {
     principals {
-      type        = "*"
-      identifiers = ["*"]
+      type        = "AWS"
+      identifiers = [aws_cloudfront_origin_access_identity.lgtms.iam_arn]
     }
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.lgtms.arn}/*"]
