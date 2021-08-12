@@ -22,8 +22,8 @@ services:
       - 9000:9000
       - 9001:9001
     environment:
-      MINIO_ROOT_USER: root
-      MINIO_ROOT_PASSWORD: password
+      MINIO_ROOT_USER: DUMMY_AWS_ACCESS_KEY_ID
+      MINIO_ROOT_PASSWORD: DUMMY_AWS_SECRET_ACCESS_KEY
     entrypoint: sh
     command: |
       -c "
