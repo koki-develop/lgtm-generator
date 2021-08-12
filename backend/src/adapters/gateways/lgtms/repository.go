@@ -41,7 +41,7 @@ func (repo *Repository) Find(id string) (*entities.LGTM, error) {
 }
 
 func (repo *Repository) FindAll(limit int64) (entities.LGTMs, error) {
-	var lgtms entities.LGTMs
+	lgtms := entities.LGTMs{}
 
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
 	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(limit).All(&lgtms); err != nil {
@@ -60,7 +60,7 @@ func (repo *Repository) FindAllAfter(id string, limit int64) (entities.LGTMs, er
 		return nil, errors.WithStack(err)
 	}
 
-	var lgtms entities.LGTMs
+	lgtms := entities.LGTMs{}
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
 	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(limit).StartFrom(key).All(&lgtms); err != nil {
 		return nil, errors.WithStack(err)
