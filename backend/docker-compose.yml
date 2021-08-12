@@ -17,7 +17,6 @@ services:
       - dynamodb
 
   bucket:
-    command: server /data --console-address ':9001'
     image: minio/minio:latest
     ports:
       - 9000:9000
@@ -25,6 +24,12 @@ services:
     environment:
       MINIO_ROOT_USER: root
       MINIO_ROOT_PASSWORD: password
+    entrypoint: sh
+    command: |
+      -c "
+      mkdir -p /export/lgtm-generator-backend-local-lgtms
+      /usr/bin/minio server /export --console-address ':9001'
+      "
 
   dynamodb:
     image: lgtm-generator-backend-dynamodb
