@@ -21,14 +21,14 @@ type GureguDynamoDBUpdate dynamo.Update
  */
 
 func NewGureguDynamoDB() *GureguDynamoDB {
-	cfg := &aws.Config{Region: aws.String("us-east-1")}
+	awscfg := &aws.Config{Region: aws.String("us-east-1")}
 
 	if os.Getenv("STAGE") == "local" {
-		cfg.Endpoint = aws.String("http://dynamodb:8000")
-		cfg.Credentials = credentials.NewStaticCredentials("DUMMY_AWS_ACCESS_KEY_ID", "DUMMY_AWS_SECRET_ACCESS_KEY", "")
+		awscfg.Endpoint = aws.String("http://dynamodb:8000")
+		awscfg.Credentials = credentials.NewStaticCredentials("DUMMY_AWS_ACCESS_KEY_ID", "DUMMY_AWS_SECRET_ACCESS_KEY", "")
 	}
 
-	sess := session.Must(session.NewSession(cfg))
+	sess := session.Must(session.NewSession(awscfg))
 	return (*GureguDynamoDB)(dynamo.New(sess))
 }
 
