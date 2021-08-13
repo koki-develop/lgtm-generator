@@ -15,6 +15,7 @@ services:
     env_file: .env
     depends_on:
       - dynamodb
+      - bucket
 
   bucket:
     image: minio/minio:latest
