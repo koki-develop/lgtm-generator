@@ -7,7 +7,20 @@ import {
   CssBaseline,
   ThemeProvider,
 } from '@material-ui/core';
+import {
+  createStyles,
+  makeStyles,
+  Theme,
+} from '@material-ui/core/styles';
 import { theme } from './theme';
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    main: {
+      padding: theme.spacing(2),
+    },
+  }),
+);
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -22,11 +35,17 @@ const Root: React.VFC<LayoutProps> = (props: LayoutProps) => {
 };
 
 const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
+  const classes = useStyles();
+
   return (
     <Box>
       <CssBaseline />
       <Header />
-      <Container component='main'>
+      <Container
+        className={classes.main}
+        component='main'
+        maxWidth='md'
+      >
         {props.children}
       </Container>
       <Footer />
