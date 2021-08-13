@@ -1,5 +1,6 @@
 export const Routes = {
   home: '/',
+  precaution: '/precaution',
   privacyPolicy: '/privacy',
 } as const;
 
