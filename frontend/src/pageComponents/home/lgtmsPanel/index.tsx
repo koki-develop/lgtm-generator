@@ -9,7 +9,8 @@ import Loading from '~/components/loading';
 import Modal from '~/components/modal';
 
 const LgtmsPanel: React.VFC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
   const [previewDataUrl, setPreviewDataUrl] = useState<string>();
 
@@ -18,24 +19,38 @@ const LgtmsPanel: React.VFC = () => {
   };
 
   const handleChangeFile = (file: File) => {
-    setLoading(true);
+    setLoadingImage(true);
     ImageFileReader.readAsDataUrl(file).then(dataUrl => {
-      setLoading(false);
+      setLoadingImage(false);
       setPreviewDataUrl(dataUrl);
       setOpenConfirmForm(true);
     });
   };
 
+  const handleConfirm = () => {
+    setUploading(true);
+    new Promise<void>(resolve => {
+      setTimeout(() => {
+        resolve();
+      }, 3000);
+    }).then(() => {
+      setUploading(false);
+      setOpenConfirmForm(false);
+    });
+  };
+
   return (
     <Box>
-      <Modal open={loading}>
+      <Modal open={loadingImage}>
         <Loading text='読込中' />
       </Modal>
       <UploadButton onChange={handleChangeFile} />
       <ConfirmForm
+        loading={uploading}
         previewDataUrl={previewDataUrl}
         open={openConfirmForm}
         onClose={handleCloseConfirmForm}
+        onConfirm={handleConfirm}
       />
     </Box>
   );

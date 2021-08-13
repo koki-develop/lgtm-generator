@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes } from '~/routes';
 import ModalCard from '~/components/modalCard';
 import ExternalLink from '~/components/externalLink';
+import LoadableButton from '~/components/loadableButton';
 import {
   Button,
   CardActions,
@@ -39,16 +40,23 @@ const useStyles = makeStyles((theme: Theme) =>
 type ConfirmFormProps = {
   previewDataUrl: string;
   open: boolean;
+  loading: boolean;
   onClose: () => void;
+  onConfirm: () => void;
 };
 
 const ConfirmForm: React.VFC<ConfirmFormProps> = (props: ConfirmFormProps) => {
   const classes = useStyles();
 
+  const handleClose = () => {
+    if (props.loading) return;
+    props.onClose();
+  };
+
   return (
     <ModalCard
       open={props.open}
-      onClose={props.onClose}
+      onClose={handleClose}
     >
       <CardContent className={classes.content}>
         <Typography>この画像で LGTM 画像を生成しますか？</Typography>
@@ -72,17 +80,20 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = (props: ConfirmFormProps) => {
         <Button
           fullWidth
           variant='contained'
-          onClick={props.onClose}
+          onClick={handleClose}
+          disabled={props.loading}
         >
           キャンセル
         </Button>
-        <Button
+        <LoadableButton
           fullWidth
           color='primary'
           variant='contained'
+          loading={props.loading}
+          onClick={props.onConfirm}
         >
           生成
-        </Button>
+        </LoadableButton>
       </CardActions>
     </ModalCard>
   );
