@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Layout from '~/layout';
-import { Lgtm } from '~/types/lgtm';
-import { ApiClient } from '~/lib/apiClient';
 import Tabs, { TabValue } from './tabs';
-import LgtmCardList from './lgtmCardList';
 import Field from '~/components/field';
+import LgtmsPanel from './lgtmsPanel';
+import SearchImagesPanel from './searchImagesPanel';
+import FavoritesPanel from './favoritesPanel';
 
 const Home: React.VFC = () => {
-  const [lgtms, setLgtms] = useState<Lgtm[]>([]);
-  const [tab, setTab] = useState<TabValue>(TabValue.lgtm);
+  const [tab, setTab] = useState<TabValue>(TabValue.lgtms);
 
   const handleChangeTab = (value: TabValue) => {
     setTab(value);
   };
-
-  useEffect(() => {
-    ApiClient.getLgtms().then(lgtms => setLgtms(lgtms));
-  }, []);
 
   return (
     <Layout>
@@ -27,8 +22,16 @@ const Home: React.VFC = () => {
         />
       </Field>
 
-      <Field>
-        <LgtmCardList items={lgtms} />
+      <Field hidden={tab !== TabValue.lgtms}>
+        <LgtmsPanel />
+      </Field>
+
+      <Field hidden={tab !== TabValue.searchImages}>
+        <SearchImagesPanel />
+      </Field>
+
+      <Field hidden={tab !== TabValue.favorites}>
+        <FavoritesPanel />
       </Field>
     </Layout>
   );

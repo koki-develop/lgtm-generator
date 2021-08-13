@@ -6,9 +6,9 @@ import {
 } from '@material-ui/core';
 
 export const TabValue = {
-  lgtm: 'lgtm',
-  searchImage: 'search_image',
-  favorite: 'favorite',
+  lgtms: 'lgtms',
+  searchImages: 'search_images',
+  favorites: 'favorites',
 } as const;
 
 export type TabValue = typeof TabValue[keyof typeof TabValue];
@@ -34,15 +34,15 @@ const Tabs: React.VFC<TabsProps> = (props: TabsProps) => {
       >
         <Tab
           label='LGTM'
-          value={TabValue.lgtm}
+          value={TabValue.lgtms}
         />
         <Tab
           label='画像検索'
-          value={TabValue.searchImage}
+          value={TabValue.searchImages}
         />
         <Tab
           label='お気に入り'
-          value={TabValue.favorite}
+          value={TabValue.favorites}
         />
       </MuiTabs>
     </Paper>
