@@ -2,6 +2,11 @@ import { createTheme } from '@material-ui/core';
 
 export const theme = createTheme({
   overrides: {
+    MuiButton: {
+      root: {
+        fontWeight: 'bold',
+      },
+    },
     MuiCssBaseline: {
       '@global': {
         a: {
