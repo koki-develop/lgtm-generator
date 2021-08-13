@@ -5,8 +5,11 @@ import {
 } from '@material-ui/core';
 import UploadButton from './uploadButton';
 import ConfirmForm from '../confirmForm';
+import Loading from '~/components/loading';
+import Modal from '~/components/modal';
 
 const LgtmsPanel: React.VFC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
   const [previewDataUrl, setPreviewDataUrl] = useState<string>();
 
@@ -15,7 +18,9 @@ const LgtmsPanel: React.VFC = () => {
   };
 
   const handleChangeFile = (file: File) => {
+    setLoading(true);
     ImageFileReader.readAsDataUrl(file).then(dataUrl => {
+      setLoading(false);
       setPreviewDataUrl(dataUrl);
       setOpenConfirmForm(true);
     });
@@ -23,6 +28,9 @@ const LgtmsPanel: React.VFC = () => {
 
   return (
     <Box>
+      <Modal open={loading}>
+        <Loading text='読込中' />
+      </Modal>
       <UploadButton onChange={handleChangeFile} />
       <ConfirmForm
         previewDataUrl={previewDataUrl}
