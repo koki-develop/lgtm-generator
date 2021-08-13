@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './header';
 import Footer from './footer';
+import ToastProvider from '~/contexts/toastProvider';
 import {
   Box,
   Container,
@@ -29,7 +30,9 @@ type LayoutProps = {
 const Root: React.VFC<LayoutProps> = (props: LayoutProps) => {
   return (
     <ThemeProvider theme={theme}>
-      <Layout {...props} />
+      <ToastProvider>
+        <Layout {...props} />
+      </ToastProvider>
     </ThemeProvider>
   );
 };

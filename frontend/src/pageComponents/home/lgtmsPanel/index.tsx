@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ImageFileReader } from '~/lib/imageFileReader';
+import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
 } from '@material-ui/core';
@@ -13,6 +14,7 @@ const LgtmsPanel: React.VFC = () => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
   const [previewDataUrl, setPreviewDataUrl] = useState<string>();
+  const { enqueueSuccess } = useToast();
 
   const handleCloseConfirmForm = () => {
     setOpenConfirmForm(false);
@@ -36,6 +38,7 @@ const LgtmsPanel: React.VFC = () => {
     }).then(() => {
       setUploading(false);
       setOpenConfirmForm(false);
+      enqueueSuccess('LGTM 画像を生成しました');
     });
   };
 
