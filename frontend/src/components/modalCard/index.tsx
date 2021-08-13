@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal, { ModalProps } from '~/components/modal';
+import Modal from '~/components/modal';
 import {
   Box,
   Card,
@@ -16,11 +16,6 @@ import {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    modal: {
-      alignItems: 'center',
-      display: 'flex',
-      justifyContent: 'center',
-    },
     closeIconContainer: {
       display: 'flex',
       justifyContent: 'flex-end',
@@ -33,26 +28,28 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-type ModalCardProps = ModalProps;
+type ModalCardProps = {
+  open: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
+};
 
 const ModalCard: React.VFC<ModalCardProps> = (props: ModalCardProps) => {
   const classes = useStyles();
-  const { children, ...modalProps } = props;
 
   return (
     <Modal
-      {...modalProps}
-      className={classes.modal}
+      open={props.open}
     >
-      <Container maxWidth='md'>
+      <Container maxWidth='sm'>
         <Card>
           <Box className={classes.closeIconContainer}>
             <CloseIcon
               className={classes.closeIcon}
-              onClick={() => props.onClose}
+              onClick={() => props.onClose()}
             />
           </Box>
-          {children}
+          {props.children}
         </Card>
       </Container>
     </Modal>

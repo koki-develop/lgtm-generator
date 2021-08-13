@@ -5,15 +5,31 @@ import {
   Modal as MuiModal,
   ModalProps as MuiModalProps,
 } from '@material-ui/core';
+import {
+  createStyles,
+  makeStyles,
+} from '@material-ui/core/styles';
 
-export type ModalProps = MuiModalProps;
+const useStyles = makeStyles(() =>
+  createStyles({
+    modal: {
+      alignItems: 'center',
+      display: 'flex',
+      justifyContent: 'center',
+    },
+  }),
+);
+
+type ModalProps = MuiModalProps;
 
 const Modal: React.VFC<ModalProps> = (props: ModalProps) => {
+  const classes = useStyles();
   const { children, ...modalProps } = props;
 
   return (
     <MuiModal
       {...modalProps}
+      className={classes.modal}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{ timeout: 200 }}
