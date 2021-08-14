@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { ApiClient } from '~/lib/apiClient';
 import { ImageFileReader } from '~/lib/imageFileReader';
+import { DataUrl } from '~/lib/dataUrl';
 import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
@@ -14,6 +16,7 @@ const LgtmsPanel: React.VFC = () => {
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
   const [previewDataUrl, setPreviewDataUrl] = useState<string>();
+  const [previewContentType, setPreviewContentType] = useState<string>();
   const { enqueueSuccess } = useToast();
 
   const handleCloseConfirmForm = () => {
@@ -25,17 +28,15 @@ const LgtmsPanel: React.VFC = () => {
     ImageFileReader.readAsDataUrl(file).then(dataUrl => {
       setLoadingImage(false);
       setPreviewDataUrl(dataUrl);
+      setPreviewContentType(file.type);
       setOpenConfirmForm(true);
     });
   };
 
   const handleConfirm = () => {
     setUploading(true);
-    new Promise<void>(resolve => {
-      setTimeout(() => {
-        resolve();
-      }, 3000);
-    }).then(() => {
+    const base64 = new DataUrl(previewDataUrl).toBase64();
+    ApiClient.createLgtm(new DataUrl(previewDataUrl).toBase64(), previewContentType).then(() => {
       setUploading(false);
       setOpenConfirmForm(false);
       enqueueSuccess('LGTM 画像を生成しました');
