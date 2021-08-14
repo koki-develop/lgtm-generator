@@ -14,7 +14,7 @@ custom:
       - local
     start:
       port: 8000
-      inMemory: true
+      dbPath: ./data
       migrate: true
 
 provider:
