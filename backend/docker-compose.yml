@@ -1,22 +1,6 @@
 version: '3'
 
 services:
-  api:
-    command: go run github.com/cosmtrek/air
-    image: lambci/lambda:build-go1.x
-    working_dir: /app
-    ports:
-      - 8080:8080
-    volumes:
-      - .:/app
-      - go_mod:/go/pkg/mod
-    environment:
-      STAGE: local
-    env_file: .env
-    depends_on:
-      - dynamodb
-      - bucket
-
   bucket:
     image: minio/minio:latest
     ports:
@@ -48,7 +32,6 @@ services:
       - dynamodb_data:/app/data
 
 volumes:
-  go_mod:
   bucket_data:
   dynamodb_data:
   node_modules:
