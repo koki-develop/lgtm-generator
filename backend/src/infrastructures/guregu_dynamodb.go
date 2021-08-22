@@ -24,7 +24,7 @@ func NewGureguDynamoDB() *GureguDynamoDB {
 	awscfg := &aws.Config{Region: aws.String("us-east-1")}
 
 	if os.Getenv("STAGE") == "local" {
-		awscfg.Endpoint = aws.String("http://dynamodb:8000")
+		awscfg.Endpoint = aws.String("http://localhost:8000")
 		awscfg.Credentials = credentials.NewStaticCredentials("DUMMY_AWS_ACCESS_KEY_ID", "DUMMY_AWS_SECRET_ACCESS_KEY", "")
 	}
 

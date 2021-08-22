@@ -31,7 +31,7 @@ type S3Config struct {
 func NewS3(cfg *S3Config) *S3 {
 	awscfg := &aws.Config{Region: aws.String("us-east-1")}
 	if os.Getenv("STAGE") == "local" {
-		awscfg.Endpoint = aws.String("http://bucket:9000")
+		awscfg.Endpoint = aws.String("http://localhost:9000")
 		awscfg.Credentials = credentials.NewStaticCredentials("DUMMY_AWS_ACCESS_KEY_ID", "DUMMY_AWS_SECRET_ACCESS_KEY", "")
 		awscfg.S3ForcePathStyle = aws.Bool(true)
 	}
