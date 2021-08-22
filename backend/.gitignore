@@ -23,6 +23,7 @@ vendor
 /node_modules/
 /.env
 /.dynamodb
+/tmp/
 
 # Created by https://www.toptal.com/developers/gitignore/api/terraform
 # Edit at https://www.toptal.com/developers/gitignore?templates=terraform
