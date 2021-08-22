@@ -36,7 +36,7 @@ services:
 
   dynamodb:
     image: lgtm-generator-backend-dynamodb
-    command: yarn run sls dynamodb start --stage local
+    command: yarn run serverless dynamodb start --stage local
     ports:
       - 8000:8000
     build:
