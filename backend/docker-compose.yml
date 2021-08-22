@@ -43,7 +43,9 @@ services:
       context: .
       dockerfile: ./containers/dynamodb/Dockerfile
     volumes:
-      - ./serverless.yml:/app/serverless.yml
+      - .:/app
+      - node_modules:/app/node_modules
+      - dynamodb_data:/app/data
 
 volumes:
   go_mod:
