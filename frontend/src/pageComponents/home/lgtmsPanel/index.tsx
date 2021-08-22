@@ -35,7 +35,6 @@ const LgtmsPanel: React.VFC = () => {
 
   const handleConfirm = () => {
     setUploading(true);
-    const base64 = new DataUrl(previewDataUrl).toBase64();
     ApiClient.createLgtm(new DataUrl(previewDataUrl).toBase64(), previewContentType).then(() => {
       setUploading(false);
       setOpenConfirmForm(false);
