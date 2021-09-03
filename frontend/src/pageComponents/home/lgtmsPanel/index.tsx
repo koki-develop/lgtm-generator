@@ -14,6 +14,8 @@ import ConfirmForm from '../confirmForm';
 import Loading from '~/components/loading';
 import Modal from '~/components/modal';
 
+const perPage = 20;
+
 const LgtmsPanel: React.VFC = React.memo(() => {
   const [lgtms, setLgtms] = useState<Lgtm[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
@@ -47,7 +49,7 @@ const LgtmsPanel: React.VFC = React.memo(() => {
   };
 
   useEffect(() => {
-    ApiClient.getLgtms().then(lgtms => {
+    ApiClient.getLgtms(perPage).then(lgtms => {
       setLgtms(lgtms);
     });
   }, []);

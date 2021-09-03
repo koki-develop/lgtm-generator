@@ -8,9 +8,9 @@ type LgtmRaw = {
 };
 
 export class ApiClient {
-  public static async getLgtms(after?: string): Promise<Lgtm[]> {
+  public static async getLgtms(limit: number, after?: string): Promise<Lgtm[]> {
     const endpoint = this.buildEndpoint('v1', 'lgtms');
-    const response = await axios.get<LgtmRaw[]>(endpoint, { params: { after, limit: 20 } });
+    const response = await axios.get<LgtmRaw[]>(endpoint, { params: { after, limit } });
     return response.data.map(this.lgtmFromRaw);
   }
 
