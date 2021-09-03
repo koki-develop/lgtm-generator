@@ -45,7 +45,7 @@ type ConfirmFormProps = {
   onConfirm: () => void;
 };
 
-const ConfirmForm: React.VFC<ConfirmFormProps> = (props: ConfirmFormProps) => {
+const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo((props: ConfirmFormProps) => {
   const classes = useStyles();
 
   const handleClose = () => {
@@ -97,6 +97,8 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = (props: ConfirmFormProps) => {
       </CardActions>
     </ModalCard>
   );
-};
+});
+
+ConfirmForm.displayName = 'ConfirmForm';
 
 export default ConfirmForm;

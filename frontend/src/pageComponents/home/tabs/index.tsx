@@ -18,7 +18,7 @@ type TabsProps = {
   onChange: (value: TabValue) => void;
 };
 
-const Tabs: React.VFC<TabsProps> = (props: TabsProps) => {
+const Tabs: React.VFC<TabsProps> = React.memo((props: TabsProps) => {
   const handleChangeValue = (_: React.ChangeEvent<unknown>, value: string) => {
     props.onChange(value as TabValue);
   };
@@ -47,6 +47,8 @@ const Tabs: React.VFC<TabsProps> = (props: TabsProps) => {
       </MuiTabs>
     </Paper>
   );
-};
+});
+
+Tabs.displayName = 'Tabs';
 
 export default Tabs;

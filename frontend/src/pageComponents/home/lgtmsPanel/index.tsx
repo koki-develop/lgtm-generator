@@ -14,7 +14,7 @@ import ConfirmForm from '../confirmForm';
 import Loading from '~/components/loading';
 import Modal from '~/components/modal';
 
-const LgtmsPanel: React.VFC = () => {
+const LgtmsPanel: React.VFC = React.memo(() => {
   const [lgtms, setLgtms] = useState<Lgtm[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
@@ -84,6 +84,8 @@ const LgtmsPanel: React.VFC = () => {
         </Grid>
     </Box>
   );
-};
+});
+
+LgtmsPanel.displayName = 'LgtmsPanel';
 
 export default LgtmsPanel;

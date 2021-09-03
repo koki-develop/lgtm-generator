@@ -33,7 +33,7 @@ type UploadButtonProps = {
   onChange: (file: File) => void;
 };
 
-const UploadButton: React.VFC<UploadButtonProps> = (props: UploadButtonProps) => {
+const UploadButton: React.VFC<UploadButtonProps> = React.memo((props: UploadButtonProps) => {
   const classes = useStyles();
 
   const inputFileRef = React.createRef<HTMLInputElement>();
@@ -70,6 +70,8 @@ const UploadButton: React.VFC<UploadButtonProps> = (props: UploadButtonProps) =>
       アップロード
     </Fab>
   );
-};
+});
+
+UploadButton.displayName = 'UploadButton';
 
 export default UploadButton;

@@ -72,7 +72,7 @@ type LgtmCardProps = {
   lgtm: Lgtm;
 };
 
-const LgtmCard: React.VFC<LgtmCardProps> = (props: LgtmCardProps) => {
+const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => {
   const classes = useStyles();
 
   return (
@@ -111,6 +111,8 @@ const LgtmCard: React.VFC<LgtmCardProps> = (props: LgtmCardProps) => {
       </CardActions>
     </Card>
   );
-};
+});
+
+LgtmCard.displayName = 'LgtmCard';
 
 export default LgtmCard;
