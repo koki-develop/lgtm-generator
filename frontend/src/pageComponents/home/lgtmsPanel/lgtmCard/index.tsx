@@ -48,9 +48,11 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: '100%',
     },
     copyButton: {
+      borderRight: 'none !important',
     },
     favoriteButton: {
       backgroundColor: '#fff',
+      borderRight: 'none !important',
       color: pink['700'],
       '&:hover': {
         backgroundColor: pink['50'],
@@ -85,23 +87,23 @@ const LgtmCard: React.VFC<LgtmCardProps> = (props: LgtmCardProps) => {
         </Box>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <ButtonGroup className={classes.buttonGroup}>
+        <ButtonGroup
+          className={classes.buttonGroup}
+          color='primary'
+          variant='contained'
+        >
           <Button
             className={classes.copyButton}
-            color='primary'
-            variant='contained'
           >
             <FileCopyOutlinedIcon fontSize='small' />
           </Button>
           <Button
             className={classes.favoriteButton}
-            variant='contained'
           >
             <FavoriteBorderIcon fontSize='small' />
           </Button>
           <Button
             className={classes.reportButton}
-            variant='contained'
           >
             <FlagOutlinedIcon fontSize='small' />
           </Button>
