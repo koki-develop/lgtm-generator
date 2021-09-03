@@ -6,6 +6,7 @@ import { DataUrl } from '~/lib/dataUrl';
 import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
+  Grid,
 } from '@material-ui/core';
 import UploadButton from './uploadButton';
 import LgtmCard from './lgtmCard';
@@ -65,12 +66,22 @@ const LgtmsPanel: React.VFC = () => {
         onConfirm={handleConfirm}
       />
 
-      {lgtms.map(lgtm => (
-        <LgtmCard
-          key={lgtm.id}
-          lgtm={lgtm}
-        />
-      ))}
+      <Grid
+        container
+        spacing={2}
+      >
+        {lgtms.map(lgtm => (
+          <Grid
+            key={lgtm.id}
+            item
+            xs={3}
+          >
+            <LgtmCard
+              lgtm={lgtm}
+            />
+          </Grid>
+        ))}
+        </Grid>
     </Box>
   );
 };
