@@ -17,8 +17,11 @@ import { theme } from './theme';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      backgroundColor: theme.palette.primary.light,
+    },
     main: {
-      padding: theme.spacing(2),
+      paddingTop: theme.spacing(2),
     },
   }),
 );
@@ -41,13 +44,13 @@ const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
   const classes = useStyles();
 
   return (
-    <Box>
+    <Box className={classes.root}>
       <CssBaseline />
       <Header />
       <Container
         className={classes.main}
         component='main'
-        maxWidth='md'
+        maxWidth='lg'
       >
         {props.children}
       </Container>
