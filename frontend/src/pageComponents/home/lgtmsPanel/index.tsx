@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Lgtm } from '~/types/lgtm';
 import { ApiClient } from '~/lib/apiClient';
 import { ImageFileReader } from '~/lib/imageFileReader';
 import { DataUrl } from '~/lib/dataUrl';
@@ -7,11 +8,13 @@ import {
   Box,
 } from '@material-ui/core';
 import UploadButton from './uploadButton';
+import LgtmCard from './lgtmCard';
 import ConfirmForm from '../confirmForm';
 import Loading from '~/components/loading';
 import Modal from '~/components/modal';
 
 const LgtmsPanel: React.VFC = () => {
+  const [lgtms, setLgtms] = useState<Lgtm[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
@@ -42,6 +45,12 @@ const LgtmsPanel: React.VFC = () => {
     });
   };
 
+  useEffect(() => {
+    ApiClient.getLgtms().then(lgtms => {
+      setLgtms(lgtms);
+    });
+  }, []);
+
   return (
     <Box>
       <Modal open={loadingImage}>
@@ -55,6 +64,13 @@ const LgtmsPanel: React.VFC = () => {
         onClose={handleCloseConfirmForm}
         onConfirm={handleConfirm}
       />
+
+      {lgtms.map(lgtm => (
+        <LgtmCard
+          key={lgtm.id}
+          lgtm={lgtm}
+        />
+      ))}
     </Box>
   );
 };
