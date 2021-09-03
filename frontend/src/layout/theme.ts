@@ -1,6 +1,13 @@
 import { createTheme } from '@material-ui/core';
 
 export const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#1E90FF',
+      dark: '#0070DF',
+      light: '#E8EEF2',
+    },
+  },
   overrides: {
     MuiButton: {
       root: {
