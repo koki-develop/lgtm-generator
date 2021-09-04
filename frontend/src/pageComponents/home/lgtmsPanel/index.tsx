@@ -7,7 +7,6 @@ import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
   Button,
-  Grid,
 } from '@material-ui/core';
 import {
   createStyles,
@@ -15,7 +14,7 @@ import {
   Theme,
 } from '@material-ui/core/styles';
 import UploadButton from './uploadButton';
-import LgtmCard from '../lgtmCard';
+import LgtmCardList from '../lgtmCardList';
 import ConfirmForm from '../confirmForm';
 import Loading from '~/components/loading';
 import Modal from '~/components/modal';
@@ -103,22 +102,7 @@ const LgtmsPanel: React.VFC = React.memo(() => {
         onConfirm={handleConfirm}
       />
 
-      <Grid
-        container
-        spacing={2}
-      >
-        {lgtms.map(lgtm => (
-          <Grid
-            key={lgtm.id}
-            item
-            xs={6}
-            sm={4}
-            md={3}
-          >
-            <LgtmCard id={lgtm.id} />
-          </Grid>
-        ))}
-      </Grid>
+      <LgtmCardList ids={lgtms.map(lgtm => lgtm.id)} />
 
       <Box className={classes.moreButtonContainer}>
         {loading && <Loading />}

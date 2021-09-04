@@ -1,8 +1,13 @@
 import React from 'react';
+import { useRecoilValue } from 'recoil';
+import { favoriteIdsState } from '~/recoil/atoms';
+import LgtmCardList from '../lgtmCardList';
 
 const FavoritesPanel: React.VFC = React.memo(() => {
+  const favoriteIds = useRecoilValue(favoriteIdsState);
+
   return (
-    <div>favorites</div>
+    <LgtmCardList ids={favoriteIds} />
   );
 });
 
