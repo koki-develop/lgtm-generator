@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { favoriteIdsState } from '~/recoil/atoms';
 import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
@@ -32,6 +34,7 @@ import {
   orange,
   pink,
 } from '@material-ui/core/colors';
+import { DataStorage } from '~/lib/dataStorage';
 import urlJoin from 'url-join';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -93,16 +96,30 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type LgtmCardProps = {
   id: string;
-  favorite: boolean;
-  onFavorite: () => void;
-  onUnfavorite: () => void;
 };
 
 const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => {
   const classes = useStyles();
 
   const { enqueueSuccess } = useToast();
+  const [favoriteIds, setFavoriteIds] = useRecoilState(favoriteIdsState);
   const [copyButtonEl, setCopyButtonEl] = useState<HTMLButtonElement>();
+
+  const handleClickFavorite = () => {
+    const after = [props.id, ...favoriteIds];
+    setFavoriteIds(after);
+    DataStorage.saveFavoriteIds(after);
+  };
+
+  const handleClickUnfavorite = () => {
+    const after = favoriteIds.filter(id => id !== props.id);
+    setFavoriteIds(after);
+    DataStorage.saveFavoriteIds(after);
+  };
+
+  const favorited = useMemo(() => {
+    return favoriteIds.includes(props.id);
+  }, [favoriteIds]);
 
   const handleClickCopyButton = (e: React.MouseEvent<HTMLButtonElement>) => {
     setCopyButtonEl(e.currentTarget);
@@ -176,17 +193,17 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
           >
             <FileCopyOutlinedIcon fontSize='small' />
           </Button>
-          {props.favorite ? (
+          {favorited ? (
             <Button
               className={classes.unfavoriteButton}
-              onClick={props.onUnfavorite}
+              onClick={handleClickUnfavorite}
             >
               <FavoriteIcon fontSize='small' />
             </Button>
           ) : (
             <Button
               className={classes.favoriteButton}
-              onClick={props.onFavorite}
+              onClick={handleClickFavorite}
             >
               <FavoriteBorderIcon fontSize='small' />
             </Button>

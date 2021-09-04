@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { favoriteIdsState } from '~/recoil/atoms';
-import dynamic from 'next/dynamic';
 import { Lgtm } from '~/types/lgtm';
 import { ApiClient } from '~/lib/apiClient';
 import { ImageFileReader } from '~/lib/imageFileReader';
 import { DataUrl } from '~/lib/dataUrl';
-import { DataStorage } from '~/lib/dataStorage';
 import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
@@ -43,7 +39,6 @@ const LgtmsPanel: React.VFC = React.memo(() => {
   const classes = useStyles();
 
   const [lgtms, setLgtms] = useState<Lgtm[]>([]);
-  const [favoriteIds, setFavoriteIds] = useRecoilState(favoriteIdsState);
   const [uploading, setUploading] = useState<boolean>(false);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
@@ -75,18 +70,6 @@ const LgtmsPanel: React.VFC = React.memo(() => {
       setLgtms(prev => [lgtm, ...prev]);
       enqueueSuccess('LGTM 画像を生成しました');
     });
-  };
-
-  const handleFavoriteLgtm = (lgtm: Lgtm) => {
-    const after = [lgtm.id, ...favoriteIds];
-    setFavoriteIds(after);
-    DataStorage.saveFavoriteIds(after);
-  };
-
-  const handleUnfavoriteLgtm = (lgtm: Lgtm) => {
-    const after = favoriteIds.filter(id => id !== lgtm.id);
-    setFavoriteIds(after);
-    DataStorage.saveFavoriteIds(after);
   };
 
   const handleClickMore = () => {
@@ -132,12 +115,7 @@ const LgtmsPanel: React.VFC = React.memo(() => {
             sm={4}
             md={3}
           >
-            <LgtmCard
-              id={lgtm.id}
-              favorite={favoriteIds.includes(lgtm.id)}
-              onFavorite={() => handleFavoriteLgtm(lgtm)}
-              onUnfavorite={() => handleUnfavoriteLgtm(lgtm)}
-            />
+            <LgtmCard id={lgtm.id} />
           </Grid>
         ))}
       </Grid>
@@ -160,7 +138,4 @@ const LgtmsPanel: React.VFC = React.memo(() => {
 
 LgtmsPanel.displayName = 'LgtmsPanel';
 
-export default dynamic(
-  { loader: async () => LgtmsPanel },
-  { ssr: false },
-);
+export default LgtmsPanel;
