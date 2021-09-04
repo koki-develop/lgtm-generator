@@ -1,4 +1,5 @@
 import React from 'react';
+import { RecoilRoot } from 'recoil';
 import Header from './header';
 import Footer from './footer';
 import ToastProvider from '~/contexts/toastProvider';
@@ -33,11 +34,13 @@ type LayoutProps = {
 
 const Root: React.VFC<LayoutProps> = (props: LayoutProps) => {
   return (
-    <ThemeProvider theme={theme}>
-      <ToastProvider>
-        <Layout {...props} />
-      </ToastProvider>
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <ToastProvider>
+          <Layout {...props} />
+        </ToastProvider>
+      </ThemeProvider>
+    </RecoilRoot>
   );
 };
 

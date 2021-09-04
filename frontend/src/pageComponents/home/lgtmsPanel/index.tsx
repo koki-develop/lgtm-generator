@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { favoriteIdsState } from '~/recoil/atoms';
 import dynamic from 'next/dynamic';
 import { Lgtm } from '~/types/lgtm';
 import { ApiClient } from '~/lib/apiClient';
@@ -41,7 +43,7 @@ const LgtmsPanel: React.VFC = React.memo(() => {
   const classes = useStyles();
 
   const [lgtms, setLgtms] = useState<Lgtm[]>([]);
-  const [favoriteIds, setFavoriteIds] = useState<string[]>(DataStorage.getFavoriteIds());
+  const [favoriteIds, setFavoriteIds] = useRecoilState(favoriteIdsState);
   const [uploading, setUploading] = useState<boolean>(false);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);

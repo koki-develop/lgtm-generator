@@ -33,7 +33,6 @@ import {
   pink,
 } from '@material-ui/core/colors';
 import urlJoin from 'url-join';
-import { Lgtm } from '~/types/lgtm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
