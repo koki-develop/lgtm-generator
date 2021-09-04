@@ -17,7 +17,7 @@ import {
   Theme,
 } from '@material-ui/core/styles';
 import UploadButton from './uploadButton';
-import LgtmCard from './lgtmCard';
+import LgtmCard from '../lgtmCard';
 import ConfirmForm from '../confirmForm';
 import Loading from '~/components/loading';
 import Modal from '~/components/modal';
