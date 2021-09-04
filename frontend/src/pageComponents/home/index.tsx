@@ -22,17 +22,11 @@ const Home: React.VFC = () => {
         />
       </Field>
 
-      <Field hidden={tab !== TabValue.lgtms}>
-        <LgtmsPanel />
-      </Field>
+      <LgtmsPanel show={tab === TabValue.lgtms} />
 
-      <Field hidden={tab !== TabValue.searchImages}>
-        <SearchImagesPanel />
-      </Field>
+      <SearchImagesPanel show={tab === TabValue.searchImages} />
 
-      <Field hidden={tab !== TabValue.favorites}>
-        <FavoritesPanel />
-      </Field>
+      <FavoritesPanel show={tab === TabValue.favorites} />
     </Layout>
   );
 };

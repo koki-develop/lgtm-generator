@@ -1,8 +1,15 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 
-const SearchImagesPanel: React.VFC = React.memo(() => {
+type SearchImagesPanelProps = {
+  show: boolean;
+};
+
+const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: SearchImagesPanelProps) => {
   return (
-    <div>search images</div>
+    <Box hidden={!props.show}>
+      search images
+    </Box>
   );
 });
 

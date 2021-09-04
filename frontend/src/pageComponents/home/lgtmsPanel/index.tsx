@@ -34,7 +34,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const perPage = 2;
 
-const LgtmsPanel: React.VFC = React.memo(() => {
+type LgtmsPanelProps = {
+  show: boolean;
+};
+
+const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProps) => {
   const classes = useStyles();
 
   const [lgtms, setLgtms] = useState<Lgtm[]>([]);
@@ -89,7 +93,7 @@ const LgtmsPanel: React.VFC = React.memo(() => {
   }, []);
 
   return (
-    <Box>
+    <Box hidden={!props.show}>
       <Modal open={loadingImage}>
         <Loading text='読込中' />
       </Modal>
