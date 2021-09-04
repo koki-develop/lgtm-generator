@@ -111,7 +111,9 @@ const LgtmsPanel: React.VFC = React.memo(() => {
           <Grid
             key={lgtm.id}
             item
-            xs={3}
+            xs={6}
+            sm={4}
+            md={3}
           >
             <LgtmCard
               lgtm={lgtm}
