@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { Lgtm } from '~/types/lgtm';
 import { ApiClient } from '~/lib/apiClient';
 import { ImageFileReader } from '~/lib/imageFileReader';
 import { DataUrl } from '~/lib/dataUrl';
+import { DataStorage } from '~/lib/dataStorage';
 import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
@@ -39,7 +41,7 @@ const LgtmsPanel: React.VFC = React.memo(() => {
   const classes = useStyles();
 
   const [lgtms, setLgtms] = useState<Lgtm[]>([]);
-  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<string[]>(DataStorage.getFavoriteIds());
   const [uploading, setUploading] = useState<boolean>(false);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
@@ -74,11 +76,15 @@ const LgtmsPanel: React.VFC = React.memo(() => {
   };
 
   const handleFavoriteLgtm = (lgtm: Lgtm) => {
-    setFavoriteIds([lgtm.id, ...favoriteIds]);
+    const after = [lgtm.id, ...favoriteIds];
+    setFavoriteIds(after);
+    DataStorage.saveFavoriteIds(after);
   };
 
   const handleUnfavoriteLgtm = (lgtm: Lgtm) => {
-    setFavoriteIds(favoriteIds.filter(id => id !== lgtm.id));
+    const after = favoriteIds.filter(id => id !== lgtm.id);
+    setFavoriteIds(after);
+    DataStorage.saveFavoriteIds(after);
   };
 
   const handleClickMore = () => {
@@ -152,4 +158,7 @@ const LgtmsPanel: React.VFC = React.memo(() => {
 
 LgtmsPanel.displayName = 'LgtmsPanel';
 
-export default LgtmsPanel;
+export default dynamic(
+  { loader: async () => LgtmsPanel },
+  { ssr: false },
+);
