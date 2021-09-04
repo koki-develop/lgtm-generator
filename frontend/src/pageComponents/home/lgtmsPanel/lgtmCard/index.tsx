@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Button,
@@ -6,7 +6,15 @@ import {
   Card,
   CardActions,
   CardContent,
+  ClickAwayListener,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Popper,
 } from '@material-ui/core';
+import CopyToClipBoard from 'react-copy-to-clipboard';
 import {
   FavoriteBorder as FavoriteBorderIcon,
   FileCopyOutlined as FileCopyOutlinedIcon,
@@ -30,11 +38,13 @@ const useStyles = makeStyles((theme: Theme) =>
     img: {
       border: '1px solid',
       borderColor: grey['A100'],
-      height: 150,
+      maxHeight: 140,
       maxWidth: '100%',
     },
     imgContainer: {
+      alignItems: 'center',
       display: 'flex',
+      height: 150,
       justifyContent: 'center',
     },
     cardContent: {
@@ -46,6 +56,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     buttonGroup: {
       maxWidth: '100%',
+    },
+    copyListItem: {
+      textAlign: 'center',
+      padding: theme.spacing(1),
     },
     copyButton: {
       borderRight: 'none !important',
@@ -75,6 +89,22 @@ type LgtmCardProps = {
 const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => {
   const classes = useStyles();
 
+  const [copyButtonEl, setCopyButtonEl] = useState<HTMLButtonElement>();
+
+  const handleClickCopyButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setCopyButtonEl(e.currentTarget);
+  };
+
+  const handleClickOutsideCopyList = () => {
+    setCopyButtonEl(undefined);
+  };
+
+  const handleClickCopyLink = () => {
+    // FIXME: トースト表示
+    console.log('Copied!');
+    setCopyButtonEl(undefined);
+  };
+
   return (
     <Card>
       <CardContent className={classes.cardContent}>
@@ -87,6 +117,42 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
         </Box>
       </CardContent>
       <CardActions className={classes.cardActions}>
+        <Popper
+          transition
+          open={Boolean(copyButtonEl)}
+          anchorEl={copyButtonEl}
+          placement='top'
+        >
+          <ClickAwayListener onClickAway={handleClickOutsideCopyList}>
+            <Paper>
+              <List disablePadding>
+                <ListItem
+                  className={classes.copyListItem}
+                  button
+                  onClick={handleClickCopyLink}
+                >
+                  <CopyToClipBoard
+                    text={`![LGTM](${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.lgtm.id)})`}
+                  >
+                    <ListItemText secondary='Markdown' />
+                  </CopyToClipBoard>
+                </ListItem>
+                <Divider />
+                <ListItem
+                  className={classes.copyListItem}
+                  button
+                  onClick={handleClickCopyLink}
+                >
+                  <CopyToClipBoard
+                    text={`<img src="${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.lgtm.id)}" alt="LGTM" />`}
+                  >
+                    <ListItemText secondary='HTML' />
+                  </CopyToClipBoard>
+                </ListItem>
+              </List>
+            </Paper>
+          </ClickAwayListener>
+        </Popper>
         <ButtonGroup
           className={classes.buttonGroup}
           color='primary'
@@ -94,6 +160,7 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
         >
           <Button
             className={classes.copyButton}
+            onClick={handleClickCopyButton}
           >
             <FileCopyOutlinedIcon fontSize='small' />
           </Button>
