@@ -39,6 +39,7 @@ const LgtmsPanel: React.VFC = React.memo(() => {
   const classes = useStyles();
 
   const [lgtms, setLgtms] = useState<Lgtm[]>([]);
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
   const [uploading, setUploading] = useState<boolean>(false);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
@@ -70,6 +71,14 @@ const LgtmsPanel: React.VFC = React.memo(() => {
       setLgtms(prev => [lgtm, ...prev]);
       enqueueSuccess('LGTM 画像を生成しました');
     });
+  };
+
+  const handleFavoriteLgtm = (lgtm: Lgtm) => {
+    setFavoriteIds([lgtm.id, ...favoriteIds]);
+  };
+
+  const handleUnfavoriteLgtm = (lgtm: Lgtm) => {
+    setFavoriteIds(favoriteIds.filter(id => id !== lgtm.id));
   };
 
   const handleClickMore = () => {
@@ -116,7 +125,10 @@ const LgtmsPanel: React.VFC = React.memo(() => {
             md={3}
           >
             <LgtmCard
-              lgtm={lgtm}
+              id={lgtm.id}
+              favorite={favoriteIds.includes(lgtm.id)}
+              onFavorite={() => handleFavoriteLgtm(lgtm)}
+              onUnfavorite={() => handleUnfavoriteLgtm(lgtm)}
             />
           </Grid>
         ))}

@@ -18,6 +18,7 @@ import {
 import CopyToClipBoard from 'react-copy-to-clipboard';
 import {
   FavoriteBorder as FavoriteBorderIcon,
+  Favorite as FavoriteIcon,
   FileCopyOutlined as FileCopyOutlinedIcon,
   FlagOutlined as FlagOutlinedIcon,
 } from '@material-ui/icons';
@@ -73,6 +74,14 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: pink['50'],
       },
     },
+    unfavoriteButton: {
+      backgroundColor: pink['100'],
+      borderRight: 'none !important',
+      color: pink['700'],
+      '&:hover': {
+        backgroundColor: pink['200'],
+      },
+    },
     reportButton: {
       backgroundColor: orange['500'],
       color: '#fff',
@@ -84,7 +93,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type LgtmCardProps = {
-  lgtm: Lgtm;
+  id: string;
+  favorite: boolean;
+  onFavorite: () => void;
+  onUnfavorite: () => void;
 };
 
 const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => {
@@ -112,7 +124,7 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
         <Box className={classes.imgContainer}>
           <img
             className={classes.img}
-            src={urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.lgtm.id)}
+            src={urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)}
             alt="LGTM"
           />
         </Box>
@@ -133,7 +145,7 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
                   onClick={handleClickCopyLink}
                 >
                   <CopyToClipBoard
-                    text={`![LGTM](${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.lgtm.id)})`}
+                    text={`![LGTM](${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)})`}
                   >
                     <ListItemText secondary='Markdown' />
                   </CopyToClipBoard>
@@ -145,7 +157,7 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
                   onClick={handleClickCopyLink}
                 >
                   <CopyToClipBoard
-                    text={`<img src="${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.lgtm.id)}" alt="LGTM" />`}
+                    text={`<img src="${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)}" alt="LGTM" />`}
                   >
                     <ListItemText secondary='HTML' />
                   </CopyToClipBoard>
@@ -165,11 +177,21 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
           >
             <FileCopyOutlinedIcon fontSize='small' />
           </Button>
-          <Button
-            className={classes.favoriteButton}
-          >
-            <FavoriteBorderIcon fontSize='small' />
-          </Button>
+          {props.favorite ? (
+            <Button
+              className={classes.unfavoriteButton}
+              onClick={props.onUnfavorite}
+            >
+              <FavoriteIcon fontSize='small' />
+            </Button>
+          ) : (
+            <Button
+              className={classes.favoriteButton}
+              onClick={props.onFavorite}
+            >
+              <FavoriteBorderIcon fontSize='small' />
+            </Button>
+          )}
           <Button
             className={classes.reportButton}
           >
