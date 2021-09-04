@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
   Button,
@@ -89,6 +90,7 @@ type LgtmCardProps = {
 const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => {
   const classes = useStyles();
 
+  const { enqueueSuccess } = useToast();
   const [copyButtonEl, setCopyButtonEl] = useState<HTMLButtonElement>();
 
   const handleClickCopyButton = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -100,8 +102,7 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
   };
 
   const handleClickCopyLink = () => {
-    // FIXME: トースト表示
-    console.log('Copied!');
+    enqueueSuccess('クリップボードにコピーしました');
     setCopyButtonEl(undefined);
   };
 
