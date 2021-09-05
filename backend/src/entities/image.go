@@ -1,6 +1,8 @@
 package entities
 
 import (
+	"strings"
+
 	"github.com/pkg/errors"
 )
 
@@ -16,7 +18,7 @@ type ImagesSearchInput struct {
 }
 
 func (ipt *ImagesSearchInput) Valid() error {
-	if ipt.Query == "" {
+	if strings.TrimSpace(ipt.Query) == "" {
 		return errors.New("query is empty")
 	}
 	return nil

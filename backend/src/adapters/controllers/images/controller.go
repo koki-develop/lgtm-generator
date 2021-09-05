@@ -28,6 +28,10 @@ func (ctrl *Controller) Search(ctx controllers.Context) {
 
 	imgs, err := ctrl.config.ImagesUsecase.Search(&ipt)
 	if err != nil {
+		if errors.Is(err, entities.ErrInvalidParameter) {
+			ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidParameter, errors.WithStack(err))
+			return
+		}
 		ctrl.config.Renderer.InternalServerError(ctx, errors.WithStack(err))
 		return
 	}

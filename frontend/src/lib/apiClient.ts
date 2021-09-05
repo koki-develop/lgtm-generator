@@ -1,6 +1,7 @@
 import axios from 'axios';
 import urlJoin from 'url-join';
 import { Lgtm } from '~/types/lgtm';
+import { Image } from '~/types/image';
 
 type LgtmRaw = {
   id: string;
@@ -19,6 +20,12 @@ export class ApiClient {
     const body = { base64, content_type: contentType };
     const response = await axios.post<LgtmRaw>(endpoint, body);
     return this.lgtmFromRaw(response.data);
+  }
+
+  public static async searchImages(q: string): Promise<Image[]> {
+    const endpoint = this.buildEndpoint('v1', 'images');
+    const response = await axios.get<Image[]>(endpoint, { params: { q } });
+    return response.data;
   }
 
   private static buildEndpoint(...paths: string[]): string {
