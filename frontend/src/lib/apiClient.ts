@@ -15,9 +15,16 @@ export class ApiClient {
     return response.data.map(this.lgtmFromRaw);
   }
 
-  public static async createLgtm(base64: string, contentType: string): Promise<Lgtm> {
+  public static async createLgtmFromBase64(base64: string, contentType: string): Promise<Lgtm> {
     const endpoint = this.buildEndpoint('v1', 'lgtms');
     const body = { base64, content_type: contentType };
+    const response = await axios.post<LgtmRaw>(endpoint, body);
+    return this.lgtmFromRaw(response.data);
+  }
+
+  public static async createLgtmFromUrl(url: string): Promise<Lgtm> {
+    const endpoint = this.buildEndpoint('v1', 'lgtms');
+    const body = { url };
     const response = await axios.post<LgtmRaw>(endpoint, body);
     return this.lgtmFromRaw(response.data);
   }

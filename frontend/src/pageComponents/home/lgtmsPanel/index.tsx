@@ -67,7 +67,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
 
   const handleConfirm = () => {
     setUploading(true);
-    ApiClient.createLgtm(new DataUrl(previewDataUrl).toBase64(), previewContentType).then(lgtm => {
+    ApiClient.createLgtmFromBase64(new DataUrl(previewDataUrl).toBase64(), previewContentType).then(lgtm => {
       setUploading(false);
       setOpenConfirmForm(false);
       setLgtms(prev => [lgtm, ...prev]);
@@ -100,7 +100,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
       <UploadButton onChange={handleChangeFile} />
       <ConfirmForm
         loading={uploading}
-        previewDataUrl={previewDataUrl}
+        previewSrc={previewDataUrl}
         open={openConfirmForm}
         onClose={handleCloseConfirmForm}
         onConfirm={handleConfirm}

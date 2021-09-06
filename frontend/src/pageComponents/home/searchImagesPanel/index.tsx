@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
   TextField,
@@ -14,6 +15,7 @@ import Loading from '~/components/loading';
 import { ApiClient } from '~/lib/apiClient';
 import { Image } from '~/types/image';
 import ImageCardList from './imageCardList';
+import ConfirmForm from '../confirmForm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,15 +32,19 @@ type SearchImagesPanelProps = {
 const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: SearchImagesPanelProps) => {
   const classes = useStyles();
 
+  const { enqueueSuccess } = useToast();
   const [query, setQuery] = useState<string>('');
   const [searching, setSearching] = useState<boolean>(false);
   const [images, setImages] = useState<Image[]>([]);
+  const [generating, setGenerating] = useState<boolean>(false);
+  const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
+  const [previewUrl, setPreviewUrl] = useState<string>('');
 
   const handleChangeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.currentTarget.value);
   };
 
-  const handleSubmit = () => {
+  const handleSearch = () => {
     setSearching(true);
     ApiClient.searchImages(query).then(images => {
       setImages(images);
@@ -46,9 +52,27 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
     });
   };
 
+  const handleClickImage = (image: Image) => {
+    setPreviewUrl(image.url);
+    setOpenConfirmForm(true);
+  };
+
+  const handleCloseConfirmForm = () => {
+    setOpenConfirmForm(false);
+  };
+
+  const handleConfirm = () => {
+    setGenerating(true);
+    ApiClient.createLgtmFromUrl(previewUrl).then(lgtm => {
+      setGenerating(false);
+      setOpenConfirmForm(false);
+      enqueueSuccess('LGTM 画像を生成しました');
+    });
+  };
+
   return (
     <Box hidden={!props.show}>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSearch}>
         <Field>
           <TextField
             className={classes.queryInput}
@@ -63,11 +87,19 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
       </Form>
 
       <Field>
+        <ConfirmForm
+          loading={generating}
+          previewSrc={previewUrl}
+          open={openConfirmForm}
+          onClose={handleCloseConfirmForm}
+          onConfirm={handleConfirm}
+        />
         {searching ? (
           <Loading />
         ) : (
           <ImageCardList
             images={images}
+            onClickImage={handleClickImage}
           />
         )}
       </Field>

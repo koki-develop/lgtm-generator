@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type ConfirmFormProps = {
-  previewDataUrl: string;
+  previewSrc: string;
   open: boolean;
   loading: boolean;
   onClose: () => void;
@@ -62,7 +62,7 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo((props: ConfirmFormP
         <Typography>この画像で LGTM 画像を生成しますか？</Typography>
         <img
           className={classes.img}
-          src={props.previewDataUrl}
+          src={props.previewSrc}
           alt='preview'
         />
         <Typography>

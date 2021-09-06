@@ -36,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type ImageCardProps = {
   image: Image;
+  onClick: () => void;
 };
 
 const ImageCard: React.VFC<ImageCardProps> = (props: ImageCardProps) => {
@@ -43,7 +44,7 @@ const ImageCard: React.VFC<ImageCardProps> = (props: ImageCardProps) => {
 
   return (
     <Card>
-      <CardActionArea>
+      <CardActionArea onClick={props.onClick}>
         <CardContent className={classes.cardContent}>
           <Box className={classes.imgContainer}>
             <img

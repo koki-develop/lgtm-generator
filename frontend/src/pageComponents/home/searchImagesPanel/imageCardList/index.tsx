@@ -5,6 +5,7 @@ import ImageCard from './imageCard';
 
 type ImageCardListProps = {
   images: Image[];
+  onClickImage: (image: Image) => void;
 };
 
 const ImageCardList: React.VFC<ImageCardListProps> = (props: ImageCardListProps) => {
@@ -24,6 +25,7 @@ const ImageCardList: React.VFC<ImageCardListProps> = (props: ImageCardListProps)
           <ImageCard
             key={image.url}
             image={image}
+            onClick={() => props.onClickImage(image)}
           />
         </Grid>
       ))}
