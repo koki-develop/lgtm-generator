@@ -180,6 +180,7 @@ workflows:
       # build
       - backend_build
       - backend_terraform_plan:
+          name: backend_terraform_plan_dev
           stage: dev
       - frontend_build
 
@@ -188,9 +189,13 @@ workflows:
           type: approval
           requires:
             - backend_build
+            - backend_terraform_plan_dev
+            - frontend_build
       - slack/on-hold:
           requires:
             - backend_build
+            - backend_terraform_plan_dev
+            - frontend_build
 
       # deploy
       - backend_deploy:
