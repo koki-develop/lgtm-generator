@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
@@ -52,10 +52,10 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
     });
   };
 
-  const handleClickImage = (image: Image) => {
+  const handleClickImage = useCallback((image: Image) => {
     setPreviewUrl(image.url);
     setOpenConfirmForm(true);
-  };
+  }, [images]);
 
   const handleCloseConfirmForm = () => {
     setOpenConfirmForm(false);

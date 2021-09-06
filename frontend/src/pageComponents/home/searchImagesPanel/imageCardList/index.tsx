@@ -8,7 +8,7 @@ type ImageCardListProps = {
   onClickImage: (image: Image) => void;
 };
 
-const ImageCardList: React.VFC<ImageCardListProps> = (props: ImageCardListProps) => {
+const ImageCardList: React.VFC<ImageCardListProps> = React.memo((props: ImageCardListProps) => {
   return (
     <Grid
       container
@@ -31,6 +31,8 @@ const ImageCardList: React.VFC<ImageCardListProps> = (props: ImageCardListProps)
       ))}
     </Grid>
   );
-};
+});
+
+ImageCardList.displayName = 'ImageCardList';
 
 export default ImageCardList;
