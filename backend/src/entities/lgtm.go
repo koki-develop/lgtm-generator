@@ -1,6 +1,7 @@
 package entities
 
 import (
+	"net/url"
 	"regexp"
 	"strings"
 	"time"
@@ -50,12 +51,15 @@ func (ipt *LGTMCreateInput) Valid() error {
 			return errors.New("base64 is empty")
 		}
 		if _, err := utils.Base64Decode(*ipt.Base64); err != nil {
-			return errors.New("invalid base64 string")
+			return errors.New("invalid base64 format")
 		}
 	}
 	if ipt.URL != nil {
 		if strings.TrimSpace(*ipt.URL) == "" {
 			return errors.New("url is empty")
+		}
+		if _, err := url.ParseRequestURI(*ipt.URL); err != nil {
+			return errors.New("invalid url format")
 		}
 	}
 	return nil
