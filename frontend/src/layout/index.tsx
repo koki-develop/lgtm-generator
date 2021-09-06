@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
+import Head from 'next/head';
 import {
   useSetRecoilState,
   RecoilRoot,
@@ -35,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 type LayoutProps = {
   children: React.ReactNode;
+  title?: string;
 };
 
 const Root: React.VFC<LayoutProps> = (props: LayoutProps) => {
@@ -51,6 +53,15 @@ const Root: React.VFC<LayoutProps> = (props: LayoutProps) => {
 
 const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
   const classes = useStyles();
+  const { title } = props;
+
+  const pageTitle = useMemo(() => {
+    const baseTitle = 'LGTM Generator';
+    if (!title) {
+      return baseTitle;
+    }
+    return `${title} | ${baseTitle}`;
+  }, [title]);
 
   const setFavoriteIds = useSetRecoilState(favoriteIdsState);
 
@@ -60,6 +71,9 @@ const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
 
   return (
     <Box className={classes.root}>
+      <Head>
+        <title>{pageTitle}</title>
+      </Head>
       <CssBaseline />
       <Header />
       <Container
