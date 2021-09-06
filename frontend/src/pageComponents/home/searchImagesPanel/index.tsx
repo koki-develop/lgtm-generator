@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
+import { lgtmsState } from '~/recoil/atoms';
 import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
@@ -33,6 +35,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
   const classes = useStyles();
 
   const { enqueueSuccess } = useToast();
+  const setLgtms = useSetRecoilState(lgtmsState);
   const [query, setQuery] = useState<string>('');
   const [searching, setSearching] = useState<boolean>(false);
   const [images, setImages] = useState<Image[]>([]);
@@ -66,6 +69,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
     ApiClient.createLgtmFromUrl(previewUrl).then(lgtm => {
       setGenerating(false);
       setOpenConfirmForm(false);
+      setLgtms(prev => [lgtm, ...prev]);
       enqueueSuccess('LGTM 画像を生成しました');
     });
   };
