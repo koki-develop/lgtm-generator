@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { lgtmsState } from '~/recoil/atoms';
 import { Lgtm } from '~/types/lgtm';
-import { ApiClient } from '~/lib/apiClient';
+import {
+  ApiClient,
+  UnsupportedImageFormatError,
+} from '~/lib/apiClient';
 import { ImageFileReader } from '~/lib/imageFileReader';
 import { DataUrl } from '~/lib/dataUrl';
 import { useToast } from '~/contexts/toastProvider';
@@ -51,7 +54,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
   const [previewContentType, setPreviewContentType] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [showMore, setShowMore] = useState<boolean>(false);
-  const { enqueueSuccess } = useToast();
+  const { enqueueSuccess, enqueueError } = useToast();
 
   const handleCloseConfirmForm = () => {
     setOpenConfirmForm(false);
@@ -70,10 +73,20 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
   const handleConfirm = () => {
     setUploading(true);
     ApiClient.createLgtmFromBase64(new DataUrl(previewDataUrl).toBase64(), previewContentType).then(lgtm => {
-      setUploading(false);
       setOpenConfirmForm(false);
       setLgtms(prev => [lgtm, ...prev]);
       enqueueSuccess('LGTM 画像を生成しました');
+    }).catch(error => {
+      switch (error.constructor) {
+        case UnsupportedImageFormatError:
+          enqueueError('サポートしていない画像形式です');
+          break;
+        default:
+          enqueueError('LGTM 画像の生成に失敗しました');
+          break;
+      }
+    }).finally(() => {
+      setUploading(false);
     });
   };
 

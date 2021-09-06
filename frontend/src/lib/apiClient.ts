@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { CustomError } from 'ts-custom-error';
 import urlJoin from 'url-join';
 import { Lgtm } from '~/types/lgtm';
 import { Image } from '~/types/image';
@@ -8,6 +9,8 @@ type LgtmRaw = {
   created_at: string;
 };
 
+export class UnsupportedImageFormatError extends CustomError {}
+
 export class ApiClient {
   public static async getLgtms(limit: number, after?: string): Promise<Lgtm[]> {
     const endpoint = this.buildEndpoint('v1', 'lgtms');
@@ -16,23 +19,35 @@ export class ApiClient {
   }
 
   public static async createLgtmFromBase64(base64: string, contentType: string): Promise<Lgtm> {
-    const endpoint = this.buildEndpoint('v1', 'lgtms');
-    const body = { base64, content_type: contentType };
-    const response = await axios.post<LgtmRaw>(endpoint, body);
-    return this.lgtmFromRaw(response.data);
+    return this.createLgtm({ base64, content_type: contentType });
   }
 
   public static async createLgtmFromUrl(url: string): Promise<Lgtm> {
-    const endpoint = this.buildEndpoint('v1', 'lgtms');
-    const body = { url };
-    const response = await axios.post<LgtmRaw>(endpoint, body);
-    return this.lgtmFromRaw(response.data);
+    return this.createLgtm({ url });
   }
 
   public static async searchImages(q: string): Promise<Image[]> {
     const endpoint = this.buildEndpoint('v1', 'images');
     const response = await axios.get<Image[]>(endpoint, { params: { q } });
     return response.data;
+  }
+
+  private static async createLgtm(body: { base64: string, content_type: string } | { url: string }): Promise<Lgtm> {
+    const endpoint = this.buildEndpoint('v1', 'lgtms');
+    const validateStatus = (status: number) => {
+      return status >= 200 && status < 300 || status === 400;
+    };
+    const response = await axios.post<LgtmRaw>(endpoint, body, { validateStatus });
+    if (response.status === 201) {
+      return this.lgtmFromRaw(response.data);
+    }
+    switch (response.data.code) {
+      case 'UNSUPPORTED_IMAGE_FORMAT':
+        throw new UnsupportedImageFormatError();
+        break;
+      default:
+        throw new Error(response.data.code);
+    }
   }
 
   private static buildEndpoint(...paths: string[]): string {

@@ -14,7 +14,10 @@ import {
 import Field from '~/components/field';
 import Form from '~/components/form';
 import Loading from '~/components/loading';
-import { ApiClient } from '~/lib/apiClient';
+import {
+  ApiClient,
+  UnsupportedImageFormatError,
+} from '~/lib/apiClient';
 import { Image } from '~/types/image';
 import ImageCardList from './imageCardList';
 import ConfirmForm from '../confirmForm';
@@ -34,7 +37,7 @@ type SearchImagesPanelProps = {
 const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: SearchImagesPanelProps) => {
   const classes = useStyles();
 
-  const { enqueueSuccess } = useToast();
+  const { enqueueSuccess, enqueueError } = useToast();
   const setLgtms = useSetRecoilState(lgtmsState);
   const [query, setQuery] = useState<string>('');
   const [searching, setSearching] = useState<boolean>(false);
@@ -67,10 +70,20 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
   const handleConfirm = () => {
     setGenerating(true);
     ApiClient.createLgtmFromUrl(previewUrl).then(lgtm => {
-      setGenerating(false);
       setOpenConfirmForm(false);
       setLgtms(prev => [lgtm, ...prev]);
       enqueueSuccess('LGTM 画像を生成しました');
+    }).catch(error => {
+      switch (error.constructor) {
+        case UnsupportedImageFormatError:
+          enqueueError('サポートしていない画像形式です');
+          break;
+        default:
+          enqueueError('LGTM 画像の生成に失敗しました');
+          break;
+      }
+    }).finally(() => {
+      setGenerating(false);
     });
   };
 
