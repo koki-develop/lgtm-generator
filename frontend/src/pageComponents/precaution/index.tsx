@@ -12,6 +12,11 @@ import {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    title: {
+      fontSize: theme.typography.h4.fontSize,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
     listItem: {
       marginBottom: theme.spacing(1),
     },
@@ -31,7 +36,7 @@ const Precaution: React.VFC = () => {
 
   return (
     <Layout title='ご利用上の注意'>
-      <Typography variant='h4'>ご利用上の注意</Typography>
+      <Typography className={classes.title}>ご利用上の注意</Typography>
       <Box>
         <ul>
           {items.map((item, i) => (
