@@ -3,7 +3,7 @@ import { Lgtm } from '~/types/lgtm';
 const favoriteIdsKey = 'FAVORITE_IDS';
 
 export class DataStorage {
-  public static getFavoriteIds(): Lgtm[] {
+  public static getFavoriteIds(): string[] {
     const val = localStorage.getItem(favoriteIdsKey);
     if (!val) {
       return [];
