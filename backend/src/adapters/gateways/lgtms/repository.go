@@ -2,6 +2,8 @@ package lgtms
 
 import (
 	"fmt"
+	"io/ioutil"
+	"net/http"
 	"time"
 
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
@@ -20,6 +22,7 @@ type RepositoryConfig struct {
 	DynamoDB      gateways.DynamoDB
 	DBPrefix      string
 	FileStorage   gateways.FileStorage
+	HTTPAPI       gateways.HTTPAPI
 }
 
 func NewRepository(cfg *RepositoryConfig) *Repository {
@@ -66,6 +69,32 @@ func (repo *Repository) FindAllAfter(id string, limit int64) (entities.LGTMs, er
 		return nil, errors.WithStack(err)
 	}
 	return lgtms, nil
+}
+
+func (repo *Repository) CreateFromBase64(base64, contentType string) (*entities.LGTM, error) {
+	src, err := utils.Base64Decode(base64)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	return repo.Create(src, contentType)
+}
+
+func (repo *Repository) CreateFromURL(url string) (*entities.LGTM, error) {
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	resp, err := repo.config.HTTPAPI.Do(req)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	defer resp.Body.Close()
+	src, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return repo.Create(src, resp.Header.Get("Content-Type"))
 }
 
 func (repo *Repository) Create(src []byte, contentType string) (*entities.LGTM, error) {

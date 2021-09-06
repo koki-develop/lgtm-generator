@@ -56,6 +56,7 @@ func New() *gin.Engine {
 		DynamoDB:      db,
 		DBPrefix:      fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
 		FileStorage:   s3lgtms,
+		HTTPAPI:       http.DefaultClient,
 	})
 	imgsrepo := imgsrepo.NewRepository(&imgsrepo.RepositoryConfig{
 		ImageSearchEngine: imgse,

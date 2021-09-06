@@ -3,7 +3,6 @@ package lgtms
 import (
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/usecases"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
 	"github.com/pkg/errors"
 )
 
@@ -45,11 +44,14 @@ func (uc *Usecase) Create(ipt *entities.LGTMCreateInput) (*entities.LGTM, error)
 		return nil, errors.Wrap(entities.ErrInvalidParameter, err.Error())
 	}
 	if ipt.Base64 != nil {
-		src, err := utils.Base64Decode(*ipt.Base64)
+		lgtm, err := uc.config.LGTMsRepository.CreateFromBase64(*ipt.Base64, ipt.ContentType)
 		if err != nil {
-			return nil, errors.WithStack(entities.ErrInvalidParameter)
+			return nil, errors.WithStack(err)
 		}
-		lgtm, err := uc.config.LGTMsRepository.Create(src, ipt.ContentType)
+		return lgtm, nil
+	}
+	if ipt.URL != nil {
+		lgtm, err := uc.config.LGTMsRepository.CreateFromURL(*ipt.URL)
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}

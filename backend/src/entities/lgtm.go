@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
 	"github.com/pkg/errors"
 )
 
@@ -35,18 +36,21 @@ type LGTMCreateInput struct {
 }
 
 func (ipt *LGTMCreateInput) Valid() error {
-	if ipt.ContentType == "" {
-		return errors.New("content type is empty")
-	}
-	if !regexp.MustCompile(`\Aimage/.+\z`).Match([]byte(ipt.ContentType)) {
-		return errors.Errorf("invalid content type: %s", ipt.ContentType)
-	}
 	if ipt.Base64 == nil && ipt.URL == nil {
 		return errors.New("image source is empty")
 	}
 	if ipt.Base64 != nil {
+		if ipt.ContentType == "" {
+			return errors.New("content type is empty")
+		}
+		if !regexp.MustCompile(`\Aimage/.+\z`).Match([]byte(ipt.ContentType)) {
+			return errors.Errorf("invalid content type: %s", ipt.ContentType)
+		}
 		if strings.TrimSpace(*ipt.Base64) == "" {
 			return errors.New("base64 is empty")
+		}
+		if _, err := utils.Base64Decode(*ipt.Base64); err != nil {
+			return errors.New("invalid base64 string")
 		}
 	}
 	if ipt.URL != nil {
