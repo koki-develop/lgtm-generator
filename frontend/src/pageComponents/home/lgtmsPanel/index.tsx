@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { lgtmsState } from '~/recoil/atoms';
-import { Lgtm } from '~/types/lgtm';
 import {
   ApiClient,
   UnsupportedImageFormatError,
