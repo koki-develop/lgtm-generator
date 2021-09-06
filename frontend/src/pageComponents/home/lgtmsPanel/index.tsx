@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { lgtmsState } from '~/recoil/atoms';
 import { Lgtm } from '~/types/lgtm';
 import { ApiClient } from '~/lib/apiClient';
 import { ImageFileReader } from '~/lib/imageFileReader';
@@ -41,7 +43,7 @@ type LgtmsPanelProps = {
 const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProps) => {
   const classes = useStyles();
 
-  const [lgtms, setLgtms] = useState<Lgtm[]>([]);
+  const [lgtms, setLgtms] = useRecoilState(lgtmsState);
   const [uploading, setUploading] = useState<boolean>(false);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
