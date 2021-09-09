@@ -173,6 +173,7 @@ jobs:
       - run:
           name: build
           command: yarn run build
+      - notify_status
 
 workflows:
   build:
