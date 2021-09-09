@@ -90,7 +90,7 @@ func New() *gin.Engine {
 		case "local":
 			cfg.AllowOrigins = []string{"http://localhost:3000"}
 		case "dev":
-			cfg.AllowOrigins = []string{"http://localhost:3000"}
+			cfg.AllowOrigins = []string{"*"} // FIXME: 厳密に設定する
 		default:
 			panic(fmt.Sprintf("unknown stage: %s", stg))
 		}
