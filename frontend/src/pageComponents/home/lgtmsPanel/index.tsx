@@ -82,6 +82,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
           break;
         default:
           enqueueError('LGTM 画像の生成に失敗しました');
+          console.error(error);
           break;
       }
     }).finally(() => {

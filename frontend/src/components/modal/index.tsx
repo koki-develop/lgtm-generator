@@ -16,6 +16,7 @@ const useStyles = makeStyles(() =>
       alignItems: 'center',
       display: 'flex',
       justifyContent: 'center',
+      overflowY: 'scroll',
     },
   }),
 );

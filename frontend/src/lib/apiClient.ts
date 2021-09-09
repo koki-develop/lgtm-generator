@@ -3,9 +3,21 @@ import { CustomError } from 'ts-custom-error';
 import urlJoin from 'url-join';
 import { Lgtm } from '~/types/lgtm';
 import { Image } from '~/types/image';
+import {
+  Report,
+  ReportType,
+} from '~/types/report';
 
 type LgtmRaw = {
   id: string;
+  created_at: string;
+};
+
+type ReportRaw = {
+  id: string;
+  lgtm_id: string;
+  type: ReportType;
+  text: string;
   created_at: string;
 };
 
@@ -29,6 +41,12 @@ export class ApiClient {
   public static async searchImages(q: string): Promise<Image[]> {
     const endpoint = this.buildEndpoint('v1', 'images');
     const response = await axios.get<Image[]>(endpoint, { params: { q } });
+    return response.data;
+  }
+
+  public static async createReport(lgtmId: string, type: ReportType, text: string): Promise<Report> {
+    const endpoint = this.buildEndpoint('v1', 'reports');
+    const response = await axios.post<Report>(endpoint, { lgtm_id: lgtmId, type, text });
     return response.data;
   }
 
@@ -56,7 +74,15 @@ export class ApiClient {
 
   private static lgtmFromRaw(raw: LgtmRaw): Lgtm {
     return {
-      id: raw.id,
+      ...raw,
+      createdAt: new Date(raw.created_at),
+    };
+  }
+
+  private static reportFromRaw(raw: ReportRaw): Report {
+    return {
+      ...raw,
+      lgtmId: raw.lgtm_id,
       createdAt: new Date(raw.created_at),
     };
   }
