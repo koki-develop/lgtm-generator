@@ -1,5 +1,3 @@
-import { Lgtm } from '~/types/lgtm';
-
 const favoriteIdsKey = 'FAVORITE_IDS';
 
 export class DataStorage {
