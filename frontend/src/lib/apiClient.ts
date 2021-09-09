@@ -23,6 +23,10 @@ type ReportRaw = {
 
 export class UnsupportedImageFormatError extends CustomError {}
 
+type ErrorResponse = {
+  code: string;
+};
+
 export class ApiClient {
   public static async getLgtms(limit: number, after?: string): Promise<Lgtm[]> {
     const endpoint = this.buildEndpoint('v1', 'lgtms');
@@ -55,16 +59,19 @@ export class ApiClient {
     const validateStatus = (status: number) => {
       return status >= 200 && status < 300 || status === 400;
     };
-    const response = await axios.post<LgtmRaw>(endpoint, body, { validateStatus });
+    // TODO: エラー時の型指定にもっといい書き方無いか？要調査
+    const response = await axios.post<LgtmRaw | ErrorResponse>(endpoint, body, { validateStatus });
     if (response.status === 201) {
-      return this.lgtmFromRaw(response.data);
+      const data = response.data as LgtmRaw;
+      return this.lgtmFromRaw(data);
     }
-    switch (response.data.code) {
+    const data = response.data as ErrorResponse;
+    switch (data.code) {
       case 'UNSUPPORTED_IMAGE_FORMAT':
         throw new UnsupportedImageFormatError();
         break;
       default:
-        throw new Error(response.data.code);
+        throw new Error(data.code);
     }
   }
 
