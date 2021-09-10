@@ -194,11 +194,13 @@ workflows:
           requires:
             - backend_build
             - backend_terraform_plan_dev
+            - backend_terraform_plan_prod
             - frontend_build
       - slack/on-hold:
           requires:
             - backend_build
             - backend_terraform_plan_dev
+            - backend_terraform_plan_prod
             - frontend_build
 
       # deploy
