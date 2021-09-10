@@ -21,7 +21,7 @@ cp .env.template .env
 # .env
 GOOGLE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # GCP で発行した API キー
 GOOGLE_CUSTOM_SEARCH_ENGINE_ID=xxxxxxxxxxxxxxxxx # Google カスタム検索エンジン ID
-SLACK_ACCESS_TOKEN=xoxb-xxxxxxxxxxxx-xxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx # Slack API のアクセストークン
+NOTIFICATION_SLACK_ACCESS_TOKEN=xoxb-xxxxxxxxxxxx-xxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx # Slack API のアクセストークン
 ```
 
 ### 開発用 Docker イメージを準備

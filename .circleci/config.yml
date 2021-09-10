@@ -100,7 +100,7 @@ jobs:
           command: |
             echo "GOOGLE_API_KEY=${GOOGLE_API_KEY}"                                 >> .env
             echo "GOOGLE_CUSTOM_SEARCH_ENGINE_ID=${GOOGLE_CUSTOM_SEARCH_ENGINE_ID}" >> .env
-            echo "SLACK_ACCESS_TOKEN=${APP_SLACK_ACCESS_TOKEN}"                     >> .env
+            echo "NOTIFICATION_SLACK_ACCESS_TOKEN=${NOTIFICATION_SLACK_ACCESS_TOKEN}"                     >> .env
       - run:
           name: deploy
           command: yarn run deploy --stage << parameters.stage >>
@@ -183,19 +183,24 @@ workflows:
       - backend_terraform_plan:
           name: backend_terraform_plan_dev
           stage: dev
+      - backend_terraform_plan:
+          name: backend_terraform_plan_prod
+          stage: prod
       - frontend_build
 
       # approval
-      - approval_deploy_dev:
+      - approval_deploy:
           type: approval
           requires:
             - backend_build
             - backend_terraform_plan_dev
+            - backend_terraform_plan_prod
             - frontend_build
       - slack/on-hold:
           requires:
             - backend_build
             - backend_terraform_plan_dev
+            - backend_terraform_plan_prod
             - frontend_build
 
       # deploy
@@ -203,8 +208,36 @@ workflows:
           name: backend_deploy_dev
           stage: dev
           requires:
-            - approval_deploy_dev
+            - approval_deploy
+          filters:
+            branches:
+              ignore:
+                - main
       - backend_terraform_apply:
+          name: backend_terraform_apply_dev
           stage: dev
           requires:
             - backend_deploy_dev
+          filters:
+            branches:
+              ignore:
+                - main
+
+      - backend_deploy:
+          name: backend_deploy_prod
+          stage: prod
+          requires:
+            - approval_deploy
+          filters:
+            branches:
+              only:
+                - main
+      - backend_terraform_apply:
+          name: backend_terraform_apply_prod
+          stage: prod
+          requires:
+            - backend_deploy_prod
+          filters:
+            branches:
+              only:
+                - main
