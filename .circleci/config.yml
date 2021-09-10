@@ -214,6 +214,7 @@ workflows:
               ignore:
                 - main
       - backend_terraform_apply:
+          name: backend_terraform_apply_dev
           stage: dev
           requires:
             - backend_deploy_dev
@@ -232,3 +233,12 @@ workflows:
           #   branches:
           #     only:
           #       - main
+      - backend_terraform_apply:
+          name: backend_terraform_apply_prod
+          stage: prod
+          requires:
+            - backend_deploy_prod
+          filters:
+            branches:
+              only:
+                - main
