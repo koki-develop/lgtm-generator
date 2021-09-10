@@ -186,7 +186,7 @@ workflows:
       - frontend_build
 
       # approval
-      - approval_deploy_dev:
+      - approval_deploy:
           type: approval
           requires:
             - backend_build
@@ -203,8 +203,16 @@ workflows:
           name: backend_deploy_dev
           stage: dev
           requires:
-            - approval_deploy_dev
+            - approval_deploy
+          filters:
+            branches:
+              ignore:
+                - main
       - backend_terraform_apply:
           stage: dev
           requires:
             - backend_deploy_dev
+          filters:
+            branches:
+              ignore:
+                - main
