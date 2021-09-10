@@ -237,8 +237,7 @@ workflows:
           stage: prod
           requires:
             - backend_deploy_prod
-          # FIXME: コメント解除
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
+          filters:
+            branches:
+              only:
+                - main
