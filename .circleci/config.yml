@@ -228,11 +228,10 @@ workflows:
           stage: prod
           requires:
             - approval_deploy
-          # FIXME: コメント解除
-          # filters:
-          #   branches:
-          #     only:
-          #       - main
+          filters:
+            branches:
+              only:
+                - main
       - backend_terraform_apply:
           name: backend_terraform_apply_prod
           stage: prod
