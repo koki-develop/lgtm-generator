@@ -183,6 +183,9 @@ workflows:
       - backend_terraform_plan:
           name: backend_terraform_plan_dev
           stage: dev
+      - backend_terraform_plan:
+          name: backend_terraform_plan_prod
+          stage: prod
       - frontend_build
 
       # approval
