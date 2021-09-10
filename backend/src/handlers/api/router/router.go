@@ -32,7 +32,7 @@ func New() *gin.Engine {
 	r := gin.Default()
 
 	s := infrastructures.NewSlackClient(&infrastructures.SlackClientConfig{
-		AccessToken: os.Getenv("SLACK_ACCESS_TOKEN"),
+		AccessToken: os.Getenv("NOTIFICATION_SLACK_ACCESS_TOKEN"),
 		HTTPAPI:     http.DefaultClient,
 	})
 	rdr := infrastructures.NewRenderer(&infrastructures.RendererConfig{SlackAPI: s})
