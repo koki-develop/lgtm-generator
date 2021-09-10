@@ -216,3 +216,13 @@ workflows:
             branches:
               ignore:
                 - main
+
+      - backend_deploy:
+          name: backend_deploy_prod
+          stage: prod
+          requires:
+            - approval_deploy
+          filters:
+            branches:
+              only:
+                - main
