@@ -10,3 +10,11 @@ resource "aws_route53_record" "api_certificate_validation" {
   records = [aws_acm_certificate.api.domain_validation_options.*.resource_record_value[0]]
   ttl     = 60
 }
+
+resource "aws_route53_record" "images_certificate_validation" {
+  zone_id = data.aws_route53_zone.default.zone_id
+  name    = aws_acm_certificate.images.domain_validation_options.*.resource_record_name[0]
+  type    = aws_acm_certificate.images.domain_validation_options.*.resource_record_type[0]
+  records = [aws_acm_certificate.images.domain_validation_options.*.resource_record_value[0]]
+  ttl     = 60
+}
