@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const perPage = 2;
+const perPage = 20;
 
 type LgtmsPanelProps = {
   show: boolean;
