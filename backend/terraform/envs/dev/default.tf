@@ -1,4 +1,4 @@
 module "aws" {
-  source = "../../aws"
+  source = "../../modules/aws"
   stage  = var.stage
 }
