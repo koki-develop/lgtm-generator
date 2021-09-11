@@ -92,7 +92,7 @@ func New() *gin.Engine {
 		case "dev":
 			cfg.AllowOrigins = []string{"https://lgtm-generator-*-kou-pg-0131.vercel.app"}
 		case "prod":
-			cfg.AllowOrigins = []string{"https://lgtmgen.orb"}
+			cfg.AllowOrigins = []string{"https://lgtmgen.org"}
 		default:
 			panic(fmt.Sprintf("unknown stage: %s", stg))
 		}
