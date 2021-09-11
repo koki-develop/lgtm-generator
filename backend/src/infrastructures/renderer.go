@@ -42,6 +42,13 @@ func (rdr *Renderer) BadRequest(ctx controllers.Context, code entities.ErrCode, 
 	})
 }
 
+func (rdr *Renderer) Forbidden(ctx controllers.Context, code entities.ErrCode, err error) {
+	fmt.Printf("error: %+v\n", err)
+	ctx.JSON(http.StatusForbidden, map[string]string{
+		"code": string(code),
+	})
+}
+
 func (rdr *Renderer) InternalServerError(ctx controllers.Context, err error) {
 	fmt.Printf("error: %+v\n", err)
 	if err := rdr.config.SlackAPI.PostMessage(&slack.Msg{
