@@ -31,7 +31,7 @@ func (c *CORS) Apply(ctx controllers.Context) {
 		return
 	}
 
-	if !c.validateOrigin(org, c.config.AllowOrigins) {
+	if !c.validateOrigin(org) {
 		c.config.Renderer.Forbidden(ctx, entities.ErrCodeForbidden, errors.Errorf("not allowed origin: %s", org))
 		ctx.Abort()
 		return
@@ -51,11 +51,11 @@ func (c *CORS) Apply(ctx controllers.Context) {
 	}
 }
 
-func (c *CORS) validateOrigin(org string, allowOrgs []string) bool {
-	for _, allowOrg := range allowOrgs {
-		if strings.Contains(org, "*") {
+func (c *CORS) validateOrigin(org string) bool {
+	for _, allowOrg := range c.config.AllowOrigins {
+		if strings.Contains(allowOrg, "*") {
 			pref, suff := func() (string, string) {
-				s := strings.Split(org, "*")
+				s := strings.Split(allowOrg, "*")
 				return s[0], s[1]
 			}()
 			if strings.HasPrefix(org, pref) && strings.HasSuffix(org, suff) {
