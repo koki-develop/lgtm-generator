@@ -14,7 +14,7 @@ resource "aws_cloudfront_distribution" "lgtms" {
   viewer_certificate {
     acm_certificate_arn      = aws_acm_certificate.images.arn
     ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2018"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
   default_cache_behavior {
