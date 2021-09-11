@@ -201,7 +201,7 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
                   onClick={handleClickCopyLink}
                 >
                   <CopyToClipBoard
-                    text={`![LGTM](${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)})`}
+                    text={`[![LGTM](${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)})](https://lgtmgen.org)`}
                   >
                     <ListItemText secondary='Markdown' />
                   </CopyToClipBoard>
@@ -213,7 +213,7 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo((props: LgtmCardProps) => 
                   onClick={handleClickCopyLink}
                 >
                   <CopyToClipBoard
-                    text={`<img src="${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)}" alt="LGTM" />`}
+                    text={`<a href="https://lgtmgen.org"><img src="${urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)}" alt="LGTM" /></a>`}
                   >
                     <ListItemText secondary='HTML' />
                   </CopyToClipBoard>

@@ -1,23 +1,23 @@
-resource "aws_s3_bucket" "lgtms" {
-  bucket        = "${local.prefix}-lgtms"
+resource "aws_s3_bucket" "images" {
+  bucket        = "${local.prefix}-images"
   acl           = "private"
   force_destroy = var.stage != "prod"
 
-  tags = { Name = "${local.prefix}-lgtms" }
+  tags = { Name = "${local.prefix}-images" }
 }
 
-resource "aws_s3_bucket_policy" "lgtms" {
-  bucket = aws_s3_bucket.lgtms.id
-  policy = data.aws_iam_policy_document.lgtms_bucket_policy.json
+resource "aws_s3_bucket_policy" "images" {
+  bucket = aws_s3_bucket.images.id
+  policy = data.aws_iam_policy_document.images_bucket_policy.json
 }
 
-data "aws_iam_policy_document" "lgtms_bucket_policy" {
+data "aws_iam_policy_document" "images_bucket_policy" {
   statement {
     principals {
       type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.lgtms.iam_arn]
+      identifiers = [aws_cloudfront_origin_access_identity.images.iam_arn]
     }
     actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.lgtms.arn}/*"]
+    resources = ["${aws_s3_bucket.images.arn}/*"]
   }
 }

@@ -1,13 +1,13 @@
-resource "aws_cloudfront_distribution" "lgtms" {
+resource "aws_cloudfront_distribution" "images" {
   enabled      = true
   aliases      = [local.images_domain]
   http_version = "http2"
 
   origin {
-    origin_id   = aws_s3_bucket.lgtms.id
-    domain_name = "${aws_s3_bucket.lgtms.id}.s3.amazonaws.com"
+    origin_id   = aws_s3_bucket.images.id
+    domain_name = "${aws_s3_bucket.images.id}.s3.amazonaws.com"
     s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.lgtms.cloudfront_access_identity_path
+      origin_access_identity = aws_cloudfront_origin_access_identity.images.cloudfront_access_identity_path
     }
   }
 
@@ -18,7 +18,7 @@ resource "aws_cloudfront_distribution" "lgtms" {
   }
 
   default_cache_behavior {
-    target_origin_id       = aws_s3_bucket.lgtms.id
+    target_origin_id       = aws_s3_bucket.images.id
     viewer_protocol_policy = "redirect-to-https"
     cached_methods         = ["GET", "HEAD"]
     allowed_methods        = ["GET", "HEAD"]
@@ -41,4 +41,4 @@ resource "aws_cloudfront_distribution" "lgtms" {
   }
 }
 
-resource "aws_cloudfront_origin_access_identity" "lgtms" {}
+resource "aws_cloudfront_origin_access_identity" "images" {}

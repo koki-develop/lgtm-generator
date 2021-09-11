@@ -44,7 +44,7 @@ provider:
             Fn::Join:
               - ""
               - - "arn:aws:s3:::"
-                - ${self:custom.prefix}-lgtms
+                - ${self:custom.prefix}-images
                 - /*
   ecr:
     images:

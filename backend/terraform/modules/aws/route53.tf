@@ -29,8 +29,8 @@ resource "aws_route53_record" "images" {
   type    = "A"
 
   alias {
-    name                   = aws_cloudfront_distribution.lgtms.domain_name
-    zone_id                = aws_cloudfront_distribution.lgtms.hosted_zone_id
+    name                   = aws_cloudfront_distribution.images.domain_name
+    zone_id                = aws_cloudfront_distribution.images.hosted_zone_id
     evaluate_target_health = false
   }
 }

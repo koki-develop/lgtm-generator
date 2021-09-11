@@ -42,7 +42,7 @@ func New() *gin.Engine {
 	})
 	db := infrastructures.NewGureguDynamoDB()
 	s3lgtms := infrastructures.NewS3(&infrastructures.S3Config{
-		Bucket: fmt.Sprintf("lgtm-generator-backend-%s-lgtms", os.Getenv("STAGE")),
+		Bucket: fmt.Sprintf("lgtm-generator-backend-%s-images", os.Getenv("STAGE")),
 	})
 	lgtmgen := infrastructures.NewLGTMGenerator()
 
