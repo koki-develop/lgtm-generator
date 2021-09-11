@@ -4,6 +4,7 @@ import { lgtmsState } from '~/recoil/atoms';
 import { useToast } from '~/contexts/toastProvider';
 import {
   Box,
+  InputAdornment,
   TextField,
 } from '@material-ui/core';
 import {
@@ -11,6 +12,7 @@ import {
   makeStyles,
   Theme,
 } from '@material-ui/core/styles';
+import { Search as SearchIcon } from '@material-ui/icons';
 import Field from '~/components/field';
 import Form from '~/components/form';
 import Loading from '~/components/loading';
@@ -99,6 +101,10 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
             type='search'
             value={query}
             onChange={handleChangeQuery}
+            placeholder='キーワード'
+            InputProps={{
+              startAdornment: <InputAdornment position='start'><SearchIcon /></InputAdornment>,
+            }}
           />
         </Field>
       </Form>
