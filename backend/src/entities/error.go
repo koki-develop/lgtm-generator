@@ -7,7 +7,7 @@ type ErrCode string
 const (
 	ErrCodeUnsupportedImageFormat ErrCode = "UNSUPPORTED_IMAGE_FORMAT"
 
-	ErrCodeResourceNotFound = "RESOURCE_NOT_FOUND"
+	ErrCodeResourceNotFound ErrCode = "RESOURCE_NOT_FOUND"
 
 	ErrCodeInvalidParameter   ErrCode = "INVALID_PARAMETER"
 	ErrCodeInvalidJSON        ErrCode = "INVALID_JSON"
@@ -20,6 +20,7 @@ const (
 	ErrCodeBase64IsEmpty      ErrCode = "BASE64_IS_EMPTY"
 	ErrCodeImageSourceIsEmpty ErrCode = "IMAGE_SOURCE_IS_EMPTY"
 
+	ErrCodeForbidden           ErrCode = "FORBIDDEN"
 	ErrCodeInternalServerError ErrCode = "INTERNAL_SERVER_ERROR"
 )
 

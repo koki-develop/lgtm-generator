@@ -90,9 +90,9 @@ func New() *gin.Engine {
 		case "local":
 			cfg.AllowOrigins = []string{"http://localhost:3000"}
 		case "dev":
-			cfg.AllowOrigins = []string{"*"} // FIXME: 厳密に設定する
+			cfg.AllowOrigins = []string{"https://lgtm-generator-*-kou-pg-0131.vercel.app"}
 		case "prod":
-			cfg.AllowOrigins = []string{"*"} // FIXME: 厳密に設定する
+			cfg.AllowOrigins = []string{"https://lgtmgen.orb"}
 		default:
 			panic(fmt.Sprintf("unknown stage: %s", stg))
 		}
