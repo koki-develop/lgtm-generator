@@ -2,6 +2,7 @@ service: lgtm-generator-backend
 
 frameworkVersion: "2"
 useDotenv: true
+configValidationMode: error
 
 plugins:
   - serverless-dynamodb-local
