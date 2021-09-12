@@ -31,6 +31,25 @@ export default class Document extends NextDocument {
               </script>
             </>
           )}
+
+          <meta name='theme-color' content='#1E90FF' />
+          <meta name='description' content='シンプルな LGTM 画像作成サービスです。' />
+          <meta property='og:site_name' content='LGTM Generator' />
+          <meta property='og:title' content='LGTM Generator' />
+          <meta property='og:description' content='シンプルな LGTM 画像作成サービスです。' />
+          <meta property='og:type' content='website' />
+          <meta property='og:url' content='https://lgtmgen.org' />
+          <meta property='og:image' content='https://lgtmgen.org/card.png' />
+          <meta property='og:image:secure_url' content='https://lgtmgen.org/card.png' />
+          <meta property='og:image:width' content='600' />
+          <meta property='og:image:height' content='314' />
+          <meta property='og:locale' content='ja_JP' />
+          <meta name='twitter:card' content='summary_large_image' />
+          <meta name='twitter:site' content='@kou_pg_0131' />
+          <meta property='fb:app_id' content='889570964422469' />
+          <link rel='icon' href='%PUBLIC_URL%/favicon.ico' />
+          <link rel='apple-touch-icon' href='%PUBLIC_URL%/logo192.png' />
+          <link rel='manifest' href='%PUBLIC_URL%/manifest.json' />
         </Head>
         <body>
           <Main />
