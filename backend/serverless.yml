@@ -151,16 +151,3 @@ resources:
             KeyType: HASH
           - AttributeName: created_at
             KeyType: RANGE
-    RequestTooLargeGatewayResponse:
-      Type: AWS::ApiGateway::GatewayResponse
-      Properties:
-        RestApiId:
-          Ref: ApiGatewayRestApi
-        StatusCode: "413"
-        ResponseType: REQUEST_TOO_LARGE
-        ResponseTemplates:
-          application/json: "{\"code\":\"REQUEST_TOO_LONG\"}"
-        ResponseParameters:
-          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
-          gatewayresponse.header.Access-Control-Allow-Headers: "'Origin,Content-Length,Content-Type,Accept-Encoding'"
-          gatewayresponse.header.Access-Control-Allow-Methods: "'GET,POST,OPTIONS'"
