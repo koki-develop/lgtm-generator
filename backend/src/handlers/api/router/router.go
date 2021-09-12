@@ -83,7 +83,13 @@ func New() *gin.Engine {
 			Renderer:     rdr,
 			AllowOrigins: []string{},
 			AllowMethods: []string{"GET", "POST", "OPTIONS"},
-			AllowHeaders: []string{"Origin", "Content-Length", "Content-Type", "Accept-Encoding"},
+			AllowHeaders: []string{
+				"Origin",
+				"Content-Length",
+				"Content-Type",
+				"Accept-Encoding",
+				"Sentry-Trace",
+			},
 		}
 		stg := os.Getenv("STAGE")
 		switch stg {
