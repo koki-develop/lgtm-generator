@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useMemo } from 'react';
+import { useRouter } from 'next/router';
 import Layout from '~/layout';
 import Tabs, { TabValue } from './tabs';
 import Field from '~/components/field';
@@ -7,10 +8,13 @@ import SearchImagesPanel from './searchImagesPanel';
 import FavoritesPanel from './favoritesPanel';
 
 const Home: React.VFC = () => {
-  const [tab, setTab] = useState<TabValue>(TabValue.lgtms);
+  const router = useRouter();
+  const tab = useMemo(() => {
+    return Object.values(TabValue).find(v => v === router.query.tab) || 'lgtms';
+  }, [router.query.tab]);
 
   const handleChangeTab = (value: TabValue) => {
-    setTab(value);
+    router.replace({ search: `tab=${value}` });
   };
 
   return (
