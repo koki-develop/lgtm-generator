@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { lgtmsState } from '~/recoil/atoms';
 import { useToast } from '~/contexts/toastProvider';
@@ -40,6 +40,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
   const classes = useStyles();
 
   const { enqueueSuccess, enqueueError } = useToast();
+  const queryInputRef = useRef<HTMLInputElement>();
   const setLgtms = useSetRecoilState(lgtmsState);
   const [query, setQuery] = useState<string>('');
   const [searching, setSearching] = useState<boolean>(false);
@@ -53,6 +54,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
   };
 
   const handleSearch = () => {
+    queryInputRef.current?.blur();
     setSearching(true);
     ApiClient.searchImages(query).then(images => {
       setImages(images);
@@ -102,6 +104,9 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
             value={query}
             onChange={handleChangeQuery}
             placeholder='キーワード'
+            inputProps={{
+              ref: queryInputRef,
+            }}
             InputProps={{
               startAdornment: <InputAdornment position='start'><SearchIcon /></InputAdornment>,
             }}
