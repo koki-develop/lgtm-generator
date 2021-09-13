@@ -31,6 +31,11 @@ export default class Document extends NextDocument {
               </script>
             </>
           )}
+          <script
+            data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CODE}
+            async
+            src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+          ></script>
 
           <meta name='theme-color' content='#1E90FF' />
           <meta name='description' content='シンプルな LGTM 画像作成サービスです。' />
