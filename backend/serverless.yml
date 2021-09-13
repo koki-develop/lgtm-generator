@@ -151,3 +151,12 @@ resources:
             KeyType: HASH
           - AttributeName: created_at
             KeyType: RANGE
+    GatewayResponseMissingAuthenticationToken:
+      Type: AWS::ApiGateway::GatewayResponse
+      Properties:
+        ResponseType: MISSING_AUTHENTICATION_TOKEN
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        StatusCode: "404"
+        ResponseTemplates:
+          application/json: '{"code":"NOT_FOUND"}'

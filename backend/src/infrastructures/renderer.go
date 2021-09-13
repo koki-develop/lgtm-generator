@@ -42,6 +42,13 @@ func (rdr *Renderer) BadRequest(ctx controllers.Context, code entities.ErrCode, 
 	})
 }
 
+func (rdr *Renderer) NotFound(ctx controllers.Context, code entities.ErrCode, err error) {
+	fmt.Printf("error: %+v\n", err)
+	ctx.JSON(http.StatusNotFound, map[string]string{
+		"code": string(code),
+	})
+}
+
 func (rdr *Renderer) Forbidden(ctx controllers.Context, code entities.ErrCode, err error) {
 	fmt.Printf("error: %+v\n", err)
 	ctx.JSON(http.StatusForbidden, map[string]string{

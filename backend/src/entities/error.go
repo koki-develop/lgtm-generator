@@ -21,6 +21,7 @@ const (
 	ErrCodeImageSourceIsEmpty ErrCode = "IMAGE_SOURCE_IS_EMPTY"
 
 	ErrCodeForbidden           ErrCode = "FORBIDDEN"
+	ErrCodeNotFound            ErrCode = "NOT_FOUND"
 	ErrCodeInternalServerError ErrCode = "INTERNAL_SERVER_ERROR"
 )
 

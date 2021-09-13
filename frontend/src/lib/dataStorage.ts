@@ -2,7 +2,10 @@ const favoriteIdsKey = 'FAVORITE_IDS';
 
 export class DataStorage {
   public static getFavoriteIds(): string[] {
-    const val = localStorage.getItem(favoriteIdsKey);
+    if (typeof window === 'undefined') {
+      return [];
+    }
+    const val = window.localStorage.getItem(favoriteIdsKey);
     if (!val) {
       return [];
     }
@@ -14,6 +17,9 @@ export class DataStorage {
   }
 
   public static saveFavoriteIds(favoriteIds: string[]): void {
-    localStorage.setItem(favoriteIdsKey, JSON.stringify(favoriteIds));
+    if (typeof window === 'undefined') {
+      return;
+    }
+    window.localStorage.setItem(favoriteIdsKey, JSON.stringify(favoriteIds));
   }
 }
