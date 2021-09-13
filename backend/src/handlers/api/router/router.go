@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/pkg/errors"
+
 	"github.com/gin-gonic/gin"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
 	healthctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/health"
@@ -16,6 +18,7 @@ import (
 	lgtmsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/lgtms"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/notifier"
 	rptsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/reports"
+	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
 	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
 	imgsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/images"
 	lgtmsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/lgtms"
@@ -135,6 +138,9 @@ func New() *gin.Engine {
 		})
 		v1.POST("/reports", withContext(ctrl.Create))
 	}
+	r.NoRoute(withContext(func(ctx controllers.Context) {
+		rdr.NotFound(ctx, entities.ErrCodeNotFound, errors.New("no route"))
+	}))
 
 	return r
 }

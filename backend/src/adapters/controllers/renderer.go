@@ -13,6 +13,8 @@ type Renderer interface {
 	BadRequest(ctx Context, code entities.ErrCode, err error)
 	// 403
 	Forbidden(ctx Context, code entities.ErrCode, err error)
+	// 404
+	NotFound(ctx Context, code entities.ErrCode, err error)
 	// 500
 	InternalServerError(ctx Context, err error)
 }
