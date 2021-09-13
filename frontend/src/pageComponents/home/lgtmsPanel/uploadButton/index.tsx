@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 'bold',
       position: 'fixed',
       right: theme.spacing(2),
+      zIndex: 999,
     },
     input: {
       display: 'none',
