@@ -47,9 +47,9 @@ export default class Document extends NextDocument {
           <meta name='twitter:card' content='summary_large_image' />
           <meta name='twitter:site' content='@kou_pg_0131' />
           <meta property='fb:app_id' content='889570964422469' />
-          <link rel='icon' href='%PUBLIC_URL%/favicon.ico' />
-          <link rel='apple-touch-icon' href='%PUBLIC_URL%/logo192.png' />
-          <link rel='manifest' href='%PUBLIC_URL%/manifest.json' />
+          <link rel='icon' href='https://lgtmgen.org/favicon.ico' />
+          <link rel='apple-touch-icon' href='https://lgtmgen.org/logo192.png' />
+          <link rel='manifest' href='https://lgtmgen.org/manifest.json' />
         </Head>
         <body>
           <Main />
