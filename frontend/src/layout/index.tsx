@@ -1,12 +1,7 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Head from 'next/head';
-import {
-  useSetRecoilState,
-  RecoilRoot,
-} from 'recoil';
-import { favoriteIdsState } from '~/recoil/atoms';
+import { RecoilRoot } from 'recoil';
 import Header from './header';
-import { DataStorage } from '~/lib/dataStorage';
 import Footer from './footer';
 import ToastProvider from '~/contexts/toastProvider';
 import {
@@ -62,12 +57,6 @@ const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
     }
     return `${title} | ${baseTitle}`;
   }, [title]);
-
-  const setFavoriteIds = useSetRecoilState(favoriteIdsState);
-
-  useEffect(() => {
-    setFavoriteIds(DataStorage.getFavoriteIds());
-  }, []);
 
   return (
     <Box className={classes.root}>

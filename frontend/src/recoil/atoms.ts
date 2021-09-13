@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { Lgtm } from '~/types/lgtm';
+import { DataStorage } from '~/lib/dataStorage';
 
 export const lgtmsState = atom<Lgtm[]>({
   key: 'lgtmsState',
@@ -8,5 +9,5 @@ export const lgtmsState = atom<Lgtm[]>({
 
 export const favoriteIdsState = atom<string[]>({
   key: 'favoriteIdsState',
-  default: [],
+  default: DataStorage.getFavoriteIds(),
 });
