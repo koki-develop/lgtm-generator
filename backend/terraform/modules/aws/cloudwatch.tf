@@ -21,7 +21,7 @@ resource "aws_cloudwatch_dashboard" "api" {
           view    = "timeSeries"
         }
         type  = "metric"
-        width = 6
+        width = 12
         x     = 0
         y     = 0
       },
@@ -49,7 +49,7 @@ resource "aws_cloudwatch_dashboard" "api" {
           view    = "timeSeries"
         }
         type  = "metric"
-        width = 6
+        width = 12
         x     = 0
         y     = 6
       },
@@ -75,8 +75,8 @@ resource "aws_cloudwatch_dashboard" "api" {
           view    = "timeSeries"
         }
         type  = "metric"
-        width = 6
-        x     = 6
+        width = 12
+        x     = 12
         y     = 6
       },
       {
@@ -85,7 +85,7 @@ resource "aws_cloudwatch_dashboard" "api" {
           metrics = [
             [
               "AWS/ApiGateway",
-              "Latency",
+              "レイテンシー",
               "ApiName",
               data.aws_api_gateway_rest_api.api.name,
               {
@@ -100,8 +100,8 @@ resource "aws_cloudwatch_dashboard" "api" {
           view    = "timeSeries"
         }
         type  = "metric"
-        width = 6
-        x     = 6
+        width = 12
+        x     = 12
         y     = 0
       },
     ]
