@@ -5,7 +5,10 @@ import {
   ApiClient,
   UnsupportedImageFormatError,
 } from '~/lib/apiClient';
-import { ImageFileReader } from '~/lib/imageFileReader';
+import {
+  FileTooLargeError,
+  ImageFileReader,
+} from '~/lib/imageFileReader';
 import { DataUrl } from '~/lib/dataUrl';
 import { useToast } from '~/contexts/toastProvider';
 import {
@@ -53,7 +56,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
   const [previewContentType, setPreviewContentType] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const [showMore, setShowMore] = useState<boolean>(false);
-  const { enqueueSuccess, enqueueError } = useToast();
+  const { enqueueSuccess, enqueueWarn, enqueueError } = useToast();
 
   const handleCloseConfirmForm = () => {
     setOpenConfirmForm(false);
@@ -62,10 +65,16 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
   const handleChangeFile = (file: File) => {
     setLoadingImage(true);
     ImageFileReader.readAsDataUrl(file).then(dataUrl => {
-      setLoadingImage(false);
       setPreviewDataUrl(dataUrl);
       setPreviewContentType(file.type);
       setOpenConfirmForm(true);
+    }).catch(error => {
+      switch (error.constructor) {
+        case FileTooLargeError:
+          enqueueWarn(`ファイルサイズが上限を超えています: ${file.name}`);
+      }
+    }).finally(() => {
+      setLoadingImage(false);
     });
   };
 
