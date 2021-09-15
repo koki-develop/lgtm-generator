@@ -72,6 +72,10 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
       switch (error.constructor) {
         case FileTooLargeError:
           enqueueWarn(`ファイルサイズが上限を超えています: ${file.name}`);
+          break;
+        default:
+          enqueueError(画像の読み込みに失敗しました);
+          throw error;
       }
     }).finally(() => {
       setLoadingImage(false);

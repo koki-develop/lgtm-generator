@@ -84,7 +84,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo((props: 
           break;
         default:
           enqueueError('LGTM 画像の生成に失敗しました');
-          break;
+          throw error;
       }
     }).finally(() => {
       setGenerating(false);
