@@ -7,6 +7,7 @@ import {
 } from '~/lib/apiClient';
 import {
   FileTooLargeError,
+  ImageFile,
   ImageFileReader,
 } from '~/lib/imageFileReader';
 import { DataUrl } from '~/lib/dataUrl';
@@ -52,8 +53,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
   const [uploading, setUploading] = useState<boolean>(false);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
-  const [previewDataUrl, setPreviewDataUrl] = useState<string>();
-  const [previewContentType, setPreviewContentType] = useState<string>();
+  const [previewImageFile, setPreviewImageFile] = useState<ImageFile>();
   const [loading, setLoading] = useState<boolean>(false);
   const [showMore, setShowMore] = useState<boolean>(false);
   const { enqueueSuccess, enqueueWarn, enqueueError } = useToast();
@@ -64,17 +64,16 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
 
   const handleChangeFile = (file: File) => {
     setLoadingImage(true);
-    ImageFileReader.readAsDataUrl(file).then(dataUrl => {
-      setPreviewDataUrl(dataUrl);
-      setPreviewContentType(file.type);
+    ImageFileReader.read(file).then(imageFile => {
+      setPreviewImageFile(imageFile);
       setOpenConfirmForm(true);
     }).catch(error => {
       switch (error.constructor) {
         case FileTooLargeError:
-          enqueueWarn(`ファイルサイズが上限を超えています: ${file.name}`);
+          enqueueWarn(`ファイルサイズが大きすぎます: ${file.name}`);
           break;
         default:
-          enqueueError(画像の読み込みに失敗しました);
+          enqueueError('画像の読み込みに失敗しました');
           throw error;
       }
     }).finally(() => {
@@ -84,7 +83,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
 
   const handleConfirm = () => {
     setUploading(true);
-    ApiClient.createLgtmFromBase64(new DataUrl(previewDataUrl).toBase64(), previewContentType).then(lgtm => {
+    ApiClient.createLgtmFromBase64(new DataUrl(previewImageFile.dataUrl).toBase64(), previewImageFile.type).then(lgtm => {
       setOpenConfirmForm(false);
       setLgtms(prev => [lgtm, ...prev]);
       enqueueSuccess('LGTM 画像を生成しました');
@@ -128,7 +127,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
       <UploadButton onChange={handleChangeFile} />
       <ConfirmForm
         loading={uploading}
-        previewSrc={previewDataUrl}
+        previewSrc={previewImageFile?.dataUrl}
         open={openConfirmForm}
         onClose={handleCloseConfirmForm}
         onConfirm={handleConfirm}
