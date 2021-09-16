@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { CustomError } from 'ts-custom-error';
 import urlJoin from 'url-join';
+import { UnsupportedImageFormatError } from '~/lib/errors';
 import { Lgtm } from '~/types/lgtm';
 import { Image } from '~/types/image';
 import {
@@ -20,8 +20,6 @@ type ReportRaw = {
   text: string;
   created_at: string;
 };
-
-export class UnsupportedImageFormatError extends CustomError {}
 
 type ErrorResponse = {
   code: string;

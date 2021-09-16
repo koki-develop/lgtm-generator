@@ -14,7 +14,7 @@ services:
     entrypoint: sh
     command: |
       -c "
-      mkdir -p /export/lgtm-generator-backend-local-lgtms
+      mkdir -p /export/lgtm-generator-backend-local-images
       /usr/bin/minio server /export --console-address ':9001'
       "
 

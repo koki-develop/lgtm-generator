@@ -10,7 +10,7 @@ import {
 
 type Context = {
   enqueueSuccess?: (message: React.ReactNode) => void;
-  enqueueInfo?: (message: React.ReactNode) => void;
+  enqueueWarn?: (message: React.ReactNode) => void;
   enqueueError?: (message: React.ReactNode) => void;
 };
 
@@ -48,11 +48,11 @@ const ToastProvider: React.VFC<ToastProviderProps> = (props: ToastProviderProps)
   };
 
   const enqueueSuccess = (message: React.ReactNode) => enqueueDefault(message, 'success');
-  const enqueueInfo = (message: React.ReactNode) => enqueueDefault(message, 'info');
+  const enqueueWarn = (message: React.ReactNode) => enqueueDefault(message, 'warning');
   const enqueueError = (message: React.ReactNode) => enqueueDefault(message, 'error');
 
   return (
-    <ToastContext.Provider value={{ enqueueSuccess, enqueueInfo, enqueueError }}>
+    <ToastContext.Provider value={{ enqueueSuccess, enqueueWarn, enqueueError }}>
       {props.children}
     </ToastContext.Provider>
   );

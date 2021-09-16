@@ -3,9 +3,15 @@ import { useRecoilState } from 'recoil';
 import { lgtmsState } from '~/recoil/atoms';
 import {
   ApiClient,
-  UnsupportedImageFormatError,
 } from '~/lib/apiClient';
-import { ImageFileReader } from '~/lib/imageFileReader';
+import {
+  ImageFile,
+  ImageFileReader,
+} from '~/lib/imageFileReader';
+import {
+  FileTooLargeError,
+  UnsupportedImageFormatError,
+} from '~/lib/errors';
 import { DataUrl } from '~/lib/dataUrl';
 import { useToast } from '~/contexts/toastProvider';
 import {
@@ -49,11 +55,10 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
   const [uploading, setUploading] = useState<boolean>(false);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
-  const [previewDataUrl, setPreviewDataUrl] = useState<string>();
-  const [previewContentType, setPreviewContentType] = useState<string>();
+  const [previewImageFile, setPreviewImageFile] = useState<ImageFile>();
   const [loading, setLoading] = useState<boolean>(false);
   const [showMore, setShowMore] = useState<boolean>(false);
-  const { enqueueSuccess, enqueueError } = useToast();
+  const { enqueueSuccess, enqueueWarn, enqueueError } = useToast();
 
   const handleCloseConfirmForm = () => {
     setOpenConfirmForm(false);
@@ -61,17 +66,29 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
 
   const handleChangeFile = (file: File) => {
     setLoadingImage(true);
-    ImageFileReader.readAsDataUrl(file).then(dataUrl => {
-      setLoadingImage(false);
-      setPreviewDataUrl(dataUrl);
-      setPreviewContentType(file.type);
+    ImageFileReader.read(file).then(imageFile => {
+      setPreviewImageFile(imageFile);
       setOpenConfirmForm(true);
+    }).catch(error => {
+      switch (error.constructor) {
+        case FileTooLargeError:
+          enqueueWarn(`ファイルサイズが大きすぎます: ${file.name}`);
+          break;
+        case UnsupportedImageFormatError:
+          enqueueError('サポートしていない画像形式です');
+          break;
+        default:
+          enqueueError('画像の読み込みに失敗しました');
+          throw error;
+      }
+    }).finally(() => {
+      setLoadingImage(false);
     });
   };
 
   const handleConfirm = () => {
     setUploading(true);
-    ApiClient.createLgtmFromBase64(new DataUrl(previewDataUrl).toBase64(), previewContentType).then(lgtm => {
+    ApiClient.createLgtmFromBase64(new DataUrl(previewImageFile.dataUrl).toBase64(), previewImageFile.type).then(lgtm => {
       setOpenConfirmForm(false);
       setLgtms(prev => [lgtm, ...prev]);
       enqueueSuccess('LGTM 画像を生成しました');
@@ -115,7 +132,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
       <UploadButton onChange={handleChangeFile} />
       <ConfirmForm
         loading={uploading}
-        previewSrc={previewDataUrl}
+        previewSrc={previewImageFile?.dataUrl}
         open={openConfirmForm}
         onClose={handleCloseConfirmForm}
         onConfirm={handleConfirm}
