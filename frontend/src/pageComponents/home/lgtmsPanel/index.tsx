@@ -3,13 +3,15 @@ import { useRecoilState } from 'recoil';
 import { lgtmsState } from '~/recoil/atoms';
 import {
   ApiClient,
-  UnsupportedImageFormatError,
 } from '~/lib/apiClient';
 import {
-  FileTooLargeError,
   ImageFile,
   ImageFileReader,
 } from '~/lib/imageFileReader';
+import {
+  FileTooLargeError,
+  UnsupportedImageFormatError,
+} from '~/lib/errors';
 import { DataUrl } from '~/lib/dataUrl';
 import { useToast } from '~/contexts/toastProvider';
 import {
@@ -71,6 +73,9 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo((props: LgtmsPanelProp
       switch (error.constructor) {
         case FileTooLargeError:
           enqueueWarn(`ファイルサイズが大きすぎます: ${file.name}`);
+          break;
+        case UnsupportedImageFormatError:
+          enqueueError('サポートしていない画像形式です');
           break;
         default:
           enqueueError('画像の読み込みに失敗しました');

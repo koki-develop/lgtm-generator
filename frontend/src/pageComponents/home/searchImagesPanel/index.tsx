@@ -18,8 +18,8 @@ import Form from '~/components/form';
 import Loading from '~/components/loading';
 import {
   ApiClient,
-  UnsupportedImageFormatError,
 } from '~/lib/apiClient';
+import { UnsupportedImageFormatError } from '~/lib/errors';
 import { Image } from '~/types/image';
 import ImageCardList from './imageCardList';
 import ConfirmForm from '../confirmForm';

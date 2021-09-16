@@ -1,7 +1,8 @@
 import { loadImage, createCanvas } from 'canvas';
-import { CustomError } from 'ts-custom-error';
-
-export class FileTooLargeError extends CustomError {}
+import {
+  FileTooLargeError,
+  UnsupportedImageFormatError,
+} from '~/lib/errors';
 
 export type ImageFile = {
   name: string;
@@ -17,7 +18,16 @@ export class ImageFileReader {
 
     const dataUrl = await this.readAsDataUrl(file);
     const imageFile = { name: file.name, type: file.type, dataUrl };
-    return await this.resizeImageFile(imageFile, 400);
+    return await this.resizeImageFile(imageFile, 400).catch(error => {
+      switch (error.constructor) {
+        case Error:
+          if (error.message.startsWith('Failed to load the image')) {
+            throw new UnsupportedImageFormatError();
+          }
+          break;
+      }
+      throw error;
+    });
   }
 
   public static async readAsDataUrl(file: File): Promise<string> {
