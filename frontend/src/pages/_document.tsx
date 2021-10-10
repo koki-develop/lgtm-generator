@@ -50,7 +50,7 @@ export default class Document extends NextDocument {
           <meta property='og:image:height' content='314' />
           <meta property='og:locale' content='ja_JP' />
           <meta name='twitter:card' content='summary_large_image' />
-          <meta name='twitter:site' content='@kou_pg_0131' />
+          <meta name='twitter:site' content='@koki_develop' />
           <meta property='fb:app_id' content='889570964422469' />
           <link rel='icon' href='https://lgtmgen.org/favicon.ico' />
           <link rel='apple-touch-icon' href='https://lgtmgen.org/logo192.png' />

@@ -45,7 +45,7 @@ const Footer: React.VFC = () => {
 
       <ul className={classes.list}>
         <li className={classes.listItem}>
-          <ExternalLink href='https://github.com/kou-pg-0131/lgtm-generator'>
+          <ExternalLink href='https://github.com/koki-develop/lgtm-generator'>
             View on GitHub
           </ExternalLink>
         </li>

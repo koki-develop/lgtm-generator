@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
+	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	"github.com/koki-develop/lgtm-generator/backend/src/utils"
 	"github.com/pkg/errors"
 )
 
