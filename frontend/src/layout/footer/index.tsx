@@ -39,7 +39,7 @@ const Footer: React.VFC = () => {
       className={classes.root}
       component='footer'
     >
-      <ExternalLink href='https://kou-pg.com'>
+      <ExternalLink href='https://koki.me'>
         <Typography component='small'>&copy;2021 koki sato</Typography>
       </ExternalLink>
 
