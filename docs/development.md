@@ -1,7 +1,7 @@
 # 開発環境構築
 
 ```sh
-git clone git@github.com:kou-pg-0131/lgtm-generator.git
+git clone git@github.com:koki-develop/lgtm-generator.git
 cd lgtm-generator
 ```
 
