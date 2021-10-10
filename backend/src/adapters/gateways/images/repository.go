@@ -1,8 +1,8 @@
 package images
 
 import (
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
+	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	"github.com/pkg/errors"
 )
 

@@ -8,21 +8,21 @@ import (
 	"github.com/pkg/errors"
 
 	"github.com/gin-gonic/gin"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
-	healthctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/health"
-	imgsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/images"
-	lgtmsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/lgtms"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/middlewares/cors"
-	rptsctrl "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers/reports"
-	imgsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/images"
-	lgtmsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/lgtms"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/notifier"
-	rptsrepo "github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways/reports"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/infrastructures"
-	imgsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/images"
-	lgtmsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/lgtms"
-	rptsuc "github.com/kou-pg-0131/lgtm-generator/backend/src/usecases/reports"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
+	healthctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/health"
+	imgsctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/images"
+	lgtmsctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/lgtms"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/middlewares/cors"
+	rptsctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/reports"
+	imgsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/images"
+	lgtmsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/lgtms"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/notifier"
+	rptsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/reports"
+	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	"github.com/koki-develop/lgtm-generator/backend/src/infrastructures"
+	imgsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases/images"
+	lgtmsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases/lgtms"
+	rptsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases/reports"
 )
 
 func withContext(h func(ctx controllers.Context)) gin.HandlerFunc {
@@ -99,7 +99,7 @@ func New() *gin.Engine {
 		case "local":
 			cfg.AllowOrigins = []string{"http://localhost:3000"}
 		case "dev":
-			cfg.AllowOrigins = []string{"https://lgtm-generator-*-kou-pg-0131.vercel.app"}
+			cfg.AllowOrigins = []string{"https://lgtm-generator-*-koki-develop.vercel.app"}
 		case "prod":
 			cfg.AllowOrigins = []string{"https://lgtmgen.org"}
 		default:

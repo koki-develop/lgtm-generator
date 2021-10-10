@@ -1,7 +1,7 @@
 package infrastructures
 
 import (
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
+	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	"github.com/pkg/errors"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/customsearch/v1"

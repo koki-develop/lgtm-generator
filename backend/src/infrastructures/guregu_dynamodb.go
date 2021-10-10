@@ -7,7 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/guregu/dynamo"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/gateways"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
 )
 
 type GureguDynamoDB dynamo.DB

@@ -3,7 +3,7 @@ package health
 import (
 	"net/http"
 
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 )
 
 type Controller struct {

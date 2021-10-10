@@ -6,7 +6,7 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	ginadapter "github.com/awslabs/aws-lambda-go-api-proxy/gin"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/handlers/api/router"
+	"github.com/koki-develop/lgtm-generator/backend/src/handlers/api/router"
 )
 
 var ginLambda *ginadapter.GinLambda

@@ -3,7 +3,7 @@ package entities
 import (
 	"time"
 
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/utils"
+	"github.com/koki-develop/lgtm-generator/backend/src/utils"
 	"github.com/pkg/errors"
 )
 

@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/adapters/controllers"
-	"github.com/kou-pg-0131/lgtm-generator/backend/src/entities"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
+	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	"github.com/pkg/errors"
 	"github.com/slack-go/slack"
 )
