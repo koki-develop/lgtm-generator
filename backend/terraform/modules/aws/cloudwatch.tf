@@ -1,4 +1,6 @@
 resource "aws_cloudwatch_dashboard" "api" {
+  count = var.stage == "prod" ? 1 : 0
+
   dashboard_name = "${local.prefix}-api"
   dashboard_body = jsonencode({
     widgets = [
