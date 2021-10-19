@@ -64,11 +64,16 @@ jobs:
   backend_build:
     working_directory: ~/project/backend
     docker:
-      - image: lambci/lambda:build-go1.x
+      - image: golang:1.16
     steps:
       - checkout:
           path: ~/project
       - jq/install
+      - run:
+          name: install imagemagick
+          command: |
+            apt update
+            apt install -y imagemagick libmagickwand-dev
       - go_mod_download
       - restore_cache:
           keys:
