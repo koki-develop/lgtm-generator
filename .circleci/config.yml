@@ -70,9 +70,16 @@ jobs:
           path: ~/project
       - jq/install
       - go_mod_download
+      - restore_cache:
+          keys:
+            - go-build-v1-{{ .Branch }}
       - run:
           name: test
           command: go test ./src/...
+      - save_cache:
+          key: go-build-v1-{{ .Branch }}
+          paths:
+            - /root/.cache/go-build
       - notify_status
 
   backend_deploy:
