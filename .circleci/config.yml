@@ -35,14 +35,14 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - go-mod-v1-{{ .Branch }}-{{ checksum "go.sum" }}
+            - go-mod-v2-{{ .Branch }}-{{ checksum "go.sum" }}
       - run:
           name: go mod download
           command: go mod download -x
       - save_cache:
           paths:
             - /go/pkg/mod
-          key: go-mod-v1-{{ .Branch }}-{{ checksum "go.sum" }}
+          key: go-mod-v2-{{ .Branch }}-{{ checksum "go.sum" }}
 
   yarn_install:
     steps:
@@ -77,12 +77,12 @@ jobs:
       - go_mod_download
       - restore_cache:
           keys:
-            - go-build-v1-{{ .Branch }}
+            - go-build-v2-{{ .Branch }}
       - run:
           name: test
           command: go test ./src/...
       - save_cache:
-          key: go-build-v1-{{ .Branch }}
+          key: go-build-v2-{{ .Branch }}
           paths:
             - /root/.cache/go-build
       - notify_status
