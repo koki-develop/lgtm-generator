@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -54,7 +54,7 @@ func (c *SlackClient) PostMessage(msg *slack.Msg) error {
 	}
 	defer httpresp.Body.Close()
 
-	b, err := ioutil.ReadAll(httpresp.Body)
+	b, err := io.ReadAll(httpresp.Body)
 	if err != nil {
 		return errors.WithStack(err)
 	}

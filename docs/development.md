@@ -33,8 +33,7 @@ docker compose build
 ### ローカルで API を起動
 
 ```sh
-docker compose up -d
-go run github.com/cosmtrek/air
+docker compose up
 ```
 
 ### デプロイ

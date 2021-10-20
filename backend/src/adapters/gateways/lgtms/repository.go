@@ -2,7 +2,7 @@ package lgtms
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"time"
 
@@ -89,7 +89,7 @@ func (repo *Repository) CreateFromURL(url string) (*entities.LGTM, error) {
 		return nil, errors.WithStack(err)
 	}
 	defer resp.Body.Close()
-	src, err := ioutil.ReadAll(resp.Body)
+	src, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
