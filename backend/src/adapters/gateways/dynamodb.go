@@ -19,6 +19,7 @@ type DynamoDBTable interface {
 	Get(name string, value interface{}) DynamoDBQuery
 	Put(item interface{}) DynamoDBPut
 	Update(hashKey string, value interface{}) DynamoDBUpdate
+	Delete(hashKey string, value interface{}) DynamoDBDelete
 }
 
 type DynamoDBQuery interface {
@@ -37,4 +38,9 @@ type DynamoDBUpdate interface {
 	Run() error
 	Range(name string, value interface{}) DynamoDBUpdate
 	Set(path string, value interface{}) DynamoDBUpdate
+}
+
+type DynamoDBDelete interface {
+	Run() error
+	Range(name string, value interface{}) DynamoDBDelete
 }
