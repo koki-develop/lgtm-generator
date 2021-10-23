@@ -60,7 +60,7 @@ func (rdr *Renderer) InternalServerError(ctx controllers.Context, err error) {
 	fmt.Printf("error: %+v\n", err)
 	if err := rdr.config.SlackAPI.PostMessage(&slack.Msg{
 		Channel: fmt.Sprintf("lgtm-generator-backend-%s-errors", os.Getenv("STAGE")),
-		Text:    fmt.Sprintf(":red_circle: *ERROR*"),
+		Text:    ":red_circle: *ERROR*",
 		Attachments: []slack.Attachment{
 			{
 				Color: "#ff0000",
