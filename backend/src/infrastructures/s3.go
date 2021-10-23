@@ -67,3 +67,14 @@ func (c *S3) IssueSignedURL(key string) (string, error) {
 	}
 	return url, nil
 }
+
+func (c *S3) Delete(key string) error {
+	if _, err := c.api.DeleteObject(&s3.DeleteObjectInput{
+		Bucket: aws.String(c.config.Bucket),
+		Key:    aws.String(key),
+	}); err != nil {
+		return errors.WithStack(err)
+	}
+
+	return nil
+}

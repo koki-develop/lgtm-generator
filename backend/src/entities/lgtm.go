@@ -13,8 +13,9 @@ import (
 type LGTMStatus string
 
 const (
-	LGTMStatusOK      LGTMStatus = "ok"
-	LGTMStatusPending LGTMStatus = "pending"
+	LGTMStatusOK       LGTMStatus = "ok"
+	LGTMStatusPending  LGTMStatus = "pending"
+	LGTMStatusDeleting LGTMStatus = "deleting"
 )
 
 type LGTM struct {
@@ -63,4 +64,8 @@ func (ipt *LGTMCreateInput) Valid() error {
 		}
 	}
 	return nil
+}
+
+type LGTMDeleteInput struct {
+	ID string
 }

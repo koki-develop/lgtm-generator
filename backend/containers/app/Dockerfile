@@ -8,7 +8,8 @@ RUN apt update \
 COPY go.mod go.sum ./
 RUN go mod download -x
 COPY . .
-RUN GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o build/api src/handlers/api/main.go
+RUN GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o build/api src/handlers/api/main.go \
+ && GO111MODULE=on GOOS=linux go build -ldflags="-s -w" -o build/deletelgtm src/handlers/deletelgtm/main.go
 
 ENTRYPOINT []
 
@@ -23,5 +24,6 @@ RUN apt update \
       libmagickwand-dev
 COPY --from=build /var/task/src/static/ /var/task/src/static/
 COPY --from=build /var/task/build/api /var/task/build/api
+COPY --from=build /var/task/build/deletelgtm /var/task/build/deletelgtm
 
 ENTRYPOINT []

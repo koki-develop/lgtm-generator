@@ -15,6 +15,7 @@ type GureguDynamoDBTable dynamo.Table
 type GureguDynamoDBQuery dynamo.Query
 type GureguDynamoDBPut dynamo.Put
 type GureguDynamoDBUpdate dynamo.Update
+type GureguDynamoDBDelete dynamo.Delete
 
 /*
  * db
@@ -62,6 +63,10 @@ func (tbl GureguDynamoDBTable) Put(item interface{}) gateways.DynamoDBPut {
 
 func (tbl GureguDynamoDBTable) Update(hashKey string, value interface{}) gateways.DynamoDBUpdate {
 	return dynamoDBUpdateFromGuregu(tbl.guregu().Update(hashKey, value))
+}
+
+func (tbl GureguDynamoDBTable) Delete(hashKey string, value interface{}) gateways.DynamoDBDelete {
+	return dynamoDBDeleteFromGuregu(tbl.guregu().Delete(hashKey, value))
 }
 
 /*
@@ -142,4 +147,24 @@ func (u *GureguDynamoDBUpdate) Range(name string, value interface{}) gateways.Dy
 
 func (u *GureguDynamoDBUpdate) Set(path string, value interface{}) gateways.DynamoDBUpdate {
 	return dynamoDBUpdateFromGuregu(u.guregu().Set(path, value))
+}
+
+/*
+ * delete
+ */
+
+func dynamoDBDeleteFromGuregu(d *dynamo.Delete) gateways.DynamoDBDelete {
+	return (*GureguDynamoDBDelete)(d)
+}
+
+func (d *GureguDynamoDBDelete) guregu() *dynamo.Delete {
+	return (*dynamo.Delete)(d)
+}
+
+func (d *GureguDynamoDBDelete) Run() error {
+	return d.guregu().Run()
+}
+
+func (d *GureguDynamoDBDelete) Range(name string, value interface{}) gateways.DynamoDBDelete {
+	return dynamoDBDeleteFromGuregu(d.guregu().Range(name, value))
 }
