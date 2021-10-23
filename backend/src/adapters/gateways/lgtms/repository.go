@@ -126,3 +126,23 @@ func (repo *Repository) Create(src []byte, contentType string) (*entities.LGTM, 
 
 	return lgtm, nil
 }
+
+func (repo *Repository) Delete(id string) error {
+	lgtm, err := repo.Find(id)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
+	if err := tbl.Update("id", lgtm.ID).Range("created_at", lgtm.CreatedAt).Set("status", entities.LGTMStatusDeleting).Run(); err != nil {
+		return errors.WithStack(err)
+	}
+	if err := repo.config.FileStorage.Delete(lgtm.ID); err != nil {
+		return errors.WithStack(err)
+	}
+	if err := tbl.Delete("id", lgtm.ID).Range("created_at", lgtm.CreatedAt).Run(); err != nil {
+		return errors.WithStack(err)
+	}
+
+	return nil
+}

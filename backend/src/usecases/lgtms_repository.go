@@ -10,4 +10,5 @@ type LGTMsRepository interface {
 	FindAllAfter(id string, limit int64) (entities.LGTMs, error)
 	CreateFromBase64(base64, contentType string) (*entities.LGTM, error)
 	CreateFromURL(url string) (*entities.LGTM, error)
+	Delete(id string) error
 }
