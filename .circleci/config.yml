@@ -34,15 +34,14 @@ commands:
   go_mod_download:
     steps:
       - restore_cache:
-          keys:
-            - go-mod-v2-{{ .Branch }}-{{ checksum "go.sum" }}
+          key: go-mod-v2-{{ .Branch }}-{{ checksum "go.sum" }}
       - run:
           name: go mod download
           command: go mod download -x
       - save_cache:
+          key: go-mod-v2-{{ .Branch }}-{{ checksum "go.sum" }}
           paths:
             - /go/pkg/mod
-          key: go-mod-v2-{{ .Branch }}-{{ checksum "go.sum" }}
 
   yarn_install:
     steps:
@@ -179,9 +178,15 @@ jobs:
       - run:
           name: lint
           command: yarn run lint
+      - restore_cache:
+          key: next-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
       - run:
           name: build
           command: yarn run build
+      - save_cache:
+          key: next-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - .next/cache
       - notify_status
 
   frontend_terraform_plan:
