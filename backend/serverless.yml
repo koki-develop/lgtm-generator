@@ -34,6 +34,7 @@ provider:
             - dynamodb:Query
             - dynamodb:PutItem
             - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
           Resource:
             - Fn::Join:
                 - ":"
@@ -42,7 +43,9 @@ provider:
                   - Ref: AWS::AccountId
                   - table/${self:custom.prefix}-*
         - Effect: Allow
-          Action: s3:PutObject
+          Action:
+            - s3:PutObject
+            - s3:DeleteObject
           Resource:
             Fn::Join:
               - ""
