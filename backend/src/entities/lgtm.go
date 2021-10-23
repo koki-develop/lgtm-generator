@@ -65,3 +65,7 @@ func (ipt *LGTMCreateInput) Valid() error {
 	}
 	return nil
 }
+
+type LGTMDeleteInput struct {
+	ID string
+}
