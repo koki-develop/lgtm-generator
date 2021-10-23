@@ -60,3 +60,10 @@ func (uc *Usecase) Create(ipt *entities.LGTMCreateInput) (*entities.LGTM, error)
 
 	return nil, errors.WithStack(entities.ErrInvalidParameter)
 }
+
+func (uc *Usecase) Delete(ipt *entities.LGTMDeleteInput) error {
+	if err := uc.config.LGTMsRepository.Delete(ipt.ID); err != nil {
+		return errors.WithStack(err)
+	}
+	return nil
+}
