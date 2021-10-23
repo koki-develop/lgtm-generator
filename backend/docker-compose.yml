@@ -2,6 +2,7 @@ version: '3'
 
 services:
   app:
+    image: lgtm-generator-backend-app
     build:
       context: .
       dockerfile: ./containers/app/Dockerfile
@@ -32,7 +33,7 @@ services:
     command: |
       -c "
       mkdir -p /export/lgtm-generator-backend-local-images
-      /usr/bin/minio server /export --console-address ':9001'
+      /usr/bin/docker-entrypoint.sh server /export --console-address ':9001'
       "
 
   dynamodb:
