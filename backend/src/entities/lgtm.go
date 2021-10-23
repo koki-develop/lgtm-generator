@@ -13,8 +13,9 @@ import (
 type LGTMStatus string
 
 const (
-	LGTMStatusOK      LGTMStatus = "ok"
-	LGTMStatusPending LGTMStatus = "pending"
+	LGTMStatusOK       LGTMStatus = "ok"
+	LGTMStatusPending  LGTMStatus = "pending"
+	LGTMStatusDeleting LGTMStatus = "deleting"
 )
 
 type LGTM struct {
