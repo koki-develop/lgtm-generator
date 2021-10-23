@@ -61,3 +61,12 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 	}
 	ctrl.config.Renderer.Created(ctx, lgtm)
 }
+
+func (ctrl *Controller) BatchDelete(id string) error {
+	ipt := &entities.LGTMDeleteInput{ID: id}
+	if err := ctrl.config.LGTMsUsecase.Delete(ipt); err != nil {
+		return errors.WithStack(err)
+	}
+
+	return nil
+}
