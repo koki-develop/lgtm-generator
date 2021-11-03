@@ -13,7 +13,7 @@
     "axios": "^0.21.1",
     "canvas": "^2.8.0",
     "next": "^11.0.1",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.1",
     "notistack": "^1.0.10",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
