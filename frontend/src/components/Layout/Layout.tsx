@@ -4,18 +4,22 @@ import { RecoilRoot } from 'recoil';
 import Header from './Header';
 import Footer from './Footer';
 import ToastProvider from '~/components/providers/ToastProvider';
-import { Box, Container, CssBaseline, ThemeProvider, StyledEngineProvider } from '@mui/material';
+import {
+  Box,
+  Container,
+  CssBaseline,
+  ThemeProvider,
+  StyledEngineProvider,
+} from '@mui/material';
 import { Theme } from '@mui/material/styles';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
 import { theme } from './theme';
 
-
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
 }
-
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
