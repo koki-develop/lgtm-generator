@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
-import Tabs, { TabValue } from './tabs';
+import Tabs, { TabValue } from '../../../pageComponents/home/tabs';
 import Field from '~/components/utils/Field';
-import LgtmsPanel from './lgtmsPanel';
-import SearchImagesPanel from './searchImagesPanel';
-import FavoritesPanel from './favoritesPanel';
+import LgtmsPanel from '../../../pageComponents/home/lgtmsPanel';
+import SearchImagesPanel from '../../../pageComponents/home/searchImagesPanel';
+import FavoritesPanel from '../../../pageComponents/home/favoritesPanel';
 
 const Home: React.VFC = () => {
   const router = useRouter();
