@@ -17,12 +17,15 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', 'react-hooks'],
   rules: {
+    'react/prop-types': 'off',
     semi: ['error', 'always'],
     'comma-dangle': ['error', 'always-multiline'],
     quotes: ['error', 'single'],
+    'object-curly-spacing': ['error', 'always'],
     'react/jsx-tag-spacing': ['error'],
+    'react-hooks/exhaustive-deps': ['error'],
   },
   overrides: [
     {
