@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "eslint --max-warnings 0 --ext .js,.ts,.tsx ."
+    "lint": "eslint --max-warnings 0 --ext .js,.ts,.tsx .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
