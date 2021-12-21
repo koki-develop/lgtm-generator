@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Routes } from '~/routes';
-import ModalCard from '~/components/modalCard';
+import ModalCard from '~/components/utils/ModalCard';
 import ExternalLink from '~/components/utils/ExternalLink';
 import LoadableButton from '~/components/utils/LoadableButton';
 
