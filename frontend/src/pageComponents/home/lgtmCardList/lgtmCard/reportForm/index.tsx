@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { ReportType } from '~/types/report';
 import ModalCard from '~/components/modalCard';
-import LoadableButton from '~/components/loadableButton';
+import LoadableButton from '~/components/utils/LoadableButton';
 import {
   Button,
   CardActions,
