@@ -1,5 +1,5 @@
 import React from 'react';
-import { Paper, Tabs as MuiTabs, Tab } from '@material-ui/core';
+import { Paper, Tabs as MuiTabs, Tab } from '@mui/material';
 
 export const TabValue = {
   lgtms: 'lgtms',

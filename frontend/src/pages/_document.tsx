@@ -6,7 +6,7 @@ import NextDocument, {
   Main,
   NextScript,
 } from 'next/document';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import ServerStyleSheets from '@mui/styles/ServerStyleSheets';
 
 export default class Document extends NextDocument {
   render(): JSX.Element {

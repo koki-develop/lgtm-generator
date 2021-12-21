@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Fab } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { AddCircle as AddCircleIcon } from '@material-ui/icons';
+import { Fab } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import { AddCircle as AddCircleIcon } from '@mui/icons-material';
 import * as uuid from 'uuid';
 
 const useStyles = makeStyles((theme: Theme) =>

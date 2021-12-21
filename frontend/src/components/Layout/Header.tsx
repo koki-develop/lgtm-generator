@@ -1,15 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
 import { Routes } from '~/routes';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { AppBar, Toolbar, Typography } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     logo: {
       fontFamily: 'ArchivoBlack',
       fontSize: theme.typography.h4.fontSize,
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         fontSize: theme.typography.h5.fontSize,
       },
     },

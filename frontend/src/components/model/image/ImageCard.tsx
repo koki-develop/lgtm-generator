@@ -1,14 +1,16 @@
 import React from 'react';
 import { Image } from '~/types/image';
-import { Box, Card, CardActionArea, CardContent } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { grey } from '@material-ui/core/colors';
+import { Box, Card, CardActionArea, CardContent } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import { grey } from '@mui/material/colors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     cardContent: {
       padding: theme.spacing(1),
-      paddingBottom: `${theme.spacing(1)}px !important`,
+      paddingBottom: `${theme.spacing(1)} !important`,
     },
     img: {
       border: '1px solid',

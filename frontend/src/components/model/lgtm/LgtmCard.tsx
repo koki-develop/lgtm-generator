@@ -16,16 +16,18 @@ import {
   ListItemText,
   Paper,
   Popper,
-} from '@material-ui/core';
+} from '@mui/material';
 import CopyToClipBoard from 'react-copy-to-clipboard';
 import {
   FavoriteBorder as FavoriteBorderIcon,
   Favorite as FavoriteIcon,
   FileCopyOutlined as FileCopyOutlinedIcon,
   FlagOutlined as FlagOutlinedIcon,
-} from '@material-ui/icons';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { grey, orange, pink } from '@material-ui/core/colors';
+} from '@mui/icons-material';
+import { Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import { grey, orange, pink } from '@mui/material/colors';
 import { DataStorage } from '~/lib/dataStorage';
 import { ApiClient } from '~/lib/apiClient';
 import ReportForm, { Values as ReportFormValues } from '../report/ReportForm';

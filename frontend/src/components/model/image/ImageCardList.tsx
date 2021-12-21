@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from '~/types/image';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import ImageCard from './ImageCard';
 
 type ImageCardListProps = {

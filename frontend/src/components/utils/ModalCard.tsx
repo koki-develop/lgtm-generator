@@ -1,8 +1,10 @@
 import React from 'react';
 import Modal from '~/components/utils/Modal';
-import { Box, Card, Container } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import { Close as CloseIcon } from '@material-ui/icons';
+import { Box, Card, Container } from '@mui/material';
+import { Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
+import { Close as CloseIcon } from '@mui/icons-material';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

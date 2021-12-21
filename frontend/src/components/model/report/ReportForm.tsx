@@ -10,8 +10,11 @@ import {
   Radio,
   RadioGroup,
   TextField,
-} from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+} from '@mui/material';
+import { Theme } from '@mui/material/styles';
+
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
