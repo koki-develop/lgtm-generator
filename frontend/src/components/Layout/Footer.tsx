@@ -5,10 +5,10 @@ import { Box, Typography } from '@mui/material';
 import { Routes } from '~/routes';
 import ExternalLink from '~/components/utils/ExternalLink';
 
-const LinkListItem = styled('li')({
-  mb: 1,
+const LinkListItem = styled('li')(({ theme }) => ({
+  marginBottom: theme.spacing(1),
   textAlign: 'center',
-});
+}));
 
 const Footer: React.VFC = () => {
   return (
