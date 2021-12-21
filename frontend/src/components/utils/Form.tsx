@@ -1,17 +1,18 @@
 import React from 'react';
 
-type FormProps = {
-  children: React.ReactNode;
-  onSubmit: () => void;
-};
+type FormProps = React.HTMLProps<HTMLFormElement>;
 
-const Form: React.VFC<FormProps> = (props: FormProps) => {
+const Form: React.VFC<FormProps> = React.memo(props => {
+  const { onSubmit, ...formProps } = props;
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    props.onSubmit();
+    onSubmit?.(e);
   };
 
-  return <form onSubmit={handleSubmit}>{props.children}</form>;
-};
+  return <form onSubmit={handleSubmit} {...formProps} />;
+});
+
+Form.displayName = 'Form';
 
 export default Form;
