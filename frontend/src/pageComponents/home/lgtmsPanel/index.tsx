@@ -10,7 +10,7 @@ import { Box, Button } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import UploadButton from './uploadButton';
 import LgtmCardList from '../../../components/model/lgtm/LgtmCardList';
-import ConfirmForm from '../confirmForm';
+import ConfirmForm from '../../../components/model/lgtm/LgtmForm';
 import Loading from '~/components/utils/Loading';
 import Modal from '~/components/utils/Modal';
 

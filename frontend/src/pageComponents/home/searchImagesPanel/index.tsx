@@ -12,7 +12,7 @@ import { ApiClient } from '~/lib/apiClient';
 import { UnsupportedImageFormatError } from '~/lib/errors';
 import { Image } from '~/types/image';
 import ImageCardList from './imageCardList';
-import ConfirmForm from '../confirmForm';
+import ConfirmForm from '../../../components/model/lgtm/LgtmForm';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
