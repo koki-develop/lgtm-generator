@@ -6,7 +6,7 @@ import { Box, InputAdornment, TextField } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Search as SearchIcon } from '@material-ui/icons';
 import Field from '~/components/utils/Field';
-import Form from '~/components/form';
+import Form from '~/components/utils/Form';
 import Loading from '~/components/loading';
 import { ApiClient } from '~/lib/apiClient';
 import { UnsupportedImageFormatError } from '~/lib/errors';
