@@ -1,8 +1,8 @@
 import React from 'react';
-import Layout from '~/layout';
-import ExternalLink from '~/components/externalLink';
 import { Box, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Layout from '~/layout';
+import ExternalLink from '~/components/utils/ExternalLink';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
-import { Routes } from '~/routes';
-import ExternalLink from '~/components/externalLink';
 import { Box, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Routes } from '~/routes';
+import ExternalLink from '~/components/utils/ExternalLink';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
