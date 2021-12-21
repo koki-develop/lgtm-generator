@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from '~/types/image';
 import { Grid } from '@material-ui/core';
-import ImageCard from './imageCard';
+import ImageCard from '../../../pageComponents/home/searchImagesPanel/imageCardList/imageCard';
 
 type ImageCardListProps = {
   images: Image[];

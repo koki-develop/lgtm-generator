@@ -11,7 +11,7 @@ import Loading from '~/components/utils/Loading';
 import { ApiClient } from '~/lib/apiClient';
 import { UnsupportedImageFormatError } from '~/lib/errors';
 import { Image } from '~/types/image';
-import ImageCardList from './imageCardList';
+import ImageCardList from '../../../components/model/image/ImageCardList';
 import ConfirmForm from '../../../components/model/lgtm/LgtmForm';
 
 const useStyles = makeStyles((theme: Theme) =>
