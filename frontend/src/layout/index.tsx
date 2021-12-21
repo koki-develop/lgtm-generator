@@ -4,17 +4,8 @@ import { RecoilRoot } from 'recoil';
 import Header from './header';
 import Footer from './footer';
 import ToastProvider from '~/contexts/toastProvider';
-import {
-  Box,
-  Container,
-  CssBaseline,
-  ThemeProvider,
-} from '@material-ui/core';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import { Box, Container, CssBaseline, ThemeProvider } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { theme } from './theme';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -65,11 +56,7 @@ const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
       </Head>
       <CssBaseline />
       <Header />
-      <Container
-        className={classes.main}
-        component='main'
-        maxWidth='lg'
-      >
+      <Container className={classes.main} component='main' maxWidth='lg'>
         {props.children}
       </Container>
       <Footer />

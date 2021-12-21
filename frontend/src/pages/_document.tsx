@@ -16,7 +16,10 @@ export default class Document extends NextDocument {
           {process.env.NEXT_PUBLIC_STAGE === 'prod' && (
             <>
               {/* Global site tag (gtag.js) - Google Analytics */}
-              <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}></script>
+              <script
+                async
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
+              ></script>
               <script
                 dangerouslySetInnerHTML={{
                   __html: `
@@ -27,20 +30,28 @@ export default class Document extends NextDocument {
                     gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
                   `,
                 }}
-              >
-              </script>
+              ></script>
             </>
           )}
 
           <meta name='theme-color' content='#1E90FF' />
-          <meta name='description' content='シンプルな LGTM 画像作成サービスです。' />
+          <meta
+            name='description'
+            content='シンプルな LGTM 画像作成サービスです。'
+          />
           <meta property='og:site_name' content='LGTM Generator' />
           <meta property='og:title' content='LGTM Generator' />
-          <meta property='og:description' content='シンプルな LGTM 画像作成サービスです。' />
+          <meta
+            property='og:description'
+            content='シンプルな LGTM 画像作成サービスです。'
+          />
           <meta property='og:type' content='website' />
           <meta property='og:url' content='https://lgtmgen.org' />
           <meta property='og:image' content='https://lgtmgen.org/card.png' />
-          <meta property='og:image:secure_url' content='https://lgtmgen.org/card.png' />
+          <meta
+            property='og:image:secure_url'
+            content='https://lgtmgen.org/card.png'
+          />
           <meta property='og:image:width' content='600' />
           <meta property='og:image:height' content='314' />
           <meta property='og:locale' content='ja_JP' />
@@ -66,13 +77,16 @@ Document.getInitialProps = async (ctx: DocumentContext) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
+      enhanceApp: App => props => sheets.collect(<App {...props} />),
     });
 
   const initialProps = await NextDocument.getInitialProps(ctx);
 
   return {
     ...initialProps,
-    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
+    styles: [
+      ...React.Children.toArray(initialProps.styles),
+      sheets.getStyleElement(),
+    ],
   };
 };

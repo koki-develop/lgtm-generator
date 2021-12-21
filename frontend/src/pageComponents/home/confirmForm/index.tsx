@@ -9,11 +9,7 @@ import {
   CardContent,
   Typography,
 } from '@material-ui/core';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,59 +41,54 @@ type ConfirmFormProps = {
   onConfirm: () => void;
 };
 
-const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo((props: ConfirmFormProps) => {
-  const classes = useStyles();
+const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(
+  (props: ConfirmFormProps) => {
+    const classes = useStyles();
 
-  const handleClose = () => {
-    if (props.loading) return;
-    props.onClose();
-  };
+    const handleClose = () => {
+      if (props.loading) return;
+      props.onClose();
+    };
 
-  return (
-    <ModalCard
-      open={props.open}
-      onClose={handleClose}
-    >
-      <CardContent className={classes.content}>
-        <Typography>この画像で LGTM 画像を生成しますか？</Typography>
-        <img
-          className={classes.img}
-          src={props.previewSrc}
-          alt='preview'
-        />
-        <Typography>
-          LGTM 画像を生成する前に
-          <ExternalLink
-            className={classes.precautionLink}
-            href={Routes.precaution}
+    return (
+      <ModalCard open={props.open} onClose={handleClose}>
+        <CardContent className={classes.content}>
+          <Typography>この画像で LGTM 画像を生成しますか？</Typography>
+          <img className={classes.img} src={props.previewSrc} alt='preview' />
+          <Typography>
+            LGTM 画像を生成する前に
+            <ExternalLink
+              className={classes.precautionLink}
+              href={Routes.precaution}
+            >
+              ご利用上の注意
+            </ExternalLink>
+            をお読みください
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button
+            fullWidth
+            variant='contained'
+            onClick={handleClose}
+            disabled={props.loading}
           >
-            ご利用上の注意
-          </ExternalLink>
-          をお読みください
-        </Typography>
-      </CardContent>
-      <CardActions>
-        <Button
-          fullWidth
-          variant='contained'
-          onClick={handleClose}
-          disabled={props.loading}
-        >
-          キャンセル
-        </Button>
-        <LoadableButton
-          fullWidth
-          color='primary'
-          variant='contained'
-          loading={props.loading}
-          onClick={props.onConfirm}
-        >
-          生成
-        </LoadableButton>
-      </CardActions>
-    </ModalCard>
-  );
-});
+            キャンセル
+          </Button>
+          <LoadableButton
+            fullWidth
+            color='primary'
+            variant='contained'
+            loading={props.loading}
+            onClick={props.onConfirm}
+          >
+            生成
+          </LoadableButton>
+        </CardActions>
+      </ModalCard>
+    );
+  },
+);
 
 ConfirmForm.displayName = 'ConfirmForm';
 

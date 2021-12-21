@@ -1,14 +1,7 @@
 import React from 'react';
 import Layout from '~/layout';
-import {
-  Box,
-  Typography,
-} from '@material-ui/core';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import { Box, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,10 +33,7 @@ const Precaution: React.VFC = () => {
       <Box>
         <ul>
           {items.map((item, i) => (
-            <li
-              key={i}
-              className={classes.listItem}
-            >
+            <li key={i} className={classes.listItem}>
               {item}
             </li>
           ))}

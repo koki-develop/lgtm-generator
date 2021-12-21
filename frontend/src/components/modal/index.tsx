@@ -5,10 +5,7 @@ import {
   Modal as MuiModal,
   ModalProps as MuiModalProps,
 } from '@material-ui/core';
-import {
-  createStyles,
-  makeStyles,
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -35,9 +32,7 @@ const Modal: React.VFC<ModalProps> = (props: ModalProps) => {
       BackdropComponent={Backdrop}
       BackdropProps={{ timeout: 200 }}
     >
-      <Fade in={props.open}>
-        {children}
-      </Fade>
+      <Fade in={props.open}>{children}</Fade>
     </MuiModal>
   );
 };

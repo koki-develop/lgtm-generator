@@ -2,15 +2,8 @@ import React from 'react';
 import Link from 'next/link';
 import { Routes } from '~/routes';
 import ExternalLink from '~/components/externalLink';
-import {
-  Box,
-  Typography,
-} from '@material-ui/core';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import { Box, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,10 +28,7 @@ const Footer: React.VFC = () => {
   const classes = useStyles();
 
   return (
-    <Box
-      className={classes.root}
-      component='footer'
-    >
+    <Box className={classes.root} component='footer'>
       <ExternalLink href='https://koki.me'>
         <Typography component='small'>&copy;2021 koki sato</Typography>
       </ExternalLink>
@@ -51,16 +41,12 @@ const Footer: React.VFC = () => {
         </li>
         <li className={classes.listItem}>
           <Link href={Routes.precaution}>
-            <a>
-              ご利用上の注意
-            </a>
+            <a>ご利用上の注意</a>
           </Link>
         </li>
         <li className={classes.listItem}>
           <Link href={Routes.privacyPolicy}>
-            <a>
-              プライバシーポリシー
-            </a>
+            <a>プライバシーポリシー</a>
           </Link>
         </li>
       </ul>

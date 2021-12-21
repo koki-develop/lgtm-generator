@@ -6,20 +6,13 @@ type LgtmCardListProps = {
   ids: string[];
 };
 
-const LgtmCardList: React.VFC<LgtmCardListProps> = (props: LgtmCardListProps) => {
+const LgtmCardList: React.VFC<LgtmCardListProps> = (
+  props: LgtmCardListProps,
+) => {
   return (
-    <Grid
-      container
-      spacing={2}
-    >
+    <Grid container spacing={2}>
       {props.ids.map(id => (
-        <Grid
-          key={id}
-          item
-          xs={6}
-          sm={4}
-          md={3}
-        >
+        <Grid key={id} item xs={6} sm={4} md={3}>
           <LgtmCard id={id} />
         </Grid>
       ))}

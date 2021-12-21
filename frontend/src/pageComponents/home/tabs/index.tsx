@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  Paper,
-  Tabs as MuiTabs,
-  Tab,
-} from '@material-ui/core';
+import { Paper, Tabs as MuiTabs, Tab } from '@material-ui/core';
 
 export const TabValue = {
   lgtms: 'lgtms',
@@ -32,18 +28,9 @@ const Tabs: React.VFC<TabsProps> = React.memo((props: TabsProps) => {
         indicatorColor='primary'
         textColor='primary'
       >
-        <Tab
-          label='LGTM'
-          value={TabValue.lgtms}
-        />
-        <Tab
-          label='画像検索'
-          value={TabValue.searchImages}
-        />
-        <Tab
-          label='お気に入り'
-          value={TabValue.favorites}
-        />
+        <Tab label='LGTM' value={TabValue.lgtms} />
+        <Tab label='画像検索' value={TabValue.searchImages} />
+        <Tab label='お気に入り' value={TabValue.favorites} />
       </MuiTabs>
     </Paper>
   );

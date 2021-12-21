@@ -1,8 +1,5 @@
 import { loadImage, createCanvas } from 'canvas';
-import {
-  FileTooLargeError,
-  UnsupportedImageFormatError,
-} from '~/lib/errors';
+import { FileTooLargeError, UnsupportedImageFormatError } from '~/lib/errors';
 
 export type ImageFile = {
   name: string;
@@ -43,13 +40,30 @@ export class ImageFileReader {
     });
   }
 
-  private static async resizeImageFile(imageFile: ImageFile, sideLength: number): Promise<ImageFile> {
+  private static async resizeImageFile(
+    imageFile: ImageFile,
+    sideLength: number,
+  ): Promise<ImageFile> {
     const image = await loadImage(imageFile.dataUrl);
 
-    const [destWidth, destHeight] = this.calcSize(image.width, image.height, sideLength);
+    const [destWidth, destHeight] = this.calcSize(
+      image.width,
+      image.height,
+      sideLength,
+    );
     const canvas = createCanvas(destWidth, destHeight);
     const context = canvas.getContext('2d');
-    context.drawImage(image, 0, 0, image.width, image.height, 0, 0, destWidth, destHeight);
+    context.drawImage(
+      image,
+      0,
+      0,
+      image.width,
+      image.height,
+      0,
+      0,
+      destWidth,
+      destHeight,
+    );
     const dataUrl = canvas.toDataURL('image/png');
 
     return {
@@ -59,11 +73,15 @@ export class ImageFileReader {
     };
   }
 
-  private static calcSize(width: number, height: number, sideLength: number): [number, number] {
+  private static calcSize(
+    width: number,
+    height: number,
+    sideLength: number,
+  ): [number, number] {
     if (width > height) {
-      return [sideLength, sideLength / width * height];
+      return [sideLength, (sideLength / width) * height];
     } else {
-      return [sideLength / height * width, sideLength];
+      return [(sideLength / height) * width, sideLength];
     }
   }
 }

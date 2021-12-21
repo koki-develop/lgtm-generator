@@ -1,18 +1,8 @@
 import React from 'react';
 import Modal from '~/components/modal';
-import {
-  Box,
-  Card,
-  Container,
-} from '@material-ui/core';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
-import {
-  Close as CloseIcon,
-} from '@material-ui/icons';
+import { Box, Card, Container } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { Close as CloseIcon } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,9 +28,7 @@ const ModalCard: React.VFC<ModalCardProps> = (props: ModalCardProps) => {
   const classes = useStyles();
 
   return (
-    <Modal
-      open={props.open}
-    >
+    <Modal open={props.open}>
       <Container maxWidth='sm'>
         <Card>
           <Box className={classes.closeIconContainer}>

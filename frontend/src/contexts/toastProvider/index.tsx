@@ -1,12 +1,5 @@
-import React, {
-  createContext,
-  useContext,
-} from 'react';
-import {
-  useSnackbar,
-  SnackbarProvider,
-  VariantType,
-} from 'notistack';
+import React, { createContext, useContext } from 'react';
+import { useSnackbar, SnackbarProvider, VariantType } from 'notistack';
 
 type Context = {
   enqueueSuccess?: (message: React.ReactNode) => void;
@@ -30,14 +23,14 @@ const Root: React.VFC<ToastProviderProps> = (props: ToastProviderProps) => {
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       autoHideDuration={3000}
     >
-      <ToastProvider>
-        {props.children}
-      </ToastProvider>
+      <ToastProvider>{props.children}</ToastProvider>
     </SnackbarProvider>
   );
 };
 
-const ToastProvider: React.VFC<ToastProviderProps> = (props: ToastProviderProps) => {
+const ToastProvider: React.VFC<ToastProviderProps> = (
+  props: ToastProviderProps,
+) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   const enqueueDefault = (message: React.ReactNode, variant: VariantType) => {
@@ -47,12 +40,17 @@ const ToastProvider: React.VFC<ToastProviderProps> = (props: ToastProviderProps)
     });
   };
 
-  const enqueueSuccess = (message: React.ReactNode) => enqueueDefault(message, 'success');
-  const enqueueWarn = (message: React.ReactNode) => enqueueDefault(message, 'warning');
-  const enqueueError = (message: React.ReactNode) => enqueueDefault(message, 'error');
+  const enqueueSuccess = (message: React.ReactNode) =>
+    enqueueDefault(message, 'success');
+  const enqueueWarn = (message: React.ReactNode) =>
+    enqueueDefault(message, 'warning');
+  const enqueueError = (message: React.ReactNode) =>
+    enqueueDefault(message, 'error');
 
   return (
-    <ToastContext.Provider value={{ enqueueSuccess, enqueueWarn, enqueueError }}>
+    <ToastContext.Provider
+      value={{ enqueueSuccess, enqueueWarn, enqueueError }}
+    >
       {props.children}
     </ToastContext.Provider>
   );

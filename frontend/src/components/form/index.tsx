@@ -11,11 +11,7 @@ const Form: React.VFC<FormProps> = (props: FormProps) => {
     props.onSubmit();
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      {props.children}
-    </form>
-  );
+  return <form onSubmit={handleSubmit}>{props.children}</form>;
 };
 
 export default Form;

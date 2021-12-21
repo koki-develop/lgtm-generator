@@ -11,11 +11,7 @@ import {
   RadioGroup,
   TextField,
 } from '@material-ui/core';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,7 +57,10 @@ const ReportForm: React.VFC<ReportFormProps> = (props: ReportFormProps) => {
   };
 
   const handleChangeType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    props.onChange({ ...props.values, type: e.currentTarget.value as ReportType });
+    props.onChange({
+      ...props.values,
+      type: e.currentTarget.value as ReportType,
+    });
   };
 
   const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,20 +78,10 @@ const ReportForm: React.VFC<ReportFormProps> = (props: ReportFormProps) => {
   }, [props.values]);
 
   return (
-    <ModalCard
-      open={props.open}
-      onClose={handleClose}
-    >
+    <ModalCard open={props.open} onClose={handleClose}>
       <CardContent className={classes.cardContent}>
-        <img
-          className={classes.img}
-          src={props.imgSrc}
-          alt="LGTM"
-        />
-        <RadioGroup
-          value={props.values.type || ''}
-          onChange={handleChangeType}
-        >
+        <img className={classes.img} src={props.imgSrc} alt='LGTM' />
+        <RadioGroup value={props.values.type || ''} onChange={handleChangeType}>
           <FormControlLabel
             value={ReportType.illegal}
             control={<Radio value={ReportType.illegal} />}

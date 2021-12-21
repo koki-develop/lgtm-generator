@@ -1,6 +1,4 @@
-import {
-  Box,
-} from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { withStyles, createStyles, Theme } from '@material-ui/core/styles';
 
 export default withStyles((theme: Theme) =>

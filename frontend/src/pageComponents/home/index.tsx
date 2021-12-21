@@ -20,10 +20,7 @@ const Home: React.VFC = () => {
   return (
     <Layout>
       <Field>
-        <Tabs
-          value={tab}
-          onChange={handleChangeTab}
-        />
+        <Tabs value={tab} onChange={handleChangeTab} />
       </Field>
 
       <LgtmsPanel show={tab === TabValue.lgtms} />

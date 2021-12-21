@@ -13,13 +13,13 @@ const App: React.VFC<AppProps> = ({ Component, pageProps }: AppProps) => {
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_STAGE === 'prod') {
-      window.gtag('config', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID, { page_path: router.pathname });
+      window.gtag('config', process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID, {
+        page_path: router.pathname,
+      });
     }
   }, [router.pathname]);
 
-  return (
-    <Component {...pageProps} />
-  );
+  return <Component {...pageProps} />;
 };
 
 export default App;

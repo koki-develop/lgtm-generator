@@ -1,15 +1,8 @@
 import React from 'react';
 import Layout from '~/layout';
 import ExternalLink from '~/components/externalLink';
-import {
-  Box,
-  Typography,
-} from '@material-ui/core';
-import {
-  createStyles,
-  makeStyles,
-  Theme,
-} from '@material-ui/core/styles';
+import { Box, Typography } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,24 +26,34 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
 const PrivacyPolicy: React.VFC = () => {
   const classes = useStyles();
 
-  const items: { name: string; content: React.ReactNode; }[] = [
+  const items: { name: string; content: React.ReactNode }[] = [
     {
       name: 'アクセス解析ツールについて',
       content: (
         <>
-          当サイトでは、 Google によるアクセス解析ツール「 Google アナリティクス」を利用しています。この Google アナリティクスはトラフィックデータの収集のために Cookie を使用しています。このトラフィックデータは匿名で収集されており、個人を特定するものではありません。この機能は Cookie を無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。この規約に関して、詳しくは <ExternalLink className={classes.link} href='https://marketingplatform.google.com/about/analytics/terms/jp/'>Google アナリティクス利用規約</ExternalLink> を参照してください。
+          当サイトでは、 Google によるアクセス解析ツール「 Google
+          アナリティクス」を利用しています。この Google
+          アナリティクスはトラフィックデータの収集のために Cookie
+          を使用しています。このトラフィックデータは匿名で収集されており、個人を特定するものではありません。この機能は
+          Cookie
+          を無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。この規約に関して、詳しくは{' '}
+          <ExternalLink
+            className={classes.link}
+            href='https://marketingplatform.google.com/about/analytics/terms/jp/'
+          >
+            Google アナリティクス利用規約
+          </ExternalLink>{' '}
+          を参照してください。
         </>
-
-
       ),
     },
     {
       name: 'プライバシーポリシーの変更について',
-      content: '当サイトは、個人情報に関して適用される日本の法令を遵守するとともに、本ポリシーの内容を適宜見直しその改善に努めます。修正された最新のプライバシーポリシーは常に本ページにて開示されます。',
+      content:
+        '当サイトは、個人情報に関して適用される日本の法令を遵守するとともに、本ポリシーの内容を適宜見直しその改善に努めます。修正された最新のプライバシーポリシーは常に本ページにて開示されます。',
     },
   ];
 
@@ -59,10 +62,7 @@ const PrivacyPolicy: React.VFC = () => {
       <Typography className={classes.title}>プライバシーポリシー</Typography>
       <Box>
         {items.map(item => (
-          <Box
-            key={item.name}
-            className={classes.listItem}
-          >
+          <Box key={item.name} className={classes.listItem}>
             <Typography className={classes.name}>{item.name}</Typography>
             <Typography>{item.content}</Typography>
           </Box>
