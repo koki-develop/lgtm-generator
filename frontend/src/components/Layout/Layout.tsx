@@ -12,26 +12,12 @@ import {
   StyledEngineProvider,
 } from '@mui/material';
 import { Theme } from '@mui/material/styles';
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
 import { theme } from './theme';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
 }
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      backgroundColor: theme.palette.primary.light,
-      minHeight: '100vh',
-    },
-    main: {
-      paddingTop: theme.spacing(2),
-    },
-  }),
-);
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -53,7 +39,6 @@ const Root: React.VFC<LayoutProps> = (props: LayoutProps) => {
 };
 
 const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
-  const classes = useStyles();
   const { title } = props;
 
   const pageTitle = useMemo(() => {
@@ -65,13 +50,18 @@ const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
   }, [title]);
 
   return (
-    <Box className={classes.root}>
+    <Box
+      sx={{
+        backgroundColor: theme => theme.palette.primary.light,
+        minHeight: '100vh',
+      }}
+    >
       <Head>
         <title>{pageTitle}</title>
       </Head>
       <CssBaseline />
       <Header />
-      <Container className={classes.main} component='main' maxWidth='lg'>
+      <Container component='main' maxWidth='lg' sx={{ pt: 2 }}>
         {props.children}
       </Container>
       <Footer />
