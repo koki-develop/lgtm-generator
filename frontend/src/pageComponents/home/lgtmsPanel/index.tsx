@@ -11,7 +11,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import UploadButton from './uploadButton';
 import LgtmCardList from '../lgtmCardList';
 import ConfirmForm from '../confirmForm';
-import Loading from '~/components/loading';
+import Loading from '~/components/utils/Loading';
 import Modal from '~/components/modal';
 
 const useStyles = makeStyles((theme: Theme) =>
