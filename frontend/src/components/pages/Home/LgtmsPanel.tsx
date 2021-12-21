@@ -8,9 +8,9 @@ import { DataUrl } from '~/lib/dataUrl';
 import { useToast } from '~/components/providers/ToastProvider';
 import { Box, Button } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import UploadButton from '../../../components/pages/Home/UploadButton';
-import LgtmCardList from '../../../components/model/lgtm/LgtmCardList';
-import ConfirmForm from '../../../components/model/lgtm/LgtmForm';
+import UploadButton from './UploadButton';
+import LgtmCardList from '../../model/lgtm/LgtmCardList';
+import ConfirmForm from '../../model/lgtm/LgtmForm';
 import Loading from '~/components/utils/Loading';
 import Modal from '~/components/utils/Modal';
 

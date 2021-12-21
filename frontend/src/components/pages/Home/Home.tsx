@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
 import Tabs, { TabValue } from './Tabs';
 import Field from '~/components/utils/Field';
-import LgtmsPanel from '../../../pageComponents/home/lgtmsPanel';
+import LgtmsPanel from './LgtmsPanel';
 import SearchImagesPanel from './SearchImagesPanel';
 import FavoritesPanel from '../../../pageComponents/home/favoritesPanel';
 
