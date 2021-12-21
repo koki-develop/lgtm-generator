@@ -5,7 +5,7 @@ import Tabs, { TabValue } from './Tabs';
 import Field from '~/components/utils/Field';
 import LgtmsPanel from './LgtmsPanel';
 import SearchImagesPanel from './SearchImagesPanel';
-import FavoritesPanel from '../../../pageComponents/home/favoritesPanel';
+import FavoritesPanel from './FavoritesPanel';
 
 const Home: React.VFC = () => {
   const router = useRouter();
