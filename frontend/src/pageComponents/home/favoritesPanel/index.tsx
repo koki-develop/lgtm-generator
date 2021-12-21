@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import { favoriteIdsState } from '~/recoil/atoms';
 import { Box, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import LgtmCardList from '../lgtmCardList';
+import LgtmCardList from '../../../components/model/lgtm/LgtmCardList';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

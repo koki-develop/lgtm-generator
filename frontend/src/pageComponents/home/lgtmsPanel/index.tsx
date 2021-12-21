@@ -9,7 +9,7 @@ import { useToast } from '~/components/providers/ToastProvider';
 import { Box, Button } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import UploadButton from './uploadButton';
-import LgtmCardList from '../lgtmCardList';
+import LgtmCardList from '../../../components/model/lgtm/LgtmCardList';
 import ConfirmForm from '../confirmForm';
 import Loading from '~/components/utils/Loading';
 import Modal from '~/components/utils/Modal';
