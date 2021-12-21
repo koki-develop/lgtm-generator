@@ -28,6 +28,10 @@ export const theme = createTheme({
             opacity: 0.6,
           },
         },
+        li: {
+          listStyleType: 'none',
+          paddingLeft: 0,
+        },
       },
     },
   },

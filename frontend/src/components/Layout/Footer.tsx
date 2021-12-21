@@ -1,56 +1,46 @@
 import React from 'react';
 import Link from 'next/link';
+import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
-import { Theme } from '@mui/material/styles';
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
 import { Routes } from '~/routes';
 import ExternalLink from '~/components/utils/ExternalLink';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      alignItems: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-      padding: theme.spacing(2),
-    },
-    list: {
-      listStyleType: 'none',
-      paddingLeft: 0,
-    },
-    listItem: {
-      marginBottom: theme.spacing(1),
-      textAlign: 'center',
-    },
-  }),
-);
+const LinkListItem = styled('li')({
+  mb: 1,
+  textAlign: 'center',
+});
 
 const Footer: React.VFC = () => {
-  const classes = useStyles();
-
   return (
-    <Box className={classes.root} component='footer'>
+    <Box
+      component='footer'
+      sx={{
+        alignItems: 'center',
+        display: 'flex',
+        flexDirection: 'column',
+        padding: 2,
+      }}
+    >
       <ExternalLink href='https://koki.me'>
         <Typography component='small'>&copy;2021 koki sato</Typography>
       </ExternalLink>
 
-      <ul className={classes.list}>
-        <li className={classes.listItem}>
+      <ul>
+        <LinkListItem>
           <ExternalLink href='https://github.com/koki-develop/lgtm-generator'>
             View on GitHub
           </ExternalLink>
-        </li>
-        <li className={classes.listItem}>
+        </LinkListItem>
+        <LinkListItem>
           <Link href={Routes.precaution}>
             <a>ご利用上の注意</a>
           </Link>
-        </li>
-        <li className={classes.listItem}>
+        </LinkListItem>
+        <LinkListItem>
           <Link href={Routes.privacyPolicy}>
             <a>プライバシーポリシー</a>
           </Link>
-        </li>
+        </LinkListItem>
       </ul>
     </Box>
   );
