@@ -1,21 +1,25 @@
-import { createTheme, adaptV4Theme } from '@mui/material';
+import { createTheme, PaletteColorOptions } from '@mui/material/styles';
 
-export const theme = createTheme(adaptV4Theme({
+const primary: PaletteColorOptions = {
+  main: '#1E90FF',
+  dark: '#0070DF',
+  light: '#E8EEF2',
+};
+
+export const theme = createTheme({
   palette: {
-    primary: {
-      main: '#1E90FF',
-      dark: '#0070DF',
-      light: '#E8EEF2',
-    },
+    primary,
   },
-  overrides: {
+  components: {
     MuiButton: {
-      root: {
-        fontWeight: 'bold',
+      styleOverrides: {
+        root: {
+          fontWeight: 'bold',
+        },
       },
     },
     MuiCssBaseline: {
-      '@global': {
+      styleOverrides: {
         a: {
           color: 'inherit',
           textDecoration: 'none',
@@ -27,4 +31,4 @@ export const theme = createTheme(adaptV4Theme({
       },
     },
   },
-}));
+});
