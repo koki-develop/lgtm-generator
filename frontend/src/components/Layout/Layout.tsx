@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
-import Header from './header';
-import Footer from './footer';
+import Header from './Header';
+import Footer from './Footer';
 import ToastProvider from '~/components/providers/ToastProvider';
 import { Box, Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
-import Layout from '~/layout';
+import Layout from '~/components/Layout';
 import Tabs, { TabValue } from './tabs';
 import Field from '~/components/utils/Field';
 import LgtmsPanel from './lgtmsPanel';
