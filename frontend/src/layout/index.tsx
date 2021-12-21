@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
 import Header from './header';
 import Footer from './footer';
-import ToastProvider from '~/contexts/toastProvider';
+import ToastProvider from '~/components/providers/ToastProvider';
 import { Box, Container, CssBaseline, ThemeProvider } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { theme } from './theme';

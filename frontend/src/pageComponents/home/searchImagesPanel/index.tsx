@@ -1,7 +1,7 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { lgtmsState } from '~/recoil/atoms';
-import { useToast } from '~/contexts/toastProvider';
+import { useToast } from '~/components/providers/ToastProvider';
 import { Box, InputAdornment, TextField } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Search as SearchIcon } from '@material-ui/icons';

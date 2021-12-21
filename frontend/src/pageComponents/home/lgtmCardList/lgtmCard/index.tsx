@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { favoriteIdsState } from '~/recoil/atoms';
-import { useToast } from '~/contexts/toastProvider';
+import { useToast } from '~/components/providers/ToastProvider';
 import {
   Box,
   Button,

@@ -5,7 +5,7 @@ import { ApiClient } from '~/lib/apiClient';
 import { ImageFile, ImageFileReader } from '~/lib/imageFileReader';
 import { FileTooLargeError, UnsupportedImageFormatError } from '~/lib/errors';
 import { DataUrl } from '~/lib/dataUrl';
-import { useToast } from '~/contexts/toastProvider';
+import { useToast } from '~/components/providers/ToastProvider';
 import { Box, Button } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import UploadButton from './uploadButton';
