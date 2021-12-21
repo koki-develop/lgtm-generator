@@ -28,7 +28,9 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { grey, orange, pink } from '@material-ui/core/colors';
 import { DataStorage } from '~/lib/dataStorage';
 import { ApiClient } from '~/lib/apiClient';
-import ReportForm, { Values as ReportFormValues } from './reportForm';
+import ReportForm, {
+  Values as ReportFormValues,
+} from '../../../pageComponents/home/lgtmCardList/lgtmCard/reportForm';
 import urlJoin from 'url-join';
 
 const useStyles = makeStyles((theme: Theme) =>

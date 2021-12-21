@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
-import Tabs, { TabValue } from '../../../pageComponents/home/tabs';
+import Tabs, { TabValue } from './Tabs';
 import Field from '~/components/utils/Field';
 import LgtmsPanel from '../../../pageComponents/home/lgtmsPanel';
 import SearchImagesPanel from '../../../pageComponents/home/searchImagesPanel';

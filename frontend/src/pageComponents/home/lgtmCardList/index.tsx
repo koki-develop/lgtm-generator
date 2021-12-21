@@ -1,6 +1,6 @@
 import React from 'react';
 import { Grid } from '@material-ui/core';
-import LgtmCard from './lgtmCard';
+import LgtmCard from '~/components/model/lgtm/LgtmCard';
 
 type LgtmCardListProps = {
   ids: string[];
