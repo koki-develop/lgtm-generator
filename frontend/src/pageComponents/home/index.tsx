@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '~/layout';
 import Tabs, { TabValue } from './tabs';
-import Field from '~/components/field';
+import Field from '~/components/utils/Field';
 import LgtmsPanel from './lgtmsPanel';
 import SearchImagesPanel from './searchImagesPanel';
 import FavoritesPanel from './favoritesPanel';
