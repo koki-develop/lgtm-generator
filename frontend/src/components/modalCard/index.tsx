@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from '~/components/modal';
+import Modal from '~/components/utils/Modal';
 import { Box, Card, Container } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Close as CloseIcon } from '@material-ui/icons';

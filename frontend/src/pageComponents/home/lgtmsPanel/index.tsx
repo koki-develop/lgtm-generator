@@ -12,7 +12,7 @@ import UploadButton from './uploadButton';
 import LgtmCardList from '../lgtmCardList';
 import ConfirmForm from '../confirmForm';
 import Loading from '~/components/utils/Loading';
-import Modal from '~/components/modal';
+import Modal from '~/components/utils/Modal';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
