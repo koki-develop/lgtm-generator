@@ -21,13 +21,22 @@ const Footer: React.VFC = () => {
         padding: 2,
       }}
     >
-      <ExternalLink href='https://koki.me'>
+      <ExternalLink
+        href='https://koki.me'
+        sx={{ color: 'inherit', textDecoration: 'none' }}
+      >
         <Typography component='small'>&copy;2021 koki sato</Typography>
       </ExternalLink>
 
       <ul>
         <LinkListItem>
-          <ExternalLink href='https://github.com/koki-develop/lgtm-generator'>
+          <ExternalLink
+            href='https://github.com/koki-develop/lgtm-generator'
+            sx={{
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
             View on GitHub
           </ExternalLink>
         </LinkListItem>
