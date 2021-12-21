@@ -28,7 +28,7 @@ export const theme = createTheme({
             opacity: 0.6,
           },
         },
-        li: {
+        ul: {
           listStyleType: 'none',
           paddingLeft: 0,
         },
