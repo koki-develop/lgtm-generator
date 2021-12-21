@@ -4,7 +4,7 @@ import Layout from '~/components/Layout';
 import Tabs, { TabValue } from './Tabs';
 import Field from '~/components/utils/Field';
 import LgtmsPanel from '../../../pageComponents/home/lgtmsPanel';
-import SearchImagesPanel from '../../../pageComponents/home/searchImagesPanel';
+import SearchImagesPanel from './SearchImagesPanel';
 import FavoritesPanel from '../../../pageComponents/home/favoritesPanel';
 
 const Home: React.VFC = () => {
