@@ -1,7 +1,4 @@
 import React, { useMemo } from 'react';
-import { ReportType } from '~/types/report';
-import ModalCard from '~/components/utils/ModalCard';
-import LoadableButton from '~/components/utils/LoadableButton';
 import {
   Button,
   CardActions,
@@ -11,28 +8,18 @@ import {
   RadioGroup,
   TextField,
 } from '@mui/material';
-import { Theme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
+import { ReportType } from '~/types/report';
+import ModalCard from '~/components/utils/ModalCard';
+import LoadableButton from '~/components/utils/LoadableButton';
 
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    cardContent: {
-      alignItems: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-      paddingTop: 0,
-    },
-    img: {
-      border: '1px solid #dddddd',
-      marginTop: theme.spacing(2),
-      marginBottom: theme.spacing(2),
-      maxHeight: 200,
-      maxWidth: '100%',
-    },
-  }),
-);
+const LgtmImage = styled('img')(({ theme }) => ({
+  border: '1px solid #dddddd',
+  marginTop: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+  maxHeight: 200,
+  maxWidth: '100%',
+}));
 
 export type Values = {
   type?: ReportType;
@@ -49,9 +36,7 @@ type ReportFormProps = {
   onChange: (values: Values) => void;
 };
 
-const ReportForm: React.VFC<ReportFormProps> = (props: ReportFormProps) => {
-  const classes = useStyles();
-
+const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
   const handleClose = () => {
     if (props.loading) {
       return;
@@ -82,8 +67,15 @@ const ReportForm: React.VFC<ReportFormProps> = (props: ReportFormProps) => {
 
   return (
     <ModalCard open={props.open} onClose={handleClose}>
-      <CardContent className={classes.cardContent}>
-        <img className={classes.img} src={props.imgSrc} alt='LGTM' />
+      <CardContent
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          pt: 0,
+        }}
+      >
+        <LgtmImage src={props.imgSrc} alt='LGTM' />
         <RadioGroup value={props.values.type || ''} onChange={handleChangeType}>
           <FormControlLabel
             value={ReportType.illegal}
@@ -138,6 +130,8 @@ const ReportForm: React.VFC<ReportFormProps> = (props: ReportFormProps) => {
       </CardActions>
     </ModalCard>
   );
-};
+});
+
+ReportForm.displayName = 'ReportForm';
 
 export default ReportForm;
