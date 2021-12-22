@@ -19,6 +19,8 @@ type SearchImagesPanelProps = {
 
 const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
   props => {
+    const { show } = props;
+
     const { enqueueSuccess, enqueueError } = useToast();
     const queryInputRef = useRef<HTMLInputElement>();
     const setLgtms = useSetRecoilState(lgtmsState);
@@ -78,7 +80,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
     }, [enqueueError, enqueueSuccess, previewUrl, setLgtms]);
 
     return (
-      <Box hidden={!props.show}>
+      <Box hidden={!show}>
         <Form onSubmit={handleSearch}>
           <Field>
             <TextField
