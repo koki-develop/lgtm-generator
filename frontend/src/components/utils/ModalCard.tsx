@@ -14,7 +14,12 @@ const ModalCard: React.VFC<ModalCardProps> = React.memo(props => {
 
   return (
     <Modal {...modalProps}>
-      <Container maxWidth='sm'>
+      <Container
+        maxWidth='sm'
+        sx={{
+          zIndex: theme => theme.zIndex.modal + 1,
+        }}
+      >
         <Card>
           <Box
             sx={{
