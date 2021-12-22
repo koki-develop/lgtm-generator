@@ -91,8 +91,8 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   }, [
     enqueueError,
     enqueueSuccess,
-    previewImageFile.dataUrl,
-    previewImageFile.type,
+    previewImageFile?.dataUrl,
+    previewImageFile?.type,
     setLgtms,
   ]);
 
