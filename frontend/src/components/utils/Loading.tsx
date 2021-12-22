@@ -5,16 +5,18 @@ export type LoadingProps = {
   text?: string;
 };
 
-const Loading: React.VFC<LoadingProps> = React.memo(props => {
+const Loading: React.VFC<LoadingProps> = React.forwardRef((props, ref) => {
   const { text } = props;
 
   return (
     <Box
+      ref={ref}
       sx={{
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
+        zIndex: 1,
       }}
     >
       <CircularProgress sx={{ mb: 1 }} />
