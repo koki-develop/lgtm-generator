@@ -8,7 +8,7 @@ type ImageCardProps = {
   onClick: () => void;
 };
 
-const ImageCard: React.VFC<ImageCardProps> = (props: ImageCardProps) => {
+const ImageCard: React.VFC<ImageCardProps> = React.memo(props => {
   return (
     <Card>
       <CardActionArea onClick={props.onClick}>
@@ -36,6 +36,8 @@ const ImageCard: React.VFC<ImageCardProps> = (props: ImageCardProps) => {
       </CardActionArea>
     </Card>
   );
-};
+});
+
+ImageCard.displayName = 'ImageCard';
 
 export default ImageCard;
