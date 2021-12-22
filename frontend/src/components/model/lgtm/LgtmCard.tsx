@@ -24,252 +24,230 @@ import {
   FileCopyOutlined as FileCopyOutlinedIcon,
   FlagOutlined as FlagOutlinedIcon,
 } from '@mui/icons-material';
-import { Theme } from '@mui/material/styles';
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
 import { grey, orange, pink } from '@mui/material/colors';
 import { DataStorage } from '~/lib/dataStorage';
 import { ApiClient } from '~/lib/apiClient';
 import ReportForm, { Values as ReportFormValues } from '../report/ReportForm';
 import urlJoin from 'url-join';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    img: {
-      border: '1px solid',
-      borderColor: grey['A100'],
-      maxHeight: 140,
-      maxWidth: '100%',
-    },
-    imgContainer: {
-      alignItems: 'center',
-      display: 'flex',
-      height: 150,
-      justifyContent: 'center',
-    },
-    cardContent: {
-      padding: theme.spacing(1),
-    },
-    cardActions: {
-      justifyContent: 'center',
-      paddingTop: 0,
-    },
-    buttonGroup: {
-      maxWidth: '100%',
-    },
-    copyListItem: {
-      textAlign: 'center',
-      padding: theme.spacing(1),
-    },
-    copyButton: {
-      borderRight: 'none !important',
-    },
-    favoriteButton: {
-      backgroundColor: '#fff',
-      borderRight: 'none !important',
-      color: pink['700'],
-      '&:hover': {
-        backgroundColor: pink['50'],
-      },
-    },
-    unfavoriteButton: {
-      backgroundColor: pink['100'],
-      borderRight: 'none !important',
-      color: pink['700'],
-      '&:hover': {
-        backgroundColor: pink['200'],
-      },
-    },
-    reportButton: {
-      backgroundColor: orange['500'],
-      color: '#fff',
-      '&:hover': {
-        backgroundColor: orange['700'],
-      },
-    },
-  }),
-);
-
 type LgtmCardProps = {
   id: string;
 };
 
-const LgtmCard: React.VFC<LgtmCardProps> = React.memo(
-  (props: LgtmCardProps) => {
-    const classes = useStyles();
+const LgtmCard: React.VFC<LgtmCardProps> = React.memo(props => {
+  const { enqueueSuccess, enqueueError } = useToast();
+  const [favoriteIds, setFavoriteIds] = useRecoilState(favoriteIdsState);
+  const [copyButtonEl, setCopyButtonEl] = useState<HTMLButtonElement>();
+  const [openReportForm, setOpenReportForm] = useState<boolean>(false);
+  const [reportFormValues, setReportFormValues] = useState<ReportFormValues>({
+    text: '',
+  });
+  const [reporting, setReporting] = useState<boolean>(false);
 
-    const { enqueueSuccess, enqueueError } = useToast();
-    const [favoriteIds, setFavoriteIds] = useRecoilState(favoriteIdsState);
-    const [copyButtonEl, setCopyButtonEl] = useState<HTMLButtonElement>();
-    const [openReportForm, setOpenReportForm] = useState<boolean>(false);
-    const [reportFormValues, setReportFormValues] = useState<ReportFormValues>({
-      text: '',
-    });
-    const [reporting, setReporting] = useState<boolean>(false);
+  const handleClickFavoriteButton = () => {
+    const after = [props.id, ...favoriteIds];
+    setFavoriteIds(after);
+    DataStorage.saveFavoriteIds(after);
+  };
 
-    const handleClickFavoriteButton = () => {
-      const after = [props.id, ...favoriteIds];
-      setFavoriteIds(after);
-      DataStorage.saveFavoriteIds(after);
-    };
+  const handleClickUnfavoriteButton = () => {
+    const after = favoriteIds.filter(id => id !== props.id);
+    setFavoriteIds(after);
+    DataStorage.saveFavoriteIds(after);
+  };
 
-    const handleClickUnfavoriteButton = () => {
-      const after = favoriteIds.filter(id => id !== props.id);
-      setFavoriteIds(after);
-      DataStorage.saveFavoriteIds(after);
-    };
+  const favorited = useMemo(() => {
+    return favoriteIds.includes(props.id);
+  }, [favoriteIds]);
 
-    const favorited = useMemo(() => {
-      return favoriteIds.includes(props.id);
-    }, [favoriteIds]);
+  const handleClickCopyButton = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setCopyButtonEl(e.currentTarget);
+  };
 
-    const handleClickCopyButton = (e: React.MouseEvent<HTMLButtonElement>) => {
-      setCopyButtonEl(e.currentTarget);
-    };
+  const handleClickOutsideCopyList = () => {
+    setCopyButtonEl(undefined);
+  };
 
-    const handleClickOutsideCopyList = () => {
-      setCopyButtonEl(undefined);
-    };
+  const handleClickCopyLink = () => {
+    enqueueSuccess('クリップボードにコピーしました');
+    setCopyButtonEl(undefined);
+  };
 
-    const handleClickCopyLink = () => {
-      enqueueSuccess('クリップボードにコピーしました');
-      setCopyButtonEl(undefined);
-    };
+  const handleClickReportButton = () => {
+    setOpenReportForm(true);
+  };
 
-    const handleClickReportButton = () => {
-      setOpenReportForm(true);
-    };
+  const handleCloseReportForm = () => {
+    setOpenReportForm(false);
+  };
 
-    const handleCloseReportForm = () => {
-      setOpenReportForm(false);
-    };
+  const handleChangeReportFormValues = (values: ReportFormValues) => {
+    setReportFormValues(values);
+  };
 
-    const handleChangeReportFormValues = (values: ReportFormValues) => {
-      setReportFormValues(values);
-    };
+  const handleReport = () => {
+    setReporting(true);
+    ApiClient.createReport(
+      props.id,
+      reportFormValues.type,
+      reportFormValues.text,
+    )
+      .then(() => {
+        enqueueSuccess('送信しました');
+        setReportFormValues({ text: '' });
+        setOpenReportForm(false);
+      })
+      .catch(error => {
+        console.error(error);
+        enqueueError('送信に失敗しました');
+      })
+      .finally(() => {
+        setReporting(false);
+      });
+  };
 
-    const handleReport = () => {
-      setReporting(true);
-      ApiClient.createReport(
-        props.id,
-        reportFormValues.type,
-        reportFormValues.text,
-      )
-        .then(() => {
-          enqueueSuccess('送信しました');
-          setReportFormValues({ text: '' });
-          setOpenReportForm(false);
-        })
-        .catch(error => {
-          console.error(error);
-          enqueueError('送信に失敗しました');
-        })
-        .finally(() => {
-          setReporting(false);
-        });
-    };
-
-    return (
-      <Card>
-        <ReportForm
-          imgSrc={urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)}
-          open={openReportForm}
-          onClose={handleCloseReportForm}
-          onReport={handleReport}
-          loading={reporting}
-          values={reportFormValues}
-          onChange={handleChangeReportFormValues}
-        />
-        <CardContent className={classes.cardContent}>
-          <Box className={classes.imgContainer}>
-            <img
-              className={classes.img}
-              src={urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)}
-              alt='LGTM'
-            />
-          </Box>
-        </CardContent>
-        <CardActions className={classes.cardActions}>
-          <Popper
-            transition
-            open={Boolean(copyButtonEl)}
-            anchorEl={copyButtonEl}
-            placement='top'
-          >
-            <ClickAwayListener onClickAway={handleClickOutsideCopyList}>
-              <Paper>
-                <List disablePadding>
-                  <ListItem
-                    className={classes.copyListItem}
-                    button
-                    onClick={handleClickCopyLink}
+  return (
+    <Card>
+      <ReportForm
+        imgSrc={urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)}
+        open={openReportForm}
+        onClose={handleCloseReportForm}
+        onReport={handleReport}
+        loading={reporting}
+        values={reportFormValues}
+        onChange={handleChangeReportFormValues}
+      />
+      <CardContent sx={{ p: 1 }}>
+        <Box
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            height: 150,
+            justifyContent: 'center',
+          }}
+        >
+          <img
+            src={urlJoin(process.env.NEXT_PUBLIC_LGTMS_ORIGIN, props.id)}
+            alt='LGTM'
+            style={{
+              border: '1px solid',
+              borderColor: grey['A100'],
+              maxHeight: 140,
+              maxWidth: '100%',
+            }}
+          />
+        </Box>
+      </CardContent>
+      <CardActions sx={{ justifyContent: 'center', pt: 0 }}>
+        <Popper
+          transition
+          open={Boolean(copyButtonEl)}
+          anchorEl={copyButtonEl}
+          placement='top'
+        >
+          <ClickAwayListener onClickAway={handleClickOutsideCopyList}>
+            <Paper>
+              <List disablePadding>
+                <ListItem
+                  button
+                  onClick={handleClickCopyLink}
+                  sx={{
+                    textAlign: 'center',
+                    p: 1,
+                  }}
+                >
+                  <CopyToClipBoard
+                    text={`![LGTM](${urlJoin(
+                      process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
+                      props.id,
+                    )})`}
                   >
-                    <CopyToClipBoard
-                      text={`![LGTM](${urlJoin(
-                        process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
-                        props.id,
-                      )})`}
-                    >
-                      <ListItemText secondary='Markdown' />
-                    </CopyToClipBoard>
-                  </ListItem>
-                  <Divider />
-                  <ListItem
-                    className={classes.copyListItem}
-                    button
-                    onClick={handleClickCopyLink}
+                    <ListItemText secondary='Markdown' />
+                  </CopyToClipBoard>
+                </ListItem>
+                <Divider />
+                <ListItem
+                  button
+                  onClick={handleClickCopyLink}
+                  sx={{
+                    textAlign: 'center',
+                    p: 1,
+                  }}
+                >
+                  <CopyToClipBoard
+                    text={`<img src="${urlJoin(
+                      process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
+                      props.id,
+                    )}" alt="LGTM" />`}
                   >
-                    <CopyToClipBoard
-                      text={`<img src="${urlJoin(
-                        process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
-                        props.id,
-                      )}" alt="LGTM" />`}
-                    >
-                      <ListItemText secondary='HTML' />
-                    </CopyToClipBoard>
-                  </ListItem>
-                </List>
-              </Paper>
-            </ClickAwayListener>
-          </Popper>
-          <ButtonGroup
-            className={classes.buttonGroup}
-            color='primary'
-            variant='contained'
+                    <ListItemText secondary='HTML' />
+                  </CopyToClipBoard>
+                </ListItem>
+              </List>
+            </Paper>
+          </ClickAwayListener>
+        </Popper>
+        <ButtonGroup
+          color='primary'
+          variant='contained'
+          sx={{
+            maxWidth: '100%',
+          }}
+        >
+          <Button
+            onClick={handleClickCopyButton}
+            sx={{
+              borderRight: 'none !important',
+            }}
           >
+            <FileCopyOutlinedIcon fontSize='small' />
+          </Button>
+          {favorited ? (
             <Button
-              className={classes.copyButton}
-              onClick={handleClickCopyButton}
+              onClick={handleClickUnfavoriteButton}
+              sx={{
+                backgroundColor: pink['100'],
+                borderRight: 'none !important',
+                color: pink['700'],
+                '&:hover': {
+                  backgroundColor: pink['200'],
+                },
+              }}
             >
-              <FileCopyOutlinedIcon fontSize='small' />
+              <FavoriteIcon fontSize='small' />
             </Button>
-            {favorited ? (
-              <Button
-                className={classes.unfavoriteButton}
-                onClick={handleClickUnfavoriteButton}
-              >
-                <FavoriteIcon fontSize='small' />
-              </Button>
-            ) : (
-              <Button
-                className={classes.favoriteButton}
-                onClick={handleClickFavoriteButton}
-              >
-                <FavoriteBorderIcon fontSize='small' />
-              </Button>
-            )}
+          ) : (
             <Button
-              className={classes.reportButton}
-              onClick={handleClickReportButton}
+              onClick={handleClickFavoriteButton}
+              sx={{
+                backgroundColor: '#fff',
+                borderRight: 'none !important',
+                color: pink['700'],
+                '&:hover': {
+                  backgroundColor: pink['50'],
+                },
+              }}
             >
-              <FlagOutlinedIcon fontSize='small' />
+              <FavoriteBorderIcon fontSize='small' />
             </Button>
-          </ButtonGroup>
-        </CardActions>
-      </Card>
-    );
-  },
-);
+          )}
+          <Button
+            onClick={handleClickReportButton}
+            sx={{
+              backgroundColor: orange['500'],
+              color: '#ffffff',
+              '&:hover': {
+                backgroundColor: orange['700'],
+              },
+            }}
+          >
+            <FlagOutlinedIcon fontSize='small' />
+          </Button>
+        </ButtonGroup>
+      </CardActions>
+    </Card>
+  );
+});
 
 LgtmCard.displayName = 'LgtmCard';
 
