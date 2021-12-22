@@ -6,7 +6,9 @@ import {
   ModalProps as MuiModalProps,
 } from '@mui/material';
 
-export type ModalProps = MuiModalProps;
+export type ModalProps = Omit<MuiModalProps, 'onClose'> & {
+  onClose?: () => void;
+};
 
 const Modal: React.VFC<ModalProps> = React.memo(props => {
   const { children, ...modalProps } = props;
