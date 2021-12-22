@@ -109,9 +109,11 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
     loadLgtms();
   }, [loadLgtms]);
 
+  // FIXME: リファクタ
   useEffect(() => {
     loadLgtms();
-  }, [loadLgtms]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box hidden={!show}>
