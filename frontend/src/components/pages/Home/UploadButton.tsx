@@ -8,6 +8,8 @@ type UploadButtonProps = {
 };
 
 const UploadButton: React.VFC<UploadButtonProps> = React.memo(props => {
+  const { onChange } = props;
+
   const inputFileRef = React.createRef<HTMLInputElement>();
   const [inputFileKey, setInputFileKey] = useState<string>(uuid.v4());
 
@@ -15,13 +17,16 @@ const UploadButton: React.VFC<UploadButtonProps> = React.memo(props => {
     inputFileRef.current?.click();
   }, [inputFileRef]);
 
-  const handleChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputFileKey(uuid.v4());
-    const files = e.currentTarget.files;
-    if (files && files.length > 0) {
-      props.onChange(files[0]);
-    }
-  };
+  const handleChangeFile = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputFileKey(uuid.v4());
+      const files = e.currentTarget.files;
+      if (files && files.length > 0) {
+        onChange(files[0]);
+      }
+    },
+    [onChange],
+  );
 
   return (
     <Fab
