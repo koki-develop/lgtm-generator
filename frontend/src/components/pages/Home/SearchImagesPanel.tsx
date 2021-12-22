@@ -3,9 +3,6 @@ import { useSetRecoilState } from 'recoil';
 import { lgtmsState } from '~/recoil/atoms';
 import { useToast } from '~/components/providers/ToastProvider';
 import { Box, InputAdornment, TextField } from '@mui/material';
-import { Theme } from '@mui/material/styles';
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
 import { Search as SearchIcon } from '@mui/icons-material';
 import Field from '~/components/utils/Field';
 import Form from '~/components/utils/Form';
@@ -16,22 +13,12 @@ import { Image } from '~/types/image';
 import ImageCardList from '../../model/image/ImageCardList';
 import ConfirmForm from '../../model/lgtm/LgtmForm';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    queryInput: {
-      backgroundColor: theme.palette.common.white,
-    },
-  }),
-);
-
 type SearchImagesPanelProps = {
   show: boolean;
 };
 
 const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
-  (props: SearchImagesPanelProps) => {
-    const classes = useStyles();
-
+  props => {
     const { enqueueSuccess, enqueueError } = useToast();
     const queryInputRef = useRef<HTMLInputElement>();
     const setLgtms = useSetRecoilState(lgtmsState);
@@ -42,32 +29,32 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
     const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
     const [previewUrl, setPreviewUrl] = useState<string>('');
 
-    const handleChangeQuery = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setQuery(e.currentTarget.value);
-    };
+    const handleChangeQuery = useCallback(
+      (e: React.ChangeEvent<HTMLInputElement>) => {
+        setQuery(e.currentTarget.value);
+      },
+      [],
+    );
 
-    const handleSearch = () => {
+    const handleSearch = useCallback(() => {
       queryInputRef.current?.blur();
       setSearching(true);
       ApiClient.searchImages(query).then(images => {
         setImages(images);
         setSearching(false);
       });
-    };
+    }, [query]);
 
-    const handleClickImage = useCallback(
-      (image: Image) => {
-        setPreviewUrl(image.url);
-        setOpenConfirmForm(true);
-      },
-      [images],
-    );
+    const handleClickImage = useCallback((image: Image) => {
+      setPreviewUrl(image.url);
+      setOpenConfirmForm(true);
+    }, []);
 
-    const handleCloseConfirmForm = () => {
+    const handleCloseConfirmForm = useCallback(() => {
       setOpenConfirmForm(false);
-    };
+    }, []);
 
-    const handleConfirm = () => {
+    const handleConfirm = useCallback(() => {
       setGenerating(true);
       ApiClient.createLgtmFromUrl(previewUrl)
         .then(lgtm => {
@@ -88,14 +75,16 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
         .finally(() => {
           setGenerating(false);
         });
-    };
+    }, [enqueueError, enqueueSuccess, previewUrl, setLgtms]);
 
     return (
       <Box hidden={!props.show}>
         <Form onSubmit={handleSearch}>
           <Field>
             <TextField
-              className={classes.queryInput}
+              sx={{
+                backgroundColor: theme => theme.palette.common.white,
+              }}
               fullWidth
               disabled={searching}
               variant='outlined'
