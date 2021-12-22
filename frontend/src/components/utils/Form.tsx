@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 export type FormProps = React.HTMLProps<HTMLFormElement>;
 
 const Form: React.VFC<FormProps> = React.memo(props => {
   const { onSubmit, ...formProps } = props;
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSubmit?.(e);
-  };
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      onSubmit?.(e);
+    },
+    [onSubmit],
+  );
 
   return <form onSubmit={handleSubmit} {...formProps} />;
 });
