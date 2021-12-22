@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Layout from '~/components/Layout';
 import Tabs, { TabValue } from './Tabs';
@@ -7,15 +7,19 @@ import LgtmsPanel from './LgtmsPanel';
 import SearchImagesPanel from './SearchImagesPanel';
 import FavoritesPanel from './FavoritesPanel';
 
-const Home: React.VFC = () => {
+const Home: React.VFC = React.memo(() => {
   const router = useRouter();
+
   const tab = useMemo(() => {
     return Object.values(TabValue).find(v => v === router.query.tab) || 'lgtms';
   }, [router.query.tab]);
 
-  const handleChangeTab = (value: TabValue) => {
-    router.replace({ search: `tab=${value}` });
-  };
+  const handleChangeTab = useCallback(
+    (value: TabValue) => {
+      router.replace({ search: `tab=${value}` });
+    },
+    [router],
+  );
 
   return (
     <Layout>
@@ -30,6 +34,8 @@ const Home: React.VFC = () => {
       <FavoritesPanel show={tab === TabValue.favorites} />
     </Layout>
   );
-};
+});
+
+Home.displayName = 'Home';
 
 export default Home;
