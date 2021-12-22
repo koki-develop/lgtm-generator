@@ -10,7 +10,7 @@ const LinkListItem = styled('li')(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const Footer: React.VFC = () => {
+const Footer: React.VFC = React.memo(() => {
   return (
     <Box
       component='footer'
@@ -53,6 +53,8 @@ const Footer: React.VFC = () => {
       </ul>
     </Box>
   );
-};
+});
+
+Footer.displayName = 'Footer';
 
 export default Footer;

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Routes } from '~/routes';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 
-const Header: React.VFC = () => {
+const Header: React.VFC = React.memo(() => {
   return (
     <AppBar color='primary' position='static'>
       <Toolbar>
@@ -25,6 +25,8 @@ const Header: React.VFC = () => {
       </Toolbar>
     </AppBar>
   );
-};
+});
+
+Header.displayName = 'Header';
 
 export default Header;

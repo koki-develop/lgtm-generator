@@ -24,21 +24,23 @@ type LayoutProps = {
   title?: string;
 };
 
-const Root: React.VFC<LayoutProps> = (props: LayoutProps) => {
+const Layout: React.VFC<LayoutProps> = React.memo(props => {
   return (
     <RecoilRoot>
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
           <ToastProvider>
-            <Layout {...props} />
+            <LayoutContent {...props} />
           </ToastProvider>
         </ThemeProvider>
       </StyledEngineProvider>
     </RecoilRoot>
   );
-};
+});
 
-const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
+Layout.displayName = 'Layout';
+
+const LayoutContent: React.VFC<LayoutProps> = React.memo(props => {
   const { title } = props;
 
   const pageTitle = useMemo(() => {
@@ -67,6 +69,8 @@ const Layout: React.VFC<LayoutProps> = (props: LayoutProps) => {
       <Footer />
     </Box>
   );
-};
+});
 
-export default Root;
+LayoutContent.displayName = 'LayoutContent';
+
+export default Layout;
