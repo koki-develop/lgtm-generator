@@ -1,27 +1,18 @@
 import React from 'react';
-import Layout from '~/components/Layout';
+import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
-import { Theme } from '@mui/material/styles';
+import Layout from '~/components/Layout';
 
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
+const StyledList = styled('ul')(({ theme }) => ({
+  listStyle: 'disc',
+  paddingLeft: theme.spacing(4),
+}));
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      fontSize: theme.typography.h4.fontSize,
-      fontWeight: 'bold',
-      textAlign: 'center',
-    },
-    listItem: {
-      marginBottom: theme.spacing(1),
-    },
-  }),
-);
+const StyledListItem = styled('li')(({ theme }) => ({
+  marginBottom: theme.spacing(1),
+}));
 
-const Precaution: React.VFC = () => {
-  const classes = useStyles();
-
+const Precaution: React.VFC = React.memo(() => {
   const items: string[] = [
     '本サービスを利用して生成された画像に関する一切の責任はご利用者様にご負担いただきます。ご利用者様が生成した画像に関し、第三者が損害を被った場合、運営者はご利用者様に代わっての責任は一切負いません。',
     '本サービスを利用して生成された画像はインターネット上に公開されます。',
@@ -32,18 +23,28 @@ const Precaution: React.VFC = () => {
 
   return (
     <Layout title='ご利用上の注意'>
-      <Typography className={classes.title}>ご利用上の注意</Typography>
+      <Typography
+        sx={{
+          fontSize: theme => theme.typography.h4.fontSize,
+          fontWeight: 'bold',
+          textAlign: 'center',
+        }}
+      >
+        ご利用上の注意
+      </Typography>
       <Box>
-        <ul>
+        <StyledList>
           {items.map((item, i) => (
-            <li key={i} className={classes.listItem}>
+            <StyledListItem key={i} sx={{ mb: 1 }}>
               {item}
-            </li>
+            </StyledListItem>
           ))}
-        </ul>
+        </StyledList>
       </Box>
     </Layout>
   );
-};
+});
+
+Precaution.displayName = 'Precaution';
 
 export default Precaution;
