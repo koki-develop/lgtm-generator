@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useCallback, useContext } from 'react';
 import { useSnackbar, SnackbarProvider, VariantType } from 'notistack';
 
 type Context = {
@@ -33,19 +33,28 @@ const ToastProvider: React.VFC<ToastProviderProps> = (
 ) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const enqueueDefault = (message: React.ReactNode, variant: VariantType) => {
-    const key = enqueueSnackbar(message, {
-      variant,
-      onClick: () => closeSnackbar(key),
-    });
-  };
+  const enqueueDefault = useCallback(
+    (message: React.ReactNode, variant: VariantType) => {
+      const key = enqueueSnackbar(message, {
+        variant,
+        onClick: () => closeSnackbar(key),
+      });
+    },
+    [closeSnackbar, enqueueSnackbar],
+  );
 
-  const enqueueSuccess = (message: React.ReactNode) =>
-    enqueueDefault(message, 'success');
-  const enqueueWarn = (message: React.ReactNode) =>
-    enqueueDefault(message, 'warning');
-  const enqueueError = (message: React.ReactNode) =>
-    enqueueDefault(message, 'error');
+  const enqueueSuccess = useCallback(
+    (message: React.ReactNode) => enqueueDefault(message, 'success'),
+    [enqueueDefault],
+  );
+  const enqueueWarn = useCallback(
+    (message: React.ReactNode) => enqueueDefault(message, 'warning'),
+    [enqueueDefault],
+  );
+  const enqueueError = useCallback(
+    (message: React.ReactNode) => enqueueDefault(message, 'error'),
+    [enqueueDefault],
+  );
 
   return (
     <ToastContext.Provider
