@@ -8,23 +8,23 @@ type ImageCardListProps = {
   onClickImage: (image: Image) => void;
 };
 
-const ImageCardList: React.VFC<ImageCardListProps> = React.memo(
-  (props: ImageCardListProps) => {
-    return (
-      <Grid container spacing={2}>
-        {props.images.map(image => (
-          <Grid key={image.url} item xs={6} sm={4} md={3}>
-            <ImageCard
-              key={image.url}
-              image={image}
-              onClick={() => props.onClickImage(image)}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    );
-  },
-);
+const ImageCardList: React.VFC<ImageCardListProps> = React.memo(props => {
+  const { images, onClickImage } = props;
+
+  return (
+    <Grid container spacing={2}>
+      {images.map(image => (
+        <Grid key={image.url} item xs={6} sm={4} md={3}>
+          <ImageCard
+            key={image.url}
+            image={image}
+            onClick={() => onClickImage(image)}
+          />
+        </Grid>
+      ))}
+    </Grid>
+  );
+});
 
 ImageCardList.displayName = 'ImageCardList';
 
