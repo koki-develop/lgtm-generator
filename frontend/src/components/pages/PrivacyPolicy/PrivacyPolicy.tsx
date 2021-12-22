@@ -1,36 +1,9 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { Theme } from '@mui/material/styles';
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
 import Layout from '~/components/Layout';
 import ExternalLink from '~/components/utils/ExternalLink';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      fontSize: theme.typography.h4.fontSize,
-      fontWeight: 'bold',
-      marginBottom: theme.spacing(2),
-      textAlign: 'center',
-    },
-    listItem: {
-      marginBottom: theme.spacing(4),
-    },
-    name: {
-      fontSize: theme.typography.h5.fontSize,
-      textAlign: 'center',
-    },
-    link: {
-      color: theme.palette.primary.main,
-      textDecoration: 'underline',
-    },
-  }),
-);
-
-const PrivacyPolicy: React.VFC = () => {
-  const classes = useStyles();
-
+const PrivacyPolicy: React.VFC = React.memo(() => {
   const items: { name: string; content: React.ReactNode }[] = [
     {
       name: 'アクセス解析ツールについて',
@@ -43,8 +16,11 @@ const PrivacyPolicy: React.VFC = () => {
           Cookie
           を無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。この規約に関して、詳しくは{' '}
           <ExternalLink
-            className={classes.link}
             href='https://marketingplatform.google.com/about/analytics/terms/jp/'
+            sx={{
+              color: theme => theme.palette.primary.main,
+              textDecoration: 'underline',
+            }}
           >
             Google アナリティクス利用規約
           </ExternalLink>{' '}
@@ -61,17 +37,40 @@ const PrivacyPolicy: React.VFC = () => {
 
   return (
     <Layout title='プライバシーポリシー'>
-      <Typography className={classes.title}>プライバシーポリシー</Typography>
+      <Typography
+        sx={{
+          fontSize: theme => theme.typography.h4.fontSize,
+          fontWeight: 'bold',
+          mb: 2,
+          textAlign: 'center',
+        }}
+      >
+        プライバシーポリシー
+      </Typography>
       <Box>
         {items.map(item => (
-          <Box key={item.name} className={classes.listItem}>
-            <Typography className={classes.name}>{item.name}</Typography>
+          <Box
+            key={item.name}
+            sx={{
+              mb: 4,
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: theme => theme.typography.h5.fontSize,
+                textAlign: 'center',
+              }}
+            >
+              {item.name}
+            </Typography>
             <Typography>{item.content}</Typography>
           </Box>
         ))}
       </Box>
     </Layout>
   );
-};
+});
+
+PrivacyPolicy.displayName = 'PrivacyPolicy';
 
 export default PrivacyPolicy;
