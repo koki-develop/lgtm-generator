@@ -5,37 +5,31 @@ import {
   Modal as MuiModal,
   ModalProps as MuiModalProps,
 } from '@mui/material';
-import createStyles from '@mui/styles/createStyles';
-import makeStyles from '@mui/styles/makeStyles';
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    modal: {
-      alignItems: 'center',
-      display: 'flex',
-      justifyContent: 'center',
-      overflowY: 'scroll',
-    },
-  }),
-);
 
 type ModalProps = MuiModalProps;
 
-const Modal: React.VFC<ModalProps> = (props: ModalProps) => {
-  const classes = useStyles();
+const Modal: React.VFC<ModalProps> = React.memo(props => {
   const { children, ...modalProps } = props;
 
   return (
     <MuiModal
-      {...modalProps}
-      className={classes.modal}
+      sx={{
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        overflowY: 'scroll',
+        ...modalProps.sx,
+      }}
       closeAfterTransition
       BackdropComponent={Backdrop}
-      BackdropProps={{ timeout: 200 }}
+      BackdropProps={{ timeout: 200, ...modalProps.BackdropProps }}
+      {...modalProps}
     >
       <Fade in={props.open}>{children}</Fade>
     </MuiModal>
   );
-};
+});
+
+Modal.displayName = 'Modal';
 
 export default Modal;
