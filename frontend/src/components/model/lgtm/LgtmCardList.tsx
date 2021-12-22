@@ -6,9 +6,7 @@ type LgtmCardListProps = {
   ids: string[];
 };
 
-const LgtmCardList: React.VFC<LgtmCardListProps> = (
-  props: LgtmCardListProps,
-) => {
+const LgtmCardList: React.VFC<LgtmCardListProps> = React.memo(props => {
   return (
     <Grid container spacing={2}>
       {props.ids.map(id => (
@@ -18,6 +16,8 @@ const LgtmCardList: React.VFC<LgtmCardListProps> = (
       ))}
     </Grid>
   );
-};
+});
+
+LgtmCardList.displayName = 'LgtmCardList';
 
 export default LgtmCardList;
