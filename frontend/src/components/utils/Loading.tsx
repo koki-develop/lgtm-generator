@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, CircularProgress, Typography } from '@mui/material';
 
-type LoadingProps = {
+export type LoadingProps = {
   text?: string;
 };
 

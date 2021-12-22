@@ -1,6 +1,6 @@
 import React from 'react';
 
-type FormProps = React.HTMLProps<HTMLFormElement>;
+export type FormProps = React.HTMLProps<HTMLFormElement>;
 
 const Form: React.VFC<FormProps> = React.memo(props => {
   const { onSubmit, ...formProps } = props;

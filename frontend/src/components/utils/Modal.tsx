@@ -6,7 +6,7 @@ import {
   ModalProps as MuiModalProps,
 } from '@mui/material';
 
-type ModalProps = MuiModalProps;
+export type ModalProps = MuiModalProps;
 
 const Modal: React.VFC<ModalProps> = React.memo(props => {
   const { children, ...modalProps } = props;
