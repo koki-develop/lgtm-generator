@@ -3,7 +3,9 @@ import Modal, { ModalProps } from '~/components/utils/Modal';
 import { Box, Card, Container } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 
-type ModalCardProps = ModalProps;
+type ModalCardProps = Omit<ModalProps, 'children'> & {
+  children: React.ReactNode;
+};
 
 const ModalCard: React.VFC<ModalCardProps> = React.memo(props => {
   const { onClose, ...modalProps } = props;
