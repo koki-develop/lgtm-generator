@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Paper, Tabs as MuiTabs, Tab } from '@mui/material';
 
 export const TabValue = {
@@ -14,16 +14,21 @@ type TabsProps = {
   onChange: (value: TabValue) => void;
 };
 
-const Tabs: React.VFC<TabsProps> = React.memo((props: TabsProps) => {
-  const handleChangeValue = (_: React.ChangeEvent<unknown>, value: string) => {
-    props.onChange(value as TabValue);
-  };
+const Tabs: React.VFC<TabsProps> = React.memo(props => {
+  const { value, onChange } = props;
+
+  const handleChangeValue = useCallback(
+    (_: React.ChangeEvent<unknown>, value: string) => {
+      onChange(value as TabValue);
+    },
+    [onChange],
+  );
 
   return (
     <Paper>
       <MuiTabs
         onChange={handleChangeValue}
-        value={props.value}
+        value={value}
         variant='fullWidth'
         indicatorColor='primary'
         textColor='primary'
