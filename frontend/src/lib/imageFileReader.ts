@@ -1,5 +1,7 @@
+import { useCallback, useState } from 'react';
 import { loadImage, createCanvas } from 'canvas';
 import { FileTooLargeError, UnsupportedImageFormatError } from '~/lib/errors';
+import { useToast } from '~/components/providers/ToastProvider';
 
 export type ImageFile = {
   name: string;
@@ -85,3 +87,44 @@ export class ImageFileReader {
     }
   }
 }
+
+export type LoadImageFn = (file: File) => Promise<ImageFile | null>;
+
+export const useLoadImage = (): {
+  loadImage: LoadImageFn;
+  loading: boolean;
+} => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const { enqueueWarn, enqueueError } = useToast();
+
+  const loadImage = useCallback(
+    async (file: File) => {
+      setLoading(true);
+      return ImageFileReader.read(file)
+        .then(imageFile => {
+          return imageFile;
+        })
+        .catch(err => {
+          switch (err.constructor) {
+            case FileTooLargeError:
+              enqueueWarn(`ファイルサイズが大きすぎます: ${file.name}`);
+              break;
+            case UnsupportedImageFormatError:
+              enqueueError('サポートしていない画像形式です');
+              break;
+            default:
+              enqueueError('画像の読み込みに失敗しました');
+              console.error(err);
+              break;
+          }
+          return null;
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+    [enqueueError, enqueueWarn],
+  );
+
+  return { loadImage, loading };
+};

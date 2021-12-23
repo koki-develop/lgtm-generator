@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { ImageFile, ImageFileReader } from '~/lib/imageFileReader';
-import { FileTooLargeError, UnsupportedImageFormatError } from '~/lib/errors';
+import { ImageFile } from '~/lib/imageFileReader';
 import { DataUrl } from '~/lib/dataUrl';
-import { useToast } from '~/components/providers/ToastProvider';
 import UploadButton from './UploadButton';
 import LgtmCardList from '~/components/model/lgtm/LgtmCardList';
 import LgtmForm from '~/components/model/lgtm/LgtmForm';
@@ -13,6 +11,7 @@ import {
   useFetchLgtms,
   useLgtms,
 } from '~/components/model/lgtm/LgtmHooks';
+import { useLoadImage } from '~/lib/imageFileReader';
 import Loading from '~/components/utils/Loading';
 import Modal from '~/components/utils/Modal';
 
@@ -24,14 +23,13 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   const { show } = props;
 
   const lgtms = useLgtms();
-  const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
   const [previewImageFile, setPreviewImageFile] = useState<ImageFile>();
 
-  const { enqueueWarn, enqueueError } = useToast();
   const { fetchLgtms, loading, isTruncated } = useFetchLgtms();
   const { createLgtmFromBase64, loading: uploading } =
     useCreateLgtmFromBase64();
+  const { loadImage, loading: loadingImage } = useLoadImage();
 
   const handleCloseConfirmForm = useCallback(() => {
     setOpenConfirmForm(false);
@@ -39,30 +37,12 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
 
   const handleChangeFile = useCallback(
     (file: File) => {
-      setLoadingImage(true);
-      ImageFileReader.read(file)
-        .then(imageFile => {
-          setPreviewImageFile(imageFile);
-          setOpenConfirmForm(true);
-        })
-        .catch(error => {
-          switch (error.constructor) {
-            case FileTooLargeError:
-              enqueueWarn(`ファイルサイズが大きすぎます: ${file.name}`);
-              break;
-            case UnsupportedImageFormatError:
-              enqueueError('サポートしていない画像形式です');
-              break;
-            default:
-              enqueueError('画像の読み込みに失敗しました');
-              throw error;
-          }
-        })
-        .finally(() => {
-          setLoadingImage(false);
-        });
+      loadImage(file).then(imageFile => {
+        setPreviewImageFile(imageFile);
+        setOpenConfirmForm(true);
+      });
     },
-    [enqueueError, enqueueWarn],
+    [loadImage],
   );
 
   const handleConfirm = useCallback(() => {
