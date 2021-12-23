@@ -8,7 +8,7 @@ import { ApiClient } from '~/lib/apiClient';
 import { Image } from '~/types/image';
 import ImageCardList from '../../model/image/ImageCardList';
 import ConfirmForm from '../../model/lgtm/LgtmForm';
-import { useCreateLgtmFromUrl } from '~/components/model/lgtm/hooks';
+import { useCreateLgtmFromUrl } from '~/components/model/lgtm/LgtmHooks';
 
 type SearchImagesPanelProps = {
   show: boolean;

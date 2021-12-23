@@ -12,7 +12,7 @@ import {
   useCreateLgtmFromBase64,
   useFetchLgtms,
   useLgtms,
-} from '~/components/model/lgtm/hooks';
+} from '~/components/model/lgtm/LgtmHooks';
 import Loading from '~/components/utils/Loading';
 import Modal from '~/components/utils/Modal';
 
