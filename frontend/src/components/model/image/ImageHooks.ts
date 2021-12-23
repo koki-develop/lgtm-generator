@@ -2,8 +2,9 @@ import { useCallback, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { imagesState } from '~/recoil/atoms';
 import { ApiClient } from '~/lib/apiClient';
+import { Image } from '~/types/image';
 
-export const useImages = () => {
+export const useImages = (): Image[] => {
   return useRecoilValue(imagesState);
 };
 
