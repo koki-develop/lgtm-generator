@@ -1,20 +1,35 @@
-import { createTheme, PaletteColorOptions } from '@mui/material/styles';
+import { createTheme, PaletteOptions } from '@mui/material/styles';
 
-const primary: PaletteColorOptions = {
-  main: '#1E90FF',
-  dark: '#0070DF',
-  light: '#E8EEF2',
+const palette: PaletteOptions = {
+  primary: {
+    main: '#1E90FF',
+    dark: '#0070DF',
+    light: '#E8EEF2',
+    contrastText: '#ffffff',
+  },
+  secondary: {
+    main: '#E0E0E0',
+    dark: '#D5D5D5',
+    light: '#F7F7F7',
+    contrastText: '#000000',
+  },
 };
 
 export const theme = createTheme({
-  palette: {
-    primary,
-  },
+  palette,
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           fontWeight: 'bold',
+        },
+      },
+    },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          color: 'inherit',
+          textDecoration: 'none',
         },
       },
     },
