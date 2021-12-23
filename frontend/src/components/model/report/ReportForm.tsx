@@ -111,6 +111,7 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
       <CardActions>
         <Button
           fullWidth
+          color='secondary'
           variant='contained'
           onClick={handleClose}
           disabled={props.loading}
