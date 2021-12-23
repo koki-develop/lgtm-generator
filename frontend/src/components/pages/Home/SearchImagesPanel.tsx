@@ -1,17 +1,14 @@
 import React, { useCallback, useState, useRef } from 'react';
-import { useSetRecoilState } from 'recoil';
-import { lgtmsState } from '~/recoil/atoms';
-import { useToast } from '~/components/providers/ToastProvider';
 import { Box, InputAdornment, TextField } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
 import Field from '~/components/utils/Field';
 import Form from '~/components/utils/Form';
 import Loading from '~/components/utils/Loading';
 import { ApiClient } from '~/lib/apiClient';
-import { UnsupportedImageFormatError } from '~/lib/errors';
 import { Image } from '~/types/image';
 import ImageCardList from '../../model/image/ImageCardList';
 import ConfirmForm from '../../model/lgtm/LgtmForm';
+import { useCreateLgtmFromUrl } from '~/components/model/lgtm/hooks';
 
 type SearchImagesPanelProps = {
   show: boolean;
@@ -21,15 +18,14 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
   props => {
     const { show } = props;
 
-    const { enqueueSuccess, enqueueError } = useToast();
     const queryInputRef = useRef<HTMLInputElement>();
-    const setLgtms = useSetRecoilState(lgtmsState);
     const [query, setQuery] = useState<string>('');
     const [searching, setSearching] = useState<boolean>(false);
     const [images, setImages] = useState<Image[]>([]);
-    const [generating, setGenerating] = useState<boolean>(false);
     const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
     const [previewUrl, setPreviewUrl] = useState<string>('');
+
+    const { createLgtmFromUrl, loading: generating } = useCreateLgtmFromUrl();
 
     const handleChangeQuery = useCallback(
       (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,27 +53,10 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
     }, []);
 
     const handleConfirm = useCallback(() => {
-      setGenerating(true);
-      ApiClient.createLgtmFromUrl(previewUrl)
-        .then(lgtm => {
-          setOpenConfirmForm(false);
-          setLgtms(prev => [lgtm, ...prev]);
-          enqueueSuccess('LGTM 画像を生成しました');
-        })
-        .catch(error => {
-          switch (error.constructor) {
-            case UnsupportedImageFormatError:
-              enqueueError('サポートしていない画像形式です');
-              break;
-            default:
-              enqueueError('LGTM 画像の生成に失敗しました');
-              throw error;
-          }
-        })
-        .finally(() => {
-          setGenerating(false);
-        });
-    }, [enqueueError, enqueueSuccess, previewUrl, setLgtms]);
+      createLgtmFromUrl(previewUrl).then(() => {
+        setOpenConfirmForm(false);
+      });
+    }, [createLgtmFromUrl, previewUrl]);
 
     return (
       <Box hidden={!show}>

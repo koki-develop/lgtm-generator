@@ -45,6 +45,7 @@ export type CreateLgtmFromBase64Fn = (
   contentType: string,
 ) => Promise<void>;
 
+// TODO: fromUrl と共通化する
 export const useCreateLgtmFromBase64 = (): {
   createLgtmFromBase64: CreateLgtmFromBase64Fn;
   loading: boolean;
