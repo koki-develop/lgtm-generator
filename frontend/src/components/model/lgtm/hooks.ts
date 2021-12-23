@@ -82,3 +82,43 @@ export const useCreateLgtmFromBase64 = (): {
 
   return { createLgtmFromBase64, loading };
 };
+
+export type CreateLgtmFromUrlFn = (url: string) => Promise<void>;
+
+export const useCreateLgtmFromUrl = (): {
+  createLgtmFromUrl: CreateLgtmFromUrlFn;
+  loading: boolean;
+} => {
+  const setLgtms = useSetRecoilState(lgtmsState);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const { enqueueSuccess, enqueueError } = useToast();
+
+  const createLgtmFromUrl = useCallback(
+    async (url: string) => {
+      setLoading(true);
+      await ApiClient.createLgtmFromUrl(url)
+        .then(lgtm => {
+          setLgtms(prev => [lgtm, ...prev]);
+          enqueueSuccess('LGTM 画像を生成しました');
+        })
+        .catch(err => {
+          switch (err.constructor) {
+            case UnsupportedImageFormatError:
+              enqueueError('サポートしていない画像形式です');
+              break;
+            default:
+              enqueueError('LGTM 画像の生成に失敗しました');
+              console.error(err);
+              break;
+          }
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+    [enqueueError, enqueueSuccess, setLgtms],
+  );
+
+  return { createLgtmFromUrl, loading };
+};
