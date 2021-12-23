@@ -14,6 +14,7 @@ import {
 import { useLoadImage } from '~/lib/imageFileReader';
 import Loading from '~/components/utils/Loading';
 import Modal from '~/components/utils/Modal';
+import Field from '~/components/utils/Field';
 
 type LgtmsPanelProps = {
   show: boolean;
@@ -24,7 +25,9 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
 
   const lgtms = useLgtms();
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
-  const [previewImageFile, setPreviewImageFile] = useState<ImageFile>();
+  const [previewImageFile, setPreviewImageFile] = useState<ImageFile | null>(
+    null,
+  );
 
   const { fetchLgtms, loading, isTruncated } = useFetchLgtms();
   const { createLgtmFromBase64, loading: uploading } =
@@ -77,22 +80,18 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
         onConfirm={handleConfirm}
       />
 
-      <LgtmCardList ids={lgtms.map(lgtm => lgtm.id)} />
+      <Field>
+        <LgtmCardList ids={lgtms.map(lgtm => lgtm.id)} />
+      </Field>
 
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          mt: 2,
-        }}
-      >
+      <Field sx={{ display: 'flex', justifyContent: 'center' }}>
         {loading && <Loading />}
         {!loading && isTruncated && (
           <Button color='primary' variant='contained' onClick={handleClickMore}>
             もっと見る
           </Button>
         )}
-      </Box>
+      </Field>
     </Box>
   );
 });
