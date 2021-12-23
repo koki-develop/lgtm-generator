@@ -28,7 +28,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
   const [previewImageFile, setPreviewImageFile] = useState<ImageFile>();
 
-  const { enqueueSuccess, enqueueWarn, enqueueError } = useToast();
+  const { enqueueWarn, enqueueError } = useToast();
   const { fetchLgtms, loading, isTruncated } = useFetchLgtms();
   const { createLgtmFromBase64, loading: uploading } =
     useCreateLgtmFromBase64();
@@ -69,29 +69,10 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
     createLgtmFromBase64(
       new DataUrl(previewImageFile.dataUrl).toBase64(),
       previewImageFile.type,
-    )
-      .then(() => {
-        setOpenConfirmForm(false);
-        enqueueSuccess('LGTM 画像を生成しました');
-      })
-      .catch(err => {
-        switch (err.constructor) {
-          case UnsupportedImageFormatError:
-            enqueueError('サポートしていない画像形式です');
-            break;
-          default:
-            enqueueError('LGTM 画像の生成に失敗しました');
-            console.error(err);
-            break;
-        }
-      });
-  }, [
-    createLgtmFromBase64,
-    enqueueError,
-    enqueueSuccess,
-    previewImageFile?.dataUrl,
-    previewImageFile?.type,
-  ]);
+    ).then(() => {
+      setOpenConfirmForm(false);
+    });
+  }, [createLgtmFromBase64, previewImageFile?.dataUrl, previewImageFile?.type]);
 
   const handleClickMore = useCallback(() => {
     fetchLgtms(lgtms.slice(-1)[0]?.id);

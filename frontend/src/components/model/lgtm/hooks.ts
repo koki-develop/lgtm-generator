@@ -2,7 +2,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { lgtmsState } from '~/recoil/atoms';
 import { ApiClient } from '~/lib/apiClient';
+import { useToast } from '~/components/providers/ToastProvider';
 import { Lgtm } from '~/types/lgtm';
+import { UnsupportedImageFormatError } from '~/lib/errors';
 
 export const useLgtms = (): Lgtm[] => {
   return useRecoilValue(lgtmsState);
@@ -50,18 +52,32 @@ export const useCreateLgtmFromBase64 = (): {
   const setLgtms = useSetRecoilState(lgtmsState);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { enqueueSuccess, enqueueError } = useToast();
+
   const createLgtmFromBase64 = useCallback(
     async (base64: string, contentType: string) => {
       setLoading(true);
       await ApiClient.createLgtmFromBase64(base64, contentType)
         .then(lgtm => {
           setLgtms(prev => [lgtm, ...prev]);
+          enqueueSuccess('LGTM 画像を生成しました');
+        })
+        .catch(err => {
+          switch (err.constructor) {
+            case UnsupportedImageFormatError:
+              enqueueError('サポートしていない画像形式です');
+              break;
+            default:
+              enqueueError('LGTM 画像の生成に失敗しました');
+              console.error(err);
+              break;
+          }
         })
         .finally(() => {
           setLoading(false);
         });
     },
-    [setLgtms],
+    [enqueueError, enqueueSuccess, setLgtms],
   );
 
   return { createLgtmFromBase64, loading };
