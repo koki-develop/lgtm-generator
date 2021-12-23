@@ -7,9 +7,11 @@ type LgtmCardListProps = {
 };
 
 const LgtmCardList: React.VFC<LgtmCardListProps> = React.memo(props => {
+  const { ids } = props;
+
   return (
     <Grid container spacing={2}>
-      {props.ids.map(id => (
+      {ids.map(id => (
         <Grid key={id} item xs={6} sm={4} md={3}>
           <LgtmCard id={id} />
         </Grid>
