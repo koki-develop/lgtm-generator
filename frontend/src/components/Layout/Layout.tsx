@@ -4,13 +4,7 @@ import { RecoilRoot } from 'recoil';
 import Header from './Header';
 import Footer from './Footer';
 import ToastProvider from '~/components/providers/ToastProvider';
-import {
-  Box,
-  Container,
-  CssBaseline,
-  ThemeProvider,
-  StyledEngineProvider,
-} from '@mui/material';
+import { Box, Container, CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from './theme';
 
 type LayoutProps = {
@@ -21,13 +15,11 @@ type LayoutProps = {
 const Layout: React.VFC<LayoutProps> = React.memo(props => {
   return (
     <RecoilRoot>
-      <StyledEngineProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <ToastProvider>
-            <LayoutContent {...props} />
-          </ToastProvider>
-        </ThemeProvider>
-      </StyledEngineProvider>
+      <ThemeProvider theme={theme}>
+        <ToastProvider>
+          <LayoutContent {...props} />
+        </ToastProvider>
+      </ThemeProvider>
     </RecoilRoot>
   );
 });
