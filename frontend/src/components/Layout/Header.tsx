@@ -1,7 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import { Routes } from '~/routes';
-import { AppBar, Toolbar, Typography } from '@mui/material';
 
 const Header: React.VFC = React.memo(() => {
   return (

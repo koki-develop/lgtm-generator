@@ -18,25 +18,16 @@ const Footer: React.VFC = React.memo(() => {
         alignItems: 'center',
         display: 'flex',
         flexDirection: 'column',
-        padding: 2,
       }}
     >
-      <ExternalLink
-        href='https://koki.me'
-        sx={{ color: 'inherit', textDecoration: 'none' }}
-      >
-        <Typography component='small'>&copy;2021 koki sato</Typography>
-      </ExternalLink>
-
       <ul>
+        <LinkListItem sx={{ mb: 2 }}>
+          <ExternalLink href='https://koki.me'>
+            <Typography component='small'>&copy;2021 koki sato</Typography>
+          </ExternalLink>
+        </LinkListItem>
         <LinkListItem>
-          <ExternalLink
-            href='https://github.com/koki-develop/lgtm-generator'
-            sx={{
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
+          <ExternalLink href='https://github.com/koki-develop/lgtm-generator'>
             View on GitHub
           </ExternalLink>
         </LinkListItem>
