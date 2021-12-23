@@ -1,19 +1,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { lgtmsState } from '~/recoil/atoms';
-import { ApiClient } from '~/lib/apiClient';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import { ImageFile, ImageFileReader } from '~/lib/imageFileReader';
 import { FileTooLargeError, UnsupportedImageFormatError } from '~/lib/errors';
 import { DataUrl } from '~/lib/dataUrl';
 import { useToast } from '~/components/providers/ToastProvider';
-import { Box, Button } from '@mui/material';
 import UploadButton from './UploadButton';
-import LgtmCardList from '../../model/lgtm/LgtmCardList';
-import ConfirmForm from '../../model/lgtm/LgtmForm';
+import LgtmCardList from '~/components/model/lgtm/LgtmCardList';
+import LgtmForm from '~/components/model/lgtm/LgtmForm';
+import {
+  useCreateLgtmFromBase64,
+  useFetchLgtms,
+  useLgtms,
+} from '~/components/model/lgtm/hooks';
 import Loading from '~/components/utils/Loading';
 import Modal from '~/components/utils/Modal';
-
-const perPage = 20;
 
 type LgtmsPanelProps = {
   show: boolean;
@@ -22,14 +23,15 @@ type LgtmsPanelProps = {
 const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   const { show } = props;
 
-  const [lgtms, setLgtms] = useRecoilState(lgtmsState);
-  const [uploading, setUploading] = useState<boolean>(false);
+  const lgtms = useLgtms();
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
   const [previewImageFile, setPreviewImageFile] = useState<ImageFile>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [showMore, setShowMore] = useState<boolean>(false);
+
   const { enqueueSuccess, enqueueWarn, enqueueError } = useToast();
+  const { fetchLgtms, loading, isTruncated } = useFetchLgtms();
+  const { createLgtmFromBase64, loading: uploading } =
+    useCreateLgtmFromBase64();
 
   const handleCloseConfirmForm = useCallback(() => {
     setOpenConfirmForm(false);
@@ -64,56 +66,40 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   );
 
   const handleConfirm = useCallback(() => {
-    setUploading(true);
-    ApiClient.createLgtmFromBase64(
+    createLgtmFromBase64(
       new DataUrl(previewImageFile.dataUrl).toBase64(),
       previewImageFile.type,
     )
-      .then(lgtm => {
+      .then(() => {
         setOpenConfirmForm(false);
-        setLgtms(prev => [lgtm, ...prev]);
         enqueueSuccess('LGTM 画像を生成しました');
       })
-      .catch(error => {
-        switch (error.constructor) {
+      .catch(err => {
+        switch (err.constructor) {
           case UnsupportedImageFormatError:
             enqueueError('サポートしていない画像形式です');
             break;
           default:
             enqueueError('LGTM 画像の生成に失敗しました');
-            console.error(error);
+            console.error(err);
             break;
         }
-      })
-      .finally(() => {
-        setUploading(false);
       });
   }, [
+    createLgtmFromBase64,
     enqueueError,
     enqueueSuccess,
     previewImageFile?.dataUrl,
     previewImageFile?.type,
-    setLgtms,
   ]);
 
-  const loadLgtms = useCallback(() => {
-    setLoading(true);
-    ApiClient.getLgtms(perPage, lgtms.slice(-1)[0]?.id).then(lgtms => {
-      setLgtms(prev => [...prev, ...lgtms]);
-      setShowMore(lgtms.length === perPage);
-      setLoading(false);
-    });
-  }, [lgtms, setLgtms]);
-
   const handleClickMore = useCallback(() => {
-    loadLgtms();
-  }, [loadLgtms]);
+    fetchLgtms(lgtms.slice(-1)[0]?.id);
+  }, [fetchLgtms, lgtms]);
 
-  // FIXME: リファクタ
   useEffect(() => {
-    loadLgtms();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fetchLgtms();
+  }, [fetchLgtms]);
 
   return (
     <Box hidden={!show}>
@@ -121,7 +107,8 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
         <Loading text='読込中' />
       </Modal>
       <UploadButton onChange={handleChangeFile} />
-      <ConfirmForm
+
+      <LgtmForm
         loading={uploading}
         previewSrc={previewImageFile?.dataUrl}
         open={openConfirmForm}
@@ -139,7 +126,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
         }}
       >
         {loading && <Loading />}
-        {!loading && showMore && (
+        {!loading && isTruncated && (
           <Button color='primary' variant='contained' onClick={handleClickMore}>
             もっと見る
           </Button>
