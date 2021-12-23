@@ -1,14 +1,19 @@
 import React, { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
+import { CacheProvider, EmotionCache } from '@emotion/react';
+import { createEmotionCache } from '~/lib/emotion';
 
-const App: React.VFC<AppProps> = ({ Component, pageProps }: AppProps) => {
+const clientSideEmotionCache = createEmotionCache();
+
+export type MyAppProps = AppProps & {
+  emotionCache?: EmotionCache;
+};
+
+const App: React.VFC<MyAppProps> = props => {
+  const { Component, pageProps, emotionCache = clientSideEmotionCache } = props;
+
   const router = useRouter();
-
-  useEffect(() => {
-    const jssStyles = document.getElementById('jss-server-side');
-    if (jssStyles) jssStyles.remove();
-  }, []);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_STAGE === 'prod') {
@@ -18,7 +23,11 @@ const App: React.VFC<AppProps> = ({ Component, pageProps }: AppProps) => {
     }
   }, [router.pathname]);
 
-  return <Component {...pageProps} />;
+  return (
+    <CacheProvider value={emotionCache}>
+      <Component {...pageProps} />
+    </CacheProvider>
+  );
 };
 
 export default App;

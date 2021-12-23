@@ -6,7 +6,9 @@ import NextDocument, {
   Main,
   NextScript,
 } from 'next/document';
-import ServerStyleSheets from '@mui/styles/ServerStyleSheets';
+import createEmotionServer from '@emotion/server/create-instance';
+import { createEmotionCache } from '~/lib/emotion';
+import { theme } from '~/components/Layout/theme';
 
 export default class Document extends NextDocument {
   render(): JSX.Element {
@@ -34,7 +36,7 @@ export default class Document extends NextDocument {
             </>
           )}
 
-          <meta name='theme-color' content='#1E90FF' />
+          <meta name='theme-color' content={theme.palette.primary.main} />
           <meta
             name='description'
             content='シンプルな LGTM 画像作成サービスです。'
@@ -72,21 +74,35 @@ export default class Document extends NextDocument {
 }
 
 Document.getInitialProps = async (ctx: DocumentContext) => {
-  const sheets = new ServerStyleSheets();
   const originalRenderPage = ctx.renderPage;
+
+  const cache = createEmotionCache();
+  const { extractCriticalToChunks } = createEmotionServer(cache);
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: App => props => sheets.collect(<App {...props} />),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      enhanceApp: (App: any) =>
+        function EnhanceApp(props) {
+          return <App emotionCache={cache} {...props} />;
+        },
     });
 
   const initialProps = await NextDocument.getInitialProps(ctx);
+  const emotionStyles = extractCriticalToChunks(initialProps.html);
+  const emotionStyleTags = emotionStyles.styles.map(style => (
+    <style
+      data-emotion={`${style.key} ${style.ids.join(' ')}`}
+      key={style.key}
+      dangerouslySetInnerHTML={{ __html: style.css }}
+    />
+  ));
 
   return {
     ...initialProps,
     styles: [
+      ...emotionStyleTags,
       ...React.Children.toArray(initialProps.styles),
-      sheets.getStyleElement(),
     ],
   };
 };
