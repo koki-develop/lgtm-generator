@@ -4,11 +4,14 @@ import { Search as SearchIcon } from '@mui/icons-material';
 import Field from '~/components/utils/Field';
 import Form from '~/components/utils/Form';
 import Loading from '~/components/utils/Loading';
-import { ApiClient } from '~/lib/apiClient';
 import { Image } from '~/types/image';
 import ImageCardList from '../../model/image/ImageCardList';
 import ConfirmForm from '../../model/lgtm/LgtmForm';
 import { useCreateLgtmFromUrl } from '~/components/model/lgtm/LgtmHooks';
+import {
+  useImages,
+  useSearchImages,
+} from '~/components/model/image/ImageHooks';
 
 type SearchImagesPanelProps = {
   show: boolean;
@@ -19,12 +22,13 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
     const { show } = props;
 
     const queryInputRef = useRef<HTMLInputElement>();
+
+    const images = useImages();
     const [query, setQuery] = useState<string>('');
-    const [searching, setSearching] = useState<boolean>(false);
-    const [images, setImages] = useState<Image[]>([]);
     const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
     const [previewUrl, setPreviewUrl] = useState<string>('');
 
+    const { searchImages, loading: searching } = useSearchImages();
     const { createLgtmFromUrl, loading: generating } = useCreateLgtmFromUrl();
 
     const handleChangeQuery = useCallback(
@@ -36,12 +40,8 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
 
     const handleSearch = useCallback(() => {
       queryInputRef.current?.blur();
-      setSearching(true);
-      ApiClient.searchImages(query).then(images => {
-        setImages(images);
-        setSearching(false);
-      });
-    }, [query]);
+      searchImages(query);
+    }, [query, searchImages]);
 
     const handleClickImage = useCallback((image: Image) => {
       setPreviewUrl(image.url);
