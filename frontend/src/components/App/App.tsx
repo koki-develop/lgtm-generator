@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { RecoilRoot } from 'recoil';
 import { createEmotionCache } from '~/lib/emotion';
+import ToastProvider from '~/components/providers/ToastProvider';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -25,7 +27,11 @@ const App: React.VFC<MyAppProps> = props => {
 
   return (
     <CacheProvider value={emotionCache}>
-      <Component {...pageProps} />
+      <ToastProvider>
+        <RecoilRoot>
+          <Component {...pageProps} />
+        </RecoilRoot>
+      </ToastProvider>
     </CacheProvider>
   );
 };
