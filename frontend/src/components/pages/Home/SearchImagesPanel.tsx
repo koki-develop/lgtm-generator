@@ -68,7 +68,6 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
               }}
               fullWidth
               disabled={searching}
-              variant='outlined'
               type='search'
               value={query}
               onChange={handleChangeQuery}

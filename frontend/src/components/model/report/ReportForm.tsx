@@ -110,7 +110,6 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
         <TextField
           fullWidth
           multiline
-          variant='outlined'
           placeholder='補足 ( 任意 )'
           disabled={loading}
           inputProps={{ maxLength: 1000 }}

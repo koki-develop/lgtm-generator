@@ -40,6 +40,11 @@ export const theme = createTheme({
         },
       },
     },
+    MuiTextField: {
+      defaultProps: {
+        variant: 'outlined',
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {
