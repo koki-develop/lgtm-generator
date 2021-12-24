@@ -6,13 +6,7 @@ import ModalCard from '~/components/utils/ModalCard';
 import ExternalLink from '~/components/utils/ExternalLink';
 import LoadableButton from '~/components/utils/LoadableButton';
 
-const PreviewImg = styled('img')(({ theme }) => ({
-  border: '1px solid #dddddd',
-  marginTop: theme.spacing(2),
-  marginBottom: theme.spacing(2),
-  maxHeight: 300,
-  maxWidth: '100%',
-}));
+const StyledImg = styled('img')({});
 
 type ConfirmFormProps = {
   previewSrc: string;
@@ -41,7 +35,17 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
         }}
       >
         <Typography>この画像で LGTM 画像を生成しますか？</Typography>
-        <PreviewImg src={previewSrc} alt='preview' />
+        <StyledImg
+          src={previewSrc}
+          alt='preview'
+          sx={{
+            border: '1px solid',
+            borderColor: 'divider',
+            my: 2,
+            maxHeight: 300,
+            maxWidth: '100%',
+          }}
+        />
         <Typography>
           LGTM 画像を生成する前に
           <ExternalLink
