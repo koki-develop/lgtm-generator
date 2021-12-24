@@ -1,7 +1,12 @@
 import React from 'react';
-import { Box, Card, CardActionArea, CardContent } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardContent from '@mui/material/CardContent';
+import { styled } from '@mui/material/styles';
 import { Image } from '~/types/image';
+
+const StyledImage = styled('img')();
 
 type ImageCardProps = {
   image: Image;
@@ -9,9 +14,11 @@ type ImageCardProps = {
 };
 
 const ImageCard: React.VFC<ImageCardProps> = React.memo(props => {
+  const { image, onClick } = props;
+
   return (
     <Card>
-      <CardActionArea onClick={props.onClick}>
+      <CardActionArea onClick={onClick}>
         <CardContent sx={{ p: 1 }}>
           <Box
             sx={{
@@ -21,12 +28,12 @@ const ImageCard: React.VFC<ImageCardProps> = React.memo(props => {
               justifyContent: 'center',
             }}
           >
-            <img
-              src={props.image.url}
-              alt={props.image.title}
-              style={{
+            <StyledImage
+              src={image.url}
+              alt={image.title}
+              sx={{
                 border: '1px solid',
-                borderColor: grey['A100'],
+                borderColor: 'divider',
                 maxHeight: 140,
                 maxWidth: '100%',
               }}
