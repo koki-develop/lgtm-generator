@@ -85,13 +85,7 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
           open={openReportForm}
           onClose={handleCloseReportForm}
         />
-        <ButtonGroup
-          color='primary'
-          variant='contained'
-          sx={{
-            maxWidth: '100%',
-          }}
-        >
+        <ButtonGroup color='primary' sx={{ maxWidth: '100%' }}>
           {/* コピー */}
           <Button onClick={handleClickCopyButton}>
             <FileCopyOutlinedIcon fontSize='small' />

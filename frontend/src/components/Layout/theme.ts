@@ -19,6 +19,9 @@ export const theme = createTheme({
   palette,
   components: {
     MuiButton: {
+      defaultProps: {
+        variant: 'contained',
+      },
       styleOverrides: {
         root: {
           fontWeight: 'bold',
@@ -26,6 +29,9 @@ export const theme = createTheme({
       },
     },
     MuiButtonGroup: {
+      defaultProps: {
+        variant: 'contained',
+      },
       styleOverrides: {
         grouped: {
           ':not(:last-of-type)': {

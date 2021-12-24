@@ -87,7 +87,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
       <Field sx={{ display: 'flex', justifyContent: 'center' }}>
         {loading && <Loading />}
         {!loading && isTruncated && (
-          <Button color='primary' variant='contained' onClick={handleClickMore}>
+          <Button color='primary' onClick={handleClickMore}>
             もっと見る
           </Button>
         )}

@@ -64,7 +64,6 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
         <Button
           fullWidth
           color='secondary'
-          variant='contained'
           onClick={handleClose}
           disabled={loading}
         >
@@ -73,7 +72,6 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
         <LoadableButton
           fullWidth
           color='primary'
-          variant='contained'
           loading={loading}
           onClick={onConfirm}
         >

@@ -123,7 +123,6 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
         <Button
           fullWidth
           color='secondary'
-          variant='contained'
           onClick={handleClose}
           disabled={loading}
         >
@@ -132,7 +131,6 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
         <LoadableButton
           fullWidth
           color='primary'
-          variant='contained'
           disabled={!isValid}
           loading={loading}
           onClick={handleSendReport}
