@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import { styled } from '@mui/material/styles';
 import { Image } from '~/types/image';
 
-const StyledImage = styled('img')();
+const StyledImage = styled('img')({});
 
 type ImageCardProps = {
   image: Image;
