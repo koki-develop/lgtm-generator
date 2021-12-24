@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
@@ -10,15 +10,19 @@ const StyledImage = styled('img')();
 
 type ImageCardProps = {
   image: Image;
-  onClick: () => void;
+  onClick: (image: Image) => void;
 };
 
 const ImageCard: React.VFC<ImageCardProps> = React.memo(props => {
   const { image, onClick } = props;
 
+  const handleClick = useCallback(() => {
+    onClick(image);
+  }, [image, onClick]);
+
   return (
     <Card>
-      <CardActionArea onClick={onClick}>
+      <CardActionArea onClick={handleClick}>
         <CardContent sx={{ p: 1 }}>
           <Box
             sx={{
