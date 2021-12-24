@@ -1,10 +1,11 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { lgtmsState } from '~/recoil/atoms';
+import { lgtmsState, favoriteIdsState } from '~/recoil/atoms';
 import { ApiClient } from '~/lib/apiClient';
 import { useToast } from '~/components/providers/ToastProvider';
 import { Lgtm } from '~/types/lgtm';
 import { UnsupportedImageFormatError } from '~/lib/errors';
+import { DataStorage } from '~/lib/dataStorage';
 
 export const useLgtms = (): Lgtm[] => {
   return useRecoilValue(lgtmsState);
@@ -122,4 +123,48 @@ export const useCreateLgtmFromUrl = (): {
   );
 
   return { createLgtmFromUrl, loading };
+};
+
+export const useFavoriteIds = (): string[] => {
+  return useRecoilValue(favoriteIdsState);
+};
+
+export type AddFavoriteIdFn = (id: string) => void;
+
+export const useAddFavoriteId = (): { addFavoriteId: AddFavoriteIdFn } => {
+  const setFavoriteId = useSetRecoilState(favoriteIdsState);
+
+  const addFavoriteId = useCallback(
+    (id: string) => {
+      setFavoriteId(prev => {
+        const after = [id, ...prev];
+        DataStorage.saveFavoriteIds(after);
+        return after;
+      });
+    },
+    [setFavoriteId],
+  );
+
+  return { addFavoriteId };
+};
+
+export type RemoveFavoriteIdFn = (id: string) => void;
+
+export const useRemoveFavoriteId = (): {
+  removeFavoriteId: RemoveFavoriteIdFn;
+} => {
+  const setFavoriteId = useSetRecoilState(favoriteIdsState);
+
+  const removeFavoriteId = useCallback(
+    (id: string) => {
+      setFavoriteId(prev => {
+        const after = prev.filter(prevId => prevId !== id);
+        DataStorage.saveFavoriteIds(after);
+        return after;
+      });
+    },
+    [setFavoriteId],
+  );
+
+  return { removeFavoriteId };
 };
