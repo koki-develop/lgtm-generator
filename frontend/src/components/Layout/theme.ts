@@ -25,6 +25,15 @@ export const theme = createTheme({
         },
       },
     },
+    MuiButtonGroup: {
+      styleOverrides: {
+        grouped: {
+          ':not(:last-of-type)': {
+            borderRight: 'none',
+          },
+        },
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {
