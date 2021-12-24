@@ -1,8 +1,7 @@
+import { useCallback, useState } from 'react';
 import { loadImage, createCanvas } from 'canvas';
-import {
-  FileTooLargeError,
-  UnsupportedImageFormatError,
-} from '~/lib/errors';
+import { FileTooLargeError, UnsupportedImageFormatError } from '~/lib/errors';
+import { useToast } from '~/components/providers/ToastProvider';
 
 export type ImageFile = {
   name: string;
@@ -43,13 +42,30 @@ export class ImageFileReader {
     });
   }
 
-  private static async resizeImageFile(imageFile: ImageFile, sideLength: number): Promise<ImageFile> {
+  private static async resizeImageFile(
+    imageFile: ImageFile,
+    sideLength: number,
+  ): Promise<ImageFile> {
     const image = await loadImage(imageFile.dataUrl);
 
-    const [destWidth, destHeight] = this.calcSize(image.width, image.height, sideLength);
+    const [destWidth, destHeight] = this.calcSize(
+      image.width,
+      image.height,
+      sideLength,
+    );
     const canvas = createCanvas(destWidth, destHeight);
     const context = canvas.getContext('2d');
-    context.drawImage(image, 0, 0, image.width, image.height, 0, 0, destWidth, destHeight);
+    context.drawImage(
+      image,
+      0,
+      0,
+      image.width,
+      image.height,
+      0,
+      0,
+      destWidth,
+      destHeight,
+    );
     const dataUrl = canvas.toDataURL('image/png');
 
     return {
@@ -59,11 +75,56 @@ export class ImageFileReader {
     };
   }
 
-  private static calcSize(width: number, height: number, sideLength: number): [number, number] {
+  private static calcSize(
+    width: number,
+    height: number,
+    sideLength: number,
+  ): [number, number] {
     if (width > height) {
-      return [sideLength, sideLength / width * height];
+      return [sideLength, (sideLength / width) * height];
     } else {
-      return [sideLength / height * width, sideLength];
+      return [(sideLength / height) * width, sideLength];
     }
   }
 }
+
+export type LoadImageFn = (file: File) => Promise<ImageFile | null>;
+
+export const useLoadImage = (): {
+  loadImage: LoadImageFn;
+  loading: boolean;
+} => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const { enqueueWarn, enqueueError } = useToast();
+
+  const loadImage = useCallback(
+    async (file: File) => {
+      setLoading(true);
+      return ImageFileReader.read(file)
+        .then(imageFile => {
+          return imageFile;
+        })
+        .catch(err => {
+          switch (err.constructor) {
+            case FileTooLargeError:
+              enqueueWarn(`ファイルサイズが大きすぎます: ${file.name}`);
+              break;
+            case UnsupportedImageFormatError:
+              enqueueError('サポートしていない画像形式です');
+              break;
+            default:
+              enqueueError('画像の読み込みに失敗しました');
+              console.error(err);
+              break;
+          }
+          return null;
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    },
+    [enqueueError, enqueueWarn],
+  );
+
+  return { loadImage, loading };
+};

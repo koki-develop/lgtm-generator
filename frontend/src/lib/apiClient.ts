@@ -3,10 +3,7 @@ import urlJoin from 'url-join';
 import { UnsupportedImageFormatError } from '~/lib/errors';
 import { Lgtm } from '~/types/lgtm';
 import { Image } from '~/types/image';
-import {
-  Report,
-  ReportType,
-} from '~/types/report';
+import { Report, ReportType } from '~/types/report';
 
 type LgtmRaw = {
   id: string;
@@ -28,11 +25,16 @@ type ErrorResponse = {
 export class ApiClient {
   public static async getLgtms(limit: number, after?: string): Promise<Lgtm[]> {
     const endpoint = this.buildEndpoint('v1', 'lgtms');
-    const response = await axios.get<LgtmRaw[]>(endpoint, { params: { after, limit } });
+    const response = await axios.get<LgtmRaw[]>(endpoint, {
+      params: { after, limit },
+    });
     return response.data.map(this.lgtmFromRaw);
   }
 
-  public static async createLgtmFromBase64(base64: string, contentType: string): Promise<Lgtm> {
+  public static async createLgtmFromBase64(
+    base64: string,
+    contentType: string,
+  ): Promise<Lgtm> {
     return this.createLgtm({ base64, content_type: contentType });
   }
 
@@ -46,19 +48,31 @@ export class ApiClient {
     return response.data;
   }
 
-  public static async createReport(lgtmId: string, type: ReportType, text: string): Promise<Report> {
+  public static async createReport(
+    lgtmId: string,
+    type: ReportType,
+    text: string,
+  ): Promise<Report> {
     const endpoint = this.buildEndpoint('v1', 'reports');
-    const response = await axios.post<Report>(endpoint, { lgtm_id: lgtmId, type, text });
+    const response = await axios.post<Report>(endpoint, {
+      lgtm_id: lgtmId,
+      type,
+      text,
+    });
     return response.data;
   }
 
-  private static async createLgtm(body: { base64: string, content_type: string } | { url: string }): Promise<Lgtm> {
+  private static async createLgtm(
+    body: { base64: string; content_type: string } | { url: string },
+  ): Promise<Lgtm> {
     const endpoint = this.buildEndpoint('v1', 'lgtms');
     const validateStatus = (status: number) => {
-      return status >= 200 && status < 300 || status === 400;
+      return (status >= 200 && status < 300) || status === 400;
     };
     // TODO: エラー時の型指定にもっといい書き方無いか？要調査
-    const response = await axios.post<LgtmRaw | ErrorResponse>(endpoint, body, { validateStatus });
+    const response = await axios.post<LgtmRaw | ErrorResponse>(endpoint, body, {
+      validateStatus,
+    });
     if (response.status === 201) {
       const data = response.data as LgtmRaw;
       return this.lgtmFromRaw(data);
