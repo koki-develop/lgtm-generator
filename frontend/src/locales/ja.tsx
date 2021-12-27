@@ -1,7 +1,9 @@
 import React from 'react';
+import Link from 'next/link';
 import Typography from '@mui/material/Typography';
 import ExternalLink from '~/components/utils/ExternalLink';
 import { Routes } from '~/routes';
+import { theme } from '~/components/Layout/theme';
 import { Translate } from './translate';
 
 export const ja: Translate = {
@@ -21,15 +23,18 @@ export const ja: Translate = {
   PLEASE_READ_PRECAUTIONS: (
     <Typography>
       LGTM 画像を生成する前に
-      <ExternalLink
-        href={Routes.precautions}
-        sx={{
-          color: theme => theme.palette.primary.main,
-          textDecoration: 'underline',
-        }}
-      >
-        利用上の注意
-      </ExternalLink>
+      <Link href={Routes.precautions}>
+        <a
+          target='_blank'
+          rel='noopener noreferrer'
+          style={{
+            color: theme.palette.primary.main,
+            textDecoration: 'underline',
+          }}
+        >
+          利用上の注意
+        </a>
+      </Link>
       をお読みください。
     </Typography>
   ),

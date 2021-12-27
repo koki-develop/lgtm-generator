@@ -1,5 +1,7 @@
 import React from 'react';
+import Link from 'next/link';
 import Typography from '@mui/material/Typography';
+import { theme } from '~/components/Layout/theme';
 import { Routes } from '~/routes';
 import ExternalLink from '~/components/utils/ExternalLink';
 import { Translate } from './translate';
@@ -21,15 +23,18 @@ export const en: Translate = {
   PLEASE_READ_PRECAUTIONS: (
     <Typography>
       Please read{' '}
-      <ExternalLink
-        href={Routes.precautions}
-        sx={{
-          color: theme => theme.palette.primary.main,
-          textDecoration: 'underline',
-        }}
-      >
-        precautions
-      </ExternalLink>{' '}
+      <Link href={Routes.precautions}>
+        <a
+          target='_blank'
+          rel='noopener noreferrer'
+          style={{
+            color: theme.palette.primary.main,
+            textDecoration: 'underline',
+          }}
+        >
+          precautions
+        </a>
+      </Link>{' '}
       before generating LGTM image.
     </Typography>
   ),
