@@ -27,4 +27,8 @@ export const en: Translate = {
   SEE_MORE: 'See more',
 
   KEYWORD: 'Keyword',
+
+  LGTM: 'LGTM',
+  IMAGE_SEARCH: 'Image Search',
+  FAVORITES: 'Favorites',
 };

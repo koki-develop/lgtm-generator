@@ -24,4 +24,8 @@ export type Translate = {
   SEE_MORE: string;
 
   KEYWORD: string;
+
+  LGTM: string;
+  IMAGE_SEARCH: string;
+  FAVORITES: string;
 };

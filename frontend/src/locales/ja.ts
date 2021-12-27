@@ -24,4 +24,8 @@ export const ja: Translate = {
   SEE_MORE: 'もっと見る',
 
   KEYWORD: 'キーワード',
+
+  LGTM: 'LGTM',
+  IMAGE_SEARCH: '画像検索',
+  FAVORITES: 'お気に入り',
 };

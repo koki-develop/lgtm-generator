@@ -46,6 +46,13 @@ export const theme = createTheme({
         variant: 'outlined',
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
+      },
+    },
     MuiLink: {
       styleOverrides: {
         root: {
