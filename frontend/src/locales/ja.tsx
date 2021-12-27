@@ -90,4 +90,7 @@ export const ja: Translate = {
   GENERATED_LGTM_IMAGE: 'LGTM 画像を生成しました',
   UNSUPPORTED_IMAGE_FORMAT: 'サポートしていない画像形式です',
   LGTM_IMAGE_GENERATION_FAILED: 'LGTM 画像の生成に失敗しました',
+
+  SENT: '送信しました',
+  SENDING_FAILED: '送信に失敗しました',
 };

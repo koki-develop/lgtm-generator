@@ -91,4 +91,7 @@ export const en: Translate = {
   GENERATED_LGTM_IMAGE: 'Generated LGTM image.',
   UNSUPPORTED_IMAGE_FORMAT: 'Unsupported image format.',
   LGTM_IMAGE_GENERATION_FAILED: 'LGTM image generation failed.',
+
+  SENT: 'Sent.',
+  SENDING_FAILED: 'Sending failed.',
 };

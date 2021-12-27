@@ -49,4 +49,7 @@ export type Translate = {
   UNSUPPORTED_IMAGE_FORMAT: string;
   GENERATED_LGTM_IMAGE: string;
   LGTM_IMAGE_GENERATION_FAILED: string;
+
+  SENT: string;
+  SENDING_FAILED: string;
 };
