@@ -2,6 +2,7 @@ export type Translate = {
   APP_NAME: string;
 
   PRECAUTIONS: string;
+  PRECAUTIONS_ITEMS: string[];
   PRIVACY_POLICY: string;
 
   COPIED_TO_CLIPBOARD: string;
