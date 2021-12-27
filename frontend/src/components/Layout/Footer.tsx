@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
+import { useTranslate } from '~/hooks/translateHooks';
 import { Routes } from '~/routes';
 import ExternalLink from '~/components/utils/ExternalLink';
 
@@ -11,6 +12,8 @@ const LinkListItem = styled('li')(({ theme }) => ({
 }));
 
 const Footer: React.VFC = React.memo(() => {
+  const { t } = useTranslate();
+
   return (
     <Box
       component='footer'
@@ -33,12 +36,12 @@ const Footer: React.VFC = React.memo(() => {
         </LinkListItem>
         <LinkListItem>
           <Link href={Routes.precautions}>
-            <a>ご利用上の注意</a>
+            <a>{t.PRECAUTIONS}</a>
           </Link>
         </LinkListItem>
         <LinkListItem>
           <Link href={Routes.privacyPolicy}>
-            <a>プライバシーポリシー</a>
+            <a>{t.PRIVACY_POLICY}</a>
           </Link>
         </LinkListItem>
       </ul>
