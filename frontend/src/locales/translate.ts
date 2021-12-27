@@ -3,4 +3,6 @@ export type Translate = {
 
   PRECAUTIONS: string;
   PRIVACY_POLICY: string;
+
+  COPIED_TO_CLIPBOARD: string;
 };
