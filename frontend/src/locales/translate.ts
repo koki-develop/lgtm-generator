@@ -28,4 +28,6 @@ export type Translate = {
   LGTM: string;
   IMAGE_SEARCH: string;
   FAVORITES: string;
+
+  UPLOAD: string;
 };

@@ -28,4 +28,6 @@ export const ja: Translate = {
   LGTM: 'LGTM',
   IMAGE_SEARCH: '画像検索',
   FAVORITES: 'お気に入り',
+
+  UPLOAD: 'アップロード',
 };

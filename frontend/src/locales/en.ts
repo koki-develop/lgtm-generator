@@ -31,4 +31,6 @@ export const en: Translate = {
   LGTM: 'LGTM',
   IMAGE_SEARCH: 'Image Search',
   FAVORITES: 'Favorites',
+
+  UPLOAD: 'Upload',
 };
