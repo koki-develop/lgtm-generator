@@ -32,7 +32,7 @@ const Footer: React.VFC = React.memo(() => {
           </ExternalLink>
         </LinkListItem>
         <LinkListItem>
-          <Link href={Routes.precaution}>
+          <Link href={Routes.precautions}>
             <a>ご利用上の注意</a>
           </Link>
         </LinkListItem>

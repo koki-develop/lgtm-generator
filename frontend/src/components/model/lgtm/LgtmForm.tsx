@@ -49,7 +49,7 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
         <Typography>
           LGTM 画像を生成する前に
           <ExternalLink
-            href={Routes.precaution}
+            href={Routes.precautions}
             sx={{
               color: theme => theme.palette.primary.main,
               textDecoration: 'underline',

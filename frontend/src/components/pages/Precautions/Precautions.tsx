@@ -12,7 +12,7 @@ const StyledListItem = styled('li')(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
 
-const Precaution: React.VFC = React.memo(() => {
+const Precautions: React.VFC = React.memo(() => {
   const items: string[] = [
     '本サービスを利用して生成された画像に関する一切の責任はご利用者様にご負担いただきます。ご利用者様が生成した画像に関し、第三者が損害を被った場合、運営者はご利用者様に代わっての責任は一切負いません。',
     '本サービスを利用して生成された画像はインターネット上に公開されます。',
@@ -45,6 +45,6 @@ const Precaution: React.VFC = React.memo(() => {
   );
 });
 
-Precaution.displayName = 'Precaution';
+Precautions.displayName = 'Precautions';
 
-export default Precaution;
+export default Precautions;
