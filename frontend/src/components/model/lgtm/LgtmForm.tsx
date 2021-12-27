@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { styled } from '@mui/material/styles';
 import { Button, CardActions, CardContent, Typography } from '@mui/material';
+import { useTranslate } from '~/hooks/translateHooks';
 import { Routes } from '~/routes';
 import ModalCard from '~/components/utils/ModalCard';
 import ExternalLink from '~/components/utils/ExternalLink';
@@ -18,6 +19,7 @@ type ConfirmFormProps = {
 
 const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
   const { previewSrc, open, loading, onClose, onConfirm } = props;
+  const { t, locale } = useTranslate();
 
   const handleClose = useCallback(() => {
     if (loading) return;
@@ -34,7 +36,7 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
           pt: 0,
         }}
       >
-        <Typography>この画像で LGTM 画像を生成しますか？</Typography>
+        <Typography>{t.CONFIRM_GENERATION}</Typography>
         <StyledImg
           src={previewSrc}
           alt='preview'
@@ -46,19 +48,37 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
             maxWidth: '100%',
           }}
         />
-        <Typography>
-          LGTM 画像を生成する前に
-          <ExternalLink
-            href={Routes.precautions}
-            sx={{
-              color: theme => theme.palette.primary.main,
-              textDecoration: 'underline',
-            }}
-          >
-            ご利用上の注意
-          </ExternalLink>
-          をお読みください
-        </Typography>
+        {/* FIXME: リファクタ */}
+        {locale === 'en' && (
+          <Typography>
+            Please read {'"'}
+            <ExternalLink
+              href={Routes.precautions}
+              sx={{
+                color: theme => theme.palette.primary.main,
+                textDecoration: 'underline',
+              }}
+            >
+              {t.PRECAUTIONS}
+            </ExternalLink>
+            {'"'} before generating LGTM image.
+          </Typography>
+        )}
+        {locale === 'ja' && (
+          <Typography>
+            LGTM 画像を生成する前に
+            <ExternalLink
+              href={Routes.precautions}
+              sx={{
+                color: theme => theme.palette.primary.main,
+                textDecoration: 'underline',
+              }}
+            >
+              {t.PRECAUTIONS}
+            </ExternalLink>
+            をお読みください。
+          </Typography>
+        )}
       </CardContent>
       <CardActions>
         <Button
@@ -67,7 +87,7 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
           onClick={handleClose}
           disabled={loading}
         >
-          キャンセル
+          {t.CANCEL}
         </Button>
         <LoadableButton
           fullWidth
@@ -75,7 +95,7 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
           loading={loading}
           onClick={onConfirm}
         >
-          生成
+          {t.GENERATE}
         </LoadableButton>
       </CardActions>
     </ModalCard>

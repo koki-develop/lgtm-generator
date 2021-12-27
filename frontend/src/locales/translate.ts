@@ -5,4 +5,9 @@ export type Translate = {
   PRIVACY_POLICY: string;
 
   COPIED_TO_CLIPBOARD: string;
+
+  CONFIRM_GENERATION: string;
+
+  GENERATE: string;
+  CANCEL: string;
 };

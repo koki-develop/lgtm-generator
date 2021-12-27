@@ -25,6 +25,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           fontWeight: 'bold',
+          textTransform: 'none',
         },
       },
     },

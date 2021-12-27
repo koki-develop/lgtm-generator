@@ -7,4 +7,9 @@ export const en: Translate = {
   PRIVACY_POLICY: 'Privacy Policy',
 
   COPIED_TO_CLIPBOARD: 'Copied to clipboard',
+
+  CONFIRM_GENERATION: 'Would you like to generate LGTM image with this image?',
+
+  GENERATE: 'Generate',
+  CANCEL: 'Cancel',
 };

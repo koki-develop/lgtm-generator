@@ -6,4 +6,8 @@ export const ja: Translate = {
   PRIVACY_POLICY: 'プライバシーポリシー',
 
   COPIED_TO_CLIPBOARD: 'クリップボードにコピーしました',
+
+  CONFIRM_GENERATION: 'この画像で LGTM 画像を生成しますか？',
+  GENERATE: '生成',
+  CANCEL: 'キャンセル',
 };
