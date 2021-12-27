@@ -7,11 +7,8 @@ import Loading from '~/components/utils/Loading';
 import { Image } from '~/types/image';
 import ImageCardList from '../../model/image/ImageCardList';
 import ConfirmForm from '../../model/lgtm/LgtmForm';
-import { useCreateLgtmFromUrl } from '~/components/model/lgtm/LgtmHooks';
-import {
-  useImages,
-  useSearchImages,
-} from '~/components/model/image/ImageHooks';
+import { useCreateLgtmFromUrl } from '~/hooks/lgtmHooks';
+import { useImages, useSearchImages } from '~/hooks/imageHooks';
 
 type SearchImagesPanelProps = {
   show: boolean;

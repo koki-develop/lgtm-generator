@@ -8,7 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import { ReportType } from '~/types/report';
-import { useSendReport } from './ReportHooks';
+import { useSendReport } from '~/hooks/reportHooks';
 import ModalCard from '~/components/utils/ModalCard';
 import LoadableButton from '~/components/utils/LoadableButton';
 

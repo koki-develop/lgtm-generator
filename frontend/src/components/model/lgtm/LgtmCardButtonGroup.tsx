@@ -19,7 +19,7 @@ import {
   useAddFavoriteId,
   useFavoriteIds,
   useRemoveFavoriteId,
-} from '~/components/model/lgtm/LgtmHooks';
+} from '~/hooks/lgtmHooks';
 import { useToast } from '~/components/providers/ToastProvider';
 import ReportForm from '~/components/model/report/ReportForm';
 

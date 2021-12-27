@@ -10,7 +10,7 @@ import {
   useCreateLgtmFromBase64,
   useFetchLgtms,
   useLgtms,
-} from '~/components/model/lgtm/LgtmHooks';
+} from '~/hooks/lgtmHooks';
 import { useLoadImage } from '~/lib/imageFileReader';
 import Loading from '~/components/utils/Loading';
 import Modal from '~/components/utils/Modal';
