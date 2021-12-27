@@ -86,4 +86,8 @@ export const ja: Translate = {
     '当サイトは、個人情報に関して適用される日本の法令を遵守するとともに、本ポリシーの内容を適宜見直しその改善に努めます。修正された最新のプライバシーポリシーは常に本ページにて開示されます。',
 
   LOADING: '読込中',
+
+  GENERATED_LGTM_IMAGE: 'LGTM 画像を生成しました',
+  UNSUPPORTED_IMAGE_FORMAT: 'サポートしていない画像形式です',
+  LGTM_IMAGE_GENERATION_FAILED: 'LGTM 画像の生成に失敗しました',
 };

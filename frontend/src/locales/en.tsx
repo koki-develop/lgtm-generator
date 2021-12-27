@@ -87,4 +87,8 @@ export const en: Translate = {
     'In addition to complying with the Japanese laws and regulations applicable to personal information, this website will review and improve the contents of this policy from time to time. The revised and updated privacy policy will always be disclosed on this page.',
 
   LOADING: 'Loading',
+
+  GENERATED_LGTM_IMAGE: 'Generated LGTM image.',
+  UNSUPPORTED_IMAGE_FORMAT: 'Unsupported image format.',
+  LGTM_IMAGE_GENERATION_FAILED: 'LGTM image generation failed.',
 };

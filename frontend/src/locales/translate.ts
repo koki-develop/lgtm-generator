@@ -45,4 +45,8 @@ export type Translate = {
   UPDATING_PRIVACY_POLICY_CONTENT: React.ReactNode;
 
   LOADING: string;
+
+  UNSUPPORTED_IMAGE_FORMAT: string;
+  GENERATED_LGTM_IMAGE: string;
+  LGTM_IMAGE_GENERATION_FAILED: string;
 };
