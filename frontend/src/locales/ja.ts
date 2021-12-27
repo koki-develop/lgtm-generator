@@ -30,4 +30,6 @@ export const ja: Translate = {
   FAVORITES: 'お気に入り',
 
   UPLOAD: 'アップロード',
+
+  NOT_FOUND: 'お探しのページは見つかりませんでした',
 };

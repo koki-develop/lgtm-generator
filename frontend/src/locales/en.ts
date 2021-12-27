@@ -33,4 +33,6 @@ export const en: Translate = {
   FAVORITES: 'Favorites',
 
   UPLOAD: 'Upload',
+
+  NOT_FOUND: 'Page not found',
 };

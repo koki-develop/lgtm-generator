@@ -30,4 +30,6 @@ export type Translate = {
   FAVORITES: string;
 
   UPLOAD: string;
+
+  NOT_FOUND: string;
 };
