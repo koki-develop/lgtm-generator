@@ -4,8 +4,11 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { Routes } from '~/routes';
+import { useTranslate } from '~/hooks/translateHooks';
 
 const Header: React.VFC = React.memo(() => {
+  const { t } = useTranslate();
+
   return (
     <AppBar color='primary' position='static'>
       <Toolbar>
@@ -20,7 +23,7 @@ const Header: React.VFC = React.memo(() => {
                 },
               })}
             >
-              LGTM Generator
+              {t.APP_NAME}
             </Typography>
           </a>
         </Link>

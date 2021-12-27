@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
+import { useTranslate } from '~/hooks/translateHooks';
 import Header from './Header';
 import Footer from './Footer';
 import { theme } from './theme';
@@ -26,13 +27,15 @@ Layout.displayName = 'Layout';
 const LayoutContent: React.VFC<LayoutProps> = React.memo(props => {
   const { children, title } = props;
 
+  const { t } = useTranslate();
+
   const pageTitle = useMemo(() => {
-    const baseTitle = 'LGTM Generator';
+    const baseTitle = t.APP_NAME;
     if (!title) {
       return baseTitle;
     }
     return `${title} | ${baseTitle}`;
-  }, [title]);
+  }, [t.APP_NAME, title]);
 
   return (
     <Box
