@@ -18,4 +18,6 @@ export type Translate = {
   SUPPLEMENT: string;
 
   SEND: string;
+
+  NO_FAVORITES: string;
 };

@@ -18,4 +18,6 @@ export const ja: Translate = {
   SUPPLEMENT: '( 任意 ) 補足',
 
   SEND: '送信',
+
+  NO_FAVORITES: 'お気に入りした LGTM 画像はありません。',
 };

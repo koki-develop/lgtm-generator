@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useRecoilValue } from 'recoil';
-import { favoriteIdsState } from '~/recoil/atoms';
-import LgtmCardList from '../../model/lgtm/LgtmCardList';
+import { useTranslate } from '~/hooks/translateHooks';
+import { useFavoriteIds } from '~/hooks/lgtmHooks';
+import LgtmCardList from '~/components/model/lgtm/LgtmCardList';
 
 type FavoritesPanelProps = {
   show: boolean;
@@ -11,8 +11,9 @@ type FavoritesPanelProps = {
 const FavoritesPanel: React.VFC<FavoritesPanelProps> = React.memo(props => {
   const { show } = props;
 
-  const favoriteIds = useRecoilValue(favoriteIdsState);
+  const favoriteIds = useFavoriteIds();
   const [showingFavoriteIds, setShowingFavoriteIds] = useState<string[]>([]);
+  const { t } = useTranslate();
 
   useEffect(() => {
     if (!show) {
@@ -29,7 +30,7 @@ const FavoritesPanel: React.VFC<FavoritesPanelProps> = React.memo(props => {
             textAlign: 'center',
           }}
         >
-          お気に入りした LGTM 画像はありません。
+          {t.NO_FAVORITES}
         </Typography>
       ) : (
         <LgtmCardList ids={showingFavoriteIds} />

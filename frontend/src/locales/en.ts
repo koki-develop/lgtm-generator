@@ -21,4 +21,6 @@ export const en: Translate = {
   SUPPLEMENT: '( Optional ) Supplement',
 
   SEND: 'Send',
+
+  NO_FAVORITES: 'There are no favorites yet.',
 };
