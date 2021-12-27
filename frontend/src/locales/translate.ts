@@ -43,4 +43,6 @@ export type Translate = {
 
   UPDATING_PRIVACY_POLICY: string;
   UPDATING_PRIVACY_POLICY_CONTENT: React.ReactNode;
+
+  LOADING: string;
 };

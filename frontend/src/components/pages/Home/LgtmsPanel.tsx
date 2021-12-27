@@ -70,7 +70,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   return (
     <Box hidden={!show}>
       <Modal open={loadingImage}>
-        <Loading text='読込中' />
+        <Loading text={t.LOADING} />
       </Modal>
       <UploadButton onChange={handleChangeFile} />
 

@@ -85,4 +85,6 @@ export const en: Translate = {
   UPDATING_PRIVACY_POLICY: 'Updating Privacy Policy',
   UPDATING_PRIVACY_POLICY_CONTENT:
     'In addition to complying with the Japanese laws and regulations applicable to personal information, this website will review and improve the contents of this policy from time to time. The revised and updated privacy policy will always be disclosed on this page.',
+
+  LOADING: 'Loading',
 };
