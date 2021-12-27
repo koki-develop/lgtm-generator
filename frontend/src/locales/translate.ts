@@ -2,6 +2,7 @@ import React from 'react';
 
 export type Translate = {
   APP_NAME: string;
+  APP_DESCRIPTION: string;
 
   PRECAUTIONS: string;
   PRECAUTIONS_ITEMS: string[];

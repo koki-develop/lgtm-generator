@@ -6,6 +6,8 @@ import { Translate } from './translate';
 
 export const ja: Translate = {
   APP_NAME: 'LGTM Generator',
+  APP_DESCRIPTION: 'シンプルな LGTM 画像作成サービスです。',
+
   PRECAUTIONS: '利用上の注意',
   PRECAUTIONS_ITEMS: [
     '本サービスを利用して生成された画像に関する一切の責任はご利用者様にご負担いただきます。ご利用者様が生成した画像に関し、第三者が損害を被った場合、運営者はご利用者様に代わっての責任は一切負いません。',
