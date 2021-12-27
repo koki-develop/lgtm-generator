@@ -48,37 +48,7 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
             maxWidth: '100%',
           }}
         />
-        {/* FIXME: リファクタ */}
-        {locale === 'en' && (
-          <Typography>
-            Please read {'"'}
-            <ExternalLink
-              href={Routes.precautions}
-              sx={{
-                color: theme => theme.palette.primary.main,
-                textDecoration: 'underline',
-              }}
-            >
-              {t.PRECAUTIONS}
-            </ExternalLink>
-            {'"'} before generating LGTM image.
-          </Typography>
-        )}
-        {locale === 'ja' && (
-          <Typography>
-            LGTM 画像を生成する前に
-            <ExternalLink
-              href={Routes.precautions}
-              sx={{
-                color: theme => theme.palette.primary.main,
-                textDecoration: 'underline',
-              }}
-            >
-              {t.PRECAUTIONS}
-            </ExternalLink>
-            をお読みください。
-          </Typography>
-        )}
+        {t.PLEASE_READ_PRECAUTIONS}
       </CardContent>
       <CardActions>
         <Button

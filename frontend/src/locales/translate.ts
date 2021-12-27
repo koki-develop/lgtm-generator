@@ -7,6 +7,8 @@ export type Translate = {
   PRECAUTIONS_ITEMS: string[];
   PRIVACY_POLICY: string;
 
+  PLEASE_READ_PRECAUTIONS: React.ReactNode;
+
   COPIED_TO_CLIPBOARD: string;
 
   CONFIRM_GENERATION: string;

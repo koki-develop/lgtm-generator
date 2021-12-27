@@ -1,4 +1,6 @@
 import React from 'react';
+import Typography from '@mui/material/Typography';
+import { Routes } from '~/routes';
 import ExternalLink from '~/components/utils/ExternalLink';
 import { Translate } from './translate';
 import { ja } from './ja';
@@ -14,6 +16,22 @@ export const en: Translate = {
     'In addition, we reserve the right to prohibit access to certain users without notice when malicious use of the site is confirmed.',
   ],
   PRIVACY_POLICY: 'Privacy Policy',
+
+  PLEASE_READ_PRECAUTIONS: (
+    <Typography>
+      Please read{' '}
+      <ExternalLink
+        href={Routes.precautions}
+        sx={{
+          color: theme => theme.palette.primary.main,
+          textDecoration: 'underline',
+        }}
+      >
+        precautions
+      </ExternalLink>{' '}
+      before generating LGTM image.
+    </Typography>
+  ),
 
   COPIED_TO_CLIPBOARD: 'Copied to clipboard',
 

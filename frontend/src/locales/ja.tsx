@@ -1,6 +1,8 @@
 import React from 'react';
-import { Translate } from './translate';
+import Typography from '@mui/material/Typography';
 import ExternalLink from '~/components/utils/ExternalLink';
+import { Routes } from '~/routes';
+import { Translate } from './translate';
 
 export const ja: Translate = {
   APP_NAME: 'LGTM Generator',
@@ -13,6 +15,22 @@ export const ja: Translate = {
     'その他、悪質な利用方法が確認された場合、特定のご利用者様を予告無しにアクセス禁止にすることがあります。',
   ],
   PRIVACY_POLICY: 'プライバシーポリシー',
+
+  PLEASE_READ_PRECAUTIONS: (
+    <Typography>
+      LGTM 画像を生成する前に
+      <ExternalLink
+        href={Routes.precautions}
+        sx={{
+          color: theme => theme.palette.primary.main,
+          textDecoration: 'underline',
+        }}
+      >
+        利用上の注意
+      </ExternalLink>
+      をお読みください。
+    </Typography>
+  ),
 
   COPIED_TO_CLIPBOARD: 'クリップボードにコピーしました',
 
