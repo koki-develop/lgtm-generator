@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import AppBar from '@mui/material/AppBar';
@@ -31,6 +31,10 @@ const Header: React.VFC = React.memo(() => {
     },
     [],
   );
+
+  const handleClickTranslateMenuItem = useCallback(() => {
+    setTranslateButtonEl(null);
+  }, []);
 
   const handleClickOutsideTranslateMenu = useCallback(() => {
     setTranslateButtonEl(null);
@@ -72,14 +76,20 @@ const Header: React.VFC = React.memo(() => {
               <List disablePadding>
                 <ListItem disablePadding>
                   <Link href={router.asPath} locale='ja' passHref>
-                    <ListItemButton>
+                    <ListItemButton
+                      onClick={handleClickTranslateMenuItem}
+                      component='a'
+                    >
                       <ListItemText primary='日本語' />
                     </ListItemButton>
                   </Link>
                 </ListItem>
                 <ListItem disablePadding>
                   <Link href={router.asPath} locale='en' passHref>
-                    <ListItemButton>
+                    <ListItemButton
+                      onClick={handleClickTranslateMenuItem}
+                      component='a'
+                    >
                       <ListItemText primary='English' />
                     </ListItemButton>
                   </Link>
