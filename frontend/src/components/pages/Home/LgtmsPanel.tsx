@@ -43,6 +43,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   const handleChangeFile = useCallback(
     (file: File) => {
       loadImage(file).then(imageFile => {
+        if (!imageFile) return;
         setPreviewImageFile(imageFile);
         setOpenConfirmForm(true);
       });
