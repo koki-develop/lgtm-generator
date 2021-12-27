@@ -2,9 +2,7 @@ import React, { useCallback } from 'react';
 import { styled } from '@mui/material/styles';
 import { Button, CardActions, CardContent, Typography } from '@mui/material';
 import { useTranslate } from '~/hooks/translateHooks';
-import { Routes } from '~/routes';
 import ModalCard from '~/components/utils/ModalCard';
-import ExternalLink from '~/components/utils/ExternalLink';
 import LoadableButton from '~/components/utils/LoadableButton';
 
 const StyledImg = styled('img')({});
@@ -19,7 +17,7 @@ type ConfirmFormProps = {
 
 const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
   const { previewSrc, open, loading, onClose, onConfirm } = props;
-  const { t, locale } = useTranslate();
+  const { t } = useTranslate();
 
   const handleClose = useCallback(() => {
     if (loading) return;
