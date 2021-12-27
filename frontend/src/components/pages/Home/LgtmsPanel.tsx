@@ -6,11 +6,12 @@ import { DataUrl } from '~/lib/dataUrl';
 import UploadButton from './UploadButton';
 import LgtmCardList from '~/components/model/lgtm/LgtmCardList';
 import LgtmForm from '~/components/model/lgtm/LgtmForm';
+import { useTranslate } from '~/hooks/translateHooks';
 import {
   useCreateLgtmFromBase64,
   useFetchLgtms,
   useLgtms,
-} from '~/components/model/lgtm/LgtmHooks';
+} from '~/hooks/lgtmHooks';
 import { useLoadImage } from '~/lib/imageFileReader';
 import Loading from '~/components/utils/Loading';
 import Modal from '~/components/utils/Modal';
@@ -29,6 +30,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
     null,
   );
 
+  const { t } = useTranslate();
   const { fetchLgtms, loading, isTruncated } = useFetchLgtms();
   const { createLgtmFromBase64, loading: uploading } =
     useCreateLgtmFromBase64();
@@ -41,6 +43,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   const handleChangeFile = useCallback(
     (file: File) => {
       loadImage(file).then(imageFile => {
+        if (!imageFile) return;
         setPreviewImageFile(imageFile);
         setOpenConfirmForm(true);
       });
@@ -68,7 +71,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   return (
     <Box hidden={!show}>
       <Modal open={loadingImage}>
-        <Loading text='読込中' />
+        <Loading text={t.LOADING} />
       </Modal>
       <UploadButton onChange={handleChangeFile} />
 
@@ -88,7 +91,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
         {loading && <Loading />}
         {!loading && isTruncated && (
           <Button color='primary' onClick={handleClickMore}>
-            もっと見る
+            {t.SEE_MORE}
           </Button>
         )}
       </Field>

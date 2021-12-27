@@ -25,6 +25,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           fontWeight: 'bold',
+          textTransform: 'none',
         },
       },
     },
@@ -43,6 +44,13 @@ export const theme = createTheme({
     MuiTextField: {
       defaultProps: {
         variant: 'outlined',
+      },
+    },
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          textTransform: 'none',
+        },
       },
     },
     MuiLink: {

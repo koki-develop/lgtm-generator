@@ -19,7 +19,8 @@ import {
   useAddFavoriteId,
   useFavoriteIds,
   useRemoveFavoriteId,
-} from '~/components/model/lgtm/LgtmHooks';
+} from '~/hooks/lgtmHooks';
+import { useTranslate } from '~/hooks/translateHooks';
 import { useToast } from '~/components/providers/ToastProvider';
 import ReportForm from '~/components/model/report/ReportForm';
 
@@ -34,6 +35,7 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
     const { enqueueSuccess } = useToast();
     const { addFavoriteId } = useAddFavoriteId();
     const { removeFavoriteId } = useRemoveFavoriteId();
+    const { t } = useTranslate();
 
     const favoriteIds = useFavoriteIds();
     const [copyButtonEl, setCopyButtonEl] = useState<HTMLButtonElement | null>(
@@ -65,9 +67,9 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
     }, []);
 
     const handleClickCopyLink = useCallback(() => {
-      enqueueSuccess('クリップボードにコピーしました');
+      enqueueSuccess(t.COPIED_TO_CLIPBOARD);
       setCopyButtonEl(null);
-    }, [enqueueSuccess]);
+    }, [enqueueSuccess, t.COPIED_TO_CLIPBOARD]);
 
     const handleClickReportButton = useCallback(() => {
       setOpenReportForm(true);

@@ -12,7 +12,12 @@ if (
   }/node_modules/canvas/build/Release:${process.env.LD_LIBRARY_PATH || ''}`;
 }
 
-const config = {};
+const config = {
+  i18n: {
+    locales: ['ja', 'en'],
+    defaultLocale: 'ja',
+  },
+};
 
 const SentryWebpackPluginOptions = {
   silent: true,

@@ -1,6 +1,6 @@
 export const Routes = {
   home: '/',
-  precaution: '/precaution',
+  precautions: '/precautions',
   privacyPolicy: '/privacy',
 } as const;
 

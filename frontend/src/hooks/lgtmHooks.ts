@@ -2,6 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { lgtmsState, favoriteIdsState } from '~/recoil/atoms';
 import { ApiClient } from '~/lib/apiClient';
+import { useTranslate } from './translateHooks';
 import { useToast } from '~/components/providers/ToastProvider';
 import { Lgtm } from '~/types/lgtm';
 import { UnsupportedImageFormatError } from '~/lib/errors';
@@ -55,6 +56,7 @@ export const useCreateLgtmFromBase64 = (): {
   const [loading, setLoading] = useState<boolean>(false);
 
   const { enqueueSuccess, enqueueError } = useToast();
+  const { t } = useTranslate();
 
   const createLgtmFromBase64 = useCallback(
     async (base64: string, contentType: string) => {
@@ -62,15 +64,15 @@ export const useCreateLgtmFromBase64 = (): {
       await ApiClient.createLgtmFromBase64(base64, contentType)
         .then(lgtm => {
           setLgtms(prev => [lgtm, ...prev]);
-          enqueueSuccess('LGTM 画像を生成しました');
+          enqueueSuccess(t.GENERATED_LGTM_IMAGE);
         })
         .catch(err => {
           switch (err.constructor) {
             case UnsupportedImageFormatError:
-              enqueueError('サポートしていない画像形式です');
+              enqueueError(t.UNSUPPORTED_IMAGE_FORMAT);
               break;
             default:
-              enqueueError('LGTM 画像の生成に失敗しました');
+              enqueueError(t.LGTM_IMAGE_GENERATION_FAILED);
               console.error(err);
               break;
           }
@@ -79,7 +81,14 @@ export const useCreateLgtmFromBase64 = (): {
           setLoading(false);
         });
     },
-    [enqueueError, enqueueSuccess, setLgtms],
+    [
+      enqueueError,
+      enqueueSuccess,
+      setLgtms,
+      t.GENERATED_LGTM_IMAGE,
+      t.LGTM_IMAGE_GENERATION_FAILED,
+      t.UNSUPPORTED_IMAGE_FORMAT,
+    ],
   );
 
   return { createLgtmFromBase64, loading };
@@ -95,6 +104,7 @@ export const useCreateLgtmFromUrl = (): {
   const [loading, setLoading] = useState<boolean>(false);
 
   const { enqueueSuccess, enqueueError } = useToast();
+  const { t } = useTranslate();
 
   const createLgtmFromUrl = useCallback(
     async (url: string) => {
@@ -102,15 +112,15 @@ export const useCreateLgtmFromUrl = (): {
       await ApiClient.createLgtmFromUrl(url)
         .then(lgtm => {
           setLgtms(prev => [lgtm, ...prev]);
-          enqueueSuccess('LGTM 画像を生成しました');
+          enqueueSuccess(t.GENERATED_LGTM_IMAGE);
         })
         .catch(err => {
           switch (err.constructor) {
             case UnsupportedImageFormatError:
-              enqueueError('サポートしていない画像形式です');
+              enqueueError(t.UNSUPPORTED_IMAGE_FORMAT);
               break;
             default:
-              enqueueError('LGTM 画像の生成に失敗しました');
+              enqueueError(t.LGTM_IMAGE_GENERATION_FAILED);
               console.error(err);
               break;
           }
@@ -119,7 +129,14 @@ export const useCreateLgtmFromUrl = (): {
           setLoading(false);
         });
     },
-    [enqueueError, enqueueSuccess, setLgtms],
+    [
+      enqueueError,
+      enqueueSuccess,
+      setLgtms,
+      t.GENERATED_LGTM_IMAGE,
+      t.LGTM_IMAGE_GENERATION_FAILED,
+      t.UNSUPPORTED_IMAGE_FORMAT,
+    ],
   );
 
   return { createLgtmFromUrl, loading };

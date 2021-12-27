@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { Paper, Tabs as MuiTabs, Tab } from '@mui/material';
+import { useTranslate } from '~/hooks/translateHooks';
 
 export const TabValue = {
   lgtms: 'lgtms',
@@ -16,6 +17,7 @@ type TabsProps = {
 
 const Tabs: React.VFC<TabsProps> = React.memo(props => {
   const { value, onChange } = props;
+  const { t } = useTranslate();
 
   const handleChangeValue = useCallback(
     (_: React.ChangeEvent<unknown>, value: string) => {
@@ -33,9 +35,9 @@ const Tabs: React.VFC<TabsProps> = React.memo(props => {
         indicatorColor='primary'
         textColor='primary'
       >
-        <Tab label='LGTM' value={TabValue.lgtms} />
-        <Tab label='画像検索' value={TabValue.searchImages} />
-        <Tab label='お気に入り' value={TabValue.favorites} />
+        <Tab label={t.LGTM} value={TabValue.lgtms} />
+        <Tab label={t.IMAGE_SEARCH} value={TabValue.searchImages} />
+        <Tab label={t.FAVORITES} value={TabValue.favorites} />
       </MuiTabs>
     </Paper>
   );

@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useToast } from '~/components/providers/ToastProvider';
+import { useTranslate } from './translateHooks';
 import { ReportType } from '~/types/report';
 import { ApiClient } from '~/lib/apiClient';
 
@@ -16,23 +17,24 @@ export const useSendReport = (): {
   const [loading, setLoading] = useState<boolean>(false);
 
   const { enqueueSuccess, enqueueError } = useToast();
+  const { t } = useTranslate();
 
   const sendReport = useCallback(
     async (lgtmId: string, type: ReportType, text: string) => {
       setLoading(true);
       await ApiClient.createReport(lgtmId, type, text)
         .then(() => {
-          enqueueSuccess('送信しました');
+          enqueueSuccess(t.SENT);
         })
         .catch(err => {
           console.error(err);
-          enqueueError('送信に失敗しました');
+          enqueueError(t.SENDING_FAILED);
         })
         .finally(() => {
           setLoading(false);
         });
     },
-    [enqueueError, enqueueSuccess],
+    [enqueueError, enqueueSuccess, t.SENDING_FAILED, t.SENT],
   );
 
   return { sendReport, loading };

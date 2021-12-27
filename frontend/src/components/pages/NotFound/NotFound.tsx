@@ -1,12 +1,13 @@
 import React from 'react';
 import Layout from '~/components/Layout';
 import { Typography } from '@mui/material';
+import { useTranslate } from '~/hooks/translateHooks';
 
 const NotFound: React.VFC = React.memo(() => {
-  const message = 'お探しのページは見つかりませんでした';
+  const { t } = useTranslate();
 
   return (
-    <Layout title={message}>
+    <Layout title={t.NOT_FOUND}>
       <Typography
         sx={{
           fontSize: theme => theme.typography.h5.fontSize,
@@ -14,7 +15,7 @@ const NotFound: React.VFC = React.memo(() => {
           textAlign: 'center',
         }}
       >
-        {message}
+        {t.NOT_FOUND}
       </Typography>
     </Layout>
   );

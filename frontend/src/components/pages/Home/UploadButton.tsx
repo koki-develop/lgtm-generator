@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Fab } from '@mui/material';
 import { AddCircle as AddCircleIcon } from '@mui/icons-material';
 import * as uuid from 'uuid';
+import { useTranslate } from '~/hooks/translateHooks';
 
 type UploadButtonProps = {
   onChange: (file: File) => void;
@@ -12,6 +13,8 @@ const UploadButton: React.VFC<UploadButtonProps> = React.memo(props => {
 
   const inputFileRef = React.createRef<HTMLInputElement>();
   const [inputFileKey, setInputFileKey] = useState<string>(uuid.v4());
+
+  const { t } = useTranslate();
 
   const handleClick = useCallback(() => {
     inputFileRef.current?.click();
@@ -47,12 +50,10 @@ const UploadButton: React.VFC<UploadButtonProps> = React.memo(props => {
         type='file'
         accept={'image/*'}
         onChange={handleChangeFile}
-        style={{
-          display: 'none',
-        }}
+        style={{ display: 'none' }}
       />
       <AddCircleIcon sx={{ mr: 1 }} />
-      アップロード
+      {t.UPLOAD}
     </Fab>
   );
 });
