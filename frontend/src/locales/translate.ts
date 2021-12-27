@@ -10,4 +10,12 @@ export type Translate = {
 
   GENERATE: string;
   CANCEL: string;
+
+  ILLEGAL: string;
+  INAPPROPRIATE: string;
+  OTHER: string;
+
+  SUPPLEMENT: string;
+
+  SEND: string;
 };

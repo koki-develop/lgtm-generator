@@ -8,6 +8,7 @@ import RadioGroup from '@mui/material/RadioGroup';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import { ReportType } from '~/types/report';
+import { useTranslate } from '~/hooks/translateHooks';
 import { useSendReport } from '~/hooks/reportHooks';
 import ModalCard from '~/components/utils/ModalCard';
 import LoadableButton from '~/components/utils/LoadableButton';
@@ -28,6 +29,7 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
   const [text, setText] = useState<string>('');
 
   const { sendReport, loading } = useSendReport();
+  const { t } = useTranslate();
 
   const isValid: boolean = useMemo(() => {
     if (!Object.values(ReportType).includes(type)) {
@@ -91,26 +93,26 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
           <FormControlLabel
             value={ReportType.illegal}
             control={<Radio value={ReportType.illegal} />}
-            label='法律違反 ( 著作権侵害、プライバシー侵害、名誉毀損等 )'
+            label={t.ILLEGAL}
             disabled={loading}
           />
           <FormControlLabel
             value={ReportType.inappropriate}
             control={<Radio value={ReportType.inappropriate} />}
-            label='不適切なコンテンツ'
+            label={t.INAPPROPRIATE}
             disabled={loading}
           />
           <FormControlLabel
             value={ReportType.other}
             control={<Radio value={ReportType.other} />}
-            label='その他'
+            label={t.OTHER}
             disabled={loading}
           />
         </RadioGroup>
         <TextField
           fullWidth
           multiline
-          placeholder='補足 ( 任意 )'
+          placeholder={t.SUPPLEMENT}
           disabled={loading}
           inputProps={{ maxLength: 1000 }}
           rows={5}
@@ -125,7 +127,7 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
           onClick={handleClose}
           disabled={loading}
         >
-          キャンセル
+          {t.CANCEL}
         </Button>
         <LoadableButton
           fullWidth
@@ -134,7 +136,7 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
           loading={loading}
           onClick={handleSendReport}
         >
-          送信
+          {t.SEND}
         </LoadableButton>
       </CardActions>
     </ModalCard>

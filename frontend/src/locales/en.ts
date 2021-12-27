@@ -12,4 +12,13 @@ export const en: Translate = {
 
   GENERATE: 'Generate',
   CANCEL: 'Cancel',
+
+  ILLEGAL:
+    'Illegal ( Copyright infringement, invasion of privacy, defamation, etc. )',
+  INAPPROPRIATE: 'Inappropriate content',
+  OTHER: 'Other',
+
+  SUPPLEMENT: '( Optional ) Supplement',
+
+  SEND: 'Send',
 };
