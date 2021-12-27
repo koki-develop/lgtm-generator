@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { loadImage, createCanvas } from 'canvas';
+import { useTranslate } from '~/hooks/translateHooks';
 import { FileTooLargeError, UnsupportedImageFormatError } from '~/lib/errors';
 import { useToast } from '~/components/providers/ToastProvider';
 
@@ -90,12 +91,14 @@ export class ImageFileReader {
 
 export type LoadImageFn = (file: File) => Promise<ImageFile | null>;
 
+// TODO: hooks/ に移動
 export const useLoadImage = (): {
   loadImage: LoadImageFn;
   loading: boolean;
 } => {
   const [loading, setLoading] = useState<boolean>(false);
   const { enqueueWarn, enqueueError } = useToast();
+  const { t } = useTranslate();
 
   const loadImage = useCallback(
     async (file: File) => {
@@ -107,13 +110,13 @@ export const useLoadImage = (): {
         .catch(err => {
           switch (err.constructor) {
             case FileTooLargeError:
-              enqueueWarn(`ファイルサイズが大きすぎます: ${file.name}`);
+              enqueueWarn(`${t.FILE_TOO_LARGE}: ${file.name}`);
               break;
             case UnsupportedImageFormatError:
-              enqueueError('サポートしていない画像形式です');
+              enqueueError(t.UNSUPPORTED_IMAGE_FORMAT);
               break;
             default:
-              enqueueError('画像の読み込みに失敗しました');
+              enqueueError(t.FAILED_TO_LOAD_IMAGE);
               console.error(err);
               break;
           }
@@ -123,7 +126,13 @@ export const useLoadImage = (): {
           setLoading(false);
         });
     },
-    [enqueueError, enqueueWarn],
+    [
+      enqueueError,
+      enqueueWarn,
+      t.FAILED_TO_LOAD_IMAGE,
+      t.FILE_TOO_LARGE,
+      t.UNSUPPORTED_IMAGE_FORMAT,
+    ],
   );
 
   return { loadImage, loading };

@@ -94,4 +94,8 @@ export const en: Translate = {
 
   SENT: 'Sent.',
   SENDING_FAILED: 'Sending failed.',
+
+  FILE_TOO_LARGE: 'File size is too large.',
+
+  FAILED_TO_LOAD_IMAGE: 'Failed to load image.',
 };

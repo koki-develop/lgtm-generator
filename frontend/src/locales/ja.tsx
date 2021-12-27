@@ -93,4 +93,8 @@ export const ja: Translate = {
 
   SENT: '送信しました',
   SENDING_FAILED: '送信に失敗しました',
+
+  FILE_TOO_LARGE: 'ファイルサイズが大きすぎます',
+
+  FAILED_TO_LOAD_IMAGE: '画像の読み込みに失敗しました',
 };

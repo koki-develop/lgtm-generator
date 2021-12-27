@@ -52,4 +52,8 @@ export type Translate = {
 
   SENT: string;
   SENDING_FAILED: string;
+
+  FILE_TOO_LARGE: string;
+
+  FAILED_TO_LOAD_IMAGE: string;
 };
