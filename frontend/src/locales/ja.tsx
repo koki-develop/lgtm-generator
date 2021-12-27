@@ -1,4 +1,6 @@
+import React from 'react';
 import { Translate } from './translate';
+import ExternalLink from '~/components/utils/ExternalLink';
 
 export const ja: Translate = {
   APP_NAME: 'LGTM Generator',
@@ -39,4 +41,29 @@ export const ja: Translate = {
   UPLOAD: 'アップロード',
 
   NOT_FOUND: 'お探しのページは見つかりませんでした',
+
+  USE_OF_ACCESS_ANALYSIS_TOOLS: 'アクセス解析ツールについて',
+  USE_OF_ACCESS_ANALYSIS_TOOLS_CONTENT: (
+    <>
+      当サイトでは、 Google によるアクセス解析ツール「 Google
+      アナリティクス」を利用しています。この Google
+      アナリティクスはトラフィックデータの収集のために Cookie
+      を使用しています。このトラフィックデータは匿名で収集されており、個人を特定するものではありません。この機能は
+      Cookie
+      を無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。この規約に関して、詳しくは{' '}
+      <ExternalLink
+        href='https://marketingplatform.google.com/about/analytics/terms/jp/'
+        sx={{
+          color: theme => theme.palette.primary.main,
+          textDecoration: 'underline',
+        }}
+      >
+        Google アナリティクス利用規約
+      </ExternalLink>{' '}
+      を参照してください。
+    </>
+  ),
+  UPDATING_PRIVACY_POLICY: 'プライバシーポリシーの変更について',
+  UPDATING_PRIVACY_POLICY_CONTENT:
+    '当サイトは、個人情報に関して適用される日本の法令を遵守するとともに、本ポリシーの内容を適宜見直しその改善に努めます。修正された最新のプライバシーポリシーは常に本ページにて開示されます。',
 };

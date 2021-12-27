@@ -1,3 +1,5 @@
+import React from 'react';
+import ExternalLink from '~/components/utils/ExternalLink';
 import { Translate } from './translate';
 import { ja } from './ja';
 
@@ -42,4 +44,27 @@ export const en: Translate = {
   UPLOAD: 'Upload',
 
   NOT_FOUND: 'Page not found',
+
+  USE_OF_ACCESS_ANALYSIS_TOOLS: 'Use of Access Analysis Tools',
+  USE_OF_ACCESS_ANALYSIS_TOOLS_CONTENT: (
+    <>
+      This website uses Google Analytics, an access analysis tool provided by
+      Google. Google Analytics uses cookies to collect traffic data. This
+      traffic data is collected anonymously and is not personally identifiable.
+      You can opt out of this feature by disabling cookies, so please check your
+      browser settings. For more information about these terms, please see the{' '}
+      <ExternalLink
+        href='https://marketingplatform.google.com/about/analytics/terms/us/'
+        sx={{
+          color: theme => theme.palette.primary.main,
+          textDecoration: 'underline',
+        }}
+      >
+        Google Analytics Terms of Service.
+      </ExternalLink>
+    </>
+  ),
+  UPDATING_PRIVACY_POLICY: 'Updating Privacy Policy',
+  UPDATING_PRIVACY_POLICY_CONTENT:
+    'In addition to complying with the Japanese laws and regulations applicable to personal information, this website will review and improve the contents of this policy from time to time. The revised and updated privacy policy will always be disclosed on this page.',
 };

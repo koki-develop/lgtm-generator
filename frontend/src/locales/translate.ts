@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type Translate = {
   APP_NAME: string;
 
@@ -33,4 +35,10 @@ export type Translate = {
   UPLOAD: string;
 
   NOT_FOUND: string;
+
+  USE_OF_ACCESS_ANALYSIS_TOOLS: string;
+  USE_OF_ACCESS_ANALYSIS_TOOLS_CONTENT: React.ReactNode;
+
+  UPDATING_PRIVACY_POLICY: string;
+  UPDATING_PRIVACY_POLICY_CONTENT: React.ReactNode;
 };
