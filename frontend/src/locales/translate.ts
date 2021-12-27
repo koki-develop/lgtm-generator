@@ -20,4 +20,8 @@ export type Translate = {
   SEND: string;
 
   NO_FAVORITES: string;
+
+  SEE_MORE: string;
+
+  KEYWORD: string;
 };

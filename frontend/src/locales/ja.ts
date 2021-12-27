@@ -20,4 +20,8 @@ export const ja: Translate = {
   SEND: '送信',
 
   NO_FAVORITES: 'お気に入りした LGTM 画像はありません。',
+
+  SEE_MORE: 'もっと見る',
+
+  KEYWORD: 'キーワード',
 };

@@ -6,6 +6,7 @@ import { DataUrl } from '~/lib/dataUrl';
 import UploadButton from './UploadButton';
 import LgtmCardList from '~/components/model/lgtm/LgtmCardList';
 import LgtmForm from '~/components/model/lgtm/LgtmForm';
+import { useTranslate } from '~/hooks/translateHooks';
 import {
   useCreateLgtmFromBase64,
   useFetchLgtms,
@@ -29,6 +30,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
     null,
   );
 
+  const { t } = useTranslate();
   const { fetchLgtms, loading, isTruncated } = useFetchLgtms();
   const { createLgtmFromBase64, loading: uploading } =
     useCreateLgtmFromBase64();
@@ -88,7 +90,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
         {loading && <Loading />}
         {!loading && isTruncated && (
           <Button color='primary' onClick={handleClickMore}>
-            もっと見る
+            {t.SEE_MORE}
           </Button>
         )}
       </Field>

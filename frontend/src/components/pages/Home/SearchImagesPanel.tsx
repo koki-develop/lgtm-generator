@@ -7,6 +7,7 @@ import Loading from '~/components/utils/Loading';
 import { Image } from '~/types/image';
 import ImageCardList from '../../model/image/ImageCardList';
 import ConfirmForm from '../../model/lgtm/LgtmForm';
+import { useTranslate } from '~/hooks/translateHooks';
 import { useCreateLgtmFromUrl } from '~/hooks/lgtmHooks';
 import { useImages, useSearchImages } from '~/hooks/imageHooks';
 
@@ -25,6 +26,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
     const [openConfirmForm, setOpenConfirmForm] = useState<boolean>(false);
     const [previewUrl, setPreviewUrl] = useState<string>('');
 
+    const { t } = useTranslate();
     const { searchImages, loading: searching } = useSearchImages();
     const { createLgtmFromUrl, loading: generating } = useCreateLgtmFromUrl();
 
@@ -68,7 +70,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
               type='search'
               value={query}
               onChange={handleChangeQuery}
-              placeholder='キーワード'
+              placeholder={t.KEYWORD}
               inputProps={{
                 ref: queryInputRef,
               }}

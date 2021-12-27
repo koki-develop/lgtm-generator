@@ -23,4 +23,8 @@ export const en: Translate = {
   SEND: 'Send',
 
   NO_FAVORITES: 'There are no favorites yet.',
+
+  SEE_MORE: 'See more',
+
+  KEYWORD: 'Keyword',
 };
