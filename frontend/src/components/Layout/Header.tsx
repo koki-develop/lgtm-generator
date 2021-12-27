@@ -8,11 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import CheckIcon from '@mui/icons-material/Check';
 import TranslateIcon from '@mui/icons-material/Translate';
 import { Routes } from '~/routes';
 import { useTranslate } from '~/hooks/translateHooks';
@@ -20,7 +22,7 @@ import { useTranslate } from '~/hooks/translateHooks';
 const Header: React.VFC = React.memo(() => {
   const router = useRouter();
 
-  const { t } = useTranslate();
+  const { t, locale } = useTranslate();
 
   const [translateButtonEl, setTranslateButtonEl] =
     useState<HTMLButtonElement | null>(null);
@@ -73,14 +75,27 @@ const Header: React.VFC = React.memo(() => {
         >
           <ClickAwayListener onClickAway={handleClickOutsideTranslateMenu}>
             <Paper>
-              <List disablePadding>
+              <List>
                 <ListItem disablePadding>
                   <Link href={router.asPath} locale='ja' passHref>
                     <ListItemButton
                       onClick={handleClickTranslateMenuItem}
                       component='a'
+                      selected={locale === 'ja'}
                     >
-                      <ListItemText primary='日本語' />
+                      <ListItemText
+                        primary='日本語'
+                        primaryTypographyProps={{
+                          sx: {
+                            textAlign: 'center',
+                            color:
+                              locale === 'ja'
+                                ? theme => theme.palette.primary.main
+                                : undefined,
+                            fontWeight: locale === 'ja' ? 'bold' : undefined,
+                          },
+                        }}
+                      />
                     </ListItemButton>
                   </Link>
                 </ListItem>
@@ -89,8 +104,21 @@ const Header: React.VFC = React.memo(() => {
                     <ListItemButton
                       onClick={handleClickTranslateMenuItem}
                       component='a'
+                      selected={locale === 'en'}
                     >
-                      <ListItemText primary='English' />
+                      <ListItemText
+                        primary='English'
+                        primaryTypographyProps={{
+                          sx: {
+                            textAlign: 'center',
+                            color:
+                              locale === 'en'
+                                ? theme => theme.palette.primary.main
+                                : undefined,
+                            fontWeight: locale === 'en' ? 'bold' : undefined,
+                          },
+                        }}
+                      />
                     </ListItemButton>
                   </Link>
                 </ListItem>

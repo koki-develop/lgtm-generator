@@ -4,7 +4,7 @@ import { Translate } from '~/locales/translate';
 import { ja } from '~/locales/ja';
 import { en } from '~/locales/en';
 
-export const useTranslate = (): { t: Translate } => {
+export const useTranslate = (): { t: Translate; locale: string } => {
   const { locale } = useRouter();
 
   const t = useMemo(() => {
@@ -16,5 +16,5 @@ export const useTranslate = (): { t: Translate } => {
     }
   }, [locale]);
 
-  return { t };
+  return { locale, t };
 };
