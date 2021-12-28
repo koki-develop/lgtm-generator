@@ -6,6 +6,7 @@ import { Routes } from '~/routes';
 import { theme } from '~/components/Layout/theme';
 import { Translate } from './translate';
 
+// TODO: 整理
 export const ja: Translate = {
   APP_NAME: 'LGTM Generator',
   APP_DESCRIPTION: 'シンプルな LGTM 画像作成サービスです。',

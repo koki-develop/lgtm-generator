@@ -7,6 +7,7 @@ import ExternalLink from '~/components/utils/ExternalLink';
 import { Translate } from './translate';
 import { ja } from './ja';
 
+// TODO: 整理
 export const en: Translate = {
   APP_NAME: ja.APP_NAME,
   APP_DESCRIPTION: 'A simple LGTM image generation service.',
