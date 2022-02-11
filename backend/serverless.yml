@@ -1,6 +1,6 @@
 service: lgtm-generator-backend
 
-frameworkVersion: "2"
+frameworkVersion: "3"
 useDotenv: true
 configValidationMode: error
 

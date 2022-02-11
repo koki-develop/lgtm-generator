@@ -5,6 +5,7 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
@@ -100,40 +101,40 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
             <ClickAwayListener onClickAway={handleClickOutsideCopyList}>
               <Paper>
                 <List disablePadding>
-                  <ListItem
-                    button
-                    onClick={handleClickCopyLink}
-                    sx={{
-                      textAlign: 'center',
-                      p: 1,
-                    }}
-                  >
-                    <CopyToClipBoard
-                      text={`![LGTM](${urlJoin(
-                        process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
-                        id,
-                      )})`}
-                    >
-                      <ListItemText secondary='Markdown' />
-                    </CopyToClipBoard>
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={handleClickCopyLink}>
+                      <CopyToClipBoard
+                        text={`![LGTM](${urlJoin(
+                          process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
+                          id,
+                        )})`}
+                      >
+                        <ListItemText
+                          secondary='Markdown'
+                          secondaryTypographyProps={{
+                            sx: { textAlign: 'center' },
+                          }}
+                        />
+                      </CopyToClipBoard>
+                    </ListItemButton>
                   </ListItem>
                   <Divider />
-                  <ListItem
-                    button
-                    onClick={handleClickCopyLink}
-                    sx={{
-                      textAlign: 'center',
-                      p: 1,
-                    }}
-                  >
-                    <CopyToClipBoard
-                      text={`<img src="${urlJoin(
-                        process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
-                        id,
-                      )}" alt="LGTM" />`}
-                    >
-                      <ListItemText secondary='HTML' />
-                    </CopyToClipBoard>
+                  <ListItem disablePadding>
+                    <ListItemButton onClick={handleClickCopyLink}>
+                      <CopyToClipBoard
+                        text={`<img src="${urlJoin(
+                          process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
+                          id,
+                        )}" alt="LGTM" />`}
+                      >
+                        <ListItemText
+                          secondary='HTML'
+                          secondaryTypographyProps={{
+                            sx: { textAlign: 'center' },
+                          }}
+                        />
+                      </CopyToClipBoard>
+                    </ListItemButton>
                   </ListItem>
                 </List>
               </Paper>
