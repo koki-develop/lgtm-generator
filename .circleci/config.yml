@@ -136,6 +136,9 @@ jobs:
           command: init
       - terraform:
           path: ./terraform/envs/<< parameters.stage >>
+          command: workspace select << parameters.stage >>
+      - terraform:
+          path: ./terraform/envs/<< parameters.stage >>
           command: validate
       - terraform:
           path: ./terraform/envs/<< parameters.stage >>
@@ -162,6 +165,9 @@ jobs:
       - terraform:
           path: ./terraform/envs/<< parameters.stage >>
           command: init
+      - terraform:
+          path: ./terraform/envs/<< parameters.stage >>
+          command: workspace select << parameters.stage >>
       - terraform:
           path: ./terraform/envs/<< parameters.stage >>
           command: apply -auto-approve
@@ -209,6 +215,9 @@ jobs:
       - terraform:
           path: ./terraform/envs/<< parameters.stage >>
           command: init
+      - terraform:
+          path: ./terraform/envs/<< parameters.stage >>
+          command: workspace select << parameters.stage >>
       - terraform:
           path: ./terraform/envs/<< parameters.stage >>
           command: plan
