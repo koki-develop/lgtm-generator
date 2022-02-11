@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "images" {
   bucket        = "${local.prefix}-images"
-  acl           = "private"
   force_destroy = var.stage != "prod"
 
   tags = { Name = "${local.prefix}-images" }
