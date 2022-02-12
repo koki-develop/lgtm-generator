@@ -2,6 +2,9 @@
   "name": "lgtm-generator-e2e",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "cypress:open": "cypress open"
+  },
   "devDependencies": {
     "cypress": "^9.4.1"
   }
