@@ -3,6 +3,8 @@ const randomSearchKeyword = (): string => {
   return keywords[Math.floor(Math.random() * keywords.length)];
 };
 
+// TODO: リファクタ
+// TODO: コピーボタンのテストを追加
 describe("/", () => {
   it("works", () => {
     cy.visit("/");
