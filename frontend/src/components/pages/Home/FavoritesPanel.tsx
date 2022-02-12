@@ -22,7 +22,7 @@ const FavoritesPanel: React.VFC<FavoritesPanelProps> = React.memo(props => {
   }, [favoriteIds, show]);
 
   return (
-    <Box hidden={!show}>
+    <Box data-testid='favorites-panel' hidden={!show}>
       {showingFavoriteIds.length === 0 ? (
         <Typography
           data-testid='no-favorites'

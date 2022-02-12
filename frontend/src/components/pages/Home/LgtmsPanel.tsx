@@ -69,7 +69,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   }, [fetchLgtms]);
 
   return (
-    <Box hidden={!show}>
+    <Box data-testid='lgtms-panel' hidden={!show}>
       <Modal open={loadingImage}>
         <Loading text={t.LOADING} />
       </Modal>

@@ -104,12 +104,18 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
           />
           <FormControlLabel
             value={ReportType.other}
-            control={<Radio value={ReportType.other} />}
+            control={
+              <Radio
+                data-testid='report-form-type-radio-other'
+                value={ReportType.other}
+              />
+            }
             label={t.OTHER}
             disabled={loading}
           />
         </RadioGroup>
         <TextField
+          data-testid='report-form-text-input'
           fullWidth
           multiline
           placeholder={t.SUPPLEMENT}
@@ -130,6 +136,7 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
           {t.CANCEL}
         </Button>
         <LoadableButton
+          data-testid='report-form-send-button'
           fullWidth
           color='primary'
           disabled={!isValid}

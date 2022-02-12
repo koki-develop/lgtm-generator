@@ -144,6 +144,7 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
           {/* お気に入り */}
           {favorited ? (
             <Button
+              data-testid='unfavorite'
               onClick={handleClickUnfavoriteButton}
               sx={{
                 backgroundColor: pink['100'],
@@ -157,6 +158,7 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
             </Button>
           ) : (
             <Button
+              data-testid='favorite'
               onClick={handleClickFavoriteButton}
               sx={{
                 backgroundColor: '#fff',
@@ -172,6 +174,7 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
 
           {/* 通報 */}
           <Button
+            data-testid='lgtm-card-report-button'
             onClick={handleClickReportButton}
             sx={{
               backgroundColor: orange['500'],
