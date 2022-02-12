@@ -3,7 +3,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "cypress:open": "cypress open"
+    "open": "cypress open --config-file cypress.local.json",
+    "open:dev": "cypress open --config-file cypress.dev.json"
   },
   "devDependencies": {
     "cypress": "^9.4.1",
