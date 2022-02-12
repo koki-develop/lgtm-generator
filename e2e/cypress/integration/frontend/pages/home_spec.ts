@@ -19,5 +19,9 @@ describe("/", () => {
     // お気に入り
     cy.get("[data-testid=tab-favorites]").click();
     cy.url().should("equal", Cypress.config().baseUrl + "/?tab=favorites");
+
+    // LGTM
+    cy.get("[data-testid=tab-lgtms]").click();
+    cy.url().should("equal", Cypress.config().baseUrl + "/");
   });
 });
