@@ -22,7 +22,10 @@ const ImageCard: React.VFC<ImageCardProps> = React.memo(props => {
 
   return (
     <Card>
-      <CardActionArea onClick={handleClick}>
+      <CardActionArea
+        data-testid='image-card-action-area'
+        onClick={handleClick}
+      >
         <CardContent sx={{ p: 1 }}>
           <Box
             sx={{

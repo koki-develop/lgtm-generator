@@ -25,6 +25,7 @@ const FavoritesPanel: React.VFC<FavoritesPanelProps> = React.memo(props => {
     <Box hidden={!show}>
       {showingFavoriteIds.length === 0 ? (
         <Typography
+          data-testid='no-favorites'
           sx={{
             color: theme => theme.palette.text.secondary,
             textAlign: 'center',

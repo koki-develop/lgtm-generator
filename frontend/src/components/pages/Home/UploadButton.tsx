@@ -45,6 +45,7 @@ const UploadButton: React.VFC<UploadButtonProps> = React.memo(props => {
       }}
     >
       <input
+        data-testid='upload-file'
         key={inputFileKey}
         ref={inputFileRef}
         type='file'
