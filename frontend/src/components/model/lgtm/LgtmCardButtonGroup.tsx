@@ -90,7 +90,10 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
         />
         <ButtonGroup color='primary' sx={{ maxWidth: '100%' }}>
           {/* コピー */}
-          <Button onClick={handleClickCopyButton}>
+          <Button
+            data-testid='lgtm-card-copy-button'
+            onClick={handleClickCopyButton}
+          >
             <FileCopyOutlinedIcon fontSize='small' />
           </Button>
           <Popper
@@ -102,7 +105,10 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
               <Paper>
                 <List disablePadding>
                   <ListItem disablePadding>
-                    <ListItemButton onClick={handleClickCopyLink}>
+                    <ListItemButton
+                      data-testid='lgtm-card-copy-markdown-button'
+                      onClick={handleClickCopyLink}
+                    >
                       <CopyToClipBoard
                         text={`![LGTM](${urlJoin(
                           process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
@@ -120,7 +126,10 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
                   </ListItem>
                   <Divider />
                   <ListItem disablePadding>
-                    <ListItemButton onClick={handleClickCopyLink}>
+                    <ListItemButton
+                      data-testid='lgtm-card-copy-html-button'
+                      onClick={handleClickCopyLink}
+                    >
                       <CopyToClipBoard
                         text={`<img src="${urlJoin(
                           process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
@@ -144,7 +153,7 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
           {/* お気に入り */}
           {favorited ? (
             <Button
-              data-testid='unfavorite'
+              data-testid='lgtm-card-unfavorite-button'
               onClick={handleClickUnfavoriteButton}
               sx={{
                 backgroundColor: pink['100'],
@@ -158,7 +167,7 @@ const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
             </Button>
           ) : (
             <Button
-              data-testid='favorite'
+              data-testid='lgtm-card-favorite-button'
               onClick={handleClickFavoriteButton}
               sx={{
                 backgroundColor: '#fff',

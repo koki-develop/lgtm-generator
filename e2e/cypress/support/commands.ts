@@ -25,3 +25,35 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
 import "cypress-file-upload";
+
+Cypress.Commands.add("getByTestId", (id: string) => {
+  return cy.get(`[data-testid='${id}']`);
+});
+
+Cypress.Commands.add(
+  "findByTestId",
+  { prevSubject: "element" },
+  (subject, id: string) => {
+    return cy.wrap(subject).find(`[data-testid='${id}']`);
+  }
+);
+
+Cypress.Commands.add("pathname", () => {
+  return cy.url().then((url) => {
+    return cy.wrap(new URL(url).pathname);
+  });
+});
+
+Cypress.Commands.add("search", () => {
+  return cy.url().then((url) => {
+    return cy.wrap(new URL(url).search);
+  });
+});
+
+Cypress.Commands.add("enter", { prevSubject: "element" }, (subject) => {
+  return cy.wrap(subject).type("{enter}");
+});
+
+Cypress.Commands.add("visible", { prevSubject: "element" }, (subject) => {
+  return cy.wrap(subject).filter(":visible");
+});

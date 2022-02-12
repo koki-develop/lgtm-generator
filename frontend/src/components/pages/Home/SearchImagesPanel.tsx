@@ -73,7 +73,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
               placeholder={t.KEYWORD}
               inputProps={{
                 ref: queryInputRef,
-                'data-testid': 'search-keyword',
+                'data-testid': 'search-images-keyword-input',
               }}
               InputProps={{
                 startAdornment: (

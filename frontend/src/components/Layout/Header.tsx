@@ -36,7 +36,7 @@ const TranslateListItem: React.VFC<TranslateListItemProps> = React.memo(
     }, [currentLocale, locale]);
 
     return (
-      <ListItem data-testid={`translate-${locale}`} disablePadding>
+      <ListItem data-testid={`translate-list-item-${locale}`} disablePadding>
         <Link href={router.asPath} locale={locale} passHref>
           <ListItemButton
             onClick={onClick}
@@ -109,7 +109,7 @@ const Header: React.VFC = React.memo(() => {
           </Link>
         </Box>
         <Button
-          data-testid='translate'
+          data-testid='translate-open-button'
           onClick={handleClickTranslate}
           variant='text'
           sx={{

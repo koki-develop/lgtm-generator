@@ -58,7 +58,7 @@ const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
           {t.CANCEL}
         </Button>
         <LoadableButton
-          data-testid='generate'
+          data-testid='lgtm-form-generate-button'
           fullWidth
           color='primary'
           loading={loading}

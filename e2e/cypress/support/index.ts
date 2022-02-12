@@ -14,7 +14,20 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      getByTestId(id: string): Chainable<JQuery<HTMLElement>>;
+      findByTestId(id: string): Chainable<JQuery<HTMLElement>>;
+      pathname(): Chainable<string>;
+      search(): Chainable<string>;
+      enter(): Chainable<JQuery<HTMLElement>>;
+      visible(): Chainable<JQuery<HTMLElement>>;
+    }
+  }
+}
