@@ -35,9 +35,21 @@ const Tabs: React.VFC<TabsProps> = React.memo(props => {
         indicatorColor='primary'
         textColor='primary'
       >
-        <Tab label={t.LGTM} value={TabValue.lgtms} />
-        <Tab label={t.IMAGE_SEARCH} value={TabValue.searchImages} />
-        <Tab label={t.FAVORITES} value={TabValue.favorites} />
+        <Tab
+          data-testid='home-tab-lgtms'
+          label={t.LGTM}
+          value={TabValue.lgtms}
+        />
+        <Tab
+          data-testid='home-tab-search-images'
+          label={t.IMAGE_SEARCH}
+          value={TabValue.searchImages}
+        />
+        <Tab
+          data-testid='home-tab-favorites'
+          label={t.FAVORITES}
+          value={TabValue.favorites}
+        />
       </MuiTabs>
     </Paper>
   );

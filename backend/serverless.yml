@@ -23,7 +23,6 @@ provider:
   profile: default
   region: us-east-1
   stage: ${opt:stage, "dev"}
-  lambdaHashingVersion: 20201221
   logs:
     restApi: true
   iam:

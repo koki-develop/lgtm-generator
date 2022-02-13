@@ -16,7 +16,9 @@ const Home: React.VFC = React.memo(() => {
 
   const handleChangeTab = useCallback(
     (value: TabValue) => {
-      router.replace({ search: `tab=${value}` });
+      router.replace({
+        search: value === TabValue.lgtms ? '' : `tab=${value}`,
+      });
     },
     [router],
   );

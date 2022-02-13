@@ -17,7 +17,7 @@ const LgtmCard: React.VFC<LgtmCardProps> = React.memo(props => {
   const { id } = props;
 
   return (
-    <Card>
+    <Card data-testid='lgtm-card' data-resourceid={id}>
       <CardContent sx={{ p: 1 }}>
         <Box
           sx={{

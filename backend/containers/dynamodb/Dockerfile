@@ -7,5 +7,7 @@ COPY package.json package.json
 COPY yarn.lock yarn.lock
 RUN yarn install --check-files
 
+COPY .env .env
+
 COPY serverless.yml serverless.yml
 RUN yarn run serverless dynamodb install

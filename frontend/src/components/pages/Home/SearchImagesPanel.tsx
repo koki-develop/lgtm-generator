@@ -38,8 +38,13 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
     );
 
     const handleSearch = useCallback(() => {
+      const trimmedQuery = query.trim();
+      if (trimmedQuery === '') {
+        return;
+      }
+
       queryInputRef.current?.blur();
-      searchImages(query);
+      searchImages(trimmedQuery);
     }, [query, searchImages]);
 
     const handleClickImage = useCallback((image: Image) => {
@@ -73,6 +78,7 @@ const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
               placeholder={t.KEYWORD}
               inputProps={{
                 ref: queryInputRef,
+                'data-testid': 'search-images-keyword-input',
               }}
               InputProps={{
                 startAdornment: (
