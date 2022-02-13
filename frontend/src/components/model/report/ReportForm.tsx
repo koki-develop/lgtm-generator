@@ -128,6 +128,7 @@ const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
       </CardContent>
       <CardActions>
         <Button
+          data-testid='report-form-cancel-button'
           fullWidth
           color='secondary'
           onClick={handleClose}
