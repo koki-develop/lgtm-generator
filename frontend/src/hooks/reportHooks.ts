@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { useToast } from '~/components/providers/ToastProvider';
-import { useTranslate } from './translateHooks';
-import { ReportType } from '~/types/report';
 import { ApiClient } from '~/lib/apiClient';
+import { ReportType } from '~/types/report';
+import { useTranslate } from './translateHooks';
 
 export type SendReportFn = (
   lgtmId: string,

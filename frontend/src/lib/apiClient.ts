@@ -1,8 +1,8 @@
 import axios from 'axios';
 import urlJoin from 'url-join';
 import { UnsupportedImageFormatError } from '~/lib/errors';
-import { Lgtm } from '~/types/lgtm';
 import { Image } from '~/types/image';
+import { Lgtm } from '~/types/lgtm';
 import { Report, ReportType } from '~/types/report';
 
 type LgtmRaw = {

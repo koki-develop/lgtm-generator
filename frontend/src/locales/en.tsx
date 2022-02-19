@@ -1,11 +1,11 @@
-import React from 'react';
-import Link from 'next/link';
 import Typography from '@mui/material/Typography';
+import Link from 'next/link';
+import React from 'react';
 import { theme } from '~/components/Layout/theme';
-import { Routes } from '~/routes';
 import ExternalLink from '~/components/utils/ExternalLink';
-import { Translate } from './translate';
+import { Routes } from '~/routes';
 import { ja } from './ja';
+import { Translate } from './translate';
 
 // TODO: 整理
 export const en: Translate = {

@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
 import { Box, Typography } from '@mui/material';
+import React, { useMemo } from 'react';
 import Layout from '~/components/Layout';
 import { useTranslate } from '~/hooks/translateHooks';
 

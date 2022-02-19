@@ -1,11 +1,10 @@
-import React, { useCallback, useMemo, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import TranslateIcon from '@mui/icons-material/Translate';
 import { useMediaQuery, useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Button from '@mui/material/Button';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -14,10 +13,11 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import TranslateIcon from '@mui/icons-material/Translate';
-import { Routes } from '~/routes';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslate } from '~/hooks/translateHooks';
+import { Routes } from '~/routes';
 
 type TranslateListItemProps = {
   text: string;

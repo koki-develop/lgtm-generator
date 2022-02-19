@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
+import React, { useCallback, useMemo } from 'react';
 import Layout from '~/components/Layout';
-import Tabs, { TabValue } from './Tabs';
 import Field from '~/components/utils/Field';
+import FavoritesPanel from './FavoritesPanel';
 import LgtmsPanel from './LgtmsPanel';
 import SearchImagesPanel from './SearchImagesPanel';
-import FavoritesPanel from './FavoritesPanel';
+import Tabs, { TabValue } from './Tabs';
 
 const Home: React.VFC = React.memo(() => {
   const router = useRouter();

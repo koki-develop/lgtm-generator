@@ -1,10 +1,10 @@
-import React from 'react';
 import {
   Backdrop,
   Fade,
   Modal as MuiModal,
   ModalProps as MuiModalProps,
 } from '@mui/material';
+import React from 'react';
 
 export type ModalProps = Omit<MuiModalProps, 'onClose'> & {
   onClose?: () => void;
