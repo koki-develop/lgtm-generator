@@ -6,7 +6,7 @@
     "postbuild": "next-sitemap",
     "build": "next build",
     "lint": "eslint --max-warnings 0 --ext .js,.ts,.tsx .",
-    "format": "prettier --write ."
+    "fmt": "yarn lint --fix && prettier --write ."
   },
   "dependencies": {
     "@emotion/cache": "^11.7.1",
