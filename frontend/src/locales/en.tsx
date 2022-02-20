@@ -1,8 +1,6 @@
 import Typography from '@mui/material/Typography';
-import Link from 'next/link';
 import React from 'react';
-import { theme } from '~/components/Layout/theme';
-import ExternalLink from '~/components/utils/ExternalLink';
+import Link from '~/components/utils/Link';
 import { Routes } from '~/routes';
 import { ja } from './ja';
 import { Translate } from './translate';
@@ -24,17 +22,15 @@ export const en: Translate = {
   PLEASE_READ_PRECAUTIONS: (
     <Typography>
       Please read{' '}
-      <Link href={Routes.precautions}>
-        <a
-          target='_blank'
-          rel='noopener noreferrer'
-          style={{
-            color: theme.palette.primary.main,
-            textDecoration: 'underline',
-          }}
-        >
-          precautions
-        </a>
+      <Link
+        external
+        href={Routes.precautions}
+        sx={{
+          color: theme => theme.palette.primary.main,
+          textDecoration: 'underline',
+        }}
+      >
+        precautions
       </Link>{' '}
       before generating LGTM image.
     </Typography>
@@ -78,7 +74,8 @@ export const en: Translate = {
       traffic data is collected anonymously and is not personally identifiable.
       You can opt out of this feature by disabling cookies, so please check your
       browser settings. For more information about these terms, please see the{' '}
-      <ExternalLink
+      <Link
+        external
         href='https://marketingplatform.google.com/about/analytics/terms/us/'
         sx={{
           color: theme => theme.palette.primary.main,
@@ -86,7 +83,7 @@ export const en: Translate = {
         }}
       >
         Google Analytics Terms of Service.
-      </ExternalLink>
+      </Link>
     </>
   ),
   UPDATING_PRIVACY_POLICY: 'Updating Privacy Policy',

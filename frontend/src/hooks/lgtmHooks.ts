@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useToast } from '~/components/providers/ToastProvider';
 import { ApiClient } from '~/lib/apiClient';
@@ -38,6 +38,12 @@ export const useFetchLgtms = (): {
     },
     [perPage, setLgtms],
   );
+
+  useEffect(() => {
+    return () => {
+      setLgtms([]);
+    };
+  }, [setLgtms]);
 
   return { fetchLgtms, loading, isTruncated };
 };
