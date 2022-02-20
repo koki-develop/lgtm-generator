@@ -2,9 +2,8 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
-import Head from 'next/head';
-import React, { useMemo } from 'react';
-import { useTranslate } from '~/hooks/translateHooks';
+import React from 'react';
+import Meta from '~/components/utils/Meta';
 import Footer from './Footer';
 import Header from './Header';
 import { theme } from './theme';
@@ -27,16 +26,6 @@ Layout.displayName = 'Layout';
 const LayoutContent: React.VFC<LayoutProps> = React.memo(props => {
   const { children, title } = props;
 
-  const { t } = useTranslate();
-
-  const pageTitle = useMemo(() => {
-    const baseTitle = t.APP_NAME;
-    if (!title) {
-      return baseTitle;
-    }
-    return `${title} | ${baseTitle}`;
-  }, [t.APP_NAME, title]);
-
   return (
     <Box
       sx={{
@@ -44,9 +33,7 @@ const LayoutContent: React.VFC<LayoutProps> = React.memo(props => {
         minHeight: '100vh',
       }}
     >
-      <Head>
-        <title>{pageTitle}</title>
-      </Head>
+      <Meta title={title} />
       <CssBaseline />
       <Header />
       <Container component='main' maxWidth='lg' sx={{ pt: 2 }}>
