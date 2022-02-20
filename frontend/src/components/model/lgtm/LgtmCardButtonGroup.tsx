@@ -1,7 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
+import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
+import { orange, pink } from '@mui/material/colors';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -9,21 +13,17 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
+import React, { useCallback, useMemo, useState } from 'react';
 import CopyToClipBoard from 'react-copy-to-clipboard';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
-import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
-import { orange, pink } from '@mui/material/colors';
 import urlJoin from 'url-join';
+import ReportForm from '~/components/model/report/ReportForm';
+import { useToast } from '~/components/providers/ToastProvider';
 import {
   useAddFavoriteId,
   useFavoriteIds,
   useRemoveFavoriteId,
 } from '~/hooks/lgtmHooks';
 import { useTranslate } from '~/hooks/translateHooks';
-import { useToast } from '~/components/providers/ToastProvider';
-import ReportForm from '~/components/model/report/ReportForm';
 
 type LgtmCardButtonGroupProps = {
   id: string;

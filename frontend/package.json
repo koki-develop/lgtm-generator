@@ -3,9 +3,10 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
+    "postbuild": "next-sitemap",
     "build": "next build",
     "lint": "eslint --max-warnings 0 --ext .js,.ts,.tsx .",
-    "format": "prettier --write ."
+    "fmt": "yarn lint --fix && prettier --write ."
   },
   "dependencies": {
     "@emotion/cache": "^11.7.1",
@@ -40,8 +41,13 @@
     "@typescript-eslint/parser": "^4.29.0",
     "depcheck": "^1.4.2",
     "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "next-sitemap": "^2.4.3",
     "prettier": "^2.5.1",
     "sass": "^1.45.1",
     "typescript": "^4.3.5"

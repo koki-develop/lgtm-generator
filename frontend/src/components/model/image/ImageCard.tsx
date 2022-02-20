@@ -1,9 +1,9 @@
-import React, { useCallback } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import { styled } from '@mui/material/styles';
+import React, { useCallback } from 'react';
 import { Image } from '~/types/image';
 
 const StyledImage = styled('img')({});

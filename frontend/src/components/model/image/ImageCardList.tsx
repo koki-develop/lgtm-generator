@@ -1,5 +1,5 @@
-import React from 'react';
 import Grid from '@mui/material/Grid';
+import React from 'react';
 import { Image } from '~/types/image';
 import ImageCard from './ImageCard';
 

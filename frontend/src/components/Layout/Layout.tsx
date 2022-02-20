@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
-import Head from 'next/head';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
+import Head from 'next/head';
+import React, { useMemo } from 'react';
 import { useTranslate } from '~/hooks/translateHooks';
-import Header from './Header';
 import Footer from './Footer';
+import Header from './Header';
 import { theme } from './theme';
 
 type LayoutProps = {

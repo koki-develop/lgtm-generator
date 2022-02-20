@@ -1,10 +1,10 @@
-import React from 'react';
-import Link from 'next/link';
-import { styled } from '@mui/material/styles';
 import { Box, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Link from 'next/link';
+import React from 'react';
+import ExternalLink from '~/components/utils/ExternalLink';
 import { useTranslate } from '~/hooks/translateHooks';
 import { Routes } from '~/routes';
-import ExternalLink from '~/components/utils/ExternalLink';
 
 const LinkListItem = styled('li')(({ theme }) => ({
   marginBottom: theme.spacing(1),

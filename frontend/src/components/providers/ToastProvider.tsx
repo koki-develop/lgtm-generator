@@ -1,5 +1,5 @@
-import React, { createContext, useCallback, useContext } from 'react';
 import { useSnackbar, SnackbarProvider, VariantType } from 'notistack';
+import React, { createContext, useCallback, useContext } from 'react';
 
 type Context = {
   enqueueSuccess?: (message: React.ReactNode) => void;

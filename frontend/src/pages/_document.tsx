@@ -1,4 +1,4 @@
-import React from 'react';
+import createEmotionServer from '@emotion/server/create-instance';
 import NextDocument, {
   DocumentContext,
   Head,
@@ -6,7 +6,7 @@ import NextDocument, {
   Main,
   NextScript,
 } from 'next/document';
-import createEmotionServer from '@emotion/server/create-instance';
+import React from 'react';
 import { createEmotionCache } from '~/lib/emotion';
 
 export default class Document extends NextDocument {
@@ -35,7 +35,7 @@ export default class Document extends NextDocument {
               <script
                 data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CODE}
                 async
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"
+                src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
               ></script>
             </>
           )}

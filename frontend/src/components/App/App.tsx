@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import Head from 'next/head';
-import { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { useTheme } from '@mui/material';
+import { AppProps } from 'next/app';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
+import ToastProvider from '~/components/providers/ToastProvider';
 import { useTranslate } from '~/hooks/translateHooks';
 import { createEmotionCache } from '~/lib/emotion';
-import ToastProvider from '~/components/providers/ToastProvider';
 
 const clientSideEmotionCache = createEmotionCache();
 

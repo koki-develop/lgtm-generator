@@ -1,5 +1,5 @@
-import React from 'react';
 import { Button, ButtonProps, CircularProgress } from '@mui/material';
+import React from 'react';
 
 export type LoadableButtonProps = ButtonProps & {
   loading: boolean;
