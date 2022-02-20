@@ -1,6 +1,8 @@
+import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import Layout from '~/components/Layout';
+import Admax from '~/components/utils/Admax';
 import Field from '~/components/utils/Field';
 import FavoritesPanel from './FavoritesPanel';
 import LgtmsPanel from './LgtmsPanel';
@@ -25,6 +27,10 @@ const Home: React.VFC = React.memo(() => {
 
   return (
     <Layout>
+      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+        <Admax admaxId={process.env.NEXT_PUBLIC_ADMAX_ID} type='switch' />
+      </Box>
+
       <Field>
         <Tabs value={tab} onChange={handleChangeTab} />
       </Field>
