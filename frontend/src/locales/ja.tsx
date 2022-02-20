@@ -1,6 +1,5 @@
 import Typography from '@mui/material/Typography';
 import React from 'react';
-import ExternalLink from '~/components/utils/ExternalLink';
 import Link from '~/components/utils/Link';
 import { Routes } from '~/routes';
 import { Translate } from './translate';
