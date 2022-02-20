@@ -1,8 +1,7 @@
 import Typography from '@mui/material/Typography';
-import Link from 'next/link';
 import React from 'react';
-import { theme } from '~/components/Layout/theme';
 import ExternalLink from '~/components/utils/ExternalLink';
+import Link from '~/components/utils/Link';
 import { Routes } from '~/routes';
 import { Translate } from './translate';
 
@@ -24,17 +23,15 @@ export const ja: Translate = {
   PLEASE_READ_PRECAUTIONS: (
     <Typography>
       LGTM 画像を生成する前に
-      <Link href={Routes.precautions}>
-        <a
-          target='_blank'
-          rel='noopener noreferrer'
-          style={{
-            color: theme.palette.primary.main,
-            textDecoration: 'underline',
-          }}
-        >
-          利用上の注意
-        </a>
+      <Link
+        external
+        href={Routes.precautions}
+        sx={{
+          color: theme => theme.palette.primary.main,
+          textDecoration: 'underline',
+        }}
+      >
+        利用上の注意
       </Link>
       をお読みください。
     </Typography>
@@ -77,7 +74,8 @@ export const ja: Translate = {
       を使用しています。このトラフィックデータは匿名で収集されており、個人を特定するものではありません。この機能は
       Cookie
       を無効にすることで収集を拒否することが出来ますので、お使いのブラウザの設定をご確認ください。この規約に関して、詳しくは{' '}
-      <ExternalLink
+      <Link
+        external
         href='https://marketingplatform.google.com/about/analytics/terms/jp/'
         sx={{
           color: theme => theme.palette.primary.main,
@@ -85,7 +83,7 @@ export const ja: Translate = {
         }}
       >
         Google アナリティクス利用規約
-      </ExternalLink>{' '}
+      </Link>{' '}
       を参照してください。
     </>
   ),

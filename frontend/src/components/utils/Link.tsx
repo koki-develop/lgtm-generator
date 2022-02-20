@@ -3,11 +3,12 @@ import NextLink from 'next/link';
 import React from 'react';
 
 type LinkProps = MuiLinkProps & {
+  locale?: string;
   external?: boolean;
 };
 
 const Link: React.VFC<LinkProps> = React.memo(props => {
-  const { external, ...linkProps } = props;
+  const { external, locale, ...linkProps } = props;
 
   if (external) {
     return <MuiLink target='_blank' rel='noreferrer noopener' {...linkProps} />;
@@ -16,7 +17,7 @@ const Link: React.VFC<LinkProps> = React.memo(props => {
   const { href, ...otherLinkProps } = linkProps;
 
   return (
-    <NextLink href={href} passHref>
+    <NextLink href={href} locale={locale} passHref>
       <MuiLink {...otherLinkProps} />
     </NextLink>
   );

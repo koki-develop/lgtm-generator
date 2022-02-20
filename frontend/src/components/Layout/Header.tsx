@@ -13,9 +13,9 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo, useState } from 'react';
+import Link from '~/components/utils/Link';
 import { useTranslate } from '~/hooks/translateHooks';
 import { Routes } from '~/routes';
 
@@ -37,12 +37,8 @@ const TranslateListItem: React.VFC<TranslateListItemProps> = React.memo(
 
     return (
       <ListItem data-testid={`translate-list-item-${locale}`} disablePadding>
-        <Link href={router.asPath} locale={locale} passHref>
-          <ListItemButton
-            onClick={onClick}
-            component='a'
-            selected={currentLocale === locale}
-          >
+        <Link href={router.asPath} locale={locale} sx={{ width: '100%' }}>
+          <ListItemButton onClick={onClick} selected={currentLocale === locale}>
             <ListItemText
               primary={text}
               primaryTypographyProps={{
@@ -92,20 +88,18 @@ const Header: React.VFC = React.memo(() => {
     <AppBar color='primary' position='static'>
       <Toolbar>
         <Box sx={{ flexGrow: 1 }}>
-          <Link href={Routes.home}>
-            <a style={{ display: 'inline-block' }}>
-              <Typography
-                sx={theme => ({
-                  fontFamily: 'ArchivoBlack',
-                  fontSize: theme => theme.typography.h4.fontSize,
-                  [theme.breakpoints.down('sm')]: {
-                    fontSize: theme => theme.typography.h5.fontSize,
-                  },
-                })}
-              >
-                {t.APP_NAME}
-              </Typography>
-            </a>
+          <Link href={Routes.home} sx={{ display: 'inline-block' }}>
+            <Typography
+              sx={theme => ({
+                fontFamily: 'ArchivoBlack',
+                fontSize: theme => theme.typography.h4.fontSize,
+                [theme.breakpoints.down('sm')]: {
+                  fontSize: theme => theme.typography.h5.fontSize,
+                },
+              })}
+            >
+              {t.APP_NAME}
+            </Typography>
           </Link>
         </Box>
         <Button

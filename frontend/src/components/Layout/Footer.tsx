@@ -1,8 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import Link from 'next/link';
 import React from 'react';
-import ExternalLink from '~/components/utils/ExternalLink';
+import Link from '~/components/utils/Link';
 import { useTranslate } from '~/hooks/translateHooks';
 import { Routes } from '~/routes';
 
@@ -25,24 +24,20 @@ const Footer: React.VFC = React.memo(() => {
     >
       <ul>
         <LinkListItem sx={{ mb: 2 }}>
-          <ExternalLink href='https://koki.me'>
+          <Link external href='https://koki.me'>
             <Typography component='small'>&copy;2021 koki sato</Typography>
-          </ExternalLink>
+          </Link>
         </LinkListItem>
         <LinkListItem>
-          <ExternalLink href='https://github.com/koki-develop/lgtm-generator'>
+          <Link external href='https://github.com/koki-develop/lgtm-generator'>
             View on GitHub
-          </ExternalLink>
-        </LinkListItem>
-        <LinkListItem>
-          <Link href={Routes.precautions}>
-            <a>{t.PRECAUTIONS}</a>
           </Link>
         </LinkListItem>
         <LinkListItem>
-          <Link href={Routes.privacyPolicy}>
-            <a>{t.PRIVACY_POLICY}</a>
-          </Link>
+          <Link href={Routes.precautions}>{t.PRECAUTIONS}</Link>
+        </LinkListItem>
+        <LinkListItem>
+          <Link href={Routes.privacyPolicy}>{t.PRIVACY_POLICY}</Link>
         </LinkListItem>
       </ul>
     </Box>
