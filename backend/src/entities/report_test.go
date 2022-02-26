@@ -35,10 +35,11 @@ func TestReportType_Valid(t *testing.T) {
 		{"fuga", false},
 	}
 	for _, testcase := range testcases {
+		err := testcase.value.Valid()
 		if testcase.valid {
-			assert.NoError(t, testcase.value.Valid())
+			assert.NoError(t, err)
 		} else {
-			assert.NotNil(t, testcase.value.Valid())
+			assert.NotNil(t, err)
 		}
 	}
 }

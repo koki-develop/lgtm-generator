@@ -50,7 +50,7 @@ func (ipt *ReportCreateInput) Valid() error {
 	}
 
 	// type
-	if ipt.Type == "" {
+	if strings.TrimSpace(string(ipt.Type)) == "" {
 		return errors.New("type is required")
 	}
 	if err := ipt.Type.Valid(); err != nil {
