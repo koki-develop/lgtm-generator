@@ -1,4 +1,4 @@
-package usecases
+package iface
 
 import "github.com/koki-develop/lgtm-generator/backend/src/entities"
 

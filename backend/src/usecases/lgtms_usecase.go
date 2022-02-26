@@ -1,24 +1,24 @@
-package lgtms
+package usecases
 
 import (
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/iface"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
-	"github.com/koki-develop/lgtm-generator/backend/src/usecases"
 	"github.com/pkg/errors"
 )
 
-type Usecase struct {
-	config *UsecaseConfig
+type LGTMsUsecase struct {
+	config *LGTMsUsecaseConfig
 }
 
-type UsecaseConfig struct {
-	LGTMsRepository usecases.LGTMsRepository
+type LGTMsUsecaseConfig struct {
+	LGTMsRepository iface.LGTMsRepository
 }
 
-func NewUsecase(cfg *UsecaseConfig) *Usecase {
-	return &Usecase{config: cfg}
+func NewLGTMsUsecase(cfg *LGTMsUsecaseConfig) *LGTMsUsecase {
+	return &LGTMsUsecase{config: cfg}
 }
 
-func (uc *Usecase) FindAll(ipt *entities.LGTMsFindAllInput) (entities.LGTMs, error) {
+func (uc *LGTMsUsecase) FindAll(ipt *entities.LGTMsFindAllInput) (entities.LGTMs, error) {
 	var lmt int64 = 100
 	if ipt.Limit != nil && *ipt.Limit >= 0 {
 		lmt = *ipt.Limit
@@ -39,7 +39,7 @@ func (uc *Usecase) FindAll(ipt *entities.LGTMsFindAllInput) (entities.LGTMs, err
 	return lgtms, nil
 }
 
-func (uc *Usecase) Create(ipt *entities.LGTMCreateInput) (*entities.LGTM, error) {
+func (uc *LGTMsUsecase) Create(ipt *entities.LGTMCreateInput) (*entities.LGTM, error) {
 	if err := ipt.Valid(); err != nil {
 		return nil, errors.Wrap(entities.ErrInvalidParameter, err.Error())
 	}
@@ -61,7 +61,7 @@ func (uc *Usecase) Create(ipt *entities.LGTMCreateInput) (*entities.LGTM, error)
 	return nil, errors.WithStack(entities.ErrInvalidParameter)
 }
 
-func (uc *Usecase) Delete(ipt *entities.LGTMDeleteInput) error {
+func (uc *LGTMsUsecase) Delete(ipt *entities.LGTMDeleteInput) error {
 	if err := uc.config.LGTMsRepository.Delete(ipt.ID); err != nil {
 		return errors.WithStack(err)
 	}

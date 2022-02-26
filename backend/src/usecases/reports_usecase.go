@@ -1,26 +1,26 @@
-package reports
+package usecases
 
 import (
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/iface"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
-	"github.com/koki-develop/lgtm-generator/backend/src/usecases"
 	"github.com/pkg/errors"
 )
 
-type Usecase struct {
-	config *UsecaseConfig
+type ReportsUsecase struct {
+	config *ReportsUsecaseConfig
 }
 
-type UsecaseConfig struct {
-	ReportsRepository usecases.ReportsRepository
-	LGTMsRepository   usecases.LGTMsRepository
-	Notifier          usecases.Notifier
+type ReportsUsecaseConfig struct {
+	ReportsRepository iface.ReportsRepository
+	LGTMsRepository   iface.LGTMsRepository
+	Notifier          iface.Notifier
 }
 
-func NewUsecase(cfg *UsecaseConfig) *Usecase {
-	return &Usecase{config: cfg}
+func NewReportsUsecase(cfg *ReportsUsecaseConfig) *ReportsUsecase {
+	return &ReportsUsecase{config: cfg}
 }
 
-func (uc *Usecase) Create(ipt *entities.ReportCreateInput) (*entities.Report, error) {
+func (uc *ReportsUsecase) Create(ipt *entities.ReportCreateInput) (*entities.Report, error) {
 	if err := ipt.Valid(); err != nil {
 		return nil, errors.Wrap(entities.ErrInvalidParameter, err.Error())
 	}
