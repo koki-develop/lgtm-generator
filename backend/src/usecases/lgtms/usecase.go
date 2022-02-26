@@ -44,7 +44,7 @@ func (uc *Usecase) Create(ipt *entities.LGTMCreateInput) (*entities.LGTM, error)
 		return nil, errors.Wrap(entities.ErrInvalidParameter, err.Error())
 	}
 	if ipt.Base64 != nil {
-		lgtm, err := uc.config.LGTMsRepository.CreateFromBase64(*ipt.Base64, ipt.ContentType)
+		lgtm, err := uc.config.LGTMsRepository.CreateFromBase64(*ipt.Base64, *ipt.ContentType)
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
