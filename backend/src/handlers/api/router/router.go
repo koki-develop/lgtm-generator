@@ -20,9 +20,7 @@ import (
 	rptsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/reports"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	"github.com/koki-develop/lgtm-generator/backend/src/infrastructures"
-	imgsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases/images"
-	lgtmsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases/lgtms"
-	rptsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases/reports"
+	"github.com/koki-develop/lgtm-generator/backend/src/usecases"
 )
 
 func withContext(h func(ctx controllers.Context)) gin.HandlerFunc {
@@ -69,13 +67,13 @@ func New() *gin.Engine {
 		DBPrefix: fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
 	})
 
-	lgtmsuc := lgtmsuc.NewUsecase(&lgtmsuc.UsecaseConfig{
+	lgtmsuc := usecases.NewLGTMsUsecase(&usecases.LGTMsUsecaseConfig{
 		LGTMsRepository: lgtmsrepo,
 	})
-	imgsuc := imgsuc.NewUsecase(&imgsuc.UsecaseConfig{
+	imgsuc := usecases.NewImagesUsecase(&usecases.ImagesUsecaseConfig{
 		ImagesRepository: imgsrepo,
 	})
-	rptsuc := rptsuc.NewUsecase(&rptsuc.UsecaseConfig{
+	rptsuc := usecases.NewReportsUsecase(&usecases.ReportsUsecaseConfig{
 		ReportsRepository: rptsrepo,
 		LGTMsRepository:   lgtmsrepo,
 		Notifier:          n,

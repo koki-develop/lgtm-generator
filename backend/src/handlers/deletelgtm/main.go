@@ -8,7 +8,7 @@ import (
 	lgtmsctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/lgtms"
 	lgtmsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/lgtms"
 	"github.com/koki-develop/lgtm-generator/backend/src/infrastructures"
-	lgtmsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases/lgtms"
+	lgtmsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases"
 	"github.com/pkg/errors"
 )
 
@@ -26,7 +26,7 @@ func handler(e event) error {
 		DBPrefix:    fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
 		FileStorage: s3lgtms,
 	})
-	lgtmsuc := lgtmsuc.NewUsecase(&lgtmsuc.UsecaseConfig{
+	lgtmsuc := lgtmsuc.NewLGTMsUsecase(&lgtmsuc.LGTMsUsecaseConfig{
 		LGTMsRepository: lgtmsrepo,
 	})
 	ctrl := lgtmsctrl.NewController(&lgtmsctrl.ControllerConfig{
