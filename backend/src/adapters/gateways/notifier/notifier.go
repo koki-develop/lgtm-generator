@@ -12,7 +12,7 @@ type Notifier struct {
 }
 
 type Config struct {
-	Slack       gateways.Slack
+	Slack       gateways.SlackAPI
 	Channel     string
 	FileStorage gateways.FileStorage
 }

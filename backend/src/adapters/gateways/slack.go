@@ -2,6 +2,6 @@ package gateways
 
 import "github.com/slack-go/slack"
 
-type Slack interface {
+type SlackAPI interface {
 	PostMessage(msg *slack.Msg) error
 }
