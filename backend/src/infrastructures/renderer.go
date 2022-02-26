@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	"github.com/pkg/errors"
 	"github.com/slack-go/slack"
@@ -16,7 +17,7 @@ type Renderer struct {
 }
 
 type RendererConfig struct {
-	SlackAPI SlackAPI
+	SlackAPI gateways.SlackAPI
 }
 
 func NewRenderer(cfg *RendererConfig) *Renderer {

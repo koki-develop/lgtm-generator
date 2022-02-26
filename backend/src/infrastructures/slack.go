@@ -11,10 +11,6 @@ import (
 	"github.com/slack-go/slack"
 )
 
-type SlackAPI interface {
-	PostMessage(msg *slack.Msg) error
-}
-
 type SlackPostMessageResponse struct {
 	OK    bool   `json:"ok"`
 	Error string `json:"error"`
