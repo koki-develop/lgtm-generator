@@ -45,7 +45,7 @@ func TestReportType_Valid(t *testing.T) {
 }
 
 func TestReportCreateInput_Valid(t *testing.T) {
-	t.Run("LGTMID", func(t *testing.T) {
+	t.Run("lgtm id", func(t *testing.T) {
 		testcases := []struct {
 			value string
 			valid bool
@@ -70,7 +70,7 @@ func TestReportCreateInput_Valid(t *testing.T) {
 		}
 	})
 
-	t.Run("Type", func(t *testing.T) {
+	t.Run("type", func(t *testing.T) {
 		testcases := []struct {
 			value ReportType
 			valid bool
@@ -93,7 +93,7 @@ func TestReportCreateInput_Valid(t *testing.T) {
 		}
 	})
 
-	t.Run("Text", func(t *testing.T) {
+	t.Run("text", func(t *testing.T) {
 		testcases := []struct {
 			value string
 			valid bool
