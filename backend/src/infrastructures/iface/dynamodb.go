@@ -1,4 +1,4 @@
-package gateways
+package iface
 
 import "github.com/aws/aws-sdk-go/service/dynamodb"
 

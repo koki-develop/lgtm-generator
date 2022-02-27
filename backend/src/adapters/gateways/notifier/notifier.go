@@ -1,8 +1,8 @@
 package notifier
 
 import (
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
 	"github.com/pkg/errors"
 	"github.com/slack-go/slack"
 )
@@ -12,9 +12,9 @@ type Notifier struct {
 }
 
 type Config struct {
-	Slack       gateways.SlackAPI
+	Slack       infiface.SlackAPI
 	Channel     string
-	FileStorage gateways.FileStorage
+	FileStorage infiface.FileStorage
 }
 
 func New(cfg *Config) *Notifier {

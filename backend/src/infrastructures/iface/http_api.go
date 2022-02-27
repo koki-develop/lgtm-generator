@@ -1,4 +1,4 @@
-package gateways
+package iface
 
 import "net/http"
 

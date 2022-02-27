@@ -1,8 +1,8 @@
 package images
 
 import (
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
 	"github.com/pkg/errors"
 )
 
@@ -11,7 +11,7 @@ type Repository struct {
 }
 
 type RepositoryConfig struct {
-	ImageSearchEngine gateways.ImageSearchEngine
+	ImageSearchEngine infiface.ImageSearchEngine
 }
 
 func NewRepository(cfg *RepositoryConfig) *Repository {

@@ -7,7 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/guregu/dynamo"
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
 )
 
 type GureguDynamoDB dynamo.DB
@@ -37,7 +37,7 @@ func (db *GureguDynamoDB) guregu() *dynamo.DB {
 	return (*dynamo.DB)(db)
 }
 
-func (db *GureguDynamoDB) Table(name string) gateways.DynamoDBTable {
+func (db *GureguDynamoDB) Table(name string) infiface.DynamoDBTable {
 	return dynamoDBTableFromGuregu(db.guregu().Table(name))
 }
 
@@ -53,19 +53,19 @@ func (tbl GureguDynamoDBTable) guregu() dynamo.Table {
 	return (dynamo.Table)(tbl)
 }
 
-func (tbl GureguDynamoDBTable) Get(name string, value interface{}) gateways.DynamoDBQuery {
+func (tbl GureguDynamoDBTable) Get(name string, value interface{}) infiface.DynamoDBQuery {
 	return dynamoDBQueryFromGuregu(tbl.guregu().Get(name, value))
 }
 
-func (tbl GureguDynamoDBTable) Put(item interface{}) gateways.DynamoDBPut {
+func (tbl GureguDynamoDBTable) Put(item interface{}) infiface.DynamoDBPut {
 	return dynamoDBPutFromGuregu(tbl.guregu().Put(item))
 }
 
-func (tbl GureguDynamoDBTable) Update(hashKey string, value interface{}) gateways.DynamoDBUpdate {
+func (tbl GureguDynamoDBTable) Update(hashKey string, value interface{}) infiface.DynamoDBUpdate {
 	return dynamoDBUpdateFromGuregu(tbl.guregu().Update(hashKey, value))
 }
 
-func (tbl GureguDynamoDBTable) Delete(hashKey string, value interface{}) gateways.DynamoDBDelete {
+func (tbl GureguDynamoDBTable) Delete(hashKey string, value interface{}) infiface.DynamoDBDelete {
 	return dynamoDBDeleteFromGuregu(tbl.guregu().Delete(hashKey, value))
 }
 
@@ -85,27 +85,27 @@ func (q *GureguDynamoDBQuery) All(out interface{}) error {
 	return q.guregu().All(out)
 }
 
-func (q *GureguDynamoDBQuery) Index(name string) gateways.DynamoDBQuery {
+func (q *GureguDynamoDBQuery) Index(name string) infiface.DynamoDBQuery {
 	return dynamoDBQueryFromGuregu(q.guregu().Index(name))
 }
 
-func (q *GureguDynamoDBQuery) Order(order gateways.DynamoDBOrder) gateways.DynamoDBQuery {
+func (q *GureguDynamoDBQuery) Order(order infiface.DynamoDBOrder) infiface.DynamoDBQuery {
 	var dynamoorder dynamo.Order
 	switch order {
-	case gateways.DynamoDBOrderAsc:
+	case infiface.DynamoDBOrderAsc:
 		dynamoorder = dynamo.Ascending
-	case gateways.DynamoDBOrderDesc:
+	case infiface.DynamoDBOrderDesc:
 		dynamoorder = dynamo.Descending
 	}
 
 	return dynamoDBQueryFromGuregu(q.guregu().Order(dynamoorder))
 }
 
-func (q *GureguDynamoDBQuery) Limit(limit int64) gateways.DynamoDBQuery {
+func (q *GureguDynamoDBQuery) Limit(limit int64) infiface.DynamoDBQuery {
 	return dynamoDBQueryFromGuregu(q.guregu().Limit(limit))
 }
 
-func (q *GureguDynamoDBQuery) StartFrom(key gateways.LastEvaluatedKey) gateways.DynamoDBQuery {
+func (q *GureguDynamoDBQuery) StartFrom(key infiface.LastEvaluatedKey) infiface.DynamoDBQuery {
 	return dynamoDBQueryFromGuregu(q.guregu().StartFrom(dynamo.PagingKey(key)))
 }
 
@@ -129,7 +129,7 @@ func (p *GureguDynamoDBPut) Run() error {
  * update
  */
 
-func dynamoDBUpdateFromGuregu(u *dynamo.Update) gateways.DynamoDBUpdate {
+func dynamoDBUpdateFromGuregu(u *dynamo.Update) infiface.DynamoDBUpdate {
 	return (*GureguDynamoDBUpdate)(u)
 }
 
@@ -141,11 +141,11 @@ func (u *GureguDynamoDBUpdate) Run() error {
 	return u.guregu().Run()
 }
 
-func (u *GureguDynamoDBUpdate) Range(name string, value interface{}) gateways.DynamoDBUpdate {
+func (u *GureguDynamoDBUpdate) Range(name string, value interface{}) infiface.DynamoDBUpdate {
 	return dynamoDBUpdateFromGuregu(u.guregu().Range(name, value))
 }
 
-func (u *GureguDynamoDBUpdate) Set(path string, value interface{}) gateways.DynamoDBUpdate {
+func (u *GureguDynamoDBUpdate) Set(path string, value interface{}) infiface.DynamoDBUpdate {
 	return dynamoDBUpdateFromGuregu(u.guregu().Set(path, value))
 }
 
@@ -153,7 +153,7 @@ func (u *GureguDynamoDBUpdate) Set(path string, value interface{}) gateways.Dyna
  * delete
  */
 
-func dynamoDBDeleteFromGuregu(d *dynamo.Delete) gateways.DynamoDBDelete {
+func dynamoDBDeleteFromGuregu(d *dynamo.Delete) infiface.DynamoDBDelete {
 	return (*GureguDynamoDBDelete)(d)
 }
 
@@ -165,6 +165,6 @@ func (d *GureguDynamoDBDelete) Run() error {
 	return d.guregu().Run()
 }
 
-func (d *GureguDynamoDBDelete) Range(name string, value interface{}) gateways.DynamoDBDelete {
+func (d *GureguDynamoDBDelete) Range(name string, value interface{}) infiface.DynamoDBDelete {
 	return dynamoDBDeleteFromGuregu(d.guregu().Range(name, value))
 }

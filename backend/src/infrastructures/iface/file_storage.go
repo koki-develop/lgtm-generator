@@ -1,4 +1,4 @@
-package gateways
+package iface
 
 type FileStorage interface {
 	Save(path, contentType string, data []byte) error

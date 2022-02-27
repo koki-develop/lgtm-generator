@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
 	"github.com/koki-develop/lgtm-generator/backend/src/utils"
 	"github.com/pkg/errors"
 )
@@ -15,7 +15,7 @@ type Repository struct {
 }
 
 type RepositoryConfig struct {
-	DynamoDB gateways.DynamoDB
+	DynamoDB infiface.DynamoDB
 	DBPrefix string
 }
 

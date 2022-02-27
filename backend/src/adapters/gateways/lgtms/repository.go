@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
 	"github.com/koki-develop/lgtm-generator/backend/src/utils"
 	"github.com/pkg/errors"
 )
@@ -18,11 +18,11 @@ type Repository struct {
 }
 
 type RepositoryConfig struct {
-	LGTMGenerator gateways.LGTMGenerator
-	DynamoDB      gateways.DynamoDB
+	LGTMGenerator infiface.LGTMGenerator
+	DynamoDB      infiface.DynamoDB
 	DBPrefix      string
-	FileStorage   gateways.FileStorage
-	HTTPAPI       gateways.HTTPAPI
+	FileStorage   infiface.FileStorage
+	HTTPAPI       infiface.HTTPAPI
 }
 
 func NewRepository(cfg *RepositoryConfig) *Repository {
@@ -47,7 +47,7 @@ func (repo *Repository) FindAll(limit int64) (entities.LGTMs, error) {
 	lgtms := entities.LGTMs{}
 
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
-	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(limit).All(&lgtms); err != nil {
+	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(infiface.DynamoDBOrderDesc).Limit(limit).All(&lgtms); err != nil {
 		return nil, errors.WithStack(err)
 	}
 	return lgtms, nil
@@ -65,7 +65,7 @@ func (repo *Repository) FindAllAfter(id string, limit int64) (entities.LGTMs, er
 
 	lgtms := entities.LGTMs{}
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
-	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(gateways.DynamoDBOrderDesc).Limit(limit).StartFrom(key).All(&lgtms); err != nil {
+	if err := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(infiface.DynamoDBOrderDesc).Limit(limit).StartFrom(key).All(&lgtms); err != nil {
 		return nil, errors.WithStack(err)
 	}
 	return lgtms, nil

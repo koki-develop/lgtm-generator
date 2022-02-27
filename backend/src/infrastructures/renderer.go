@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
 	"github.com/pkg/errors"
@@ -17,7 +16,7 @@ type Renderer struct {
 }
 
 type RendererConfig struct {
-	SlackAPI gateways.SlackAPI
+	SlackAPI infiface.SlackAPI
 }
 
 func NewRenderer(cfg *RendererConfig) *Renderer {

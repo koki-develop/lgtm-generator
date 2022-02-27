@@ -1,4 +1,4 @@
-package gateways
+package iface
 
 import "github.com/koki-develop/lgtm-generator/backend/src/entities"
 
