@@ -1,4 +1,4 @@
-package reports
+package gateways
 
 import (
 	"fmt"
@@ -10,20 +10,20 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Repository struct {
-	config *RepositoryConfig
+type ReportsRepository struct {
+	config *ReportsRepositoryConfig
 }
 
-type RepositoryConfig struct {
+type ReportsRepositoryConfig struct {
 	DynamoDB infiface.DynamoDB
 	DBPrefix string
 }
 
-func NewRepository(cfg *RepositoryConfig) *Repository {
-	return &Repository{config: cfg}
+func NewReportsRepository(cfg *ReportsRepositoryConfig) *ReportsRepository {
+	return &ReportsRepository{config: cfg}
 }
 
-func (repo *Repository) Create(rpt *entities.Report) error {
+func (repo *ReportsRepository) Create(rpt *entities.Report) error {
 	rpt.ID = utils.UUIDV4()
 	rpt.CreatedAt = time.Now()
 

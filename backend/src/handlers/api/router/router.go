@@ -10,10 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/middlewares"
-	imgsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/images"
-	lgtmsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/lgtms"
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/notifier"
-	rptsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/reports"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	"github.com/koki-develop/lgtm-generator/backend/src/infrastructures"
 	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
@@ -44,22 +41,22 @@ func New() *gin.Engine {
 	})
 	lgtmgen := infrastructures.NewLGTMGenerator()
 
-	n := notifier.New(&notifier.Config{
+	n := gateways.NewNotifier(&gateways.NotifierConfig{
 		Slack:       s,
 		Channel:     fmt.Sprintf("lgtm-generator-backend-%s-reports", os.Getenv("STAGE")),
 		FileStorage: s3lgtms,
 	})
-	lgtmsrepo := lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{
+	lgtmsrepo := gateways.NewLGTMsRepository(&gateways.LGTMsRepositoryConfig{
 		LGTMGenerator: lgtmgen,
 		DynamoDB:      db,
 		DBPrefix:      fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
 		FileStorage:   s3lgtms,
 		HTTPAPI:       http.DefaultClient,
 	})
-	imgsrepo := imgsrepo.NewRepository(&imgsrepo.RepositoryConfig{
+	imgsrepo := gateways.NewImagesRepository(&gateways.ImagesRepositoryConfig{
 		ImageSearchEngine: imgse,
 	})
-	rptsrepo := rptsrepo.NewRepository(&rptsrepo.RepositoryConfig{
+	rptsrepo := gateways.NewReportsRepository(&gateways.ReportsRepositoryConfig{
 		DynamoDB: db,
 		DBPrefix: fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
 	})

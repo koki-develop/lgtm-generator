@@ -1,4 +1,4 @@
-package lgtms
+package gateways
 
 import (
 	"fmt"
@@ -13,11 +13,11 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Repository struct {
-	config *RepositoryConfig
+type LGTMsRepository struct {
+	config *LGTMsRepositoryConfig
 }
 
-type RepositoryConfig struct {
+type LGTMsRepositoryConfig struct {
 	LGTMGenerator infiface.LGTMGenerator
 	DynamoDB      infiface.DynamoDB
 	DBPrefix      string
@@ -25,11 +25,11 @@ type RepositoryConfig struct {
 	HTTPAPI       infiface.HTTPAPI
 }
 
-func NewRepository(cfg *RepositoryConfig) *Repository {
-	return &Repository{config: cfg}
+func NewLGTMsRepository(cfg *LGTMsRepositoryConfig) *LGTMsRepository {
+	return &LGTMsRepository{config: cfg}
 }
 
-func (repo *Repository) Find(id string) (*entities.LGTM, error) {
+func (repo *LGTMsRepository) Find(id string) (*entities.LGTM, error) {
 	var lgtms entities.LGTMs
 
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
@@ -43,7 +43,7 @@ func (repo *Repository) Find(id string) (*entities.LGTM, error) {
 	return lgtms[0], nil
 }
 
-func (repo *Repository) FindAll(limit int64) (entities.LGTMs, error) {
+func (repo *LGTMsRepository) FindAll(limit int64) (entities.LGTMs, error) {
 	lgtms := entities.LGTMs{}
 
 	tbl := repo.config.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.config.DBPrefix))
@@ -53,7 +53,7 @@ func (repo *Repository) FindAll(limit int64) (entities.LGTMs, error) {
 	return lgtms, nil
 }
 
-func (repo *Repository) FindAllAfter(id string, limit int64) (entities.LGTMs, error) {
+func (repo *LGTMsRepository) FindAllAfter(id string, limit int64) (entities.LGTMs, error) {
 	lgtm, err := repo.Find(id)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -71,7 +71,7 @@ func (repo *Repository) FindAllAfter(id string, limit int64) (entities.LGTMs, er
 	return lgtms, nil
 }
 
-func (repo *Repository) CreateFromBase64(base64, contentType string) (*entities.LGTM, error) {
+func (repo *LGTMsRepository) CreateFromBase64(base64, contentType string) (*entities.LGTM, error) {
 	src, err := utils.Base64Decode(base64)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -79,7 +79,7 @@ func (repo *Repository) CreateFromBase64(base64, contentType string) (*entities.
 	return repo.Create(src, contentType)
 }
 
-func (repo *Repository) CreateFromURL(url string) (*entities.LGTM, error) {
+func (repo *LGTMsRepository) CreateFromURL(url string) (*entities.LGTM, error) {
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
 		return nil, errors.WithStack(err)
@@ -97,7 +97,7 @@ func (repo *Repository) CreateFromURL(url string) (*entities.LGTM, error) {
 	return repo.Create(src, resp.Header.Get("Content-Type"))
 }
 
-func (repo *Repository) Create(src []byte, contentType string) (*entities.LGTM, error) {
+func (repo *LGTMsRepository) Create(src []byte, contentType string) (*entities.LGTM, error) {
 	id := utils.UUIDV4()
 	now := time.Now()
 
@@ -127,7 +127,7 @@ func (repo *Repository) Create(src []byte, contentType string) (*entities.LGTM, 
 	return lgtm, nil
 }
 
-func (repo *Repository) Delete(id string) error {
+func (repo *LGTMsRepository) Delete(id string) error {
 	lgtm, err := repo.Find(id)
 	if err != nil {
 		return errors.WithStack(err)
