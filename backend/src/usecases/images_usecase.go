@@ -24,7 +24,7 @@ func (uc *ImagesUsecase) Search(ipt *entities.ImagesSearchInput) (entities.Image
 	}
 	imgs, err := uc.config.ImagesRepository.Search(ipt.Query)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, errors.Wrap(entities.ErrUnexpected, err.Error())
 	}
 	return imgs, nil
 }
