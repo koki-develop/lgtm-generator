@@ -26,6 +26,7 @@ const (
 )
 
 var (
+	ErrUnexpected             = errors.New("unexpected error")
 	ErrUnsupportedImageFormat = errors.New("unsupported image format")
 	ErrInvalidReportType      = errors.New("invalid report type")
 	ErrResourceNotFound       = errors.New("resource not found")
