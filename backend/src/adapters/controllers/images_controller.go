@@ -1,26 +1,26 @@
-package images
+package controllers
 
 import (
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
-	"github.com/koki-develop/lgtm-generator/backend/src/usecases/iface"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
+	uciface "github.com/koki-develop/lgtm-generator/backend/src/usecases/iface"
 	"github.com/pkg/errors"
 )
 
-type Controller struct {
-	config *ControllerConfig
+type ImagesController struct {
+	config *ImagesControllerConfig
 }
 
-type ControllerConfig struct {
-	Renderer      controllers.Renderer
-	ImagesUsecase iface.ImagesUsecase
+type ImagesControllerConfig struct {
+	Renderer      infiface.Renderer
+	ImagesUsecase uciface.ImagesUsecase
 }
 
-func NewController(cfg *ControllerConfig) *Controller {
-	return &Controller{config: cfg}
+func NewImagesController(cfg *ImagesControllerConfig) *ImagesController {
+	return &ImagesController{config: cfg}
 }
 
-func (ctrl *Controller) Search(ctx controllers.Context) {
+func (ctrl *ImagesController) Search(ctx infiface.Context) {
 	var ipt entities.ImagesSearchInput
 	if err := ctx.ShouldBindQuery(&ipt); err != nil {
 		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidParameter, errors.WithStack(err))

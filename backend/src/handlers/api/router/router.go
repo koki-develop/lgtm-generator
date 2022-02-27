@@ -9,21 +9,18 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
-	healthctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/health"
-	imgsctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/images"
-	lgtmsctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/lgtms"
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/middlewares/cors"
-	rptsctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/reports"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/middlewares"
 	imgsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/images"
 	lgtmsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/lgtms"
 	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/notifier"
 	rptsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/reports"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	"github.com/koki-develop/lgtm-generator/backend/src/infrastructures"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
 	"github.com/koki-develop/lgtm-generator/backend/src/usecases"
 )
 
-func withContext(h func(ctx controllers.Context)) gin.HandlerFunc {
+func withContext(h func(ctx infiface.Context)) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		h(infrastructures.NewContextFromGin(ctx))
 	}
@@ -80,7 +77,7 @@ func New() *gin.Engine {
 	})
 
 	{
-		cfg := &cors.Config{
+		cfg := &middlewares.CORSMiddlewareConfig{
 			Renderer:     rdr,
 			AllowOrigins: []string{},
 			AllowMethods: []string{"GET", "POST", "OPTIONS"},
@@ -103,26 +100,26 @@ func New() *gin.Engine {
 		default:
 			panic(fmt.Sprintf("unknown stage: %s", stg))
 		}
-		cors := cors.New(cfg)
+		cors := middlewares.NewCORSMiddleware(cfg)
 		r.Use(withContext(cors.Apply))
 	}
 
 	v1 := r.Group("/v1")
 	{
-		ctrl := healthctrl.NewController(&healthctrl.ControllerConfig{
+		ctrl := controllers.NewHealthController(&controllers.HealthControllerConfig{
 			Renderer: rdr,
 		})
 		v1.GET("/h", withContext(ctrl.Standard))
 	}
 	{
-		ctrl := imgsctrl.NewController(&imgsctrl.ControllerConfig{
+		ctrl := controllers.NewImagesController(&controllers.ImagesControllerConfig{
 			Renderer:      rdr,
 			ImagesUsecase: imgsuc,
 		})
 		v1.GET("/images", withContext(ctrl.Search))
 	}
 	{
-		ctrl := lgtmsctrl.NewController(&lgtmsctrl.ControllerConfig{
+		ctrl := controllers.NewLGTMsController(&controllers.LGTMsControllerConfig{
 			Renderer:     rdr,
 			LGTMsUsecase: lgtmsuc,
 		})
@@ -130,13 +127,13 @@ func New() *gin.Engine {
 		v1.POST("/lgtms", withContext(ctrl.Create))
 	}
 	{
-		ctrl := rptsctrl.NewController(&rptsctrl.ControllerConfig{
+		ctrl := controllers.NewReportsController(&controllers.ReportsControllerConfig{
 			Renderer:       rdr,
 			ReportsUsecase: rptsuc,
 		})
 		v1.POST("/reports", withContext(ctrl.Create))
 	}
-	r.NoRoute(withContext(func(ctx controllers.Context) {
+	r.NoRoute(withContext(func(ctx infiface.Context) {
 		rdr.NotFound(ctx, entities.ErrCodeNotFound, errors.New("no route"))
 	}))
 

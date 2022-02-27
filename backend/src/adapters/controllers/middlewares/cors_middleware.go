@@ -1,29 +1,29 @@
-package cors
+package middlewares
 
 import (
 	"strings"
 
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
 	"github.com/pkg/errors"
 )
 
-type CORS struct {
-	config *Config
+type CORSMiddleware struct {
+	config *CORSMiddlewareConfig
 }
 
-type Config struct {
-	Renderer     controllers.Renderer
+type CORSMiddlewareConfig struct {
+	Renderer     infiface.Renderer
 	AllowOrigins []string
 	AllowMethods []string
 	AllowHeaders []string
 }
 
-func New(cfg *Config) *CORS {
-	return &CORS{config: cfg}
+func NewCORSMiddleware(cfg *CORSMiddlewareConfig) *CORSMiddleware {
+	return &CORSMiddleware{config: cfg}
 }
 
-func (c *CORS) Apply(ctx controllers.Context) {
+func (c *CORSMiddleware) Apply(ctx infiface.Context) {
 	req := ctx.GetRequest()
 	org := req.Header.Get("Origin")
 	if org == "" {
@@ -51,7 +51,7 @@ func (c *CORS) Apply(ctx controllers.Context) {
 	}
 }
 
-func (c *CORS) validateOrigin(org string) bool {
+func (c *CORSMiddleware) validateOrigin(org string) bool {
 	for _, allowOrg := range c.config.AllowOrigins {
 		if strings.Contains(allowOrg, "*") {
 			pref, suff := func() (string, string) {

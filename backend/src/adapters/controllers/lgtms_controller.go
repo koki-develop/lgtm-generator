@@ -1,27 +1,27 @@
-package lgtms
+package controllers
 
 import (
 	"github.com/pkg/errors"
 
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
-	"github.com/koki-develop/lgtm-generator/backend/src/usecases/iface"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
+	uciface "github.com/koki-develop/lgtm-generator/backend/src/usecases/iface"
 )
 
-type Controller struct {
-	config *ControllerConfig
+type LGTMsController struct {
+	config *LGTMsControllerConfig
 }
 
-type ControllerConfig struct {
-	Renderer     controllers.Renderer
-	LGTMsUsecase iface.LGTMsUsecase
+type LGTMsControllerConfig struct {
+	Renderer     infiface.Renderer
+	LGTMsUsecase uciface.LGTMsUsecase
 }
 
-func NewController(cfg *ControllerConfig) *Controller {
-	return &Controller{config: cfg}
+func NewLGTMsController(cfg *LGTMsControllerConfig) *LGTMsController {
+	return &LGTMsController{config: cfg}
 }
 
-func (ctrl *Controller) Index(ctx controllers.Context) {
+func (ctrl *LGTMsController) Index(ctx infiface.Context) {
 	var ipt entities.LGTMsFindAllInput
 	if err := ctx.ShouldBindQuery(&ipt); err != nil {
 		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidParameter, errors.WithStack(err))
@@ -40,7 +40,7 @@ func (ctrl *Controller) Index(ctx controllers.Context) {
 	ctrl.config.Renderer.OK(ctx, lgtms)
 }
 
-func (ctrl *Controller) Create(ctx controllers.Context) {
+func (ctrl *LGTMsController) Create(ctx infiface.Context) {
 	var ipt entities.LGTMCreateInput
 	if err := ctx.ShouldBindJSON(&ipt); err != nil {
 		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidJSON, errors.WithStack(err))
@@ -63,7 +63,7 @@ func (ctrl *Controller) Create(ctx controllers.Context) {
 	ctrl.config.Renderer.Created(ctx, lgtm)
 }
 
-func (ctrl *Controller) BatchDelete(id string) error {
+func (ctrl *LGTMsController) BatchDelete(id string) error {
 	ipt := &entities.LGTMDeleteInput{ID: id}
 	if err := ctrl.config.LGTMsUsecase.Delete(ipt); err != nil {
 		return errors.WithStack(err)

@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/aws/aws-lambda-go/lambda"
-	lgtmsctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/lgtms"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 	lgtmsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/lgtms"
 	"github.com/koki-develop/lgtm-generator/backend/src/infrastructures"
 	lgtmsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases"
@@ -29,7 +29,7 @@ func handler(e event) error {
 	lgtmsuc := lgtmsuc.NewLGTMsUsecase(&lgtmsuc.LGTMsUsecaseConfig{
 		LGTMsRepository: lgtmsrepo,
 	})
-	ctrl := lgtmsctrl.NewController(&lgtmsctrl.ControllerConfig{
+	ctrl := controllers.NewLGTMsController(&controllers.LGTMsControllerConfig{
 		LGTMsUsecase: lgtmsuc,
 	})
 	if err := ctrl.BatchDelete(e.LGTMID); err != nil {

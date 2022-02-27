@@ -1,26 +1,26 @@
-package reports
+package controllers
 
 import (
-	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
-	"github.com/koki-develop/lgtm-generator/backend/src/usecases/iface"
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
+	uciface "github.com/koki-develop/lgtm-generator/backend/src/usecases/iface"
 	"github.com/pkg/errors"
 )
 
-type Controller struct {
-	config *ControllerConfig
+type ReportsController struct {
+	config *ReportsControllerConfig
 }
 
-type ControllerConfig struct {
-	Renderer       controllers.Renderer
-	ReportsUsecase iface.ReportsUsecase
+type ReportsControllerConfig struct {
+	Renderer       infiface.Renderer
+	ReportsUsecase uciface.ReportsUsecase
 }
 
-func NewController(cfg *ControllerConfig) *Controller {
-	return &Controller{config: cfg}
+func NewReportsController(cfg *ReportsControllerConfig) *ReportsController {
+	return &ReportsController{config: cfg}
 }
 
-func (ctrl *Controller) Create(ctx controllers.Context) {
+func (ctrl *ReportsController) Create(ctx infiface.Context) {
 	var ipt entities.ReportCreateInput
 	if err := ctx.ShouldBindJSON(&ipt); err != nil {
 		ctrl.config.Renderer.BadRequest(ctx, entities.ErrCodeInvalidJSON, errors.WithStack(err))

@@ -1,4 +1,4 @@
-package controllers
+package iface
 
 import "net/http"
 
