@@ -16,7 +16,7 @@ func buildReportCreateInput() *ReportCreateInput {
 }
 
 func Test_buildReportCreateInput(t *testing.T) {
-	t.Run("buildCreateReportInput return valid input", func(t *testing.T) {
+	t.Run("return valid input", func(t *testing.T) {
 		ipt := buildReportCreateInput()
 		assert.Nil(t, ipt.Valid())
 	})

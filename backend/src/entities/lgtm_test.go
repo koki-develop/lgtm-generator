@@ -19,14 +19,14 @@ func buildLGTMCreateInputWithBase64() *LGTMCreateInput {
 }
 
 func Test_buildLGTMCreateInputWithURL(t *testing.T) {
-	t.Run("buildLGTMCreateInputWithURL return valid input", func(t *testing.T) {
+	t.Run("return valid input", func(t *testing.T) {
 		ipt := buildLGTMCreateInputWithURL()
 		assert.NoError(t, ipt.Valid())
 	})
 }
 
 func Test_buildLGTMCreateInputWithBase64(t *testing.T) {
-	t.Run("buildLGTMCreateInputWithBase64 return valid input", func(t *testing.T) {
+	t.Run("return valid input", func(t *testing.T) {
 		ipt := buildLGTMCreateInputWithBase64()
 		assert.NoError(t, ipt.Valid())
 	})

@@ -10,6 +10,13 @@ func buildImageSearchInput() *ImagesSearchInput {
 	return &ImagesSearchInput{Query: "query"}
 }
 
+func Test_buildImageSearchInput(t *testing.T) {
+	t.Run("return valid input", func(t *testing.T) {
+		ipt := buildImageSearchInput()
+		assert.NoError(t, ipt.Valid())
+	})
+}
+
 func TestImageSearchInput_Valid(t *testing.T) {
 	t.Run("query", func(t *testing.T) {
 		testcases := []struct {
