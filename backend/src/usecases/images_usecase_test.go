@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	gwmocks "github.com/koki-develop/lgtm-generator/backend/mocks/src/adapters/gateways/iface"
+	mocks "github.com/koki-develop/lgtm-generator/backend/mocks/src/adapters/gateways/iface"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
@@ -30,6 +31,18 @@ func buildMocksForImagesUsecase() *mocksForImagesUsecase {
 		imagesUsecase:    imgsuc,
 		imagesRepository: imgsrepo,
 	}
+}
+
+func Test_NewImagesUsecase(t *testing.T) {
+	t.Run("return ImagesUsecase", func(t *testing.T) {
+		cfg := &ImagesUsecaseConfig{
+			ImagesRepository: &mocks.ImagesRepository{},
+		}
+		uc := NewImagesUsecase(cfg)
+
+		assert.NotNil(t, uc)
+		assert.Equal(t, cfg.ImagesRepository, uc.config.ImagesRepository)
+	})
 }
 
 func TestImagesUsecase_Search(t *testing.T) {
