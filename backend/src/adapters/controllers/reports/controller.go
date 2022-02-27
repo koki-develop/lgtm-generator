@@ -3,6 +3,7 @@ package reports
 import (
 	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	"github.com/koki-develop/lgtm-generator/backend/src/usecases/iface"
 	"github.com/pkg/errors"
 )
 
@@ -12,7 +13,7 @@ type Controller struct {
 
 type ControllerConfig struct {
 	Renderer       controllers.Renderer
-	ReportsUsecase controllers.ReportsUsecase
+	ReportsUsecase iface.ReportsUsecase
 }
 
 func NewController(cfg *ControllerConfig) *Controller {

@@ -5,6 +5,7 @@ import (
 
 	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	"github.com/koki-develop/lgtm-generator/backend/src/usecases/iface"
 )
 
 type Controller struct {
@@ -13,7 +14,7 @@ type Controller struct {
 
 type ControllerConfig struct {
 	Renderer     controllers.Renderer
-	LGTMsUsecase controllers.LGTMsUsecase
+	LGTMsUsecase iface.LGTMsUsecase
 }
 
 func NewController(cfg *ControllerConfig) *Controller {

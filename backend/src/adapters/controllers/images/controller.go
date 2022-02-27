@@ -3,6 +3,7 @@ package images
 import (
 	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
+	"github.com/koki-develop/lgtm-generator/backend/src/usecases/iface"
 	"github.com/pkg/errors"
 )
 
@@ -12,7 +13,7 @@ type Controller struct {
 
 type ControllerConfig struct {
 	Renderer      controllers.Renderer
-	ImagesUsecase controllers.ImagesUsecase
+	ImagesUsecase iface.ImagesUsecase
 }
 
 func NewController(cfg *ControllerConfig) *Controller {
