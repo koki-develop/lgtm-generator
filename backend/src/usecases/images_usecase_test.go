@@ -84,7 +84,7 @@ func TestImagesUsecase_Search(t *testing.T) {
 		imgs, err := uc.Search(ipt)
 
 		assert.Nil(t, imgs)
-		assert.True(t, errors.Is(err, entities.ErrUnexpected))
+		assert.EqualError(t, err, "SOMETHING_WRONG")
 		ms.AssertExpectations(t)
 	})
 }
