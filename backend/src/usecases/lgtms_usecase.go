@@ -19,6 +19,10 @@ func NewLGTMsUsecase(cfg *LGTMsUsecaseConfig) *LGTMsUsecase {
 }
 
 func (uc *LGTMsUsecase) FindAll(ipt *entities.LGTMsFindAllInput) (entities.LGTMs, error) {
+	if err := ipt.Valid(); err != nil {
+		return nil, errors.Wrap(entities.ErrInvalidParameter, err.Error())
+	}
+
 	var lmt int64 = 100
 	if ipt.Limit != nil && *ipt.Limit >= 0 {
 		lmt = *ipt.Limit
