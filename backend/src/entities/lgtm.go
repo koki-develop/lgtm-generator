@@ -27,8 +27,17 @@ type LGTM struct {
 type LGTMs []*LGTM
 
 type LGTMsFindAllInput struct {
-	Limit *int64 `form:"limit"`
-	After string `form:"after"`
+	Limit *int64  `form:"limit"`
+	After *string `form:"after"`
+}
+
+func (ipt *LGTMsFindAllInput) Valid() error {
+	if ipt.After != nil {
+		if !utils.IsLowerUUID(*ipt.After) {
+			return errors.Errorf("invalid lgtm id format: %s", *ipt.After)
+		}
+	}
+	return nil
 }
 
 type LGTMCreateInput struct {

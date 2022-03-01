@@ -24,8 +24,8 @@ func (uc *LGTMsUsecase) FindAll(ipt *entities.LGTMsFindAllInput) (entities.LGTMs
 		lmt = *ipt.Limit
 	}
 
-	if ipt.After != "" {
-		lgtms, err := uc.config.LGTMsRepository.FindAllAfter(ipt.After, lmt)
+	if ipt.After != nil {
+		lgtms, err := uc.config.LGTMsRepository.FindAllAfter(*ipt.After, lmt)
 		if err != nil {
 			return nil, errors.WithStack(err)
 		}
