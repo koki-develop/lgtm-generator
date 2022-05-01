@@ -44,6 +44,14 @@ func (g *LGTMGenerator) Generate(src []byte) ([]byte, error) {
 	if ok := pw.SetColor("#ffffff"); !ok {
 		return nil, errors.New("invalid color")
 	}
+	bw := imagick.NewPixelWand()
+	if ok := bw.SetColor("#000000"); !ok {
+		return nil, errors.New("invalid color")
+	}
+	ttl.SetStrokeColor(bw)
+	txt.SetStrokeColor(bw)
+	ttl.SetStrokeWidth(1)
+	txt.SetStrokeWidth(0.8)
 	ttl.SetFillColor(pw)
 	txt.SetFillColor(pw)
 	ttl.SetFontSize(ttlfs)
