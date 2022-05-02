@@ -7,13 +7,10 @@ import (
 	"io"
 	"net/http"
 
+	infiface "github.com/koki-develop/lgtm-generator/backend/src/infrastructures/iface"
 	"github.com/pkg/errors"
 	"github.com/slack-go/slack"
 )
-
-type SlackAPI interface {
-	PostMessage(msg *slack.Msg) error
-}
 
 type SlackPostMessageResponse struct {
 	OK    bool   `json:"ok"`
@@ -26,7 +23,7 @@ type SlackClient struct {
 
 type SlackClientConfig struct {
 	AccessToken string
-	HTTPAPI     HTTPAPI
+	HTTPAPI     infiface.HTTPAPI
 }
 
 func NewSlackClient(cfg *SlackClientConfig) *SlackClient {

@@ -5,10 +5,10 @@ import (
 	"os"
 
 	"github.com/aws/aws-lambda-go/lambda"
-	lgtmsctrl "github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers/lgtms"
-	lgtmsrepo "github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways/lgtms"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/controllers"
+	"github.com/koki-develop/lgtm-generator/backend/src/adapters/gateways"
 	"github.com/koki-develop/lgtm-generator/backend/src/infrastructures"
-	lgtmsuc "github.com/koki-develop/lgtm-generator/backend/src/usecases/lgtms"
+	"github.com/koki-develop/lgtm-generator/backend/src/usecases"
 	"github.com/pkg/errors"
 )
 
@@ -21,15 +21,15 @@ func handler(e event) error {
 	s3lgtms := infrastructures.NewS3(&infrastructures.S3Config{
 		Bucket: fmt.Sprintf("lgtm-generator-backend-%s-images", os.Getenv("STAGE")),
 	})
-	lgtmsrepo := lgtmsrepo.NewRepository(&lgtmsrepo.RepositoryConfig{
+	lgtmsrepo := gateways.NewLGTMsRepository(&gateways.LGTMsRepositoryConfig{
 		DynamoDB:    db,
 		DBPrefix:    fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
 		FileStorage: s3lgtms,
 	})
-	lgtmsuc := lgtmsuc.NewUsecase(&lgtmsuc.UsecaseConfig{
+	lgtmsuc := usecases.NewLGTMsUsecase(&usecases.LGTMsUsecaseConfig{
 		LGTMsRepository: lgtmsrepo,
 	})
-	ctrl := lgtmsctrl.NewController(&lgtmsctrl.ControllerConfig{
+	ctrl := controllers.NewLGTMsController(&controllers.LGTMsControllerConfig{
 		LGTMsUsecase: lgtmsuc,
 	})
 	if err := ctrl.BatchDelete(e.LGTMID); err != nil {

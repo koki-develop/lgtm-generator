@@ -7,7 +7,7 @@
 
 [lgtmgen.org](https://lgtmgen.org)
 
-シンプルな LGTM 画像生成サービス。
+シンプルな LGTM 画像生成ツール。
 
 ![screenshot](./docs/screenshot.png)
 

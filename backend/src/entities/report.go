@@ -1,7 +1,9 @@
 package entities
 
 import (
+	"strings"
 	"time"
+	"unicode/utf8"
 
 	"github.com/koki-develop/lgtm-generator/backend/src/utils"
 	"github.com/pkg/errors"
@@ -39,13 +41,24 @@ type ReportCreateInput struct {
 }
 
 func (ipt *ReportCreateInput) Valid() error {
+	// lgtm id
+	if strings.TrimSpace(ipt.LGTMID) == "" {
+		return errors.New("lgtm id is required")
+	}
 	if !utils.IsLowerUUID(ipt.LGTMID) {
 		return errors.Errorf("invalid lgtm id format: %s", ipt.LGTMID)
+	}
+
+	// type
+	if strings.TrimSpace(string(ipt.Type)) == "" {
+		return errors.New("type is required")
 	}
 	if err := ipt.Type.Valid(); err != nil {
 		return errors.WithStack(err)
 	}
-	if len(ipt.Text) > 1000 {
+
+	// text
+	if utf8.RuneCountInString(ipt.Text) > 1000 {
 		return errors.New("text too long")
 	}
 
