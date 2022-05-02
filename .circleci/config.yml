@@ -146,7 +146,7 @@ jobs:
               curl
       - aws_setup
       - run:
-          name: Terraform plan
+          name: Terraform apply
           working_directory: ~/project/backend/terraform
           command: |
             terraform init
