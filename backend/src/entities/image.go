@@ -1,6 +1,7 @@
 package entities
 
 import (
+	"net/url"
 	"strings"
 
 	"github.com/pkg/errors"
@@ -12,6 +13,21 @@ type Image struct {
 }
 
 type Images []*Image
+
+func (imgs Images) FilterOnlyHTTPS() Images {
+	var rtn Images
+	for _, img := range imgs {
+		u, err := url.ParseRequestURI(img.URL)
+		if err != nil {
+			continue
+		}
+		if u.Scheme != "https" {
+			continue
+		}
+		rtn = append(rtn, img)
+	}
+	return rtn
+}
 
 type ImagesSearchInput struct {
 	Query string `form:"q"`
