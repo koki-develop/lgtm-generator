@@ -26,5 +26,5 @@ func (uc *ImagesUsecase) Search(ipt *entities.ImagesSearchInput) (entities.Image
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
-	return imgs, nil
+	return imgs.FilterOnlyHTTPS(), nil
 }
