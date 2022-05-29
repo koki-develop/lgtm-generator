@@ -86,9 +86,9 @@ jobs:
       - jq/install
       - aws_setup
       - docker/install-docker:
-          version: v19.03.14
+          version: v20.10.14
       - setup_remote_docker:
-          version: 19.03.14
+          version: 20.10.14
       - yarn_install
       - run:
           name: create .env
