@@ -50,7 +50,7 @@ jobs:
   backend_build:
     working_directory: ~/project/backend
     docker:
-      - image: golang:1.16
+      - image: golang:1.17
     steps:
       - checkout:
           path: ~/project
