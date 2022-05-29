@@ -5,11 +5,6 @@ import { Image } from '~/types/image';
 import { Lgtm } from '~/types/lgtm';
 import { Report, ReportType } from '~/types/report';
 
-type LgtmRaw = {
-  id: string;
-  created_at: string;
-};
-
 type ReportRaw = {
   id: string;
   lgtm_id: string;
@@ -25,10 +20,10 @@ type ErrorResponse = {
 export class ApiClient {
   public static async getLgtms(limit: number, after?: string): Promise<Lgtm[]> {
     const endpoint = this.buildEndpoint('v1', 'lgtms');
-    const response = await axios.get<LgtmRaw[]>(endpoint, {
+    const { data } = await axios.get<Lgtm[]>(endpoint, {
       params: { after, limit },
     });
-    return response.data.map(this.lgtmFromRaw);
+    return data;
   }
 
   public static async createLgtmFromBase64(
@@ -54,12 +49,12 @@ export class ApiClient {
     text: string,
   ): Promise<Report> {
     const endpoint = this.buildEndpoint('v1', 'reports');
-    const response = await axios.post<Report>(endpoint, {
+    const { data } = await axios.post<ReportRaw>(endpoint, {
       lgtm_id: lgtmId,
       type,
       text,
     });
-    return response.data;
+    return this.reportFromRaw(data);
   }
 
   private static async createLgtm(
@@ -70,18 +65,17 @@ export class ApiClient {
       return (status >= 200 && status < 300) || status === 400;
     };
     // TODO: エラー時の型指定にもっといい書き方無いか？要調査
-    const response = await axios.post<LgtmRaw | ErrorResponse>(endpoint, body, {
+    const response = await axios.post<Lgtm | ErrorResponse>(endpoint, body, {
       validateStatus,
     });
     if (response.status === 201) {
-      const data = response.data as LgtmRaw;
-      return this.lgtmFromRaw(data);
+      const data = response.data as Lgtm;
+      return data;
     }
     const data = response.data as ErrorResponse;
     switch (data.code) {
       case 'UNSUPPORTED_IMAGE_FORMAT':
         throw new UnsupportedImageFormatError();
-        break;
       default:
         throw new Error(data.code);
     }
@@ -89,13 +83,6 @@ export class ApiClient {
 
   private static buildEndpoint(...paths: string[]): string {
     return urlJoin(process.env.NEXT_PUBLIC_API_ORIGIN, ...paths);
-  }
-
-  private static lgtmFromRaw(raw: LgtmRaw): Lgtm {
-    return {
-      ...raw,
-      createdAt: new Date(raw.created_at),
-    };
   }
 
   private static reportFromRaw(raw: ReportRaw): Report {
