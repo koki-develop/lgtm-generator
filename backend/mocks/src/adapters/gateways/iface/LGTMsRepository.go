@@ -141,3 +141,26 @@ func (_m *LGTMsRepository) FindAllAfter(id string, limit int64) (entities.LGTMs,
 
 	return r0, r1
 }
+
+// FindRandomly provides a mock function with given fields: limit
+func (_m *LGTMsRepository) FindRandomly(limit int64) (entities.LGTMs, error) {
+	ret := _m.Called(limit)
+
+	var r0 entities.LGTMs
+	if rf, ok := ret.Get(0).(func(int64) entities.LGTMs); ok {
+		r0 = rf(limit)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(entities.LGTMs)
+		}
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(int64) error); ok {
+		r1 = rf(limit)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
