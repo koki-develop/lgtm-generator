@@ -88,6 +88,7 @@ jobs:
       - docker/install-docker:
           version: v20.10.14
       - setup_remote_docker:
+          docker_layer_caching: true
           version: 20.10.14
       - yarn_install
       - run:
