@@ -63,12 +63,12 @@ jobs:
       - go_mod_download
       - restore_cache:
           keys:
-            - go-build-v2-{{ .Branch }}
+            - go-build-v3-{{ .Branch }}
       - run:
           name: test
           command: go test ./src/...
       - save_cache:
-          key: go-build-v2-{{ .Branch }}
+          key: go-build-v3-{{ .Branch }}
           paths:
             - /root/.cache/go-build
       - notify_status
