@@ -28,6 +28,14 @@ func (uc *LGTMsUsecase) FindAll(ipt *entities.LGTMsFindAllInput) (entities.LGTMs
 		lmt = *ipt.Limit
 	}
 
+	if ipt.Random {
+		lgtms, err := uc.config.LGTMsRepository.FindRandomly(lmt)
+		if err != nil {
+			return nil, errors.WithStack(err)
+		}
+		return lgtms, nil
+	}
+
 	if ipt.After != nil {
 		lgtms, err := uc.config.LGTMsRepository.FindAllAfter(*ipt.After, lmt)
 		if err != nil {

@@ -3,6 +3,7 @@ package gateways
 import (
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
 	"time"
 
@@ -41,6 +42,27 @@ func (repo *LGTMsRepository) Find(id string) (*entities.LGTM, error) {
 	}
 
 	return lgtms[0], nil
+}
+
+func (repo *LGTMsRepository) FindRandomly(limit int64) (entities.LGTMs, error) {
+	keys, err := repo.config.FileStorage.ListKeys()
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(keys), func(i, j int) { keys[i], keys[j] = keys[j], keys[i] })
+
+	to := int(limit)
+	if len(keys) < int(limit) {
+		to = len(keys)
+	}
+	keys = keys[:to]
+
+	var lgtms entities.LGTMs
+	for _, k := range keys {
+		lgtms = append(lgtms, &entities.LGTM{ID: k})
+	}
+	return lgtms, nil
 }
 
 func (repo *LGTMsRepository) FindAll(limit int64) (entities.LGTMs, error) {
