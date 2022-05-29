@@ -10,6 +10,8 @@ func UUIDV4() string {
 	return uuid.New().String()
 }
 
+var lowerUUIDPattern = regexp.MustCompile(`\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z`)
+
 func IsLowerUUID(s string) bool {
-	return regexp.MustCompile(`\A[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\z`).Match([]byte(s))
+	return lowerUUIDPattern.Match([]byte(s))
 }
