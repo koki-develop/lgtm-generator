@@ -53,6 +53,21 @@ func (c *S3) Save(path, contentType string, data []byte) error {
 	return nil
 }
 
+func (c *S3) ListKeys() ([]string, error) {
+	resp, err := c.api.ListObjectsV2(&s3.ListObjectsV2Input{
+		Bucket:  aws.String(c.config.Bucket),
+		MaxKeys: aws.Int64(1000),
+	})
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	var keys []string
+	for _, o := range resp.Contents {
+		keys = append(keys, *o.Key)
+	}
+	return keys, nil
+}
+
 func (c *S3) IssueSignedURL(key string) (string, error) {
 	req, _ := c.api.GetObjectRequest(&s3.GetObjectInput{
 		Bucket: aws.String(c.config.Bucket),

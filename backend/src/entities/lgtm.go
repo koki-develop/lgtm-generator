@@ -21,14 +21,15 @@ const (
 type LGTM struct {
 	ID        string     `json:"id"         dynamo:"id"         dynamodbav:"id"`
 	Status    LGTMStatus `json:"-"          dynamo:"status"     dynamodbav:"status"`
-	CreatedAt time.Time  `json:"created_at" dynamo:"created_at" dynamodbav:"created_at"`
+	CreatedAt time.Time  `json:"-" dynamo:"created_at" dynamodbav:"created_at"`
 }
 
 type LGTMs []*LGTM
 
 type LGTMsFindAllInput struct {
-	Limit *int64  `form:"limit"`
-	After *string `form:"after"`
+	Limit  *int64  `form:"limit"`
+	After  *string `form:"after"`
+	Random bool    `form:"random"`
 }
 
 func (ipt *LGTMsFindAllInput) Valid() error {

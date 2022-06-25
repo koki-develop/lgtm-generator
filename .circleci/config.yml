@@ -50,7 +50,7 @@ jobs:
   backend_build:
     working_directory: ~/project/backend
     docker:
-      - image: golang:1.16
+      - image: golang:1.18
     steps:
       - checkout:
           path: ~/project
@@ -63,12 +63,12 @@ jobs:
       - go_mod_download
       - restore_cache:
           keys:
-            - go-build-v2-{{ .Branch }}
+            - go-build-v3-{{ .Branch }}
       - run:
           name: test
           command: go test ./src/...
       - save_cache:
-          key: go-build-v2-{{ .Branch }}
+          key: go-build-v3-{{ .Branch }}
           paths:
             - /root/.cache/go-build
       - notify_status
@@ -86,9 +86,10 @@ jobs:
       - jq/install
       - aws_setup
       - docker/install-docker:
-          version: v19.03.14
+          version: v20.10.14
       - setup_remote_docker:
-          version: 19.03.14
+          docker_layer_caching: true
+          version: 20.10.14
       - yarn_install
       - run:
           name: create .env
