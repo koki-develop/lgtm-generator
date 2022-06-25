@@ -1,4 +1,4 @@
-FROM golang:1.17 as build
+FROM golang:1.18 as build
 WORKDIR /var/task
 
 RUN apt update \
@@ -19,7 +19,7 @@ ENTRYPOINT []
 
 # ---------------------------
 
-FROM golang:1.17
+FROM golang:1.18
 WORKDIR /var/task
 
 RUN apt update \
