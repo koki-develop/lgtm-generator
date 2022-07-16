@@ -1,5 +1,5 @@
 resource "aws_ecr_lifecycle_policy" "app" {
-  repository = "serverless-${local.prefix}"
+  repository = "serverless-${local.prefix_backend}"
   policy = jsonencode({
     rules = [
       {
