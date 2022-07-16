@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/imagesearch"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/repositories"
 )
 
 func New() *gin.Engine {
@@ -29,7 +30,8 @@ func New() *gin.Engine {
 
 	// lgtms
 	{
-		ctrl := controllers.NewLGTMsController()
+		repo := repositories.NewLGTMsRepository()
+		ctrl := controllers.NewLGTMsController(repo)
 		v1.GET("/lgtms", ctrl.FindAll)
 	}
 
