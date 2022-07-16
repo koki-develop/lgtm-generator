@@ -1,6 +1,11 @@
 package entities
 
-import "time"
+import (
+	"strings"
+	"time"
+
+	"github.com/koki-develop/lgtm-generator/backend/pkg/utils"
+)
 
 type LGTMStatus string
 
@@ -17,3 +22,17 @@ type LGTM struct {
 }
 
 type LGTMs []*LGTM
+
+type LGTMCreateInput struct {
+	URL string `json:"url"`
+}
+
+func (ipt *LGTMCreateInput) Valid() bool {
+	if strings.TrimSpace(ipt.URL) == "" {
+		return false
+	}
+	if !utils.IsURL(ipt.URL) {
+		return false
+	}
+	return true
+}
