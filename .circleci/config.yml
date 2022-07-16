@@ -5,6 +5,7 @@ orbs:
   jq: circleci/jq@2.2.0
   slack: circleci/slack@4.4.2
   aws-cli: circleci/aws-cli@3.1.1
+  terraform: circleci/terraform@3.1.0
 
 executors:
   terraform:
@@ -102,7 +103,8 @@ jobs:
       - notify_status
 
   terraform_plan:
-    executor: terraform
+    machine:
+      image: ubuntu-2004:current
     working_directory: ~/project/terraform/app
     parameters:
       stage:
@@ -110,11 +112,9 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - run:
-          name: install required commands
-          command: |
-            apk --update add jq curl
       - aws_setup
+      - terraform/install:
+          terraform_version: 1.2.3
       - run:
           name: terraform plan
           command: |
