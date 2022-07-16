@@ -125,7 +125,8 @@ jobs:
       - notify_status
 
   terraform_apply:
-    executor: terraform
+    machine:
+      image: ubuntu-2004:current
     working_directory: ~/project/terraform/app
     parameters:
       stage:
@@ -133,11 +134,9 @@ jobs:
     steps:
       - checkout:
           path: ~/project
-      - run:
-          name: install required commands
-          command: |
-            apk --update add jq curl
       - aws_setup
+      - terraform/install:
+          terraform_version: 1.2.3
       - run:
           name: terraform apply
           command: |
