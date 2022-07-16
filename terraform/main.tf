@@ -4,5 +4,5 @@ module "aws" {
     aws = aws
   }
 
-  env = terraform.workspace
+  stage = terraform.workspace
 }

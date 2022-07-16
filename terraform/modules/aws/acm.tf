@@ -1,7 +1,7 @@
 resource "aws_acm_certificate" "api" {
   domain_name       = local.api_domain
   validation_method = "DNS"
-  tags              = { Name = "${local.prefix}-api" }
+  tags              = { Name = "${local.prefix_backend}-api" }
 }
 
 resource "aws_acm_certificate_validation" "api" {
@@ -12,7 +12,7 @@ resource "aws_acm_certificate_validation" "api" {
 resource "aws_acm_certificate" "images" {
   domain_name       = local.images_domain
   validation_method = "DNS"
-  tags              = { Name = "${local.prefix}-images" }
+  tags              = { Name = "${local.prefix_backend}-images" }
 }
 
 resource "aws_acm_certificate_validation" "images" {
