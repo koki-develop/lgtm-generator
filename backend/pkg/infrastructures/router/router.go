@@ -7,7 +7,7 @@ import (
 	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers/health"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers/images"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers/lgtms"
-	"github.com/koki-develop/lgtm-generator/backend/pkg/imagesearch"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/imagesearch"
 )
 
 func New() *gin.Engine {
