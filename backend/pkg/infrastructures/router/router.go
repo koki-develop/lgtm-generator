@@ -4,9 +4,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers/health"
-	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers/images"
-	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers/lgtms"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/imagesearch"
 )
 
@@ -15,7 +13,7 @@ func New() *gin.Engine {
 
 	// health
 	{
-		ctrl := health.New()
+		ctrl := controllers.NewHealthController()
 		r.GET("/h", ctrl.Standard)
 		r.GET("/v1/h", ctrl.Standard)
 	}
@@ -25,13 +23,13 @@ func New() *gin.Engine {
 	// images
 	{
 		engine := imagesearch.New(os.Getenv("GOOGLE_API_KEY"), os.Getenv("GOOGLE_CUSTOM_SEARCH_ENGINE_ID"))
-		ctrl := images.New(engine)
+		ctrl := controllers.NewImagesController(engine)
 		v1.GET("/images", ctrl.Search)
 	}
 
 	// lgtms
 	{
-		ctrl := lgtms.New()
+		ctrl := controllers.NewLGTMsController()
 		v1.GET("/lgtms", ctrl.FindAll)
 	}
 

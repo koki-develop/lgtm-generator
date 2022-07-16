@@ -1,17 +1,16 @@
-package health
+package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers"
 )
 
 type HealthController struct {
-	Renderer *controllers.Renderer
+	Renderer *Renderer
 }
 
-func New() *HealthController {
+func NewHealthController() *HealthController {
 	return &HealthController{
-		Renderer: controllers.NewRenderer(),
+		Renderer: NewRenderer(),
 	}
 }
 

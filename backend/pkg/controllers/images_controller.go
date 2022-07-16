@@ -1,20 +1,19 @@
-package images
+package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/entities"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/imagesearch"
 )
 
 type ImagesController struct {
-	Renderer          *controllers.Renderer
+	Renderer          *Renderer
 	ImageSearchEngine imagesearch.Engine
 }
 
-func New(engine imagesearch.Engine) *ImagesController {
+func NewImagesController(engine imagesearch.Engine) *ImagesController {
 	return &ImagesController{
-		Renderer:          controllers.NewRenderer(),
+		Renderer:          NewRenderer(),
 		ImageSearchEngine: engine,
 	}
 }

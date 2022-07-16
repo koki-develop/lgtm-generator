@@ -1,17 +1,16 @@
-package lgtms
+package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers"
 )
 
 type LGTMsController struct {
-	Renderer *controllers.Renderer
+	Renderer *Renderer
 }
 
-func New() *LGTMsController {
+func NewLGTMsController() *LGTMsController {
 	return &LGTMsController{
-		Renderer: controllers.NewRenderer(),
+		Renderer: NewRenderer(),
 	}
 }
 
