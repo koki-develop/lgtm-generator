@@ -4,6 +4,9 @@ orbs:
   docker: circleci/docker@1.6.0
   jq: circleci/jq@2.2.0
   slack: circleci/slack@4.4.2
+  aws-cli: circleci/aws-cli@3.1.1
+  terraform: circleci/terraform@3.1.0
+  node: circleci/node@5.0.2
 
 executors:
   terraform:
@@ -13,15 +16,9 @@ executors:
 commands:
   aws_setup:
     steps:
-      - run:
-          name: create aws/credentials aws/config
-          command: |
-            mkdir -p ~/.aws
-            echo '[default]'                                       > ~/.aws/credentials
-            echo "aws_access_key_id=${AWS_ACCESS_KEY_ID}"         >> ~/.aws/credentials
-            echo "aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
-            echo '[default]'                                       > ~/.aws/config
-            echo "region = us-east-1"                             >> ~/.aws/config
+      - aws-cli/install
+      - aws-cli/assume-role-with-web-identity:
+          role-arn: ${AWS_IAM_ROLE_ARN}
 
   go_mod_download:
     steps:
@@ -80,8 +77,8 @@ jobs:
 
   backend_deploy:
     working_directory: ~/project/backend
-    docker:
-      - image: node:14
+    machine:
+      image: ubuntu-2004:current
     parameters:
       stage:
         type: string
@@ -89,12 +86,10 @@ jobs:
       - checkout:
           path: ~/project
       - jq/install
+      - node/install:
+          install-yarn: true
+          node-version: '14'
       - aws_setup
-      - docker/install-docker:
-          version: v20.10.14
-      - setup_remote_docker:
-          docker_layer_caching: true
-          version: 20.10.14
       - yarn_install
       - run:
           name: create .env
@@ -108,19 +103,18 @@ jobs:
       - notify_status
 
   terraform_plan:
-    executor: terraform
-    working_directory: ~/project/terraform
+    machine:
+      image: ubuntu-2004:current
+    working_directory: ~/project/terraform/app
     parameters:
       stage:
         type: string
     steps:
       - checkout:
           path: ~/project
-      - run:
-          name: install required commands
-          command: |
-            apk --update add jq curl
       - aws_setup
+      - terraform/install:
+          terraform_version: 1.2.3
       - run:
           name: terraform plan
           command: |
@@ -130,19 +124,18 @@ jobs:
       - notify_status
 
   terraform_apply:
-    executor: terraform
-    working_directory: ~/project/terraform
+    machine:
+      image: ubuntu-2004:current
+    working_directory: ~/project/terraform/app
     parameters:
       stage:
         type: string
     steps:
       - checkout:
           path: ~/project
-      - run:
-          name: install required commands
-          command: |
-            apk --update add jq curl
       - aws_setup
+      - terraform/install:
+          terraform_version: 1.2.3
       - run:
           name: terraform apply
           command: |
@@ -179,9 +172,11 @@ workflows:
       # build
       - backend_build
       - terraform_plan:
+          context: aws
           name: terraform_plan_dev
           stage: dev
       - terraform_plan:
+          context: aws
           name: terraform_plan_prod
           stage: prod
       - frontend_build
@@ -203,6 +198,7 @@ workflows:
 
       # deploy
       - backend_deploy:
+          context: aws
           name: backend_deploy_dev
           stage: dev
           requires:
@@ -212,6 +208,7 @@ workflows:
               ignore:
                 - main
       - terraform_apply:
+          context: aws
           name: terraform_apply_dev
           stage: dev
           requires:
@@ -222,6 +219,7 @@ workflows:
                 - main
 
       - backend_deploy:
+          context: aws
           name: backend_deploy_prod
           stage: prod
           requires:
@@ -231,6 +229,7 @@ workflows:
               only:
                 - main
       - terraform_apply:
+          context: aws
           name: terraform_apply_prod
           stage: prod
           requires:
