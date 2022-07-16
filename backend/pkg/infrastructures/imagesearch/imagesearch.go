@@ -43,7 +43,7 @@ func (e *GoogleImageSearchEngine) Search(q string) (entities.Images, error) {
 
 	imgs := entities.Images{}
 	for _, item := range resp.Items {
-		if !utils.IsHTTPS(item.Link) {
+		if !utils.IsHTTPSURL(item.Link) {
 			continue
 		}
 		imgs = append(imgs, &entities.Image{
