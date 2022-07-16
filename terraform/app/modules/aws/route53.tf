@@ -47,7 +47,7 @@ resource "aws_route53_record" "ui" {
   count = var.stage == "prod" ? 1 : 0
 
   zone_id = data.aws_route53_zone.default.zone_id
-  name    = local.domain
+  name    = local.ui_domain
   type    = "A"
   records = [local.vercel_ip]
   ttl     = 60

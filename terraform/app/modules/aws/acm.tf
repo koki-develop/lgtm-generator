@@ -2,6 +2,10 @@ resource "aws_acm_certificate" "api" {
   domain_name       = local.api_domain
   validation_method = "DNS"
   tags              = { Name = "${local.prefix_backend}-api" }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_acm_certificate_validation" "api" {
@@ -13,6 +17,10 @@ resource "aws_acm_certificate" "images" {
   domain_name       = local.images_domain
   validation_method = "DNS"
   tags              = { Name = "${local.prefix_backend}-images" }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_acm_certificate_validation" "images" {
@@ -26,6 +34,10 @@ resource "aws_acm_certificate" "ui" {
   domain_name       = local.domain
   validation_method = "DNS"
   tags              = { Name = local.prefix_frontend }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_acm_certificate_validation" "ui" {
