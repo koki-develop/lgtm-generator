@@ -208,6 +208,7 @@ workflows:
               ignore:
                 - main
       - terraform_apply:
+          context: aws
           name: terraform_apply_dev
           stage: dev
           requires:
@@ -228,6 +229,7 @@ workflows:
               only:
                 - main
       - terraform_apply:
+          context: aws
           name: terraform_apply_prod
           stage: prod
           requires:
