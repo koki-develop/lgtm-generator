@@ -1,17 +1,18 @@
 package router
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers/health"
 )
 
 func New() *gin.Engine {
 	r := gin.Default()
 
-	r.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, map[string]string{"message": "hello world"})
-	})
+	{
+		ctrl := health.New()
+		r.GET("/h", ctrl.Standard)
+		r.GET("/v1/h", ctrl.Standard)
+	}
 
 	return r
 }
