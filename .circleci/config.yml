@@ -90,11 +90,6 @@ jobs:
           install-yarn: true
           node-version: '14'
       - aws_setup
-      - docker/install-docker:
-          version: v20.10.14
-      - setup_remote_docker:
-          docker_layer_caching: true
-          version: 20.10.14
       - yarn_install
       - run:
           name: create .env
