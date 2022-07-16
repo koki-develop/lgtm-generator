@@ -1,7 +1,9 @@
 package lgtmgen
 
 import (
+	"io"
 	"math"
+	"net/http"
 	"strings"
 
 	"github.com/koki-develop/lgtm-generator/backend/src/entities"
@@ -11,10 +13,18 @@ import (
 
 const maxSideLength float64 = 425
 
-type LGTMGenerator struct{}
+type httpAPI interface {
+	Do(req *http.Request) (*http.Response, error)
+}
+
+type LGTMGenerator struct {
+	httpAPI httpAPI
+}
 
 func New() *LGTMGenerator {
-	return &LGTMGenerator{}
+	return &LGTMGenerator{
+		httpAPI: new(http.Client),
+	}
 }
 
 func (g *LGTMGenerator) Generate(src []byte) ([]byte, error) {
@@ -87,6 +97,26 @@ func (g *LGTMGenerator) Generate(src []byte) ([]byte, error) {
 	}
 
 	return mw.GetImagesBlob(), nil
+}
+
+func (g *LGTMGenerator) GenerateFromURL(u string) ([]byte, error) {
+	req, err := http.NewRequest(http.MethodGet, u, nil)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	resp, err := g.httpAPI.Do(req)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+	defer resp.Body.Close()
+
+	src, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return g.Generate(src)
 }
 
 func (g *LGTMGenerator) calcImageSize(w, h float64) (float64, float64) {
