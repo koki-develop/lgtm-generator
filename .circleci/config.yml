@@ -48,17 +48,20 @@ commands:
       - terraform/install:
           terraform_version: 1.2.3
 
-  notify:
+  notify-fail:
     steps:
-      - slack/notify:
-          event: pass
-          template: basic_success_1
       - slack/notify:
           event: fail
           template: basic_fail_1
 
+  notify-deployed:
+    steps:
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+
 jobs:
-  backend_build:
+  backend-build:
     executor: golang
     working_directory: ~/project/backend
     steps:
@@ -70,9 +73,9 @@ jobs:
             apt update
             apt install -y imagemagick libmagickwand-dev
       - go-test
-      - notify
+      - notify-fail
 
-  backend_deploy:
+  backend-deploy:
     executor: ubuntu
     working_directory: ~/project/backend
     parameters:
@@ -93,9 +96,9 @@ jobs:
       - run:
           name: deploy
           command: yarn run deploy --stage << parameters.stage >>
-      - notify
+      - notify-fail
 
-  terraform_plan:
+  terraform-plan:
     executor: ubuntu
     working_directory: ~/project/terraform/app
     parameters:
@@ -109,9 +112,9 @@ jobs:
       - terraform/init
       - terraform/plan:
           workspace: << parameters.stage >>
-      - notify
+      - notify-fail
 
-  terraform_apply:
+  terraform-apply:
     executor: ubuntu
     working_directory: ~/project/terraform/app
     parameters:
@@ -125,9 +128,10 @@ jobs:
       - terraform/init
       - terraform/apply:
           workspace: << parameters.stage >>
-      - notify
+      - notify-fail
+      - notify-deployed
 
-  frontend_build:
+  frontend-build:
     executor: node
     working_directory: ~/project/frontend
     steps:
@@ -136,76 +140,76 @@ jobs:
       - yarn-install
       - run: yarn run lint
       - run: yarn run build
-      - notify
+      - notify-fail
 
 workflows:
   build:
     jobs:
       # build
-      - backend_build
-      - terraform_plan:
+      - backend-build
+      - terraform-plan:
           context: aws
-          name: terraform_plan_dev
+          name: terraform-plan-dev
           stage: dev
-      - terraform_plan:
+      - terraform-plan:
           context: aws
-          name: terraform_plan_prod
+          name: terraform-plan-prod
           stage: prod
-      - frontend_build
+      - frontend-build
 
       # approval
-      - approval_deploy:
+      - approval-deploy:
           type: approval
           requires:
-            - backend_build
-            - terraform_plan_dev
-            - terraform_plan_prod
-            - frontend_build
+            - backend-build
+            - terraform-plan-dev
+            - terraform-plan-prod
+            - frontend-build
       - slack/on-hold:
           requires:
-            - backend_build
-            - terraform_plan_dev
-            - terraform_plan_prod
-            - frontend_build
+            - backend-build
+            - terraform-plan-dev
+            - terraform-plan-prod
+            - frontend-build
 
       # deploy
-      - backend_deploy:
+      - backend-deploy:
           context: aws
-          name: backend_deploy_dev
+          name: backend-deploy-dev
           stage: dev
           requires:
-            - approval_deploy
+            - approval-deploy
           filters:
             branches:
               ignore:
                 - main
-      - terraform_apply:
+      - terraform-apply:
           context: aws
-          name: terraform_apply_dev
+          name: terraform-apply-dev
           stage: dev
           requires:
-            - backend_deploy_dev
+            - backend-deploy-dev
           filters:
             branches:
               ignore:
                 - main
 
-      - backend_deploy:
+      - backend-deploy:
           context: aws
-          name: backend_deploy_prod
+          name: backend-deploy-prod
           stage: prod
           requires:
-            - approval_deploy
+            - approval-deploy
           filters:
             branches:
               only:
                 - main
-      - terraform_apply:
+      - terraform-apply:
           context: aws
-          name: terraform_apply_prod
+          name: terraform-apply-prod
           stage: prod
           requires:
-            - backend_deploy_prod
+            - backend-deploy-prod
           filters:
             branches:
               only:
