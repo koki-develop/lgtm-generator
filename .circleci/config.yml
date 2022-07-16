@@ -24,6 +24,11 @@ commands:
       - aws-cli/assume-role-with-web-identity:
           role-arn: ${AWS_IAM_ROLE_ARN}
 
+  install-golang:
+    steps:
+      - go/install:
+          version: '1.18'
+
   go-test:
     steps:
       - go/mod-download-cached
@@ -53,6 +58,12 @@ commands:
           name: install tflint
           command: curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
       - run: tflint --init
+
+  install-tfsec:
+    steps:
+      - run:
+          name: install tfsec
+          command: go install github.com/aquasecurity/tfsec/cmd/tfsec@latest
 
   notify-fail:
     steps:
@@ -114,14 +125,17 @@ jobs:
       - checkout:
           path: ~/project
       - aws-configure
+      - install-golang
       - install-terraform
       - install-tflint
+      - install-tfsec
       - terraform/init
       - run:
           name: tflint
           command: |
             tflint .
             tflint ./modules/aws
+      - run: tfsec
       - terraform/plan:
           workspace: << parameters.stage >>
       - notify-fail
