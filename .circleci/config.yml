@@ -198,6 +198,7 @@ workflows:
 
       # deploy
       - backend_deploy:
+          context: aws
           name: backend_deploy_dev
           stage: dev
           requires:
@@ -217,6 +218,7 @@ workflows:
                 - main
 
       - backend_deploy:
+          context: aws
           name: backend_deploy_prod
           stage: prod
           requires:
