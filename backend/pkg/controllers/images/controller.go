@@ -1,19 +1,20 @@
 package images
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/entities"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/imagesearch"
 )
 
 type ImagesController struct {
+	Renderer          *controllers.Renderer
 	ImageSearchEngine imagesearch.Engine
 }
 
 func New(engine imagesearch.Engine) *ImagesController {
 	return &ImagesController{
+		Renderer:          controllers.NewRenderer(),
 		ImageSearchEngine: engine,
 	}
 }
@@ -21,19 +22,19 @@ func New(engine imagesearch.Engine) *ImagesController {
 func (ctrl *ImagesController) Search(ctx *gin.Context) {
 	var ipt entities.ImagesSearchInput
 	if err := ctx.ShouldBindQuery(&ipt); err != nil {
-		ctx.JSON(http.StatusBadRequest, map[string]string{"message": "invalid json"})
+		ctrl.Renderer.BadRequest(ctx)
 		return
 	}
 	if !ipt.Valid() {
-		ctx.JSON(http.StatusBadRequest, map[string]string{"message": "invalid input"})
+		ctrl.Renderer.BadRequest(ctx)
 		return
 	}
 
 	imgs, err := ctrl.ImageSearchEngine.Search(ipt.Query)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, map[string]string{"message": "internal server error"})
+		ctrl.Renderer.InternalServerError(ctx, err)
 		return
 	}
 
-	ctx.JSON(http.StatusOK, imgs)
+	ctrl.Renderer.OK(ctx, imgs)
 }

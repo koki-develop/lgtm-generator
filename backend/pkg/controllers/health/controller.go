@@ -1,17 +1,20 @@
 package health
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers"
 )
 
-type HealthController struct{}
+type HealthController struct {
+	Renderer *controllers.Renderer
+}
 
 func New() *HealthController {
-	return &HealthController{}
+	return &HealthController{
+		Renderer: controllers.NewRenderer(),
+	}
 }
 
 func (ctrl *HealthController) Standard(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, map[string]string{"status": "ok"})
+	ctrl.Renderer.OK(ctx, map[string]string{"status": "ok"})
 }
