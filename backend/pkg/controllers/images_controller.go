@@ -21,11 +21,11 @@ func NewImagesController(engine imagesearch.Engine) *ImagesController {
 func (ctrl *ImagesController) Search(ctx *gin.Context) {
 	var ipt entities.ImagesSearchInput
 	if err := ctx.ShouldBindQuery(&ipt); err != nil {
-		ctrl.Renderer.BadRequest(ctx)
+		ctrl.Renderer.BadRequest(ctx, ErrCodeInvalidQuery)
 		return
 	}
 	if !ipt.Valid() {
-		ctrl.Renderer.BadRequest(ctx)
+		ctrl.Renderer.BadRequest(ctx, ErrCodeInvalidQuery)
 		return
 	}
 
