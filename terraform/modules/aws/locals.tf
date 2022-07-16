@@ -10,4 +10,5 @@ locals {
   images_domain = "${local.sub_domain}images.${local.domain}"
 
   ui_domain = local.domain
+  vercel_ip = "76.76.21.21"
 }

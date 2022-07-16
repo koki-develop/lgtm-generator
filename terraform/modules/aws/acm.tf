@@ -27,3 +27,10 @@ resource "aws_acm_certificate" "ui" {
   validation_method = "DNS"
   tags              = { Name = local.prefix_frontend }
 }
+
+resource "aws_acm_certificate_validation" "ui" {
+  count = var.stage == "prod" ? 1 : 0
+
+  certificate_arn         = aws_acm_certificate.ui[0].arn
+  validation_record_fqdns = [aws_route53_record.ui_certificate_validation[0].fqdn]
+}
