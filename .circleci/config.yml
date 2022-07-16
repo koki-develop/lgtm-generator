@@ -5,6 +5,11 @@ orbs:
   jq: circleci/jq@2.2.0
   slack: circleci/slack@4.4.2
 
+executors:
+  terraform:
+    docker:
+      - image: hashicorp/terraform:1.2.3
+
 commands:
   aws_setup:
     steps:
@@ -103,12 +108,11 @@ jobs:
       - notify_status
 
   backend_terraform_plan:
+    executor: terraform
     working_directory: ~/project/backend
     parameters:
       stage:
         type: string
-    docker:
-      - image: hashicorp/terraform:1.0.4
     steps:
       - checkout:
           path: ~/project
@@ -130,12 +134,11 @@ jobs:
       - notify_status
 
   backend_terraform_apply:
+    executor: terraform
     working_directory: ~/project/backend
     parameters:
       stage:
         type: string
-    docker:
-      - image: hashicorp/terraform:1.0.4
     steps:
       - checkout:
           path: ~/project
