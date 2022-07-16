@@ -177,33 +177,6 @@ jobs:
             - .next/cache
       - notify_status
 
-  frontend_terraform_plan:
-    working_directory: ~/project/frontend
-    parameters:
-      stage:
-        type: string
-    docker:
-      - image: hashicorp/terraform:1.0.4
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: install required commands
-          command: |
-            apk --update add \
-              jq \
-              curl
-      - aws_setup
-      - run:
-          name: Terraform plan
-          working_directory: ~/project/backend/terraform
-          command: |
-            terraform init
-            terraform workspace select << parameters.stage >>
-            terraform validate
-            terraform plan
-      - notify_status
-
 workflows:
   build:
     jobs:
@@ -216,9 +189,6 @@ workflows:
           name: backend_terraform_plan_prod
           stage: prod
       - frontend_build
-      - frontend_terraform_plan:
-          name: frontend_terraform_plan_prod
-          stage: prod
 
       # approval
       - approval_deploy:
@@ -228,14 +198,12 @@ workflows:
             - backend_terraform_plan_dev
             - backend_terraform_plan_prod
             - frontend_build
-            - frontend_terraform_plan_prod
       - slack/on-hold:
           requires:
             - backend_build
             - backend_terraform_plan_dev
             - backend_terraform_plan_prod
             - frontend_build
-            - frontend_terraform_plan_prod
 
       # deploy
       - backend_deploy:
