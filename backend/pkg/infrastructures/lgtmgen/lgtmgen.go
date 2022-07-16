@@ -46,10 +46,10 @@ func (g *LGTMGenerator) Generate(src []byte) ([]byte, error) {
 
 	ttl := imagick.NewDrawingWand()
 	txt := imagick.NewDrawingWand()
-	if err := ttl.SetFont("src/static/fonts/Archivo_Black/ArchivoBlack-Regular.ttf"); err != nil {
+	if err := ttl.SetFont("pkg/static/fonts/Archivo_Black/ArchivoBlack-Regular.ttf"); err != nil {
 		return nil, errors.WithStack(err)
 	}
-	if err := txt.SetFont("src/static/fonts/Archivo_Black/ArchivoBlack-Regular.ttf"); err != nil {
+	if err := txt.SetFont("pkg/static/fonts/Archivo_Black/ArchivoBlack-Regular.ttf"); err != nil {
 		return nil, errors.WithStack(err)
 	}
 	pw := imagick.NewPixelWand()
