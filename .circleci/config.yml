@@ -6,6 +6,7 @@ orbs:
   slack: circleci/slack@4.4.2
   aws-cli: circleci/aws-cli@3.1.1
   terraform: circleci/terraform@3.1.0
+  node: circleci/node@5.0.2
 
 executors:
   terraform:
@@ -76,8 +77,8 @@ jobs:
 
   backend_deploy:
     working_directory: ~/project/backend
-    docker:
-      - image: node:14
+    machine:
+      image: ubuntu-2004:current
     parameters:
       stage:
         type: string
@@ -85,6 +86,9 @@ jobs:
       - checkout:
           path: ~/project
       - jq/install
+      - node/install:
+          install-yarn: true
+          node-version: '14'
       - aws_setup
       - docker/install-docker:
           version: v20.10.14
