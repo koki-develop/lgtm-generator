@@ -15,7 +15,7 @@ type Image struct {
 type Images []*Image
 
 func (imgs Images) FilterOnlyHTTPS() Images {
-	var rtn Images
+	rtn := Images{}
 	for _, img := range imgs {
 		u, err := url.ParseRequestURI(img.URL)
 		if err != nil {
