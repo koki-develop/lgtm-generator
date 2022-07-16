@@ -5,6 +5,11 @@ orbs:
   jq: circleci/jq@2.2.0
   slack: circleci/slack@4.4.2
 
+executors:
+  terraform:
+    docker:
+      - image: hashicorp/terraform:1.2.3
+
 commands:
   aws_setup:
     steps:
@@ -102,53 +107,44 @@ jobs:
           command: yarn run deploy --stage << parameters.stage >>
       - notify_status
 
-  backend_terraform_plan:
-    working_directory: ~/project/backend
+  terraform_plan:
+    executor: terraform
+    working_directory: ~/project/terraform
     parameters:
       stage:
         type: string
-    docker:
-      - image: hashicorp/terraform:1.0.4
     steps:
       - checkout:
           path: ~/project
       - run:
           name: install required commands
           command: |
-            apk --update add \
-              jq \
-              curl
+            apk --update add jq curl
       - aws_setup
       - run:
-          name: Terraform plan
-          working_directory: ~/project/backend/terraform
+          name: terraform plan
           command: |
             terraform init
             terraform workspace select << parameters.stage >>
-            terraform validate
             terraform plan
       - notify_status
 
-  backend_terraform_apply:
-    working_directory: ~/project/backend
+  terraform_apply:
+    executor: terraform
+    working_directory: ~/project/terraform
     parameters:
       stage:
         type: string
-    docker:
-      - image: hashicorp/terraform:1.0.4
     steps:
       - checkout:
           path: ~/project
       - run:
           name: install required commands
           command: |
-            apk --update add \
-              jq \
-              curl
+            apk --update add jq curl
       - aws_setup
       - run:
-          name: Terraform apply
-          working_directory: ~/project/backend/terraform
+          name: terraform apply
           command: |
             terraform init
             terraform workspace select << parameters.stage >>
@@ -177,65 +173,33 @@ jobs:
             - .next/cache
       - notify_status
 
-  frontend_terraform_plan:
-    working_directory: ~/project/frontend
-    parameters:
-      stage:
-        type: string
-    docker:
-      - image: hashicorp/terraform:1.0.4
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: install required commands
-          command: |
-            apk --update add \
-              jq \
-              curl
-      - aws_setup
-      - run:
-          name: Terraform plan
-          working_directory: ~/project/backend/terraform
-          command: |
-            terraform init
-            terraform workspace select << parameters.stage >>
-            terraform validate
-            terraform plan
-      - notify_status
-
 workflows:
   build:
     jobs:
       # build
       - backend_build
-      - backend_terraform_plan:
-          name: backend_terraform_plan_dev
+      - terraform_plan:
+          name: terraform_plan_dev
           stage: dev
-      - backend_terraform_plan:
-          name: backend_terraform_plan_prod
+      - terraform_plan:
+          name: terraform_plan_prod
           stage: prod
       - frontend_build
-      - frontend_terraform_plan:
-          name: frontend_terraform_plan_prod
-          stage: prod
 
       # approval
       - approval_deploy:
           type: approval
           requires:
             - backend_build
-            - backend_terraform_plan_dev
-            - backend_terraform_plan_prod
+            - terraform_plan_dev
+            - terraform_plan_prod
             - frontend_build
-            - frontend_terraform_plan_prod
       - slack/on-hold:
           requires:
             - backend_build
-            - backend_terraform_plan_dev
-            - backend_terraform_plan_prod
+            - terraform_plan_dev
+            - terraform_plan_prod
             - frontend_build
-            - frontend_terraform_plan_prod
 
       # deploy
       - backend_deploy:
@@ -247,8 +211,8 @@ workflows:
             branches:
               ignore:
                 - main
-      - backend_terraform_apply:
-          name: backend_terraform_apply_dev
+      - terraform_apply:
+          name: terraform_apply_dev
           stage: dev
           requires:
             - backend_deploy_dev
@@ -266,8 +230,8 @@ workflows:
             branches:
               only:
                 - main
-      - backend_terraform_apply:
-          name: backend_terraform_apply_prod
+      - terraform_apply:
+          name: terraform_apply_prod
           stage: prod
           requires:
             - backend_deploy_prod

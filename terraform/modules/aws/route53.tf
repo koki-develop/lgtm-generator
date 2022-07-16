@@ -1,5 +1,5 @@
 data "aws_route53_zone" "default" {
-  name         = "lgtmgen.org"
+  name         = local.domain
   private_zone = false
 }
 
@@ -40,5 +40,25 @@ resource "aws_route53_record" "images_certificate_validation" {
   name    = aws_acm_certificate.images.domain_validation_options.*.resource_record_name[0]
   type    = aws_acm_certificate.images.domain_validation_options.*.resource_record_type[0]
   records = [aws_acm_certificate.images.domain_validation_options.*.resource_record_value[0]]
+  ttl     = 60
+}
+
+resource "aws_route53_record" "ui" {
+  count = var.stage == "prod" ? 1 : 0
+
+  zone_id = data.aws_route53_zone.default.zone_id
+  name    = local.domain
+  type    = "A"
+  records = [local.vercel_ip]
+  ttl     = 60
+}
+
+resource "aws_route53_record" "ui_certificate_validation" {
+  count = var.stage == "prod" ? 1 : 0
+
+  zone_id = data.aws_route53_zone.default.zone_id
+  name    = aws_acm_certificate.ui[0].domain_validation_options.*.resource_record_name[0]
+  type    = aws_acm_certificate.ui[0].domain_validation_options.*.resource_record_type[0]
+  records = [aws_acm_certificate.ui[0].domain_validation_options.*.resource_record_value[0]]
   ttl     = 60
 }

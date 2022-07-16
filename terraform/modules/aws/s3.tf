@@ -1,8 +1,10 @@
 resource "aws_s3_bucket" "images" {
-  bucket        = "${local.prefix}-images"
-  force_destroy = var.stage != "prod"
+  bucket        = "${local.prefix_backend}-images"
+  force_destroy = false
 
-  tags = { Name = "${local.prefix}-images" }
+  tags = {
+    Name = "${local.prefix_backend}-images"
+  }
 }
 
 resource "aws_s3_bucket_policy" "images" {
