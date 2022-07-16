@@ -109,7 +109,7 @@ jobs:
 
   terraform_plan:
     executor: terraform
-    working_directory: ~/project/terraform
+    working_directory: ~/project/terraform/app
     parameters:
       stage:
         type: string
@@ -131,7 +131,7 @@ jobs:
 
   terraform_apply:
     executor: terraform
-    working_directory: ~/project/terraform
+    working_directory: ~/project/terraform/app
     parameters:
       stage:
         type: string
