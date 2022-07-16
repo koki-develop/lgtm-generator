@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/koki-develop/lgtm-generator/backend/src/entities"
 	"github.com/pkg/errors"
 	"gopkg.in/gographics/imagick.v2/imagick"
 )
@@ -27,7 +26,7 @@ func New() *LGTMGenerator {
 	}
 }
 
-func (g *LGTMGenerator) Generate(src []byte) ([]byte, error) {
+func (g *LGTMGenerator) Generate(src []byte) ([]byte, bool, error) {
 	imagick.Initialize()
 	defer imagick.Terminate()
 
@@ -35,9 +34,9 @@ func (g *LGTMGenerator) Generate(src []byte) ([]byte, error) {
 	defer tmp.Destroy()
 	if err := tmp.ReadImageBlob(src); err != nil {
 		if strings.HasPrefix(err.Error(), "ERROR_MISSING_DELEGATE") {
-			return nil, errors.WithStack(entities.ErrUnsupportedImageFormat)
+			return nil, false, nil
 		}
-		return nil, errors.WithStack(err)
+		return nil, false, errors.WithStack(err)
 	}
 	w := tmp.GetImageWidth()
 	h := tmp.GetImageHeight()
@@ -47,18 +46,18 @@ func (g *LGTMGenerator) Generate(src []byte) ([]byte, error) {
 	ttl := imagick.NewDrawingWand()
 	txt := imagick.NewDrawingWand()
 	if err := ttl.SetFont("pkg/static/fonts/Archivo_Black/ArchivoBlack-Regular.ttf"); err != nil {
-		return nil, errors.WithStack(err)
+		return nil, false, errors.WithStack(err)
 	}
 	if err := txt.SetFont("pkg/static/fonts/Archivo_Black/ArchivoBlack-Regular.ttf"); err != nil {
-		return nil, errors.WithStack(err)
+		return nil, false, errors.WithStack(err)
 	}
 	pw := imagick.NewPixelWand()
 	if ok := pw.SetColor("#ffffff"); !ok {
-		return nil, errors.New("invalid color")
+		return nil, false, errors.New("invalid color")
 	}
 	bw := imagick.NewPixelWand()
 	if ok := bw.SetColor("#000000"); !ok {
-		return nil, errors.New("invalid color")
+		return nil, false, errors.New("invalid color")
 	}
 	ttl.SetStrokeColor(bw)
 	txt.SetStrokeColor(bw)
@@ -85,35 +84,35 @@ func (g *LGTMGenerator) Generate(src []byte) ([]byte, error) {
 		img := aw.GetImage()
 		img.AdaptiveResizeImage(uint(dw), uint(dh))
 		if err := img.DrawImage(ttl); err != nil {
-			return nil, errors.WithStack(err)
+			return nil, false, errors.WithStack(err)
 		}
 		if err := img.DrawImage(txt); err != nil {
-			return nil, errors.WithStack(err)
+			return nil, false, errors.WithStack(err)
 		}
 		if err := mw.AddImage(img); err != nil {
-			return nil, errors.WithStack(err)
+			return nil, false, errors.WithStack(err)
 		}
 		img.Destroy()
 	}
 
-	return mw.GetImagesBlob(), nil
+	return mw.GetImagesBlob(), true, nil
 }
 
-func (g *LGTMGenerator) GenerateFromURL(u string) ([]byte, error) {
+func (g *LGTMGenerator) GenerateFromURL(u string) ([]byte, bool, error) {
 	req, err := http.NewRequest(http.MethodGet, u, nil)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, false, errors.WithStack(err)
 	}
 
 	resp, err := g.httpAPI.Do(req)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, false, errors.WithStack(err)
 	}
 	defer resp.Body.Close()
 
 	src, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, false, errors.WithStack(err)
 	}
 
 	return g.Generate(src)
