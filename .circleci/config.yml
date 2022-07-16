@@ -174,9 +174,11 @@ workflows:
       # build
       - backend_build
       - terraform_plan:
+          context: aws
           name: terraform_plan_dev
           stage: dev
       - terraform_plan:
+          context: aws
           name: terraform_plan_prod
           stage: prod
       - frontend_build
