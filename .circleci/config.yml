@@ -115,12 +115,12 @@ jobs:
       - aws-configure
       - install-terraform
       - install-tflint
+      - terraform/init
       - run:
           name: tflint
           command: |
             tflint .
             tflint ./modules/aws
-      - terraform/init
       - terraform/plan:
           workspace: << parameters.stage >>
       - notify-fail
