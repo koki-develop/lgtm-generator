@@ -127,17 +127,16 @@ jobs:
       - aws-configure
       - install-golang
       - install-terraform
+      - terraform/plan:
+          workspace: << parameters.stage >>
       - install-tflint
       - install-tfsec
-      - terraform/init
       - run:
           name: tflint
           command: |
             tflint .
             tflint ./modules/aws
       - run: tfsec
-      - terraform/plan:
-          workspace: << parameters.stage >>
       - notify-fail
 
   terraform-apply:
@@ -151,7 +150,6 @@ jobs:
           path: ~/project
       - aws-configure
       - install-terraform
-      - terraform/init
       - terraform/apply:
           workspace: << parameters.stage >>
       - notify-fail
