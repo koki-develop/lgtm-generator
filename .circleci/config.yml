@@ -107,9 +107,9 @@ jobs:
           command: yarn run deploy --stage << parameters.stage >>
       - notify_status
 
-  backend_terraform_plan:
+  terraform_plan:
     executor: terraform
-    working_directory: ~/project/backend
+    working_directory: ~/project/terraform
     parameters:
       stage:
         type: string
@@ -119,23 +119,19 @@ jobs:
       - run:
           name: install required commands
           command: |
-            apk --update add \
-              jq \
-              curl
+            apk --update add jq curl
       - aws_setup
       - run:
-          name: Terraform plan
-          working_directory: ~/project/backend/terraform
+          name: terraform plan
           command: |
             terraform init
             terraform workspace select << parameters.stage >>
-            terraform validate
             terraform plan
       - notify_status
 
-  backend_terraform_apply:
+  terraform_apply:
     executor: terraform
-    working_directory: ~/project/backend
+    working_directory: ~/project/terraform
     parameters:
       stage:
         type: string
@@ -145,13 +141,10 @@ jobs:
       - run:
           name: install required commands
           command: |
-            apk --update add \
-              jq \
-              curl
+            apk --update add jq curl
       - aws_setup
       - run:
-          name: Terraform apply
-          working_directory: ~/project/backend/terraform
+          name: terraform apply
           command: |
             terraform init
             terraform workspace select << parameters.stage >>
@@ -185,11 +178,11 @@ workflows:
     jobs:
       # build
       - backend_build
-      - backend_terraform_plan:
-          name: backend_terraform_plan_dev
+      - terraform_plan:
+          name: terraform_plan_dev
           stage: dev
-      - backend_terraform_plan:
-          name: backend_terraform_plan_prod
+      - terraform_plan:
+          name: terraform_plan_prod
           stage: prod
       - frontend_build
 
@@ -198,14 +191,14 @@ workflows:
           type: approval
           requires:
             - backend_build
-            - backend_terraform_plan_dev
-            - backend_terraform_plan_prod
+            - terraform_plan_dev
+            - terraform_plan_prod
             - frontend_build
       - slack/on-hold:
           requires:
             - backend_build
-            - backend_terraform_plan_dev
-            - backend_terraform_plan_prod
+            - terraform_plan_dev
+            - terraform_plan_prod
             - frontend_build
 
       # deploy
@@ -218,8 +211,8 @@ workflows:
             branches:
               ignore:
                 - main
-      - backend_terraform_apply:
-          name: backend_terraform_apply_dev
+      - terraform_apply:
+          name: terraform_apply_dev
           stage: dev
           requires:
             - backend_deploy_dev
@@ -237,8 +230,8 @@ workflows:
             branches:
               only:
                 - main
-      - backend_terraform_apply:
-          name: backend_terraform_apply_prod
+      - terraform_apply:
+          name: terraform_apply_prod
           stage: prod
           requires:
             - backend_deploy_prod
