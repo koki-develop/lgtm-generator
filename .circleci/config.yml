@@ -15,6 +15,7 @@ executors:
 commands:
   aws_setup:
     steps:
+      - aws-cli/install
       - aws-cli/assume-role-with-web-identity:
           role-arn: ${AWS_IAM_ROLE_ARN}
 
