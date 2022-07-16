@@ -1,7 +1,13 @@
 locals {
-  prefix_backend = "lgtm-generator-backend-${var.stage}"
+  app             = "lgtm-generator"
+  prefix_backend  = "${local.app}-backend-${var.stage}"
+  prefix_frontend = "${local.app}-frontend-${var.stage}"
+
+  domain = "lgtmgen.org"
 
   sub_domain    = var.stage == "prod" ? "" : "${var.stage}."
-  api_domain    = "${local.sub_domain}api.lgtmgen.org"
-  images_domain = "${local.sub_domain}images.lgtmgen.org"
+  api_domain    = "${local.sub_domain}api.${local.domain}"
+  images_domain = "${local.sub_domain}images.${local.domain}"
+
+  ui_domain = local.domain
 }
