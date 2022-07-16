@@ -1,276 +1,241 @@
 version: 2.1
 
 orbs:
-  docker: circleci/docker@1.6.0
-  jq: circleci/jq@2.2.0
+  aws-cli: circleci/aws-cli@3.1.1
+  go: circleci/go@1.7.1
+  node: circleci/node@5.0.2
   slack: circleci/slack@4.4.2
+  terraform: circleci/terraform@3.1.0
+
+executors:
+  ubuntu:
+    machine:
+      image: ubuntu-2004:current
+  golang:
+    docker:
+      - image: golang:1.18
+  node:
+    docker:
+      - image: node:14
 
 commands:
-  aws_setup:
+  aws-configure:
+    steps:
+      - aws-cli/assume-role-with-web-identity:
+          role-arn: ${AWS_IAM_ROLE_ARN}
+
+  install-golang:
+    steps:
+      - go/install:
+          version: '1.18'
+
+  go-test:
+    steps:
+      - go/mod-download-cached
+      - run:
+          name: test
+          command: go test ./...
+
+  install-node:
+    steps:
+      - node/install:
+          install-yarn: true
+          node-version: '14'
+
+  yarn-install:
+    steps:
+      - node/install-packages:
+          pkg-manager: yarn
+
+  install-terraform:
+    steps:
+      - terraform/install:
+          terraform_version: 1.2.3
+
+  install-tflint:
     steps:
       - run:
-          name: create aws/credentials aws/config
-          command: |
-            mkdir -p ~/.aws
-            echo '[default]'                                       > ~/.aws/credentials
-            echo "aws_access_key_id=${AWS_ACCESS_KEY_ID}"         >> ~/.aws/credentials
-            echo "aws_secret_access_key=${AWS_SECRET_ACCESS_KEY}" >> ~/.aws/credentials
-            echo '[default]'                                       > ~/.aws/config
-            echo "region = us-east-1"                             >> ~/.aws/config
+          name: install tflint
+          command: curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+      - run: tflint --init
 
-  go_mod_download:
+  install-tfsec:
     steps:
-      - restore_cache:
-          key: go-mod-v2-{{ .Branch }}-{{ checksum "go.sum" }}
       - run:
-          name: go mod download
-          command: go mod download -x
-      - save_cache:
-          key: go-mod-v2-{{ .Branch }}-{{ checksum "go.sum" }}
-          paths:
-            - /go/pkg/mod
+          name: install tfsec
+          command: go install github.com/aquasecurity/tfsec/cmd/tfsec@latest
 
-  yarn_install:
-    steps:
-      - restore_cache:
-          key: node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      - run: yarn install --check-files
-      - save_cache:
-          key: node-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-
-  notify_status:
+  notify-fail:
     steps:
       - slack/notify:
           event: fail
           template: basic_fail_1
 
+  notify-deployed:
+    steps:
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+
 jobs:
-  backend_build:
+  backend-build:
+    executor: golang
     working_directory: ~/project/backend
-    docker:
-      - image: golang:1.18
     steps:
       - checkout:
           path: ~/project
-      - jq/install
       - run:
           name: install imagemagick
           command: |
             apt update
             apt install -y imagemagick libmagickwand-dev
-      - go_mod_download
-      - restore_cache:
-          keys:
-            - go-build-v3-{{ .Branch }}
-      - run:
-          name: test
-          command: go test ./src/...
-      - save_cache:
-          key: go-build-v3-{{ .Branch }}
-          paths:
-            - /root/.cache/go-build
-      - notify_status
+      - go-test
+      - notify-fail
 
-  backend_deploy:
+  backend-deploy:
+    executor: ubuntu
     working_directory: ~/project/backend
-    docker:
-      - image: node:14
     parameters:
       stage:
         type: string
     steps:
       - checkout:
           path: ~/project
-      - jq/install
-      - aws_setup
-      - docker/install-docker:
-          version: v20.10.14
-      - setup_remote_docker:
-          docker_layer_caching: true
-          version: 20.10.14
-      - yarn_install
+      - aws-configure
+      - install-node
+      - yarn-install
       - run:
           name: create .env
           command: |
-            echo "GOOGLE_API_KEY=${GOOGLE_API_KEY}"                                 >> .env
-            echo "GOOGLE_CUSTOM_SEARCH_ENGINE_ID=${GOOGLE_CUSTOM_SEARCH_ENGINE_ID}" >> .env
-            echo "NOTIFICATION_SLACK_ACCESS_TOKEN=${NOTIFICATION_SLACK_ACCESS_TOKEN}"                     >> .env
+            echo "GOOGLE_API_KEY=${GOOGLE_API_KEY}"                                   >> .env
+            echo "GOOGLE_CUSTOM_SEARCH_ENGINE_ID=${GOOGLE_CUSTOM_SEARCH_ENGINE_ID}"   >> .env
+            echo "NOTIFICATION_SLACK_ACCESS_TOKEN=${NOTIFICATION_SLACK_ACCESS_TOKEN}" >> .env
       - run:
           name: deploy
           command: yarn run deploy --stage << parameters.stage >>
-      - notify_status
+      - notify-fail
 
-  backend_terraform_plan:
-    working_directory: ~/project/backend
+  terraform-plan:
+    executor: ubuntu
+    working_directory: ~/project/terraform/app
     parameters:
       stage:
         type: string
-    docker:
-      - image: hashicorp/terraform:1.0.4
     steps:
       - checkout:
           path: ~/project
+      - aws-configure
+      - install-golang
+      - install-terraform
+      - install-tflint
+      - install-tfsec
+      - terraform/init
       - run:
-          name: install required commands
+          name: tflint
           command: |
-            apk --update add \
-              jq \
-              curl
-      - aws_setup
-      - run:
-          name: Terraform plan
-          working_directory: ~/project/backend/terraform
-          command: |
-            terraform init
-            terraform workspace select << parameters.stage >>
-            terraform validate
-            terraform plan
-      - notify_status
+            tflint .
+            tflint ./modules/aws
+      - run: tfsec
+      - terraform/plan:
+          workspace: << parameters.stage >>
+      - notify-fail
 
-  backend_terraform_apply:
-    working_directory: ~/project/backend
+  terraform-apply:
+    executor: ubuntu
+    working_directory: ~/project/terraform/app
     parameters:
       stage:
         type: string
-    docker:
-      - image: hashicorp/terraform:1.0.4
     steps:
       - checkout:
           path: ~/project
-      - run:
-          name: install required commands
-          command: |
-            apk --update add \
-              jq \
-              curl
-      - aws_setup
-      - run:
-          name: Terraform apply
-          working_directory: ~/project/backend/terraform
-          command: |
-            terraform init
-            terraform workspace select << parameters.stage >>
-            terraform apply -auto-approve
-      - notify_status
+      - aws-configure
+      - install-terraform
+      - terraform/init
+      - terraform/apply:
+          workspace: << parameters.stage >>
+      - notify-fail
+      - notify-deployed
 
-  frontend_build:
+  frontend-build:
+    executor: node
     working_directory: ~/project/frontend
-    docker:
-      - image: node:14
     steps:
       - checkout:
           path: ~/project
-      - yarn_install
-      - run:
-          name: lint
-          command: yarn run lint
-      - restore_cache:
-          key: next-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: build
-          command: yarn run build
-      - save_cache:
-          key: next-v1-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - .next/cache
-      - notify_status
-
-  frontend_terraform_plan:
-    working_directory: ~/project/frontend
-    parameters:
-      stage:
-        type: string
-    docker:
-      - image: hashicorp/terraform:1.0.4
-    steps:
-      - checkout:
-          path: ~/project
-      - run:
-          name: install required commands
-          command: |
-            apk --update add \
-              jq \
-              curl
-      - aws_setup
-      - run:
-          name: Terraform plan
-          working_directory: ~/project/backend/terraform
-          command: |
-            terraform init
-            terraform workspace select << parameters.stage >>
-            terraform validate
-            terraform plan
-      - notify_status
+      - yarn-install
+      - run: yarn run lint
+      - run: yarn run build
+      - notify-fail
 
 workflows:
   build:
     jobs:
       # build
-      - backend_build
-      - backend_terraform_plan:
-          name: backend_terraform_plan_dev
+      - backend-build
+      - terraform-plan:
+          context: aws
+          name: terraform-plan-dev
           stage: dev
-      - backend_terraform_plan:
-          name: backend_terraform_plan_prod
+      - terraform-plan:
+          context: aws
+          name: terraform-plan-prod
           stage: prod
-      - frontend_build
-      - frontend_terraform_plan:
-          name: frontend_terraform_plan_prod
-          stage: prod
+      - frontend-build
 
       # approval
-      - approval_deploy:
+      - approval-deploy:
           type: approval
           requires:
-            - backend_build
-            - backend_terraform_plan_dev
-            - backend_terraform_plan_prod
-            - frontend_build
-            - frontend_terraform_plan_prod
+            - backend-build
+            - terraform-plan-dev
+            - terraform-plan-prod
+            - frontend-build
       - slack/on-hold:
           requires:
-            - backend_build
-            - backend_terraform_plan_dev
-            - backend_terraform_plan_prod
-            - frontend_build
-            - frontend_terraform_plan_prod
+            - backend-build
+            - terraform-plan-dev
+            - terraform-plan-prod
+            - frontend-build
 
       # deploy
-      - backend_deploy:
-          name: backend_deploy_dev
+      - backend-deploy:
+          context: aws
+          name: backend-deploy-dev
           stage: dev
           requires:
-            - approval_deploy
+            - approval-deploy
           filters:
             branches:
               ignore:
                 - main
-      - backend_terraform_apply:
-          name: backend_terraform_apply_dev
+      - terraform-apply:
+          context: aws
+          name: terraform-apply-dev
           stage: dev
           requires:
-            - backend_deploy_dev
+            - backend-deploy-dev
           filters:
             branches:
               ignore:
                 - main
 
-      - backend_deploy:
-          name: backend_deploy_prod
+      - backend-deploy:
+          context: aws
+          name: backend-deploy-prod
           stage: prod
           requires:
-            - approval_deploy
+            - approval-deploy
           filters:
             branches:
               only:
                 - main
-      - backend_terraform_apply:
-          name: backend_terraform_apply_prod
+      - terraform-apply:
+          context: aws
+          name: terraform-apply-prod
           stage: prod
           requires:
-            - backend_deploy_prod
+            - backend-deploy-prod
           filters:
             branches:
               only:
