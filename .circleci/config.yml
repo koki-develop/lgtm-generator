@@ -28,7 +28,9 @@ commands:
   go-test:
     steps:
       - go/mod-download-cached
-      - go/test
+      - run:
+          name: test
+          command: go test ./...
 
   install-node:
     steps:
