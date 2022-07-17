@@ -93,6 +93,30 @@ func (repo *LGTMsRepository) Create(img *entities.LGTMImage) (*entities.LGTM, er
 	return lgtm, nil
 }
 
+func (repo *LGTMsRepository) Delete(id string) error {
+	lgtm, ok, err := repo.Find(id)
+	if err != nil {
+		return err
+	}
+	if !ok {
+		return errors.Errorf("lgtm not found: %s", id)
+	}
+
+	tbl := repo.getTable()
+	upd := tbl.Update("id", id).Range("created_at", lgtm.CreatedAt).Set("status", entities.LGTMStatusDeleting)
+	if err := upd.Run(); err != nil {
+		return errors.WithStack(err)
+	}
+	if err := repo.S3API.Delete(id); err != nil {
+		return err
+	}
+	if err := tbl.Delete("id", id).Range("created_at", lgtm.CreatedAt).Run(); err != nil {
+		return errors.WithStack(err)
+	}
+
+	return nil
+}
+
 func (repo *LGTMsRepository) getTable() dynamo.Table {
 	return repo.DynamoDB.Table(fmt.Sprintf("%s-lgtms", repo.DBPrefix))
 }
