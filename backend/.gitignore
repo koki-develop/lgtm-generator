@@ -22,6 +22,5 @@ cover.*
 
 /node_modules/
 /.env
-/.envrc
 /.dynamodb
 /tmp/
