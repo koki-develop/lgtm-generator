@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"github.com/pkg/errors"
+
 	"github.com/gin-gonic/gin"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/entities"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/lgtmgen"
@@ -42,7 +44,7 @@ func (ctrl *LGTMsController) Create(ctx *gin.Context) {
 		return
 	}
 
-	img, ok, err := ctrl.LGTMGenerator.GenerateFromURL(ipt.URL)
+	img, ok, err := ctrl.generateFromInput(ipt)
 	if err != nil {
 		ctrl.Renderer.InternalServerError(ctx, err)
 		return
@@ -59,4 +61,15 @@ func (ctrl *LGTMsController) Create(ctx *gin.Context) {
 	}
 
 	ctrl.Renderer.Created(ctx, lgtm)
+}
+
+func (ctrl *LGTMsController) generateFromInput(ipt entities.LGTMCreateInput) (*entities.LGTMImage, bool, error) {
+	switch ipt.From {
+	case entities.LGTMCreateFromURL:
+		return ctrl.LGTMGenerator.GenerateFromURL(ipt.URL)
+	case entities.LGTMCreateFromBase64:
+		return ctrl.LGTMGenerator.GenerateFromBase64(ipt.Base64, ipt.ContentType)
+	default:
+		return nil, false, errors.Errorf("unknown from: %s", ipt.From)
+	}
 }
