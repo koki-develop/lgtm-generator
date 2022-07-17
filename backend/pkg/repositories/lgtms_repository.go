@@ -3,28 +3,25 @@ package repositories
 import (
 	"fmt"
 	"os"
+	"time"
 
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/guregu/dynamo"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/entities"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/s3"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/utils"
 	"github.com/pkg/errors"
 )
 
 type LGTMsRepository struct {
+	S3API    s3.ClientAPI
 	DynamoDB *dynamo.DB
 	DBPrefix string
 }
 
-func NewLGTMsRepository() *LGTMsRepository {
-	awscfg := &aws.Config{Region: aws.String("us-east-1")}
-	if os.Getenv("STAGE") == "local" {
-		awscfg.Endpoint = aws.String("http://localhost:8000")
-	}
-	sess := session.Must(session.NewSession(awscfg))
-
+func NewLGTMsRepository(s3api s3.ClientAPI, db *dynamo.DB) *LGTMsRepository {
 	return &LGTMsRepository{
-		DynamoDB: dynamo.New(sess),
+		S3API:    s3api,
+		DynamoDB: db,
 		DBPrefix: fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")),
 	}
 }
@@ -39,6 +36,30 @@ func (repo *LGTMsRepository) FindAll() (entities.LGTMs, error) {
 	}
 
 	return lgtms, nil
+}
+
+func (repo *LGTMsRepository) Create(img *entities.LGTMImage) (*entities.LGTM, error) {
+	now := time.Now()
+	id := utils.UUIDV4()
+
+	lgtm := &entities.LGTM{ID: id, Status: entities.LGTMStatusPending, CreatedAt: now}
+
+	tbl := repo.getTable()
+	if err := tbl.Put(&lgtm).Run(); err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	if err := repo.S3API.Put(lgtm.ID, img.ContentType, img.Data); err != nil {
+		return nil, err
+	}
+
+	lgtm.Status = entities.LGTMStatusOK
+	upd := tbl.Update("id", lgtm.ID).Range("created_at", lgtm.CreatedAt)
+	if err := upd.Set("status", lgtm.Status).Run(); err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return lgtm, nil
 }
 
 func (repo *LGTMsRepository) getTable() dynamo.Table {

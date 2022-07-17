@@ -40,9 +40,15 @@ func New() *gin.Engine {
 
 	// lgtms
 	{
-		repo := repositories.NewLGTMsRepository()
-		ctrl := controllers.NewLGTMsController(repo)
+		g := lgtmgen.New()
+		bucket := fmt.Sprintf("lgtm-generator-backend-%s-images", os.Getenv("STAGE"))
+		s3client := s3.New(bucket)
+		db := dynamodb.New()
+
+		repo := repositories.NewLGTMsRepository(s3client, db)
+		ctrl := controllers.NewLGTMsController(g, repo)
 		v1.GET("/lgtms", ctrl.FindAll)
+		v1.POST("/lgtms", ctrl.Create)
 	}
 
 	return r
