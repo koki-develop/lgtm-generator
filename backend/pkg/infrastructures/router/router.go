@@ -16,10 +16,13 @@ import (
 func New() *gin.Engine {
 	r := gin.Default()
 
-	// cors
+	// middleware
 	{
-		m := controllers.NewCORSMiddleware(os.Getenv("ALLOW_ORIGIN"))
-		r.Use(m.Apply)
+		errresp := controllers.NewErrorResponseLoggerMiddleware()
+		cors := controllers.NewCORSMiddleware(os.Getenv("ALLOW_ORIGIN"))
+
+		r.Use(errresp.Apply)
+		r.Use(cors.Apply)
 	}
 
 	// health
