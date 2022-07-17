@@ -25,6 +25,10 @@ func (r *Renderer) BadRequest(ctx *gin.Context, code ErrCode) {
 	r.renderError(ctx, http.StatusBadRequest, code)
 }
 
+func (r *Renderer) Forbidden(ctx *gin.Context) {
+	r.renderError(ctx, http.StatusForbidden, ErrCodeForbidden)
+}
+
 func (r *Renderer) InternalServerError(ctx *gin.Context, err error) {
 	fmt.Printf("error: %+v\n", err)
 	r.renderError(ctx, http.StatusInternalServerError, ErrCodeInternalServerError)

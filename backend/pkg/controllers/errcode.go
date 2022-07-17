@@ -8,5 +8,7 @@ const (
 	ErrCodeInvalidQuery           ErrCode = "INVALID_QUERY"
 	ErrCodeUnsupportedImageFormat ErrCode = "UNSUPPORTED_IMAGE_FORMAT"
 
+	ErrCodeForbidden ErrCode = "FORBIDDEN"
+
 	ErrCodeInternalServerError ErrCode = "INTERNAL_SERVER_ERROR"
 )
