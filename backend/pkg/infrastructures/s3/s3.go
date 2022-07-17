@@ -16,6 +16,7 @@ import (
 
 type ClientAPI interface {
 	Put(key, contentType string, data []byte) error
+	Delete(key string) error
 }
 
 type Client struct {
@@ -49,6 +50,17 @@ func (cl *Client) Put(key, contentType string, data []byte) error {
 	})
 	if err != nil {
 		errors.WithStack(err)
+	}
+	return nil
+}
+
+func (cl *Client) Delete(key string) error {
+	_, err := cl.api.DeleteObject(&s3.DeleteObjectInput{
+		Bucket: aws.String(cl.bucket),
+		Key:    aws.String(key),
+	})
+	if err != nil {
+		return errors.WithStack(err)
 	}
 	return nil
 }
