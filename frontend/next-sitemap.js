@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 
 module.exports = {
-  siteUrl: 'https://lgtmgen.org',
+  siteUrl: 'https://www.lgtmgen.org',
   generateRobotsTxt: true,
 };

@@ -6,7 +6,7 @@
 
 # 概要
 
-[lgtmgen.org](https://lgtmgen.org)
+[lgtmgen.org](https://www.lgtmgen.org)
 
 シンプルな LGTM 画像生成ツール。
 
