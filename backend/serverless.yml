@@ -12,7 +12,7 @@ custom:
   prefix: ${self:custom.product}-${self:provider.stage}
   allowOrigin:
     dev: https://lgtm-generator-*-koki-develop.vercel.app
-    prod: https://lgtmgen.org
+    prod: https://www.lgtmgen.org
   imageBaseUrl:
     dev: https://dev.images.lgtmgen.org
     prod: https://images.lgtmgen.org
