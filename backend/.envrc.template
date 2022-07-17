@@ -1,6 +1,6 @@
 export STAGE=local
 export ALLOW_ORIGIN=http://localhost:3000
-export IMAGES_BASE_URL=http://localhost:9000
+export IMAGES_BASE_URL=http://localhost:9000/lgtm-generator-backend-local-images
 export SLACK_API_TOKEN=
 export GOOGLE_API_KEY=
 export GOOGLE_CUSTOM_SEARCH_ENGINE_ID=
