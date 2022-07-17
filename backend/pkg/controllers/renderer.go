@@ -21,6 +21,10 @@ func (r *Renderer) OK(ctx *gin.Context, obj interface{}) {
 	ctx.JSON(http.StatusOK, obj)
 }
 
+func (r *Renderer) Created(ctx *gin.Context, obj interface{}) {
+	ctx.JSON(http.StatusCreated, obj)
+}
+
 func (r *Renderer) NoContent(ctx *gin.Context) {
 	ctx.Status(http.StatusNoContent)
 }
