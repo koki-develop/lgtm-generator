@@ -62,3 +62,7 @@ func (ipt *LGTMCreateInput) Valid() bool {
 	}
 	return false
 }
+
+type LGTMFindAllInput struct {
+	After *string `form:"after"`
+}
