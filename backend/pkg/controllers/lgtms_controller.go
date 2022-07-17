@@ -1,25 +1,33 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/pkg/errors"
+	"github.com/slack-go/slack"
 
 	"github.com/gin-gonic/gin"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/entities"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/lgtmgen"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/repositories"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/utils"
 )
 
 type LGTMsController struct {
 	Renderer        *Renderer
 	LGTMGenerator   *lgtmgen.LGTMGenerator
 	LGTMsRepository *repositories.LGTMsRepository
+	SlackAPI        *slack.Client
+	SlackChannel    string
 }
 
-func NewLGTMsController(g *lgtmgen.LGTMGenerator, repo *repositories.LGTMsRepository) *LGTMsController {
+func NewLGTMsController(g *lgtmgen.LGTMGenerator, slackAPI *slack.Client, slackChannel string, repo *repositories.LGTMsRepository) *LGTMsController {
 	return &LGTMsController{
 		Renderer:        NewRenderer(),
 		LGTMGenerator:   g,
 		LGTMsRepository: repo,
+		SlackAPI:        slackAPI,
+		SlackChannel:    slackChannel,
 	}
 }
 
@@ -88,6 +96,18 @@ func (ctrl *LGTMsController) Create(ctx *gin.Context) {
 	}
 
 	ctrl.Renderer.Created(ctx, lgtm)
+
+	// FIXME: Slack 通知する分、レスポンスタイムが長くなる
+	//        SNS 等を使って非同期的に行うようにする
+	f, err := utils.WriteTmpFile(lgtm.ID, img.Data)
+	if err != nil {
+		fmt.Printf("failed to write tmp file: %+v\n", err)
+		return
+	}
+	if _, err := ctrl.SlackAPI.UploadFile(slack.FileUploadParameters{Channels: []string{ctrl.SlackChannel}, InitialComment: "LGTM 画像が生成されました", File: f}); err != nil {
+		fmt.Printf("failed to upload file to slack: %+v\n", err)
+		return
+	}
 }
 
 func (ctrl *LGTMsController) generateFromInput(ipt entities.LGTMCreateInput) (*entities.LGTMImage, bool, error) {

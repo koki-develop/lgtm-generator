@@ -17,9 +17,11 @@ import (
 func New() *gin.Engine {
 	r := gin.Default()
 
+	slackClient := slack.New(os.Getenv("SLACK_API_TOKEN"))
+
 	// middleware
 	{
-		errresp := controllers.NewErrorResponseLoggerMiddleware(slack.New(os.Getenv("SLACK_API_TOKEN")), fmt.Sprintf("lgtm-generator-backend-%s-errors", os.Getenv("STAGE")))
+		errresp := controllers.NewErrorResponseLoggerMiddleware(slackClient, fmt.Sprintf("lgtm-generator-backend-%s-errors", os.Getenv("STAGE")))
 		cors := controllers.NewCORSMiddleware(os.Getenv("ALLOW_ORIGIN"))
 
 		r.Use(errresp.Apply)
@@ -50,7 +52,7 @@ func New() *gin.Engine {
 		db := dynamodb.New()
 
 		repo := repositories.NewLGTMsRepository(s3client, db)
-		ctrl := controllers.NewLGTMsController(g, repo)
+		ctrl := controllers.NewLGTMsController(g, slackClient, fmt.Sprintf("lgtm-generator-backend-%s-lgtms", os.Getenv("STAGE")), repo)
 		v1.GET("/lgtms", ctrl.FindAll)
 		v1.POST("/lgtms", ctrl.Create)
 	}
