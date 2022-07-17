@@ -11,6 +11,7 @@ import (
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/lgtmgen"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/s3"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/repositories"
+	"github.com/slack-go/slack"
 )
 
 func New() *gin.Engine {
@@ -18,7 +19,7 @@ func New() *gin.Engine {
 
 	// middleware
 	{
-		errresp := controllers.NewErrorResponseLoggerMiddleware()
+		errresp := controllers.NewErrorResponseLoggerMiddleware(slack.New(os.Getenv("SLACK_API_TOKEN")), fmt.Sprintf("lgtm-generator-backend-%s-errors", os.Getenv("STAGE")))
 		cors := controllers.NewCORSMiddleware(os.Getenv("ALLOW_ORIGIN"))
 
 		r.Use(errresp.Apply)
