@@ -10,6 +10,12 @@ plugins:
 custom:
   product: ${self:service}
   prefix: ${self:custom.product}-${self:provider.stage}
+  allowOrigin:
+    dev: https://lgtm-generator-*-koki-develop.vercel.app
+    prod: https://lgtmgen.org
+  imageBaseUrl:
+    dev: https://dev.images.lgtmgen.org
+    prod: https://images.lgtmgen.org
   dynamodb:
     stages:
       - local
@@ -58,9 +64,11 @@ provider:
   apiName: ${self:custom.prefix}
   environment:
     STAGE: ${self:provider.stage}
+    ALLOW_ORIGIN: ${self:custom.allowOrigin.${self:provider.stage}}
+    IMAGES_BASE_URL: ${self:custom.imageBaseUrl.${self:provider.stage}}
+    SLACK_API_TOKEN: ${env:SLACK_API_TOKEN}
     GOOGLE_API_KEY: ${env:GOOGLE_API_KEY}
     GOOGLE_CUSTOM_SEARCH_ENGINE_ID: ${env:GOOGLE_CUSTOM_SEARCH_ENGINE_ID}
-    NOTIFICATION_SLACK_ACCESS_TOKEN: ${env:NOTIFICATION_SLACK_ACCESS_TOKEN}
 
 package:
   individually: true

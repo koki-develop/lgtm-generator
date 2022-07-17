@@ -3,7 +3,7 @@ tmp_dir = "tmp"
 
 [build]
   bin = "./build/api"
-  cmd = "go build -o ./build/api src/handlers/api/local/main.go"
+  cmd = "go build -o ./build/api ./pkg/handlers/api/local/"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "node_modules"]
   exclude_file = []
