@@ -9,6 +9,7 @@ const (
 	ErrCodeUnsupportedImageFormat ErrCode = "UNSUPPORTED_IMAGE_FORMAT"
 
 	ErrCodeForbidden ErrCode = "FORBIDDEN"
+	ErrCodeNotFound  ErrCode = "NOT_FOUND"
 
 	ErrCodeInternalServerError ErrCode = "INTERNAL_SERVER_ERROR"
 )
