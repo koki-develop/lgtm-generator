@@ -24,7 +24,34 @@ func NewLGTMsController(g *lgtmgen.LGTMGenerator, repo *repositories.LGTMsReposi
 }
 
 func (ctrl *LGTMsController) FindAll(ctx *gin.Context) {
-	lgtms, err := ctrl.LGTMsRepository.FindAll()
+	var ipt entities.LGTMFindAllInput
+	if err := ctx.ShouldBindQuery(&ipt); err != nil {
+		ctrl.Renderer.BadRequest(ctx, ErrCodeInvalidQuery)
+		return
+	}
+
+	if ipt.After == nil {
+		lgtms, err := ctrl.LGTMsRepository.FindAll()
+		if err != nil {
+			ctrl.Renderer.InternalServerError(ctx, err)
+			return
+		}
+
+		ctrl.Renderer.OK(ctx, lgtms)
+		return
+	}
+
+	lgtm, ok, err := ctrl.LGTMsRepository.Find(*ipt.After)
+	if err != nil {
+		ctrl.Renderer.InternalServerError(ctx, err)
+		return
+	}
+	if !ok {
+		ctrl.Renderer.NotFound(ctx)
+		return
+	}
+
+	lgtms, err := ctrl.LGTMsRepository.FindAllAfter(lgtm)
 	if err != nil {
 		ctrl.Renderer.InternalServerError(ctx, err)
 		return

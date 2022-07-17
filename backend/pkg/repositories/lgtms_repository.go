@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
 	"github.com/guregu/dynamo"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/entities"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/s3"
@@ -26,11 +27,41 @@ func NewLGTMsRepository(s3api s3.ClientAPI, db *dynamo.DB) *LGTMsRepository {
 	}
 }
 
+func (repo *LGTMsRepository) Find(id string) (*entities.LGTM, bool, error) {
+	var lgtms entities.LGTMs
+
+	tbl := repo.getTable()
+	if err := tbl.Get("id", id).All(&lgtms); err != nil {
+		return nil, false, errors.WithStack(err)
+	}
+	if len(lgtms) == 0 {
+		return nil, false, nil
+	}
+
+	return lgtms[0], true, nil
+}
+
 func (repo *LGTMsRepository) FindAll() (entities.LGTMs, error) {
 	var lgtms entities.LGTMs
 
 	tbl := repo.getTable()
 	q := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(dynamo.Descending).Limit(20)
+	if err := q.All(&lgtms); err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	return lgtms, nil
+}
+
+func (repo *LGTMsRepository) FindAllAfter(lgtm *entities.LGTM) (entities.LGTMs, error) {
+	key, err := dynamodbattribute.MarshalMap(lgtm)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	lgtms := entities.LGTMs{}
+	tbl := repo.getTable()
+	q := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(dynamo.Descending).Limit(20).StartFrom(key)
 	if err := q.All(&lgtms); err != nil {
 		return nil, errors.WithStack(err)
 	}
