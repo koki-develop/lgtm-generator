@@ -53,6 +53,16 @@ resource "aws_route53_record" "ui" {
   ttl     = 60
 }
 
+resource "aws_route53_record" "ui_apex" {
+  count = var.stage == "prod" ? 1 : 0
+
+  zone_id = data.aws_route53_zone.default.zone_id
+  name    = local.domain
+  type    = "A"
+  records = ["76.76.21.21"]
+  ttl     = 60
+}
+
 resource "aws_route53_record" "ui_certificate_validation" {
   count = var.stage == "prod" ? 1 : 0
 
