@@ -1,16 +1,26 @@
 package router
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/controllers"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/dynamodb"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/imagesearch"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/lgtmgen"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/s3"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/repositories"
 )
 
 func New() *gin.Engine {
 	r := gin.Default()
+
+	// cors
+	{
+		m := controllers.NewCORSMiddleware(os.Getenv("ALLOW_ORIGIN"))
+		r.Use(m.Apply)
+	}
 
 	// health
 	{
