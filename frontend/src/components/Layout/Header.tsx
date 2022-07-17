@@ -90,6 +90,7 @@ const Header: React.VFC = React.memo(() => {
         <Box sx={{ flexGrow: 1 }}>
           <Link href={Routes.home} sx={{ display: 'inline-block' }}>
             <Typography
+              component='h1'
               sx={theme => ({
                 fontFamily: 'ArchivoBlack',
                 fontSize: theme => theme.typography.h4.fontSize,
