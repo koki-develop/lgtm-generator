@@ -30,7 +30,7 @@ func (ctrl *LGTMsController) FindAll(ctx *gin.Context) {
 		return
 	}
 
-	if ipt.After == nil {
+	if ipt.After == nil || *ipt.After == "" {
 		lgtms, err := ctrl.LGTMsRepository.FindAll()
 		if err != nil {
 			ctrl.Renderer.InternalServerError(ctx, err)
