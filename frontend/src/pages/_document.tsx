@@ -32,11 +32,6 @@ export default class Document extends NextDocument {
                   `,
                 }}
               ></script>
-              <script
-                data-ad-client={process.env.NEXT_PUBLIC_GOOGLE_ADSENSE_CODE}
-                async
-                src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
-              ></script>
             </>
           )}
         </Head>
