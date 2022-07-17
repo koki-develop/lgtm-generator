@@ -107,9 +107,9 @@ jobs:
       - run:
           name: create .env
           command: |
-            echo "GOOGLE_API_KEY=${GOOGLE_API_KEY}"                                   >> .env
-            echo "GOOGLE_CUSTOM_SEARCH_ENGINE_ID=${GOOGLE_CUSTOM_SEARCH_ENGINE_ID}"   >> .env
-            echo "NOTIFICATION_SLACK_ACCESS_TOKEN=${NOTIFICATION_SLACK_ACCESS_TOKEN}" >> .env
+            echo "SLACK_API_TOKEN=${NOTIFICATION_SLACK_ACCESS_TOKEN}"               >> .env
+            echo "GOOGLE_API_KEY=${GOOGLE_API_KEY}"                                 >> .env
+            echo "GOOGLE_CUSTOM_SEARCH_ENGINE_ID=${GOOGLE_CUSTOM_SEARCH_ENGINE_ID}" >> .env
       - run:
           name: deploy
           command: yarn run deploy --stage << parameters.stage >>
