@@ -47,9 +47,19 @@ resource "aws_route53_record" "ui" {
   count = var.stage == "prod" ? 1 : 0
 
   zone_id = data.aws_route53_zone.default.zone_id
-  name    = local.ui_domain
+  name    = "www"
+  type    = "CNAME"
+  records = ["cname.vercel-dns.com"]
+  ttl     = 60
+}
+
+resource "aws_route53_record" "ui_apex" {
+  count = var.stage == "prod" ? 1 : 0
+
+  zone_id = data.aws_route53_zone.default.zone_id
+  name    = local.domain
   type    = "A"
-  records = [local.vercel_ip]
+  records = ["76.76.21.21"]
   ttl     = 60
 }
 
