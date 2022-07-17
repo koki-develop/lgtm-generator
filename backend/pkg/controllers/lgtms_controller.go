@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/pkg/errors"
 	"github.com/slack-go/slack"
@@ -10,7 +11,6 @@ import (
 	"github.com/koki-develop/lgtm-generator/backend/pkg/entities"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/lgtmgen"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/repositories"
-	"github.com/koki-develop/lgtm-generator/backend/pkg/utils"
 )
 
 type LGTMsController struct {
@@ -99,14 +99,17 @@ func (ctrl *LGTMsController) Create(ctx *gin.Context) {
 
 	// FIXME: Slack 通知する分、レスポンスタイムが長くなる
 	//        SNS 等を使って非同期的に行うようにする
-	f, err := utils.WriteTmpFile(lgtm.ID, img.Data)
-	if err != nil {
-		fmt.Printf("failed to write tmp file: %+v\n", err)
-		return
-	}
-	if _, err := ctrl.SlackAPI.UploadFile(slack.FileUploadParameters{Channels: []string{ctrl.SlackChannel}, InitialComment: "LGTM 画像が生成されました", File: f}); err != nil {
-		fmt.Printf("failed to upload file to slack: %+v\n", err)
-		return
+	if _, _, err := ctrl.SlackAPI.PostMessage(ctrl.SlackChannel, slack.MsgOptionAttachments(
+		slack.Attachment{
+			Color:    "#00bfff",
+			Title:    "LGTM 画像が生成されました",
+			ThumbURL: fmt.Sprintf("%s/%s", os.Getenv("IMAGES_BASE_URL"), lgtm.ID),
+			Fields: []slack.AttachmentField{
+				{Title: "LGTM ID", Value: lgtm.ID, Short: true},
+			},
+		},
+	)); err != nil {
+		fmt.Printf("failed to post message: %+v\n", err)
 	}
 }
 
