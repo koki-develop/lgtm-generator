@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/koki-develop/lgtm-generator/backend/pkg/entities"
 	"github.com/pkg/errors"
 	"gopkg.in/gographics/imagick.v2/imagick"
 )
@@ -26,7 +27,38 @@ func New() *LGTMGenerator {
 	}
 }
 
-func (g *LGTMGenerator) Generate(src []byte) ([]byte, bool, error) {
+func (g *LGTMGenerator) GenerateFromURL(u string) (*entities.LGTMImage, bool, error) {
+	req, err := http.NewRequest(http.MethodGet, u, nil)
+	if err != nil {
+		return nil, false, errors.WithStack(err)
+	}
+
+	resp, err := g.httpAPI.Do(req)
+	if err != nil {
+		return nil, false, errors.WithStack(err)
+	}
+	defer resp.Body.Close()
+
+	src, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, false, errors.WithStack(err)
+	}
+
+	data, ok, err := g.generate(src)
+	if err != nil {
+		return nil, false, err
+	}
+	if !ok {
+		return nil, false, nil
+	}
+
+	return &entities.LGTMImage{
+		Data:        data,
+		ContentType: resp.Header.Get("content-type"),
+	}, true, nil
+}
+
+func (g *LGTMGenerator) generate(src []byte) ([]byte, bool, error) {
 	imagick.Initialize()
 	defer imagick.Terminate()
 
@@ -96,26 +128,6 @@ func (g *LGTMGenerator) Generate(src []byte) ([]byte, bool, error) {
 	}
 
 	return mw.GetImagesBlob(), true, nil
-}
-
-func (g *LGTMGenerator) GenerateFromURL(u string) ([]byte, bool, error) {
-	req, err := http.NewRequest(http.MethodGet, u, nil)
-	if err != nil {
-		return nil, false, errors.WithStack(err)
-	}
-
-	resp, err := g.httpAPI.Do(req)
-	if err != nil {
-		return nil, false, errors.WithStack(err)
-	}
-	defer resp.Body.Close()
-
-	src, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, false, errors.WithStack(err)
-	}
-
-	return g.Generate(src)
 }
 
 func (g *LGTMGenerator) calcImageSize(w, h float64) (float64, float64) {
