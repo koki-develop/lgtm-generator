@@ -14,6 +14,10 @@ import (
 	"github.com/pkg/errors"
 )
 
+type ClientAPI interface {
+	Put(key, contentType string, data []byte) error
+}
+
 type Client struct {
 	api      s3iface.S3API
 	uploader s3manageriface.UploaderAPI
