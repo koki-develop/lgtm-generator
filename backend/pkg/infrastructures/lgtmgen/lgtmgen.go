@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/koki-develop/lgtm-generator/backend/pkg/entities"
+	"github.com/koki-develop/lgtm-generator/backend/pkg/utils"
 	"github.com/pkg/errors"
 	"gopkg.in/gographics/imagick.v2/imagick"
 )
@@ -25,6 +26,25 @@ func New() *LGTMGenerator {
 	return &LGTMGenerator{
 		httpAPI: new(http.Client),
 	}
+}
+
+func (g *LGTMGenerator) GenerateFromBase64(base64, contentType string) (*entities.LGTMImage, bool, error) {
+	src, err := utils.Base64Decode(base64)
+	if err != nil {
+		return nil, false, err
+	}
+	data, ok, err := g.generate(src)
+	if err != nil {
+		return nil, false, err
+	}
+	if !ok {
+		return nil, false, nil
+	}
+
+	return &entities.LGTMImage{
+		Data:        data,
+		ContentType: contentType,
+	}, true, nil
 }
 
 func (g *LGTMGenerator) GenerateFromURL(u string) (*entities.LGTMImage, bool, error) {
