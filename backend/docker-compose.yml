@@ -1,24 +1,6 @@
 version: '3'
 
 services:
-  app:
-    image: lgtm-generator-backend-app
-    build:
-      context: .
-      dockerfile: ./containers/app/Dockerfile
-      target: build
-    command: air
-    ports:
-      - 8080:8080
-    volumes:
-      - .:/var/task
-      - go_mod:/go/pkg/mod
-    environment:
-      STAGE: local
-      GOOGLE_API_KEY: $GOOGLE_API_KEY
-      GOOGLE_CUSTOM_SEARCH_ENGINE_ID: $GOOGLE_CUSTOM_SEARCH_ENGINE_ID
-      NOTIFICATION_SLACK_ACCESS_TOKEN: $NOTIFICATION_SLACK_ACCESS_TOKEN
-
   bucket:
     image: minio/minio:latest
     ports:
