@@ -19,25 +19,29 @@ cd backend
 
 ```
 cp .env.template .env
+direnv allow
 ```
 
 ```sh
 # .env
-GOOGLE_API_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # GCP で発行した API キー
-GOOGLE_CUSTOM_SEARCH_ENGINE_ID=xxxxxxxxxxxxxxxxx # Google カスタム検索エンジン ID
-NOTIFICATION_SLACK_ACCESS_TOKEN=xoxb-xxxxxxxxxxxx-xxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx # Slack API のアクセストークン
+STAGE=local
+ALLOW_ORIGIN=http://localhost:3000
+IMAGES_BASE_URL=http://localhost:9000/lgtm-generator-backend-local-images
+SLACK_API_TOKEN=xxxx # Slack API のアクセストークン
+GOOGLE_API_KEY=xxxx # GCP で発行した API キー
+GOOGLE_CUSTOM_SEARCH_ENGINE_ID=xxxx # Google カスタム検索エンジン ID
 ```
 
-### 開発用 Docker イメージを準備
-
-```sh
-docker compose build
-```
-
-### ローカルで API を起動
+### minio, dynamodb を起動
 
 ```sh
 docker compose up
+```
+
+### API を起動
+
+```sh
+air
 ```
 
 ### デプロイ

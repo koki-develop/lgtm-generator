@@ -1,5 +1,3 @@
-const { withSentryConfig } = require('@sentry/nextjs');
-
 // Vercel で canvas のビルド時に `version `ZLIB_1.2.9' not found` エラーが発生する問題の対策
 // 参考: https://github.com/Automattic/node-canvas/issues/1779#issuecomment-895885846
 if (
@@ -19,14 +17,10 @@ const config = {
   },
 };
 
-const SentryWebpackPluginOptions = {
-  silent: true,
-};
-
 module.exports = (() => {
   if (process.env.NEXT_PUBLIC_STAGE !== 'prod') {
     return config;
   }
 
-  return withSentryConfig(config, SentryWebpackPluginOptions);
+  return config;
 })();
