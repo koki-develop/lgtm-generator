@@ -17,7 +17,12 @@ import (
 func New() *gin.Engine {
 	r := gin.Default()
 
+	engine := imagesearch.New(os.Getenv("GOOGLE_API_KEY"), os.Getenv("GOOGLE_CUSTOM_SEARCH_ENGINE_ID"))
 	slackClient := slack.New(os.Getenv("SLACK_API_TOKEN"))
+	db := dynamodb.New()
+	g := lgtmgen.New()
+	bucket := fmt.Sprintf("lgtm-generator-backend-%s-images", os.Getenv("STAGE"))
+	s3client := s3.New(bucket)
 
 	// middleware
 	{
@@ -39,22 +44,23 @@ func New() *gin.Engine {
 
 	// images
 	{
-		engine := imagesearch.New(os.Getenv("GOOGLE_API_KEY"), os.Getenv("GOOGLE_CUSTOM_SEARCH_ENGINE_ID"))
 		ctrl := controllers.NewImagesController(engine)
 		v1.GET("/images", ctrl.Search)
 	}
 
 	// lgtms
 	{
-		g := lgtmgen.New()
-		bucket := fmt.Sprintf("lgtm-generator-backend-%s-images", os.Getenv("STAGE"))
-		s3client := s3.New(bucket)
-		db := dynamodb.New()
-
 		repo := repositories.NewLGTMsRepository(s3client, db)
 		ctrl := controllers.NewLGTMsController(g, slackClient, fmt.Sprintf("lgtm-generator-backend-%s-lgtms", os.Getenv("STAGE")), repo)
 		v1.GET("/lgtms", ctrl.FindAll)
 		v1.POST("/lgtms", ctrl.Create)
+	}
+
+	// reports
+	{
+		repo := repositories.NewReportsRepository(db, fmt.Sprintf("lgtm-generator-backend-%s", os.Getenv("STAGE")))
+		ctrl := controllers.NewReportsController(slackClient, fmt.Sprintf("lgtm-generator-backend-%s-reports", os.Getenv("STAGE")), repo)
+		v1.POST("/reports", ctrl.Create)
 	}
 
 	{
