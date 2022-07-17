@@ -47,7 +47,7 @@ func (ctrl *LGTMsController) FindAll(ctx *gin.Context) {
 		return
 	}
 	if !ok {
-		ctrl.Renderer.NotFound(ctx)
+		ctrl.Renderer.BadRequest(ctx, ErrCodeInvalidQuery)
 		return
 	}
 
