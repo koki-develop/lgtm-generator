@@ -54,5 +54,10 @@ func New() *gin.Engine {
 		v1.POST("/lgtms", ctrl.Create)
 	}
 
+	{
+		rdr := controllers.NewRenderer()
+		r.NoRoute(rdr.NotFound)
+	}
+
 	return r
 }
