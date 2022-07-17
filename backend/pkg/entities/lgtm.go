@@ -15,6 +15,11 @@ const (
 	LGTMStatusDeleting LGTMStatus = "deleting"
 )
 
+type LGTMImage struct {
+	Data        []byte
+	ContentType string
+}
+
 type LGTM struct {
 	ID        string     `json:"id" dynamo:"id"         dynamodbav:"id"`
 	Status    LGTMStatus `json:"-"  dynamo:"status"     dynamodbav:"status"`
