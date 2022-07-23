@@ -106,6 +106,7 @@ func (ctrl *LGTMsController) Create(ctx *gin.Context) {
 			ThumbURL: fmt.Sprintf("%s/%s", os.Getenv("IMAGES_BASE_URL"), lgtm.ID),
 			Fields: []slack.AttachmentField{
 				{Title: "LGTM ID", Value: lgtm.ID, Short: true},
+				{Title: "Source", Value: ipt.Source()},
 			},
 		},
 	)); err != nil {
