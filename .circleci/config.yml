@@ -136,7 +136,7 @@ jobs:
           command: |
             tflint .
             tflint ./modules/aws
-      - run: tfsec
+      - run: tfsec --config-file tfsec.yml
       - notify-fail
 
   terraform-apply:
