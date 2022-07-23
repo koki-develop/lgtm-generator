@@ -84,6 +84,9 @@ functions:
       # health check
       - http:
           method: get
+          path: /h
+      - http:
+          method: get
           path: /v1/h
 
       # images
