@@ -106,11 +106,22 @@ func (ctrl *LGTMsController) Create(ctx *gin.Context) {
 			ThumbURL: fmt.Sprintf("%s/%s", os.Getenv("IMAGES_BASE_URL"), lgtm.ID),
 			Fields: []slack.AttachmentField{
 				{Title: "LGTM ID", Value: lgtm.ID, Short: true},
-				{Title: "Source", Value: ipt.Source()},
+				{Title: "Source", Value: ctrl.renderSource(ipt)},
 			},
 		},
 	)); err != nil {
 		fmt.Printf("failed to post message: %+v\n", err)
+	}
+}
+
+func (ctrl *LGTMsController) renderSource(ipt entities.LGTMCreateInput) string {
+	switch ipt.From {
+	case entities.LGTMCreateFromBase64:
+		return "base64"
+	case entities.LGTMCreateFromURL:
+		return ipt.URL
+	default:
+		return ""
 	}
 }
 

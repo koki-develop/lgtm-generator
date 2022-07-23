@@ -63,17 +63,6 @@ func (ipt *LGTMCreateInput) Valid() bool {
 	return false
 }
 
-func (ipt *LGTMCreateInput) Source() string {
-	switch ipt.From {
-	case LGTMCreateFromBase64:
-		return ipt.Base64
-	case LGTMCreateFromURL:
-		return ipt.URL
-	default:
-		return ""
-	}
-}
-
 type LGTMFindAllInput struct {
 	After *string `form:"after"`
 }
