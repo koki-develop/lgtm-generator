@@ -13,7 +13,7 @@ require (
 	github.com/slack-go/slack v0.9.4
 	github.com/stretchr/testify v1.6.1
 	google.golang.org/api v0.52.0
-	gopkg.in/gographics/imagick.v2 v2.6.0
+	gopkg.in/gographics/imagick.v2 v2.6.1
 )
 
 require (
