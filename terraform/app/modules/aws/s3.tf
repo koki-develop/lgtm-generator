@@ -1,5 +1,3 @@
-# tfsec:ignore:aws-s3-enable-versioning
-# tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "images" {
   bucket        = "${local.prefix_backend}-images"
   force_destroy = false
@@ -34,7 +32,6 @@ resource "aws_s3_bucket_public_access_block" "images" {
   restrict_public_buckets = true
 }
 
-# tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket_server_side_encryption_configuration" "images" {
   bucket = aws_s3_bucket.images.id
 
