@@ -57,6 +57,11 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
     [fetchLgtms],
   );
 
+  const handleClickReload = useCallback(() => {
+    window.scrollTo(0, 0);
+    fetchLgtms({ reset: true, random: true });
+  }, [fetchLgtms]);
+
   const handleChangeFile = useCallback(
     (file: File) => {
       loadImage(file).then(imageFile => {
@@ -116,16 +121,19 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
         <LgtmCardList ids={lgtms.map(lgtm => lgtm.id)} />
       </Field>
 
-      {!randomly && (
-        <Field sx={{ display: 'flex', justifyContent: 'center' }}>
-          {loading && <Loading />}
-          {!loading && isTruncated && (
-            <Button color='primary' onClick={handleClickMore}>
-              {t.SEE_MORE}
-            </Button>
-          )}
-        </Field>
-      )}
+      <Field sx={{ display: 'flex', justifyContent: 'center' }}>
+        {loading && <Loading />}
+        {!randomly && !loading && isTruncated && (
+          <Button color='primary' onClick={handleClickMore}>
+            {t.SEE_MORE}
+          </Button>
+        )}
+        {randomly && !loading && isTruncated && (
+          <Button color='primary' onClick={handleClickReload}>
+            {t.RELOAD}
+          </Button>
+        )}
+      </Field>
     </Box>
   );
 });
