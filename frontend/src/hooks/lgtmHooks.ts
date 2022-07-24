@@ -12,7 +12,11 @@ export const useLgtms = (): Lgtm[] => {
   return useRecoilValue(lgtmsState);
 };
 
-export type FetchLgtmsFn = (after?: string) => Promise<void>;
+export type FetchLgtmsFn = (options: {
+  reset?: boolean;
+  after?: string;
+  random: boolean;
+}) => Promise<void>;
 
 export const useFetchLgtms = (): {
   fetchLgtms: FetchLgtmsFn;
@@ -25,11 +29,15 @@ export const useFetchLgtms = (): {
   const setLgtms = useSetRecoilState(lgtmsState);
 
   const fetchLgtms = useCallback(
-    async (after?: string) => {
+    async (options: { reset?: boolean; after?: string; random: boolean }) => {
       setLoading(true);
-      await ApiClient.getLgtms(after)
+      await ApiClient.getLgtms(options)
         .then(lgtms => {
-          setLgtms(prev => [...prev, ...lgtms]);
+          if (options.reset) {
+            setLgtms(lgtms);
+          } else {
+            setLgtms(prev => [...prev, ...lgtms]);
+          }
           setIsTruncated(lgtms.length === perPage);
         })
         .finally(() => {
