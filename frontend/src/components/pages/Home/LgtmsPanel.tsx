@@ -111,7 +111,11 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
             <FormControlLabel
               label={t.RANDOM}
               control={
-                <Checkbox checked={randomly} onChange={handleChangeRandomly} />
+                <Checkbox
+                  sx={{ pr: 0.5 }}
+                  checked={randomly}
+                  onChange={handleChangeRandomly}
+                />
               }
             />
           </FormGroup>
