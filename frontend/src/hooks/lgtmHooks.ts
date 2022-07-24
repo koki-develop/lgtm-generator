@@ -27,7 +27,7 @@ export const useFetchLgtms = (): {
   const fetchLgtms = useCallback(
     async (after?: string) => {
       setLoading(true);
-      await ApiClient.getLgtms(perPage, after)
+      await ApiClient.getLgtms(after)
         .then(lgtms => {
           setLgtms(prev => [...prev, ...lgtms]);
           setIsTruncated(lgtms.length === perPage);
