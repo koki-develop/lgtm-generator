@@ -2,7 +2,6 @@ package repositories
 
 import (
 	"fmt"
-	"math/rand"
 	"os"
 	"time"
 
@@ -60,10 +59,7 @@ func (repo *LGTMsRepository) FindRandomly() (entities.LGTMs, error) {
 		return nil, err
 	}
 
-	// TODO: utils に置く
-	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(keys), func(i, j int) { keys[i], keys[j] = keys[j], keys[i] })
-
+	utils.Shuffle(keys)
 	if len(keys) > 20 {
 		keys = keys[:20]
 	}
