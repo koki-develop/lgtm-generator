@@ -28,6 +28,7 @@ export type Translate = {
 
   NO_FAVORITES: string;
 
+  RANDOM: string;
   SEE_MORE: string;
 
   KEYWORD: string;

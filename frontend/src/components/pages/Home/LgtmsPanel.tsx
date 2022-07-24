@@ -1,3 +1,4 @@
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -83,6 +84,12 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
       />
 
       <Field>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <FormGroup>
+            <FormControlLabel label='ランダムに表示' control={<Checkbox />} />
+          </FormGroup>
+        </Box>
+
         <LgtmCardList ids={lgtms.map(lgtm => lgtm.id)} />
       </Field>
 

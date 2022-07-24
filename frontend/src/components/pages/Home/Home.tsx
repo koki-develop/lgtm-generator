@@ -31,7 +31,7 @@ const Home: React.VFC = React.memo(() => {
         <Admax admaxId={process.env.NEXT_PUBLIC_ADMAX_ID} type='switch' />
       </Box>
 
-      <Field>
+      <Field sx={{ mb: tab === TabValue.lgtms ? 0 : 2 }}>
         <Tabs value={tab} onChange={handleChangeTab} />
       </Field>
 
