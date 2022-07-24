@@ -11,9 +11,11 @@ custom:
   product: ${self:service}
   prefix: ${self:custom.product}-${self:provider.stage}
   allowOrigin:
+    local: http://localhost:3000
     dev: https://lgtm-generator-*-koki-develop.vercel.app
     prod: https://www.lgtmgen.org
   imageBaseUrl:
+    local: http://localhost:9000/lgtm-generator-backend-local-images
     dev: https://dev.images.lgtmgen.org
     prod: https://images.lgtmgen.org
   dynamodb:
