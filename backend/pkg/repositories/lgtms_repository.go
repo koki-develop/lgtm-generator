@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"time"
 
@@ -50,6 +51,27 @@ func (repo *LGTMsRepository) FindAll() (entities.LGTMs, error) {
 		return nil, errors.WithStack(err)
 	}
 
+	return lgtms, nil
+}
+
+func (repo *LGTMsRepository) FindRandomly() (entities.LGTMs, error) {
+	keys, err := repo.S3API.List()
+	if err != nil {
+		return nil, err
+	}
+
+	// TODO: utils に置く
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(keys), func(i, j int) { keys[i], keys[j] = keys[j], keys[i] })
+
+	if len(keys) > 20 {
+		keys = keys[:20]
+	}
+
+	lgtms := entities.LGTMs{}
+	for _, k := range keys {
+		lgtms = append(lgtms, &entities.LGTM{ID: k})
+	}
 	return lgtms, nil
 }
 
