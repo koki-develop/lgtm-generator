@@ -15,6 +15,7 @@ import (
 )
 
 type ClientAPI interface {
+	List() ([]string, error)
 	Put(key, contentType string, data []byte) error
 	Delete(key string) error
 }
@@ -41,6 +42,23 @@ func New(bucket string) *Client {
 	}
 }
 
+func (cl *Client) List() ([]string, error) {
+	resp, err := cl.api.ListObjectsV2(&s3.ListObjectsV2Input{
+		Bucket: aws.String(cl.bucket),
+	})
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
+	var keys []string
+
+	for _, c := range resp.Contents {
+		keys = append(keys, *c.Key)
+	}
+
+	return keys, nil
+}
+
 func (cl *Client) Put(key, contentType string, data []byte) error {
 	_, err := cl.uploader.Upload(&s3manager.UploadInput{
 		Bucket:      aws.String(cl.bucket),
@@ -49,7 +67,7 @@ func (cl *Client) Put(key, contentType string, data []byte) error {
 		Body:        bytes.NewReader(data),
 	})
 	if err != nil {
-		errors.WithStack(err)
+		return errors.WithStack(err)
 	}
 	return nil
 }

@@ -1,3 +1,4 @@
+import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -12,6 +13,7 @@ import {
   useLgtms,
 } from '~/hooks/lgtmHooks';
 import { useTranslate } from '~/hooks/translateHooks';
+import { DataStorage } from '~/lib/dataStorage';
 import { DataUrl } from '~/lib/dataUrl';
 import { ImageFile, useLoadImage } from '~/lib/imageFileReader';
 import UploadButton from './UploadButton';
@@ -28,6 +30,7 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   const [previewImageFile, setPreviewImageFile] = useState<ImageFile | null>(
     null,
   );
+  const [randomly, setRandomly] = useState<boolean>(false);
 
   const { t } = useTranslate();
   const { fetchLgtms, loading, isTruncated } = useFetchLgtms();
@@ -38,6 +41,25 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   const handleCloseConfirmForm = useCallback(() => {
     setOpenConfirmForm(false);
   }, []);
+
+  const handleChangeRandomly = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const checked = e.currentTarget.checked;
+      setRandomly(checked);
+      DataStorage.setRandomly(checked);
+
+      if (checked) {
+        fetchLgtms({ reset: true, random: true });
+      } else {
+        fetchLgtms({ reset: true, random: false });
+      }
+    },
+    [fetchLgtms],
+  );
+
+  const handleClickReload = useCallback(() => {
+    fetchLgtms({ reset: true, random: true });
+  }, [fetchLgtms]);
 
   const handleChangeFile = useCallback(
     (file: File) => {
@@ -60,11 +82,12 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   }, [createLgtmFromBase64, previewImageFile?.dataUrl, previewImageFile?.type]);
 
   const handleClickMore = useCallback(() => {
-    fetchLgtms(lgtms.slice(-1)[0]?.id);
+    fetchLgtms({ after: lgtms.slice(-1)[0]?.id, random: false });
   }, [fetchLgtms, lgtms]);
 
   useEffect(() => {
-    fetchLgtms();
+    setRandomly(DataStorage.getRandomly());
+    fetchLgtms({ random: DataStorage.getRandomly() });
   }, [fetchLgtms]);
 
   return (
@@ -83,14 +106,34 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
       />
 
       <Field>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <FormGroup>
+            <FormControlLabel
+              label={t.RANDOM}
+              control={
+                <Checkbox
+                  sx={{ pr: 0.5 }}
+                  checked={randomly}
+                  onChange={handleChangeRandomly}
+                />
+              }
+            />
+          </FormGroup>
+        </Box>
+
         <LgtmCardList ids={lgtms.map(lgtm => lgtm.id)} />
       </Field>
 
       <Field sx={{ display: 'flex', justifyContent: 'center' }}>
         {loading && <Loading />}
-        {!loading && isTruncated && (
+        {!randomly && !loading && isTruncated && (
           <Button color='primary' onClick={handleClickMore}>
             {t.SEE_MORE}
+          </Button>
+        )}
+        {randomly && !loading && isTruncated && (
+          <Button color='primary' onClick={handleClickReload}>
+            {t.RELOAD}
           </Button>
         )}
       </Field>

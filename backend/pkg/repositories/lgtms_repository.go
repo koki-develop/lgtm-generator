@@ -53,6 +53,24 @@ func (repo *LGTMsRepository) FindAll() (entities.LGTMs, error) {
 	return lgtms, nil
 }
 
+func (repo *LGTMsRepository) FindRandomly() (entities.LGTMs, error) {
+	keys, err := repo.S3API.List()
+	if err != nil {
+		return nil, err
+	}
+
+	utils.Shuffle(keys)
+	if len(keys) > 20 {
+		keys = keys[:20]
+	}
+
+	lgtms := entities.LGTMs{}
+	for _, k := range keys {
+		lgtms = append(lgtms, &entities.LGTM{ID: k})
+	}
+	return lgtms, nil
+}
+
 func (repo *LGTMsRepository) FindAllAfter(lgtm *entities.LGTM) (entities.LGTMs, error) {
 	key, err := dynamodbattribute.MarshalMap(lgtm)
 	if err != nil {

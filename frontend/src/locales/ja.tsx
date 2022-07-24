@@ -52,6 +52,8 @@ export const ja: Translate = {
 
   NO_FAVORITES: 'お気に入りした LGTM 画像はありません。',
 
+  RANDOM: 'ランダムに表示',
+  RELOAD: '再読み込み',
   SEE_MORE: 'もっと見る',
 
   KEYWORD: 'キーワード',

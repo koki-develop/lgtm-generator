@@ -64,5 +64,6 @@ func (ipt *LGTMCreateInput) Valid() bool {
 }
 
 type LGTMFindAllInput struct {
-	After *string `form:"after"`
+	After  *string `form:"after"`
+	Random bool    `form:"random"`
 }

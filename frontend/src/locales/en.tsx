@@ -54,6 +54,8 @@ export const en: Translate = {
 
   NO_FAVORITES: 'There are no favorites yet.',
 
+  RANDOM: 'Random',
+  RELOAD: 'Reload',
   SEE_MORE: 'See more',
 
   KEYWORD: 'Keyword',

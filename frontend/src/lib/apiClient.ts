@@ -18,10 +18,13 @@ type ErrorResponse = {
 };
 
 export class ApiClient {
-  public static async getLgtms(limit: number, after?: string): Promise<Lgtm[]> {
+  public static async getLgtms(options: {
+    after?: string;
+    random: boolean;
+  }): Promise<Lgtm[]> {
     const endpoint = this.buildEndpoint('v1', 'lgtms');
     const { data } = await axios.get<Lgtm[]>(endpoint, {
-      params: { after, limit },
+      params: { after: options.after, random: options.random },
     });
     return data;
   }

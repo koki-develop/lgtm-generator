@@ -39,14 +39,25 @@ func (ctrl *LGTMsController) FindAll(ctx *gin.Context) {
 	}
 
 	if ipt.After == nil || *ipt.After == "" {
-		lgtms, err := ctrl.LGTMsRepository.FindAll()
-		if err != nil {
-			ctrl.Renderer.InternalServerError(ctx, err)
+		if ipt.Random {
+			lgtms, err := ctrl.LGTMsRepository.FindRandomly()
+			if err != nil {
+				ctrl.Renderer.InternalServerError(ctx, err)
+				return
+			}
+
+			ctrl.Renderer.OK(ctx, lgtms)
+			return
+		} else {
+			lgtms, err := ctrl.LGTMsRepository.FindAll()
+			if err != nil {
+				ctrl.Renderer.InternalServerError(ctx, err)
+				return
+			}
+
+			ctrl.Renderer.OK(ctx, lgtms)
 			return
 		}
-
-		ctrl.Renderer.OK(ctx, lgtms)
-		return
 	}
 
 	lgtm, ok, err := ctrl.LGTMsRepository.Find(*ipt.After)
