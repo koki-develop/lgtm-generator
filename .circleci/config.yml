@@ -16,7 +16,7 @@ executors:
       - image: golang:1.18
   node:
     docker:
-      - image: node:14
+      - image: node:16
 
 commands:
   aws-configure:
@@ -136,7 +136,7 @@ jobs:
           command: |
             tflint .
             tflint ./modules/aws
-      - run: tfsec
+      - run: tfsec --config-file tfsec.yml
       - notify-fail
 
   terraform-apply:

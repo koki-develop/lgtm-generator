@@ -7,8 +7,8 @@
     "open:dev": "cypress open --config-file cypress.dev.json"
   },
   "devDependencies": {
-    "cypress": "^9.4.1",
-    "cypress-file-upload": "^5.0.8",
-    "typescript": "^4.5.5"
+    "cypress": "9.7.0",
+    "cypress-file-upload": "5.0.8",
+    "typescript": "4.5.5"
   }
 }
