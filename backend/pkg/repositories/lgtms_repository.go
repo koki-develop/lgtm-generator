@@ -42,7 +42,7 @@ func (repo *LGTMsRepository) Find(id string) (*entities.LGTM, bool, error) {
 }
 
 func (repo *LGTMsRepository) FindAll() (entities.LGTMs, error) {
-	var lgtms entities.LGTMs
+	lgtms := entities.LGTMs{}
 
 	tbl := repo.getTable()
 	q := tbl.Get("status", entities.LGTMStatusOK).Index("index_by_status").Order(dynamo.Descending).Limit(20)
