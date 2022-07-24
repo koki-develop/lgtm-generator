@@ -34,5 +34,4 @@ services:
 volumes:
   bucket_data:
   dynamodb_data:
-  go_mod:
   node_modules:
