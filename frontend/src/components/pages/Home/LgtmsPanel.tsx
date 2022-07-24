@@ -58,7 +58,6 @@ const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
   );
 
   const handleClickReload = useCallback(() => {
-    window.scrollTo(0, 0);
     fetchLgtms({ reset: true, random: true });
   }, [fetchLgtms]);
 

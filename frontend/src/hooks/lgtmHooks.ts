@@ -30,14 +30,13 @@ export const useFetchLgtms = (): {
 
   const fetchLgtms = useCallback(
     async (options: { reset?: boolean; after?: string; random: boolean }) => {
+      if (options.reset) {
+        setLgtms([]);
+      }
       setLoading(true);
       await ApiClient.getLgtms(options)
         .then(lgtms => {
-          if (options.reset) {
-            setLgtms(lgtms);
-          } else {
-            setLgtms(prev => [...prev, ...lgtms]);
-          }
+          setLgtms(prev => [...prev, ...lgtms]);
           setIsTruncated(lgtms.length === perPage);
         })
         .finally(() => {
