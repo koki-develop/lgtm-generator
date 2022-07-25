@@ -16,7 +16,7 @@ executors:
       - image: golang:1.18
   node:
     docker:
-      - image: node:16
+      - image: node:18
 
 commands:
   aws-configure:
