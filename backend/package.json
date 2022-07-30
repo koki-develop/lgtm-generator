@@ -7,6 +7,6 @@
     "remove": "serverless remove --verbose"
   },
   "devDependencies": {
-    "serverless": "3.19.0"
+    "serverless": "3.21.0"
   }
 }
