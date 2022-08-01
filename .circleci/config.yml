@@ -166,6 +166,17 @@ jobs:
       - run: yarn run build
       - notify-fail
 
+  e2e:
+    executor: node
+    working_directory: ~/project/e2e
+    steps:
+      - checkout:
+          path: ~/project
+      - yarn-install
+      - run:
+          name: cypress
+          command: yarn run cypress run --config-file cypress.dev.config.ts --record
+
 workflows:
   build:
     jobs:
@@ -180,6 +191,24 @@ workflows:
           name: terraform-plan-prod
           stage: prod
       - frontend-build
+
+      # e2e
+      - approval-e2e:
+          type: approval
+          requires:
+            - backend-build
+            - terraform-plan-dev
+            - terraform-plan-prod
+            - frontend-build
+      - slack/on-hold:
+          requires:
+            - backend-build
+            - terraform-plan-dev
+            - terraform-plan-prod
+            - frontend-build
+      - e2e:
+          requires:
+            - approval-e2e
 
       # approval
       - approval-deploy:
