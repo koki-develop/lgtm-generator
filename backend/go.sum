@@ -85,6 +85,10 @@ github.com/aws/aws-lambda-go v1.26.0 h1:6ujqBpYF7tdZcBvPIccs98SpeGfrt/UOVEiexfNI
 github.com/aws/aws-lambda-go v1.26.0/go.mod h1:jJmlefzPfGnckuHdXX7/80O3BvUUi12XOkbv4w9SGLU=
 github.com/aws/aws-lambda-go v1.33.0 h1:n4kw3zie82vPpLLN58ahlYHBz9k8QeK2svQep+jGnB8=
 github.com/aws/aws-lambda-go v1.33.0/go.mod h1:jwFe2KmMsHmffA1X2R09hH6lFzJQxzI8qK17ewzbQMM=
+github.com/aws/aws-lambda-go v1.34.0 h1:iQMJkX0pzhe6+sXb90niz5//TtvOgghu1U1I5Cfo8v4=
+github.com/aws/aws-lambda-go v1.34.0/go.mod h1:jwFe2KmMsHmffA1X2R09hH6lFzJQxzI8qK17ewzbQMM=
+github.com/aws/aws-lambda-go v1.34.1 h1:M3a/uFYBjii+tDcOJ0wL/WyFi2550FHoECdPf27zvOs=
+github.com/aws/aws-lambda-go v1.34.1/go.mod h1:jwFe2KmMsHmffA1X2R09hH6lFzJQxzI8qK17ewzbQMM=
 github.com/aws/aws-sdk-go v1.38.0 h1:mqnmtdW8rGIQmp2d0WRFLua0zW0Pel0P6/vd3gJuViY=
 github.com/aws/aws-sdk-go v1.38.0/go.mod h1:hcU610XS61/+aQV88ixoOzUoG7v3b31pl2zKMmprdro=
 github.com/aws/aws-sdk-go v1.42.47/go.mod h1:OGr6lGMAKGlG9CVrYnWYDKIyb829c6EVBRjxqjmPepc=
@@ -92,6 +96,8 @@ github.com/aws/aws-sdk-go v1.44.61 h1:NcpLSS3Z0MiVQIYugx4I40vSIEEAXT0baO684ExNRc
 github.com/aws/aws-sdk-go v1.44.61/go.mod h1:y4AeaBuwd2Lk+GepC1E9v0qOiTws0MIWAX4oIKwKHZo=
 github.com/aws/aws-sdk-go v1.44.66 h1:xdH4EvHyUnkm4I8d536ui7yMQKYzrkbSDQ2LvRRHqsg=
 github.com/aws/aws-sdk-go v1.44.66/go.mod h1:y4AeaBuwd2Lk+GepC1E9v0qOiTws0MIWAX4oIKwKHZo=
+github.com/aws/aws-sdk-go v1.44.67 h1:+nxfXbMe8QUB6svLsuLYsp+WhZBKM26w62Zidir739A=
+github.com/aws/aws-sdk-go v1.44.67/go.mod h1:y4AeaBuwd2Lk+GepC1E9v0qOiTws0MIWAX4oIKwKHZo=
 github.com/awslabs/aws-lambda-go-api-proxy v0.11.0 h1:0BeMGwaoHRtwWa26+cg4+Xd1Tpb9mYWP0NDfu7HNyQk=
 github.com/awslabs/aws-lambda-go-api-proxy v0.11.0/go.mod h1:Epon214ULEemdKoA+Vp1D+qKfPKpjPTjH9f1Syo/CDk=
 github.com/awslabs/aws-lambda-go-api-proxy v0.13.3 h1:kGtltTONdJa0Bmot9phYw3ucCg2SExj6mH00I1aga8Y=
@@ -975,6 +981,8 @@ google.golang.org/api v0.80.0/go.mod h1:xY3nI94gbvBrE0J6NHXhxOmW97HG7Khjkku6AFB3
 google.golang.org/api v0.84.0/go.mod h1:NTsGnUFJMYROtiquksZHBWtHfeMC7iYthki7Eq3pa8o=
 google.golang.org/api v0.88.0 h1:MPwxQRqpyskYhr2iNyfsQ8R06eeyhe7UEuR30p136ZQ=
 google.golang.org/api v0.88.0/go.mod h1:+Sem1dnrKlrXMR/X0bPnMWyluQe4RsNoYfmNLhOIkzw=
+google.golang.org/api v0.90.0 h1:WMnUWAvihIClUYFNeFA69VTuR3duKS3IalMGDQcLvq8=
+google.golang.org/api v0.90.0/go.mod h1:+Sem1dnrKlrXMR/X0bPnMWyluQe4RsNoYfmNLhOIkzw=
 google.golang.org/appengine v1.1.0/go.mod h1:EbEs0AVv82hx2wNQdGPgUI5lhzA/G0D9YwlJXL52JkM=
 google.golang.org/appengine v1.4.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
 google.golang.org/appengine v1.5.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
