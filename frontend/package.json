@@ -9,10 +9,10 @@
     "fmt": "yarn lint --fix && prettier --write ."
   },
   "dependencies": {
-    "@emotion/cache": "11.9.3",
-    "@emotion/react": "11.9.3",
-    "@emotion/server": "11.4.0",
-    "@emotion/styled": "11.9.3",
+    "@emotion/cache": "11.10.0",
+    "@emotion/react": "11.10.0",
+    "@emotion/server": "11.10.0",
+    "@emotion/styled": "11.10.0",
     "@mui/icons-material": "5.8.4",
     "@mui/material": "5.9.2",
     "@mui/styles": "5.9.2",
