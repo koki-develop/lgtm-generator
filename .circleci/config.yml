@@ -19,7 +19,7 @@ executors:
       - image: node:16
   cypress:
     docker:
-      - image: cypress/base:14.16.0
+      - image: cypress/base:14.19.0
 
 commands:
   aws-configure:
