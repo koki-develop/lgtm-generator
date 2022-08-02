@@ -13,7 +13,7 @@ executors:
       image: ubuntu-2004:current
   golang:
     docker:
-      - image: golang:1.18
+      - image: golang:1.19
   node:
     docker:
       - image: node:16
