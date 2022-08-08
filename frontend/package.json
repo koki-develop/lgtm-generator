@@ -18,7 +18,7 @@
     "@mui/styles": "5.9.3",
     "axios": "0.27.2",
     "canvas": "2.9.3",
-    "next": "12.2.3",
+    "next": "12.2.4",
     "notistack": "2.0.5",
     "react": "17.0.2",
     "react-copy-to-clipboard": "5.1.0",
