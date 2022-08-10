@@ -201,6 +201,10 @@ workflows:
       # e2e
       - approval-e2e:
           type: approval
+          filters:
+            branches:
+              ignore:
+                - main
           requires:
             - backend-build
             - terraform-plan-dev
