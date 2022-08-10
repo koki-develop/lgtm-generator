@@ -7,7 +7,8 @@ import { Translate } from './translate';
 // TODO: 整理
 export const ja: Translate = {
   APP_NAME: 'LGTM Generator',
-  APP_DESCRIPTION: 'シンプルな LGTM 画像作成サービスです。',
+  APP_DESCRIPTION:
+    'シンプルな LGTM 画像作成サービスです。 LGTM とは「Looks Good To Me」の略で、コードレビューのときなどに用いられるネットスラングの一種です。',
 
   PRECAUTIONS: '利用上の注意',
   PRECAUTIONS_ITEMS: [
