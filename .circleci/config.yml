@@ -177,6 +177,9 @@ jobs:
           path: ~/project
       - yarn-install
       - run:
+          name: install cypress
+          command: yarn run cypress install
+      - run:
           name: cypress
           command: yarn run cypress run --config-file cypress.dev.config.ts --record
 
