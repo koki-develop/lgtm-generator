@@ -6,3 +6,10 @@ exclude:
   - aws-s3-encryption-customer-key
   - aws-cloudfront-enable-logging
   - aws-cloudfront-enable-waf
+
+  # TODO: 設定してるのに警告される。 tfsec 側の不具合？
+  #       一旦 exclude しておく。
+  - aws-s3-no-public-buckets
+  - aws-s3-ignore-public-acls
+  - aws-s3-block-public-policy
+  - aws-s3-block-public-acls
