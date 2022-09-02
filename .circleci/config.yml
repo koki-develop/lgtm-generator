@@ -198,28 +198,6 @@ workflows:
           stage: prod
       - frontend-build
 
-      # e2e
-      - approval-e2e:
-          type: approval
-          filters:
-            branches:
-              ignore:
-                - main
-          requires:
-            - backend-build
-            - terraform-plan-dev
-            - terraform-plan-prod
-            - frontend-build
-      - slack/on-hold:
-          requires:
-            - backend-build
-            - terraform-plan-dev
-            - terraform-plan-prod
-            - frontend-build
-      - e2e:
-          requires:
-            - approval-e2e
-
       # approval
       - approval-deploy:
           type: approval
@@ -256,6 +234,9 @@ workflows:
             branches:
               ignore:
                 - main
+      - e2e:
+          requires:
+            - terraform-apply-dev
 
       - backend-deploy:
           context: aws
