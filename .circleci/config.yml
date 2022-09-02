@@ -198,9 +198,12 @@ workflows:
           stage: prod
       - frontend-build
 
-      # approval
+      # deploy (dev)
       - approval-deploy:
           type: approval
+          filters:
+            branches:
+              ignore: [main]
           requires:
             - backend-build
             - terraform-plan-dev
@@ -212,8 +215,6 @@ workflows:
             - terraform-plan-dev
             - terraform-plan-prod
             - frontend-build
-
-      # deploy
       - backend-deploy:
           context: aws
           name: backend-deploy-dev
@@ -222,8 +223,7 @@ workflows:
             - approval-deploy
           filters:
             branches:
-              ignore:
-                - main
+              ignore: [main]
       - terraform-apply:
           context: aws
           name: terraform-apply-dev
@@ -238,16 +238,18 @@ workflows:
           requires:
             - terraform-apply-dev
 
+      # deploy (prod)
       - backend-deploy:
           context: aws
           name: backend-deploy-prod
           stage: prod
           requires:
-            - approval-deploy
+            - backend-build
+            - terraform-plan-prod
+            - frontend-build
           filters:
             branches:
-              only:
-                - main
+              only: [main]
       - terraform-apply:
           context: aws
           name: terraform-apply-prod
@@ -256,5 +258,4 @@ workflows:
             - backend-deploy-prod
           filters:
             branches:
-              only:
-                - main
+              only: [main]
