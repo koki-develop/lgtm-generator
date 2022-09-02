@@ -1,5 +1,5 @@
 const randomSearchKeyword = (): string => {
-  const keywords: string[] = ["cat", "dog", "sheep", "hamster"];
+  const keywords: string[] = ["cat", "sheep", "hamster"];
   return keywords[Math.floor(Math.random() * keywords.length)];
 };
 
