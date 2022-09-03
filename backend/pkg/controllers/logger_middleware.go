@@ -39,7 +39,7 @@ func (m *LoggerMiddleware) Apply() gin.HandlerFunc {
 			RequestMethod:       ctx.Request.Method,
 		}
 
-		apigwctx, ok := core.GetAPIGatewayContextFromContext(ctx)
+		apigwctx, ok := core.GetAPIGatewayContextFromContext(ctx.Request.Context())
 		if ok {
 			params.APIGatewayRequestID = apigwctx.RequestID
 			params.ClientIP = apigwctx.Identity.SourceIP
