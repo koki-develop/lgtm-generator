@@ -15,7 +15,7 @@ import (
 )
 
 func New() *gin.Engine {
-	r := gin.Default()
+	r := gin.New()
 
 	engine := imagesearch.New(os.Getenv("GOOGLE_API_KEY"), os.Getenv("GOOGLE_CUSTOM_SEARCH_ENGINE_ID"))
 	slackClient := slack.New(os.Getenv("SLACK_API_TOKEN"))
@@ -26,9 +26,12 @@ func New() *gin.Engine {
 
 	// middleware
 	{
+		logger := controllers.NewLoggerMiddleware()
 		errresp := controllers.NewErrorResponseLoggerMiddleware(slackClient, fmt.Sprintf("lgtm-generator-backend-%s-errors", os.Getenv("STAGE")))
 		cors := controllers.NewCORSMiddleware(os.Getenv("ALLOW_ORIGIN"))
 
+		r.Use(gin.Recovery())
+		r.Use(logger.Apply())
 		r.Use(errresp.Apply)
 		r.Use(cors.Apply)
 	}
