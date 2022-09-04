@@ -210,6 +210,9 @@ workflows:
             - terraform-plan-prod
             - frontend-build
       - slack/on-hold:
+          filters:
+            branches:
+              ignore: [main]
           requires:
             - backend-build
             - terraform-plan-dev
