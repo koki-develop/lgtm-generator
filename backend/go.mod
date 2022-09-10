@@ -12,7 +12,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/slack-go/slack v0.11.2
 	google.golang.org/api v0.94.0
-	gopkg.in/gographics/imagick.v2 v2.6.1
+	gopkg.in/gographics/imagick.v2 v2.6.2
 )
 
 require (
