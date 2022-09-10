@@ -3,7 +3,7 @@ import React from 'react';
 
 export type FieldProps = BoxProps;
 
-const Field: React.VFC<FieldProps> = React.memo(props => {
+const Field: React.FC<FieldProps> = React.memo(props => {
   return <Box {...props} sx={{ mb: 2, ...props.sx }} />;
 });
 

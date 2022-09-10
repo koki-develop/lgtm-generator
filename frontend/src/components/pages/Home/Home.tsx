@@ -9,7 +9,7 @@ import LgtmsPanel from './LgtmsPanel';
 import SearchImagesPanel from './SearchImagesPanel';
 import Tabs, { TabValue } from './Tabs';
 
-const Home: React.VFC = React.memo(() => {
+const Home: React.FC = React.memo(() => {
   const router = useRouter();
 
   const tab = useMemo(() => {

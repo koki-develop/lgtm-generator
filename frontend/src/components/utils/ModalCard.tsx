@@ -7,7 +7,7 @@ type ModalCardProps = Omit<ModalProps, 'children'> & {
   children: React.ReactNode;
 };
 
-const ModalCard: React.VFC<ModalCardProps> = React.memo(props => {
+const ModalCard: React.FC<ModalCardProps> = React.memo(props => {
   const { onClose, ...modalProps } = props;
 
   const handleClickCloseIcon = useCallback(() => {

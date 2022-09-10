@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import Layout from '~/components/Layout';
 import { useTranslate } from '~/hooks/translateHooks';
 
-const PrivacyPolicy: React.VFC = React.memo(() => {
+const PrivacyPolicy: React.FC = React.memo(() => {
   const { t } = useTranslate();
 
   const items: { name: string; content: React.ReactNode }[] = useMemo(() => {

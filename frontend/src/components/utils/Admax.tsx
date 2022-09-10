@@ -9,7 +9,7 @@ export type AdmaxProps = React.HTMLProps<HTMLDivElement> & {
   admaxId: string;
 };
 
-const Admax: React.VFC<AdmaxProps> = React.memo(props => {
+const Admax: React.FC<AdmaxProps> = React.memo(props => {
   const { admaxId, ...divProps } = props;
 
   useEffect(() => {

@@ -9,7 +9,7 @@ export type MetaProps = {
   title?: string;
 };
 
-const Meta: React.VFC<MetaProps> = React.memo(props => {
+const Meta: React.FC<MetaProps> = React.memo(props => {
   const { title } = props;
 
   const router = useRouter();

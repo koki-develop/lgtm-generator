@@ -10,7 +10,7 @@ const LinkListItem = styled('li')(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const Footer: React.VFC = React.memo(() => {
+const Footer: React.FC = React.memo(() => {
   const { t } = useTranslate();
 
   return (

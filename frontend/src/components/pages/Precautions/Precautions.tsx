@@ -13,7 +13,7 @@ const StyledListItem = styled('li')(({ theme }) => ({
   marginBottom: theme.spacing(1),
 }));
 
-const Precautions: React.VFC = React.memo(() => {
+const Precautions: React.FC = React.memo(() => {
   const { t } = useTranslate();
 
   return (
