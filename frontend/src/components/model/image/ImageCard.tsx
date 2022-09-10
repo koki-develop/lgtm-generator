@@ -13,7 +13,7 @@ type ImageCardProps = {
   onClick: (image: Image) => void;
 };
 
-const ImageCard: React.VFC<ImageCardProps> = React.memo(props => {
+const ImageCard: React.FC<ImageCardProps> = React.memo(props => {
   const { image, onClick } = props;
 
   const handleClick = useCallback(() => {

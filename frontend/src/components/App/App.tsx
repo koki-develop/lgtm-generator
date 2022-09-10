@@ -12,7 +12,7 @@ export type MyAppProps = AppProps & {
   emotionCache?: EmotionCache;
 };
 
-const App: React.VFC<MyAppProps> = props => {
+const App: React.FC<MyAppProps> = props => {
   const { Component, pageProps, emotionCache = clientSideEmotionCache } = props;
 
   const router = useRouter();

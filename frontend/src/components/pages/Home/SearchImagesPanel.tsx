@@ -15,7 +15,7 @@ type SearchImagesPanelProps = {
   show: boolean;
 };
 
-const SearchImagesPanel: React.VFC<SearchImagesPanelProps> = React.memo(
+const SearchImagesPanel: React.FC<SearchImagesPanelProps> = React.memo(
   props => {
     const { show } = props;
 

@@ -8,7 +8,7 @@ type UploadButtonProps = {
   onChange: (file: File) => void;
 };
 
-const UploadButton: React.VFC<UploadButtonProps> = React.memo(props => {
+const UploadButton: React.FC<UploadButtonProps> = React.memo(props => {
   const { onChange } = props;
 
   const inputFileRef = React.createRef<HTMLInputElement>();

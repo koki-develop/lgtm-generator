@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 export type FormProps = React.HTMLProps<HTMLFormElement>;
 
-const Form: React.VFC<FormProps> = React.memo(props => {
+const Form: React.FC<FormProps> = React.memo(props => {
   const { onSubmit, ...formProps } = props;
 
   const handleSubmit = useCallback(

@@ -29,7 +29,7 @@ type LgtmCardButtonGroupProps = {
   id: string;
 };
 
-const LgtmCardButtonGroup: React.VFC<LgtmCardButtonGroupProps> = React.memo(
+const LgtmCardButtonGroup: React.FC<LgtmCardButtonGroupProps> = React.memo(
   props => {
     const { id } = props;
 

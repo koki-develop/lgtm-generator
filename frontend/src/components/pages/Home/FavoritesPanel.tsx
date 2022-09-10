@@ -8,7 +8,7 @@ type FavoritesPanelProps = {
   show: boolean;
 };
 
-const FavoritesPanel: React.VFC<FavoritesPanelProps> = React.memo(props => {
+const FavoritesPanel: React.FC<FavoritesPanelProps> = React.memo(props => {
   const { show } = props;
 
   const favoriteIds = useFavoriteIds();

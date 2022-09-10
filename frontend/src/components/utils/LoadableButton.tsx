@@ -5,7 +5,7 @@ export type LoadableButtonProps = ButtonProps & {
   loading: boolean;
 };
 
-const LoadableButton: React.VFC<LoadableButtonProps> = React.memo(props => {
+const LoadableButton: React.FC<LoadableButtonProps> = React.memo(props => {
   const { loading, children, ...buttonProps } = props;
 
   return (
