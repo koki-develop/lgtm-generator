@@ -13,8 +13,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
+import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo, useState } from 'react';
-import CopyToClipBoard from 'react-copy-to-clipboard';
 import urlJoin from 'url-join';
 import ReportForm from '~/components/model/report/ReportForm';
 import { useToast } from '~/components/providers/ToastProvider';
@@ -67,10 +67,25 @@ const LgtmCardButtonGroup: React.FC<LgtmCardButtonGroupProps> = React.memo(
       setCopyButtonEl(null);
     }, []);
 
-    const handleClickCopyLink = useCallback(() => {
+    const handleClickCopyMarkdownLink = useCallback(() => {
+      const text = `![LGTM](${urlJoin(
+        process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
+        id,
+      )})`;
+      copy(text);
       enqueueSuccess(t.COPIED_TO_CLIPBOARD);
       setCopyButtonEl(null);
-    }, [enqueueSuccess, t.COPIED_TO_CLIPBOARD]);
+    }, [enqueueSuccess, id, t.COPIED_TO_CLIPBOARD]);
+
+    const handleClickCopyHtmlLink = useCallback(() => {
+      const text = `<img src="${urlJoin(
+        process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
+        id,
+      )}" alt="LGTM" />`;
+      copy(text);
+      enqueueSuccess(t.COPIED_TO_CLIPBOARD);
+      setCopyButtonEl(null);
+    }, [enqueueSuccess, id, t.COPIED_TO_CLIPBOARD]);
 
     const handleClickReportButton = useCallback(() => {
       setOpenReportForm(true);
@@ -107,42 +122,28 @@ const LgtmCardButtonGroup: React.FC<LgtmCardButtonGroupProps> = React.memo(
                   <ListItem disablePadding>
                     <ListItemButton
                       data-testid='lgtm-card-copy-markdown-button'
-                      onClick={handleClickCopyLink}
+                      onClick={handleClickCopyMarkdownLink}
                     >
-                      <CopyToClipBoard
-                        text={`![LGTM](${urlJoin(
-                          process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
-                          id,
-                        )})`}
-                      >
-                        <ListItemText
-                          secondary='Markdown'
-                          secondaryTypographyProps={{
-                            sx: { textAlign: 'center' },
-                          }}
-                        />
-                      </CopyToClipBoard>
+                      <ListItemText
+                        secondary='Markdown'
+                        secondaryTypographyProps={{
+                          sx: { textAlign: 'center' },
+                        }}
+                      />
                     </ListItemButton>
                   </ListItem>
                   <Divider />
                   <ListItem disablePadding>
                     <ListItemButton
                       data-testid='lgtm-card-copy-html-button'
-                      onClick={handleClickCopyLink}
+                      onClick={handleClickCopyHtmlLink}
                     >
-                      <CopyToClipBoard
-                        text={`<img src="${urlJoin(
-                          process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
-                          id,
-                        )}" alt="LGTM" />`}
-                      >
-                        <ListItemText
-                          secondary='HTML'
-                          secondaryTypographyProps={{
-                            sx: { textAlign: 'center' },
-                          }}
-                        />
-                      </CopyToClipBoard>
+                      <ListItemText
+                        secondary='HTML'
+                        secondaryTypographyProps={{
+                          sx: { textAlign: 'center' },
+                        }}
+                      />
                     </ListItemButton>
                   </ListItem>
                 </List>
