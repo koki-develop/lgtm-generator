@@ -43,7 +43,7 @@ commands:
     steps:
       - node/install:
           install-yarn: true
-          node-version: '14'
+          node-version: '16'
 
   yarn-install:
     steps:
