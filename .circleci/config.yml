@@ -60,7 +60,7 @@ commands:
       - run:
           name: install tflint
           environment:
-            TFLINT_VERSION: 0.40.0
+            TFLINT_VERSION: v0.40.0
           command: curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
       - run: tflint --init
 
