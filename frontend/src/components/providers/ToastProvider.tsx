@@ -13,7 +13,7 @@ type ToastProviderProps = {
   children: React.ReactNode;
 };
 
-const Root: React.VFC<ToastProviderProps> = (props: ToastProviderProps) => {
+const Root: React.FC<ToastProviderProps> = (props: ToastProviderProps) => {
   const snackbarRef = React.createRef<SnackbarProvider>();
 
   return (
@@ -28,7 +28,7 @@ const Root: React.VFC<ToastProviderProps> = (props: ToastProviderProps) => {
   );
 };
 
-const ToastProvider: React.VFC<ToastProviderProps> = (
+const ToastProvider: React.FC<ToastProviderProps> = (
   props: ToastProviderProps,
 ) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();

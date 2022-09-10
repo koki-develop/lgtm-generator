@@ -13,7 +13,7 @@ type LgtmCardProps = {
   id: string;
 };
 
-const LgtmCard: React.VFC<LgtmCardProps> = React.memo(props => {
+const LgtmCard: React.FC<LgtmCardProps> = React.memo(props => {
   const { id } = props;
 
   return (

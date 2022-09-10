@@ -6,7 +6,7 @@ type LgtmCardListProps = {
   ids: string[];
 };
 
-const LgtmCardList: React.VFC<LgtmCardListProps> = React.memo(props => {
+const LgtmCardList: React.FC<LgtmCardListProps> = React.memo(props => {
   const { ids } = props;
 
   return (

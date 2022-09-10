@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from '~/components/Layout';
 import { useTranslate } from '~/hooks/translateHooks';
 
-const NotFound: React.VFC = React.memo(() => {
+const NotFound: React.FC = React.memo(() => {
   const { t } = useTranslate();
 
   return (

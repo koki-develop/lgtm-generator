@@ -22,7 +22,7 @@ type LgtmsPanelProps = {
   show: boolean;
 };
 
-const LgtmsPanel: React.VFC<LgtmsPanelProps> = React.memo(props => {
+const LgtmsPanel: React.FC<LgtmsPanelProps> = React.memo(props => {
   const { show } = props;
 
   const lgtms = useLgtms();

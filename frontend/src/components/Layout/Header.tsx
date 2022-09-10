@@ -25,7 +25,7 @@ type TranslateListItemProps = {
   onClick: () => void;
 };
 
-const TranslateListItem: React.VFC<TranslateListItemProps> = React.memo(
+const TranslateListItem: React.FC<TranslateListItemProps> = React.memo(
   props => {
     const { text, locale, onClick } = props;
     const router = useRouter();
@@ -60,7 +60,7 @@ const TranslateListItem: React.VFC<TranslateListItemProps> = React.memo(
 
 TranslateListItem.displayName = 'TranslateListItem';
 
-const Header: React.VFC = React.memo(() => {
+const Header: React.FC = React.memo(() => {
   const { t } = useTranslate();
   const theme = useTheme();
 

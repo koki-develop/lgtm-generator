@@ -7,7 +7,7 @@ type LinkProps = MuiLinkProps & {
   external?: boolean;
 };
 
-const Link: React.VFC<LinkProps> = React.memo(props => {
+const Link: React.FC<LinkProps> = React.memo(props => {
   const { external, locale, ...linkProps } = props;
 
   if (external) {

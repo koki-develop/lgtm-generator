@@ -15,7 +15,7 @@ type ConfirmFormProps = {
   onConfirm: () => void;
 };
 
-const ConfirmForm: React.VFC<ConfirmFormProps> = React.memo(props => {
+const ConfirmForm: React.FC<ConfirmFormProps> = React.memo(props => {
   const { previewSrc, open, loading, onClose, onConfirm } = props;
   const { t } = useTranslate();
 

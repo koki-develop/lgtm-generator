@@ -8,7 +8,7 @@ type ImageCardListProps = {
   onClickImage: (image: Image) => void;
 };
 
-const ImageCardList: React.VFC<ImageCardListProps> = React.memo(props => {
+const ImageCardList: React.FC<ImageCardListProps> = React.memo(props => {
   const { images, onClickImage } = props;
 
   return (

@@ -13,7 +13,7 @@ type LayoutProps = {
   title?: string;
 };
 
-const Layout: React.VFC<LayoutProps> = React.memo(props => {
+const Layout: React.FC<LayoutProps> = React.memo(props => {
   return (
     <ThemeProvider theme={theme}>
       <LayoutContent {...props} />
@@ -23,7 +23,7 @@ const Layout: React.VFC<LayoutProps> = React.memo(props => {
 
 Layout.displayName = 'Layout';
 
-const LayoutContent: React.VFC<LayoutProps> = React.memo(props => {
+const LayoutContent: React.FC<LayoutProps> = React.memo(props => {
   const { children, title } = props;
 
   return (

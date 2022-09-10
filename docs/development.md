@@ -37,6 +37,7 @@ GOOGLE_CUSTOM_SEARCH_ENGINE_ID=xxxx # Google カスタム検索エンジン ID
 ```sh
 docker compose up
 aws --endpoint-url http://localhost:8000 dynamodb create-table --cli-input-json "$(yarn run --silent sls print --stage local | yq '.resources.Resources.LgtmsTable.Properties' -o json)"
+aws --endpoint-url http://localhost:8000 dynamodb create-table --cli-input-json "$(yarn run --silent sls print --stage local | yq '.resources.Resources.ReportsTable.Properties' -o json)"
 ```
 
 ### API を起動

@@ -15,7 +15,7 @@ type TabsProps = {
   onChange: (value: TabValue) => void;
 };
 
-const Tabs: React.VFC<TabsProps> = React.memo(props => {
+const Tabs: React.FC<TabsProps> = React.memo(props => {
   const { value, onChange } = props;
   const { t } = useTranslate();
 

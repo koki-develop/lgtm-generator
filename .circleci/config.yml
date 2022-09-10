@@ -43,22 +43,32 @@ commands:
     steps:
       - node/install:
           install-yarn: true
-          node-version: '14'
+          node-version: '16'
 
   yarn-install:
     steps:
-      - node/install-packages:
-          pkg-manager: yarn
+      - restore_cache:
+          keys:
+            - yarn-packages-v1-{{ checksum "yarn.lock" }}
+      - run:
+          name: install dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-v1-{{ checksum "yarn.lock" }}
+          paths:
+            - "node_modules"
 
   install-terraform:
     steps:
       - terraform/install:
-          terraform_version: 1.2.3
+          terraform_version: 1.2.9
 
   install-tflint:
     steps:
       - run:
           name: install tflint
+          environment:
+            TFLINT_VERSION: v0.40.0
           command: curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
       - run: tflint --init
 
@@ -210,6 +220,9 @@ workflows:
             - terraform-plan-prod
             - frontend-build
       - slack/on-hold:
+          filters:
+            branches:
+              ignore: [main]
           requires:
             - backend-build
             - terraform-plan-dev

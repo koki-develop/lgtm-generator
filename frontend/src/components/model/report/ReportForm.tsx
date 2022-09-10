@@ -22,7 +22,7 @@ type ReportFormProps = {
   imgSrc: string;
 };
 
-const ReportForm: React.VFC<ReportFormProps> = React.memo(props => {
+const ReportForm: React.FC<ReportFormProps> = React.memo(props => {
   const { lgtmId, imgSrc, open, onClose } = props;
 
   const [type, setType] = useState<ReportType | null>(null);

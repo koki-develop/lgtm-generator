@@ -5,7 +5,7 @@ export type LoadingProps = {
   text?: string;
 };
 
-const Loading: React.VFC<LoadingProps> = React.forwardRef((props, ref) => {
+const Loading: React.FC<LoadingProps> = React.forwardRef((props, ref) => {
   const { text } = props;
 
   return (
