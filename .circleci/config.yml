@@ -198,6 +198,7 @@ workflows:
     jobs:
       # build
       - backend-build
+      - frontend-build
       - terraform-plan:
           context: aws
           name: terraform-plan-dev
@@ -206,14 +207,13 @@ workflows:
           context: aws
           name: terraform-plan-prod
           stage: prod
-      - frontend-build
 
       # deploy (dev)
       - approval-deploy:
           type: approval
           filters:
             branches:
-              ignore: [main]
+              only: [develop]
           requires:
             - backend-build
             - terraform-plan-dev
@@ -222,7 +222,7 @@ workflows:
       - slack/on-hold:
           filters:
             branches:
-              ignore: [main]
+              only: [develop]
           requires:
             - backend-build
             - terraform-plan-dev
