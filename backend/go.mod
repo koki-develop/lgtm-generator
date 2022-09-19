@@ -10,7 +10,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/guregu/dynamo v1.16.0
 	github.com/pkg/errors v0.9.1
-	github.com/slack-go/slack v0.11.2
+	github.com/slack-go/slack v0.11.3
 	google.golang.org/api v0.96.0
 	gopkg.in/gographics/imagick.v2 v2.6.2
 )
