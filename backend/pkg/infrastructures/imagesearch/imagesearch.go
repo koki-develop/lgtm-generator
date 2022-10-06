@@ -46,6 +46,13 @@ func (e *GoogleImageSearchEngine) Search(q string) (entities.Images, error) {
 		if !utils.IsHTTPSURL(item.Link) {
 			continue
 		}
+
+		// TODO: svg 画像はエラーが出ずに失敗してることが多いので、一旦省く
+		svgm := "image/svg+xml"
+		if item.Mime == svgm || item.FileFormat == svgm {
+			continue
+		}
+
 		imgs = append(imgs, &entities.Image{
 			Title: item.Title,
 			URL:   item.Link,
