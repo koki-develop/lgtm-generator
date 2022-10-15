@@ -8,10 +8,10 @@ require (
 	github.com/awslabs/aws-lambda-go-api-proxy v0.13.3
 	github.com/gin-gonic/gin v1.8.1
 	github.com/google/uuid v1.3.0
-	github.com/guregu/dynamo v1.16.0
+	github.com/guregu/dynamo v1.17.0
 	github.com/pkg/errors v0.9.1
 	github.com/slack-go/slack v0.11.3
-	google.golang.org/api v0.97.0
+	google.golang.org/api v0.98.0
 	gopkg.in/gographics/imagick.v2 v2.6.2
 )
 
