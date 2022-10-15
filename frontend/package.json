@@ -23,7 +23,7 @@
     "notistack": "2.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "recoil": "0.7.5",
+    "recoil": "0.7.6",
     "ts-custom-error": "3.2.2",
     "url-join": "5.0.0",
     "uuid": "9.0.0"
