@@ -1,7 +1,6 @@
 locals {
-  app             = "lgtm-generator"
-  prefix_backend  = "${local.app}-backend-${var.stage}"
-  prefix_frontend = "${local.app}-frontend-${var.stage}"
+  app            = "lgtm-generator"
+  prefix_backend = "${local.app}-backend-${var.stage}"
 
   domain = "lgtmgen.org"
 
