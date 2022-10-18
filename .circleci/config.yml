@@ -16,7 +16,7 @@ executors:
       - image: golang:1.19
   node:
     docker:
-      - image: node:16
+      - image: node:19
   cypress:
     docker:
       - image: cypress/base:18.6.0
