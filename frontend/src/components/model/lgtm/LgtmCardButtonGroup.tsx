@@ -4,15 +4,7 @@ import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { orange, pink } from '@mui/material/colors';
-import Divider from '@mui/material/Divider';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo, useState } from 'react';
 import urlJoin from 'url-join';
@@ -39,9 +31,6 @@ const LgtmCardButtonGroup: React.FC<LgtmCardButtonGroupProps> = React.memo(
     const { t } = useTranslate();
 
     const favoriteIds = useFavoriteIds();
-    const [copyButtonEl, setCopyButtonEl] = useState<HTMLButtonElement | null>(
-      null,
-    );
     const [openReportForm, setOpenReportForm] = useState<boolean>(false);
 
     const favorited = useMemo(() => {
@@ -56,35 +45,13 @@ const LgtmCardButtonGroup: React.FC<LgtmCardButtonGroupProps> = React.memo(
       removeFavoriteId(id);
     }, [id, removeFavoriteId]);
 
-    const handleClickCopyButton = useCallback(
-      (e: React.MouseEvent<HTMLButtonElement>) => {
-        setCopyButtonEl(e.currentTarget);
-      },
-      [],
-    );
-
-    const handleClickOutsideCopyList = useCallback(() => {
-      setCopyButtonEl(null);
-    }, []);
-
-    const handleClickCopyMarkdownLink = useCallback(() => {
+    const handleClickCopyButton = useCallback(() => {
       const text = `![LGTM](${urlJoin(
         process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
         id,
       )})`;
       copy(text);
       enqueueSuccess(t.COPIED_TO_CLIPBOARD);
-      setCopyButtonEl(null);
-    }, [enqueueSuccess, id, t.COPIED_TO_CLIPBOARD]);
-
-    const handleClickCopyHtmlLink = useCallback(() => {
-      const text = `<img src="${urlJoin(
-        process.env.NEXT_PUBLIC_LGTMS_ORIGIN,
-        id,
-      )}" alt="LGTM" />`;
-      copy(text);
-      enqueueSuccess(t.COPIED_TO_CLIPBOARD);
-      setCopyButtonEl(null);
     }, [enqueueSuccess, id, t.COPIED_TO_CLIPBOARD]);
 
     const handleClickReportButton = useCallback(() => {
@@ -111,45 +78,6 @@ const LgtmCardButtonGroup: React.FC<LgtmCardButtonGroupProps> = React.memo(
           >
             <FileCopyOutlinedIcon fontSize='small' />
           </Button>
-          <Popper
-            open={Boolean(copyButtonEl)}
-            anchorEl={copyButtonEl}
-            placement='top'
-          >
-            <ClickAwayListener onClickAway={handleClickOutsideCopyList}>
-              <Paper>
-                <List disablePadding>
-                  <ListItem disablePadding>
-                    <ListItemButton
-                      data-testid='lgtm-card-copy-markdown-button'
-                      onClick={handleClickCopyMarkdownLink}
-                    >
-                      <ListItemText
-                        secondary='Markdown'
-                        secondaryTypographyProps={{
-                          sx: { textAlign: 'center' },
-                        }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                  <Divider />
-                  <ListItem disablePadding>
-                    <ListItemButton
-                      data-testid='lgtm-card-copy-html-button'
-                      onClick={handleClickCopyHtmlLink}
-                    >
-                      <ListItemText
-                        secondary='HTML'
-                        secondaryTypographyProps={{
-                          sx: { textAlign: 'center' },
-                        }}
-                      />
-                    </ListItemButton>
-                  </ListItem>
-                </List>
-              </Paper>
-            </ClickAwayListener>
-          </Popper>
 
           {/* お気に入り */}
           {favorited ? (
