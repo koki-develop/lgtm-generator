@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
-import Layout from '@/components/Layout';
 import Admax from '@/components/utils/Admax';
 import Field from '@/components/utils/Field';
+import Layout from '@/components/Layout';
 import FavoritesPanel from './FavoritesPanel';
 import LgtmsPanel from './LgtmsPanel';
 import SearchImagesPanel from './SearchImagesPanel';

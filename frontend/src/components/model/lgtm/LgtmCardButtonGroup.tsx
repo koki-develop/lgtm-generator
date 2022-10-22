@@ -16,8 +16,8 @@ import Popper from '@mui/material/Popper';
 import copy from 'copy-to-clipboard';
 import React, { useCallback, useMemo, useState } from 'react';
 import urlJoin from 'url-join';
-import ReportForm from '@/components/model/report/ReportForm';
 import { useToast } from '@/components/providers/ToastProvider';
+import ReportForm from '@/components/model/report/ReportForm';
 import {
   useAddFavoriteId,
   useFavoriteIds,
