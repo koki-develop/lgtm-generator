@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { useToast } from '~/components/providers/ToastProvider';
-import { ApiClient } from '~/lib/apiClient';
-import { DataStorage } from '~/lib/dataStorage';
-import { UnsupportedImageFormatError } from '~/lib/errors';
-import { lgtmsState, favoriteIdsState } from '~/recoil/atoms';
-import { Lgtm } from '~/types/lgtm';
+import { useToast } from '@/components/providers/ToastProvider';
+import { ApiClient } from '@/lib/apiClient';
+import { DataStorage } from '@/lib/dataStorage';
+import { UnsupportedImageFormatError } from '@/lib/errors';
+import { lgtmsState, favoriteIdsState } from '@/recoil/atoms';
+import { Lgtm } from '@/types/lgtm';
 import { useTranslate } from './translateHooks';
 
 export const useLgtms = (): Lgtm[] => {

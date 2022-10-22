@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import LgtmCardList from '~/components/model/lgtm/LgtmCardList';
-import { useFavoriteIds } from '~/hooks/lgtmHooks';
-import { useTranslate } from '~/hooks/translateHooks';
+import LgtmCardList from '@/components/model/lgtm/LgtmCardList';
+import { useFavoriteIds } from '@/hooks/lgtmHooks';
+import { useTranslate } from '@/hooks/translateHooks';
 
 type FavoritesPanelProps = {
   show: boolean;

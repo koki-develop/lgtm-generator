@@ -1,3 +1,3 @@
-import Precautions from '~/components/pages/Precautions';
+import Precautions from '@/components/pages/Precautions';
 
 export default Precautions;

@@ -3,8 +3,8 @@ import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
-import ToastProvider from '~/components/providers/ToastProvider';
-import { createEmotionCache } from '~/lib/emotion';
+import ToastProvider from '@/components/providers/ToastProvider';
+import { createEmotionCache } from '@/lib/emotion';
 
 const clientSideEmotionCache = createEmotionCache();
 

@@ -1,7 +1,7 @@
 import { Close as CloseIcon } from '@mui/icons-material';
 import { Box, Card, Container } from '@mui/material';
 import React, { useCallback } from 'react';
-import Modal, { ModalProps } from '~/components/utils/Modal';
+import Modal, { ModalProps } from '@/components/utils/Modal';
 
 type ModalCardProps = Omit<ModalProps, 'children'> & {
   children: React.ReactNode;

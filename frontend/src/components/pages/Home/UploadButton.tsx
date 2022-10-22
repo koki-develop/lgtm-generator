@@ -2,7 +2,7 @@ import { AddCircle as AddCircleIcon } from '@mui/icons-material';
 import { Fab } from '@mui/material';
 import React, { useCallback, useState } from 'react';
 import * as uuid from 'uuid';
-import { useTranslate } from '~/hooks/translateHooks';
+import { useTranslate } from '@/hooks/translateHooks';
 
 type UploadButtonProps = {
   onChange: (file: File) => void;

@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
-import { useToast } from '~/components/providers/ToastProvider';
-import { ApiClient } from '~/lib/apiClient';
-import { ReportType } from '~/types/report';
+import { useToast } from '@/components/providers/ToastProvider';
+import { ApiClient } from '@/lib/apiClient';
+import { ReportType } from '@/types/report';
 import { useTranslate } from './translateHooks';
 
 export type SendReportFn = (

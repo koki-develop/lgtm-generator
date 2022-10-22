@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import React from 'react';
-import Meta from '~/components/utils/Meta';
+import Meta from '@/components/utils/Meta';
 import Footer from './Footer';
 import Header from './Header';
 import { theme } from './theme';

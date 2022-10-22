@@ -1,9 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import Link from '~/components/utils/Link';
-import { useTranslate } from '~/hooks/translateHooks';
-import { Routes } from '~/routes';
+import Link from '@/components/utils/Link';
+import { useTranslate } from '@/hooks/translateHooks';
+import { Routes } from '@/routes';
 
 const LinkListItem = styled('li')(({ theme }) => ({
   marginBottom: theme.spacing(1),

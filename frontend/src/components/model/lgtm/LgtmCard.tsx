@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import urlJoin from 'url-join';
-import LgtmCardButtonGroup from '~/components/model/lgtm/LgtmCardButtonGroup';
+import LgtmCardButtonGroup from '@/components/model/lgtm/LgtmCardButtonGroup';
 
 const StyledImage = styled('img')({});
 
