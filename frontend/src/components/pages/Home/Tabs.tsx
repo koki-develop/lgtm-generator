@@ -1,6 +1,6 @@
 import { Paper, Tabs as MuiTabs, Tab } from '@mui/material';
 import React, { useCallback } from 'react';
-import { useTranslate } from '~/hooks/translateHooks';
+import { useTranslate } from '@/hooks/translateHooks';
 
 export const TabValue = {
   lgtms: 'lgtms',

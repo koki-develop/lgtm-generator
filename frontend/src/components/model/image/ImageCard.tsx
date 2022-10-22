@@ -4,7 +4,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import { styled } from '@mui/material/styles';
 import React, { useCallback } from 'react';
-import { Image } from '~/types/image';
+import { Image } from '@/types/image';
 
 const StyledImage = styled('img')({});
 

@@ -1,3 +1,3 @@
-import PrivacyPolicy from '~/components/pages/PrivacyPolicy';
+import PrivacyPolicy from '@/components/pages/PrivacyPolicy';
 
 export default PrivacyPolicy;

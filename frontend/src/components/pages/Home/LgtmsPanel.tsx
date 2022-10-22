@@ -2,20 +2,20 @@ import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import React, { useCallback, useEffect, useState } from 'react';
-import LgtmCardList from '~/components/model/lgtm/LgtmCardList';
-import LgtmForm from '~/components/model/lgtm/LgtmForm';
-import Field from '~/components/utils/Field';
-import Loading from '~/components/utils/Loading';
-import Modal from '~/components/utils/Modal';
+import LgtmCardList from '@/components/model/lgtm/LgtmCardList';
+import LgtmForm from '@/components/model/lgtm/LgtmForm';
+import Field from '@/components/utils/Field';
+import Loading from '@/components/utils/Loading';
+import Modal from '@/components/utils/Modal';
 import {
   useCreateLgtmFromBase64,
   useFetchLgtms,
   useLgtms,
-} from '~/hooks/lgtmHooks';
-import { useTranslate } from '~/hooks/translateHooks';
-import { DataStorage } from '~/lib/dataStorage';
-import { DataUrl } from '~/lib/dataUrl';
-import { ImageFile, useLoadImage } from '~/lib/imageFileReader';
+} from '@/hooks/lgtmHooks';
+import { useTranslate } from '@/hooks/translateHooks';
+import { DataStorage } from '@/lib/dataStorage';
+import { DataUrl } from '@/lib/dataUrl';
+import { ImageFile, useLoadImage } from '@/lib/imageFileReader';
 import UploadButton from './UploadButton';
 
 type LgtmsPanelProps = {

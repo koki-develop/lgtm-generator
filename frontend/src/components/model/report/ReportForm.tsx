@@ -7,11 +7,11 @@ import RadioGroup from '@mui/material/RadioGroup';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import React, { useCallback, useMemo, useState } from 'react';
-import LoadableButton from '~/components/utils/LoadableButton';
-import ModalCard from '~/components/utils/ModalCard';
-import { useSendReport } from '~/hooks/reportHooks';
-import { useTranslate } from '~/hooks/translateHooks';
-import { ReportType } from '~/types/report';
+import LoadableButton from '@/components/utils/LoadableButton';
+import ModalCard from '@/components/utils/ModalCard';
+import { useSendReport } from '@/hooks/reportHooks';
+import { useTranslate } from '@/hooks/translateHooks';
+import { ReportType } from '@/types/report';
 
 const StyledImage = styled('img')({});
 

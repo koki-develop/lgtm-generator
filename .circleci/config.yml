@@ -191,7 +191,7 @@ jobs:
           command: yarn run cypress install
       - run:
           name: cypress
-          command: yarn run cypress run --config-file cypress.dev.config.ts --record
+          command: yarn run start:dev --record
 
 workflows:
   build:

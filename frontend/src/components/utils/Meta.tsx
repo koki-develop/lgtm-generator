@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useMemo } from 'react';
 import urlJoin from 'url-join';
-import { useTranslate } from '~/hooks/translateHooks';
+import { useTranslate } from '@/hooks/translateHooks';
 
 export type MetaProps = {
   title?: string;

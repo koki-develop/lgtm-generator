@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
-import Layout from '~/components/Layout';
-import { useTranslate } from '~/hooks/translateHooks';
+import { useTranslate } from '@/hooks/translateHooks';
+import Layout from '@/components/Layout';
 
 const StyledList = styled('ul')(({ theme }) => ({
   listStyle: 'disc',

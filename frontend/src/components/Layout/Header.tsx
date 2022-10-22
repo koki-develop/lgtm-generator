@@ -15,9 +15,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo, useState } from 'react';
-import Link from '~/components/utils/Link';
-import { useTranslate } from '~/hooks/translateHooks';
-import { Routes } from '~/routes';
+import Link from '@/components/utils/Link';
+import { useTranslate } from '@/hooks/translateHooks';
+import { Routes } from '@/routes';
 
 type TranslateListItemProps = {
   text: string;

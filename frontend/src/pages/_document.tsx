@@ -7,7 +7,7 @@ import NextDocument, {
   NextScript,
 } from 'next/document';
 import React from 'react';
-import { createEmotionCache } from '~/lib/emotion';
+import { createEmotionCache } from '@/lib/emotion';
 
 export default class Document extends NextDocument {
   render(): JSX.Element {

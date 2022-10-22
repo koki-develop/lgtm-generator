@@ -1,8 +1,8 @@
 import { loadImage, createCanvas } from 'canvas';
 import { useCallback, useState } from 'react';
-import { useToast } from '~/components/providers/ToastProvider';
-import { useTranslate } from '~/hooks/translateHooks';
-import { FileTooLargeError, UnsupportedImageFormatError } from '~/lib/errors';
+import { useToast } from '@/components/providers/ToastProvider';
+import { useTranslate } from '@/hooks/translateHooks';
+import { FileTooLargeError, UnsupportedImageFormatError } from '@/lib/errors';
 
 export type ImageFile = {
   name: string;

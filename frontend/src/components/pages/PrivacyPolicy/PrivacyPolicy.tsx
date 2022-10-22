@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import React, { useMemo } from 'react';
-import Layout from '~/components/Layout';
-import { useTranslate } from '~/hooks/translateHooks';
+import { useTranslate } from '@/hooks/translateHooks';
+import Layout from '@/components/Layout';
 
 const PrivacyPolicy: React.FC = React.memo(() => {
   const { t } = useTranslate();

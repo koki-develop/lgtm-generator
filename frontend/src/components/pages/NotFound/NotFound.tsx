@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import React from 'react';
-import Layout from '~/components/Layout';
-import { useTranslate } from '~/hooks/translateHooks';
+import { useTranslate } from '@/hooks/translateHooks';
+import Layout from '@/components/Layout';
 
 const NotFound: React.FC = React.memo(() => {
   const { t } = useTranslate();
