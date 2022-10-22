@@ -3,8 +3,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "open": "cypress open --config-file cypress.local.config.ts",
-    "open:dev": "cypress open --config-file cypress.dev.config.ts"
+    "open:local": "cypress open --config-file cypress.local.config.ts",
+    "open:dev": "cypress open --config-file cypress.dev.config.ts",
+    "start:local": "cypress run --browser chrome --config-file cypress.local.config.ts",
+    "start:dev": "cypress run --browser chrome --config-file cypress.dev.config.ts"
   },
   "devDependencies": {
     "@types/node": "18.6.3",
