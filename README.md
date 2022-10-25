@@ -10,8 +10,6 @@
 
 シンプルな LGTM 画像生成ツール。
 
-![screenshot](./docs/screenshot.png)
-
 # 開発
 
 [開発環境構築](./docs/development.md)
