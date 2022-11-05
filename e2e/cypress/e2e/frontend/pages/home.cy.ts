@@ -48,14 +48,33 @@ describe("/", () => {
           beforeEach(() => {
             cy.getByTestId("lgtm-card-copy-button").first().click();
           });
-          it("クリップボードに Markdown 形式のリンクをコピーすること"); // TODO
-          it("クリップボードにコピーした旨を表示すること", () => {
-            cy.contains(
-              {
-                ja: "クリップボードにコピーしました",
-                en: "Copied to clipboard",
-              }[locale]
-            );
+          describe("Markdown", () => {
+            beforeEach(() => {
+              cy.getByTestId("lgtm-card-copy-markdown-button").click();
+            });
+            it("クリップボードに Markdown 形式のリンクをコピーすること"); // TODO
+            it("クリップボードにコピーした旨を表示すること", () => {
+              cy.contains(
+                {
+                  ja: "クリップボードにコピーしました",
+                  en: "Copied to clipboard",
+                }[locale]
+              );
+            });
+          });
+          describe("HTML", () => {
+            beforeEach(() => {
+              cy.getByTestId("lgtm-card-copy-html-button").click();
+            });
+            it("クリップボードに HTML 形式のリンクをコピーすること"); // TODO
+            it("クリップボードにコピーした旨を表示すること", () => {
+              cy.contains(
+                {
+                  ja: "クリップボードにコピーしました",
+                  en: "Copied to clipboard",
+                }[locale]
+              );
+            });
           });
         });
 
