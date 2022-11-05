@@ -48,6 +48,10 @@ describe("/", () => {
           beforeEach(() => {
             cy.getByTestId("lgtm-card-copy-button").first().click();
           });
+          describe("Markdown", () => {
+            beforeEach(() => {
+              cy.getByTestId("lgtm-card-copy-markdown-button").click();
+            });
             it("クリップボードに Markdown 形式のリンクをコピーすること"); // TODO
             it("クリップボードにコピーした旨を表示すること", () => {
               cy.contains(
@@ -57,6 +61,21 @@ describe("/", () => {
                 }[locale]
               );
             });
+          });
+          describe("HTML", () => {
+            beforeEach(() => {
+              cy.getByTestId("lgtm-card-copy-html-button").click();
+            });
+            it("クリップボードに HTML 形式のリンクをコピーすること"); // TODO
+            it("クリップボードにコピーした旨を表示すること", () => {
+              cy.contains(
+                {
+                  ja: "クリップボードにコピーしました",
+                  en: "Copied to clipboard",
+                }[locale]
+              );
+            });
+          });
         });
 
         describe("通報", () => {
@@ -122,7 +141,7 @@ describe("/", () => {
         });
 
         describe("お気に入り追加・解除", () => {
-          it("正しく動作すること", () => {
+          it("正しく動作すること", async () => {
             cy.getByTestId("no-favorites-text").first().contains(
               {
                 ja: "お気に入りした LGTM 画像はありません。",
@@ -140,6 +159,7 @@ describe("/", () => {
               .visible()
               .first()
               .click();
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             cy.getByTestId("no-favorites-text").should("not.exist"); // 解除直後はまだメッセージが表示されないことを検証
             cy.getByTestId("home-tab-lgtms").click();
             cy.getByTestId("home-tab-favorites").click();
