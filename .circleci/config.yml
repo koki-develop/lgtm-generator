@@ -5,7 +5,7 @@ orbs:
   go: circleci/go@1.7.1
   node: circleci/node@5.0.3
   slack: circleci/slack@4.10.1
-  terraform: circleci/terraform@3.1.0
+  terraform: circleci/terraform@3.2.0
 
 executors:
   ubuntu:
