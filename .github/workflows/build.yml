@@ -52,8 +52,12 @@ jobs:
           aws-region: us-east-1
           role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
       # TODO: tfsec, tflint も実行したい
-      - name: terraform plan
+      - run: terraform init
+      - name: terraform plan (dev)
         run: |
-          terraform init
           terraform workspace select dev
+          terraform plan -no-color -input=false
+      - name: terraform plan (prod)
+        run: |
+          terraform workspace select prod
           terraform plan -no-color -input=false
