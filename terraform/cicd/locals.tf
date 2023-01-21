@@ -1,3 +1,4 @@
 locals {
-  prefix = "lgtm-generator-circleci"
+  legacy_prefix = "lgtm-generator-circleci"
+  prefix        = "lgtm-generator-cicd"
 }
