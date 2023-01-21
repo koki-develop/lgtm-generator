@@ -16,3 +16,20 @@ jobs:
     with:
       stage: dev
     secrets: inherit
+
+  e2e:
+    needs: [release]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cypress-io/github-action@v5.0.5
+        with:
+          start: yarn run start:dev
+          record: true
+          working-directory: e2e
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
