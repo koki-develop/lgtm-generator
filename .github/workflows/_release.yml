@@ -22,6 +22,7 @@ jobs:
       id-token: write
       contents: read
     runs-on: ubuntu-latest
+    environment: ${{ inputs.stage }}
     defaults:
       run:
         working-directory: backend
@@ -49,6 +50,7 @@ jobs:
       id-token: write
       contents: read
     runs-on: ubuntu-latest
+    environment: ${{ inputs.stage }}
     defaults:
       run:
         working-directory: terraform/app
