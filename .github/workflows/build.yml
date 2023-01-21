@@ -14,5 +14,6 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version-file: backend/go.mod
+          cache-dependency-path: backend/go.sum
           cache: true
       - run: go test ./...
