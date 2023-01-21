@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  workflow_call:
+    inputs:
+      stage:
+        required: true
+        type: string
+    secrets:
+      AWS_IAM_ROLE_ARN:
+        required: true
+      SLACK_API_TOKEN:
+        required: true
+      GOOGLE_API_KEY:
+        required: true
+      GOOGLE_CUSTOM_SEARCH_ENGINE_ID:
+        required: true
+
+jobs:
+  backend:
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: backend/package.json
+          cache: yarn
+          cache-dependency-path: backend/yarn.lock
+      - run: yarn install --frozen-lockfile
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
+      - name: deploy
+        run: yarn run deploy --stage ${{ inputs.stage }}
+        env:
+            SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
+            GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+            GOOGLE_CUSTOM_SEARCH_ENGINE_ID: ${{ secrets.GOOGLE_CUSTOM_SEARCH_ENGINE_ID }}
+
+  terraform:
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform/app
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.7
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN }}
+      - run: terraform init
+      - name: terraform apply
+        run: |
+          terraform workspace select ${{ inputs.stage }}
+          terraform apply -auto-approve -no-color -input=false
