@@ -1,6 +1,9 @@
 {
   "name": "lgtm-generator-frontend",
   "license": "MIT",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "dev": "next dev",
     "postbuild": "next-sitemap",
