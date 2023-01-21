@@ -2,6 +2,9 @@
   "name": "lgtm-generator-backend",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "deploy": "serverless deploy --verbose",
     "remove": "serverless remove --verbose"
