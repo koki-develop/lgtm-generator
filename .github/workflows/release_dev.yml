@@ -4,21 +4,20 @@ on:
   push:
     branches:
       - develop
-      - migrate-circleci-to-gh-actions # TODO: remove
 
 jobs:
-  # build:
-  #   uses: ./.github/workflows/_build.yml
-  #   secrets: inherit
+  build:
+    uses: ./.github/workflows/_build.yml
+    secrets: inherit
 
-  # release:
-  #   needs: [build]
-  #   uses: ./.github/workflows/_release.yml
-  #   with:
-  #     stage: dev
-  #   secrets: inherit
+  release:
+    needs: [build]
+    uses: ./.github/workflows/_release.yml
+    with:
+      stage: dev
+    secrets: inherit
 
   e2e:
-    # needs: [release]
+    needs: [release]
     uses: ./.github/workflows/_e2e.yml
     secrets: inherit
