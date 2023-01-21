@@ -14,6 +14,22 @@ jobs:
       - uses: actions/setup-go@v3
         with:
           go-version-file: backend/go.mod
-          cache-dependency-path: backend/go.sum
           cache: true
+          cache-dependency-path: backend/go.sum
       - run: go test ./...
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: frontend/package.json
+          cache: yarn
+          cache-dependency-path: frontend/yarn.lock
+      - run: yarn install --frozen-lockfile
+      - run: yarn lint
+      - run: yarn run build
