@@ -2,8 +2,8 @@ name: Release (dev)
 
 on:
   push:
-    branches:
-      - develop
+    branches-ignore:
+      - main
 
 jobs:
   build:
