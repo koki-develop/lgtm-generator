@@ -2,13 +2,13 @@ terraform {
   backend "s3" {
     region  = "us-east-1"
     bucket  = "lgtm-generator-tfstates"
-    key     = "circleci/terraform.tfstate"
+    key     = "cicd/terraform.tfstate"
     encrypt = true
   }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.36.0"
+      version = "~> 4.50.0"
     }
   }
 }
