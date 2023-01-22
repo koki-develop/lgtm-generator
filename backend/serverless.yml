@@ -178,3 +178,6 @@ resources:
         StatusCode: "404"
         ResponseTemplates:
           application/json: '{"code":"NOT_FOUND"}'
+
+plugins:
+  - serverless-plugin-datadog

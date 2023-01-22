@@ -10,6 +10,7 @@
     "remove": "serverless remove --verbose"
   },
   "devDependencies": {
-    "serverless": "3.23.0"
+    "serverless": "3.23.0",
+    "serverless-plugin-datadog": "^5.15.0"
   }
 }
