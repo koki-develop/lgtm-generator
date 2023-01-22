@@ -1,0 +1,27 @@
+name: E2E
+
+on:
+  workflow_call:
+    secrets:
+      CYPRESS_PROJECT_ID:
+        required: true
+      CYPRESS_RECORD_KEY:
+        required: true
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: e2e
+    steps:
+      - uses: actions/checkout@v3
+      - uses: cypress-io/github-action@v5.0.5
+        with:
+          config-file: cypress.dev.config.ts
+          record: true
+          working-directory: e2e
+        env:
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

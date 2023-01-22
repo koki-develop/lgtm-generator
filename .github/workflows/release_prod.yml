@@ -1,0 +1,18 @@
+name: Release (prod)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    uses: ./.github/workflows/_build.yml
+    secrets: inherit
+
+  release:
+    needs: [build]
+    uses: ./.github/workflows/_release.yml
+    with:
+      stage: prod
+    secrets: inherit
