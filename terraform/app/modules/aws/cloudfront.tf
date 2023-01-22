@@ -40,8 +40,10 @@ resource "aws_cloudfront_distribution" "images" {
 }
 
 resource "aws_cloudfront_origin_access_control" "images" {
-  name                              = "${local.app}-images"
+  name                              = "${local.prefix}-images"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
 }
+
+resource "aws_cloudfront_origin_access_identity" "images" {}
