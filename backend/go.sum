@@ -150,6 +150,8 @@ github.com/aws/aws-sdk-go v1.44.121 h1:ahBRUqUp4qLyGmSM5KKn+TVpZkRmtuLxTWw+6Hq/e
 github.com/aws/aws-sdk-go v1.44.121/go.mod h1:y4AeaBuwd2Lk+GepC1E9v0qOiTws0MIWAX4oIKwKHZo=
 github.com/aws/aws-sdk-go v1.44.135 h1:DJJP/CkEpgafA5p5jlY9VzDRyKrfABVixzIxrK/3tWU=
 github.com/aws/aws-sdk-go v1.44.135/go.mod h1:aVsgQcEevwlmQ7qHE9I3h+dtQgpqhFB+i8Phjh7fkwI=
+github.com/aws/aws-sdk-go v1.44.184 h1:/MggyE66rOImXJKl1HqhLQITvWvqIV7w1Q4MaG6FHUo=
+github.com/aws/aws-sdk-go v1.44.184/go.mod h1:aVsgQcEevwlmQ7qHE9I3h+dtQgpqhFB+i8Phjh7fkwI=
 github.com/awslabs/aws-lambda-go-api-proxy v0.11.0 h1:0BeMGwaoHRtwWa26+cg4+Xd1Tpb9mYWP0NDfu7HNyQk=
 github.com/awslabs/aws-lambda-go-api-proxy v0.11.0/go.mod h1:Epon214ULEemdKoA+Vp1D+qKfPKpjPTjH9f1Syo/CDk=
 github.com/awslabs/aws-lambda-go-api-proxy v0.13.3 h1:kGtltTONdJa0Bmot9phYw3ucCg2SExj6mH00I1aga8Y=
