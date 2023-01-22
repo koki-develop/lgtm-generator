@@ -4,6 +4,9 @@ frameworkVersion: "3"
 useDotenv: true
 configValidationMode: error
 
+plugins:
+  - serverless-plugin-datadog
+
 custom:
   product: ${self:service}
   prefix: ${self:custom.product}-${self:provider.stage}
@@ -181,6 +184,3 @@ resources:
         StatusCode: "404"
         ResponseTemplates:
           application/json: '{"code":"NOT_FOUND"}'
-
-plugins:
-  - serverless-plugin-datadog
