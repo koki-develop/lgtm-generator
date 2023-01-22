@@ -44,6 +44,8 @@ jobs:
             SLACK_API_TOKEN: ${{ secrets.SLACK_API_TOKEN }}
             GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
             GOOGLE_CUSTOM_SEARCH_ENGINE_ID: ${{ secrets.GOOGLE_CUSTOM_SEARCH_ENGINE_ID }}
+            DD_API_KEY: ${{ secrets.DD_API_KEY }}
+            DD_SITE: ${{ vars.DD_SITE }}
 
   terraform:
     permissions:
