@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	ddlambda "github.com/DataDog/datadog-lambda-go"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/dynamodb"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/s3"
@@ -26,5 +27,5 @@ func handler(e Event) error {
 }
 
 func main() {
-	lambda.Start(handler)
+	lambda.Start(ddlambda.WrapFunction(handler, nil))
 }
