@@ -15,6 +15,9 @@ custom:
     local: http://localhost:9000/lgtm-generator-backend-local-images
     dev: https://dev.images.lgtmgen.org
     prod: https://images.lgtmgen.org
+  datadog:
+    site: ${env:DD_SITE}
+    apiKey: ${env:DD_API_KEY}
 
 provider:
   name: aws
