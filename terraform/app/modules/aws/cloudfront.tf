@@ -4,11 +4,9 @@ resource "aws_cloudfront_distribution" "images" {
   http_version = "http2"
 
   origin {
-    origin_id   = aws_s3_bucket.images.id
-    domain_name = "${aws_s3_bucket.images.id}.s3.amazonaws.com"
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.images.cloudfront_access_identity_path
-    }
+    origin_id                = aws_s3_bucket.images.id
+    domain_name              = "${aws_s3_bucket.images.id}.s3.amazonaws.com"
+    origin_access_control_id = aws_cloudfront_origin_access_control.images.id
   }
 
   viewer_certificate {
@@ -41,4 +39,9 @@ resource "aws_cloudfront_distribution" "images" {
   }
 }
 
-resource "aws_cloudfront_origin_access_identity" "images" {}
+resource "aws_cloudfront_origin_access_control" "images" {
+  name                              = "${local.app}-images"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
