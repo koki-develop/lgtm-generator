@@ -8,11 +8,16 @@ import (
 	"github.com/aws/aws-lambda-go/lambda"
 	ginadapter "github.com/awslabs/aws-lambda-go-api-proxy/gin"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/router"
+
+	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 )
 
 var ginLambda *ginadapter.GinLambda
 
 func main() {
+	tracer.Start()
+	defer tracer.Stop()
+
 	lambda.Start(ddlambda.WrapFunction(handler, &ddlambda.Config{DebugLogging: true}))
 }
 

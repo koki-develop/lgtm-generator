@@ -12,10 +12,12 @@ import (
 	"github.com/koki-develop/lgtm-generator/backend/pkg/infrastructures/s3"
 	"github.com/koki-develop/lgtm-generator/backend/pkg/repositories"
 	"github.com/slack-go/slack"
+	gintracer "gopkg.in/DataDog/dd-trace-go.v1/contrib/gin-gonic/gin"
 )
 
 func New() *gin.Engine {
 	r := gin.New()
+	r.Use(gintracer.Middleware("lgtm-generator-backend"))
 
 	engine := imagesearch.New(os.Getenv("GOOGLE_API_KEY"), os.Getenv("GOOGLE_CUSTOM_SEARCH_ENGINE_ID"))
 	slackClient := slack.New(os.Getenv("SLACK_API_TOKEN"))
