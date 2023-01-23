@@ -27,5 +27,5 @@ func handler(e Event) error {
 }
 
 func main() {
-	lambda.Start(ddlambda.WrapFunction(handler, nil))
+	lambda.Start(ddlambda.WrapFunction(handler, &ddlambda.Config{DebugLogging: true}))
 }

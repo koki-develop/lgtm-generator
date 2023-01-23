@@ -13,7 +13,7 @@ import (
 var ginLambda *ginadapter.GinLambda
 
 func main() {
-	lambda.Start(ddlambda.WrapFunction(handler, nil))
+	lambda.Start(ddlambda.WrapFunction(handler, &ddlambda.Config{DebugLogging: true}))
 }
 
 func handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
