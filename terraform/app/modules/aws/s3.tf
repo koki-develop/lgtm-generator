@@ -15,11 +15,16 @@ resource "aws_s3_bucket_policy" "images" {
 data "aws_iam_policy_document" "images_bucket_policy" {
   statement {
     principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.images.iam_arn]
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
     }
     actions   = ["s3:GetObject"]
     resources = ["${aws_s3_bucket.images.arn}/*"]
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceArn"
+      values   = [aws_cloudfront_distribution.images.arn]
+    }
   }
 }
 
