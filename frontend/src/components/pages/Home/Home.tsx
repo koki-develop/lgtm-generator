@@ -1,7 +1,5 @@
-import Box from '@mui/material/Box';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
-import Admax from '@/components/utils/Admax';
 import Field from '@/components/utils/Field';
 import Layout from '@/components/Layout';
 import FavoritesPanel from './FavoritesPanel';
@@ -27,10 +25,6 @@ const Home: React.FC = React.memo(() => {
 
   return (
     <Layout>
-      <Box sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-        <Admax admaxId={process.env.NEXT_PUBLIC_ADMAX_ID} type='switch' />
-      </Box>
-
       <Field sx={{ mb: tab === TabValue.lgtms ? 0 : 2 }}>
         <Tabs value={tab} onChange={handleChangeTab} />
       </Field>
