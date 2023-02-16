@@ -36,7 +36,7 @@ const LayoutContent: React.FC<LayoutProps> = React.memo(props => {
       <Meta title={title} />
       <CssBaseline />
       <Header />
-      <Container component='main' maxWidth='lg' sx={{ pt: 2 }}>
+      <Container component='main' maxWidth='lg' sx={{ pt: 4 }}>
         {children}
       </Container>
       <Footer />
