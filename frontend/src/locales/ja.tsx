@@ -6,6 +6,8 @@ import { Translate } from './translate';
 
 // TODO: 整理
 export const ja: Translate = {
+  ALERT: 'LGTM Generator は 2023 年 6 月中にサービス終了予定です。',
+
   APP_NAME: 'LGTM Generator',
   APP_DESCRIPTION:
     'シンプルな LGTM 画像作成サービスです。 LGTM とは「Looks Good To Me」の略で、コードレビューのときなどに用いられるネットスラングの一種です。',

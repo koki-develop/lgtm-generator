@@ -1,6 +1,8 @@
+import { Alert } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import Field from '@/components/utils/Field';
+import { useTranslate } from '@/hooks/translateHooks';
 import Layout from '@/components/Layout';
 import FavoritesPanel from './FavoritesPanel';
 import LgtmsPanel from './LgtmsPanel';
@@ -9,6 +11,8 @@ import Tabs, { TabValue } from './Tabs';
 
 const Home: React.FC = React.memo(() => {
   const router = useRouter();
+
+  const { t } = useTranslate();
 
   const tab = useMemo(() => {
     return Object.values(TabValue).find(v => v === router.query.tab) || 'lgtms';
@@ -25,6 +29,10 @@ const Home: React.FC = React.memo(() => {
 
   return (
     <Layout>
+      <Field>
+        <Alert severity='error'>{t.ALERT}</Alert>
+      </Field>
+
       <Field sx={{ mb: tab === TabValue.lgtms ? 0 : 2 }}>
         <Tabs value={tab} onChange={handleChangeTab} />
       </Field>

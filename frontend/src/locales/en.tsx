@@ -7,6 +7,8 @@ import { Translate } from './translate';
 
 // TODO: 整理
 export const en: Translate = {
+  ALERT: 'LGTM Generator is scheduled to end its service in June 2023.',
+
   APP_NAME: ja.APP_NAME,
   APP_DESCRIPTION:
     'A simple LGTM image generation service. LGTM stands for "Looks Good To Me," a kind of Internet slang used during code reviews.',

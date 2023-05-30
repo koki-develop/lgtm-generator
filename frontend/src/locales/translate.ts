@@ -2,6 +2,8 @@ import React from 'react';
 
 // TODO: 整理
 export type Translate = {
+  ALERT: string;
+
   APP_NAME: string;
   APP_DESCRIPTION: string;
 
