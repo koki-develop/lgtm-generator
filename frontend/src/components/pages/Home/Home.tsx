@@ -1,4 +1,4 @@
-import { Alert } from '@mui/material';
+import { Alert, Box } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import Field from '@/components/utils/Field';
@@ -12,7 +12,7 @@ import Tabs, { TabValue } from './Tabs';
 const Home: React.FC = React.memo(() => {
   const router = useRouter();
 
-  const { t } = useTranslate();
+  const { t, locale } = useTranslate();
 
   const tab = useMemo(() => {
     return Object.values(TabValue).find(v => v === router.query.tab) || 'lgtms';
@@ -30,7 +30,14 @@ const Home: React.FC = React.memo(() => {
   return (
     <Layout>
       <Field>
-        <Alert severity='error'>{t.ALERT}</Alert>
+        {locale === 'ja' && (
+          <Alert severity='error'>
+            <Box sx={{ textDecoration: 'line-through' }}>{t.ALERT}</Box>
+            <Box>
+              って思ってたんですけど惜しんでくださるコメントがあって嬉しかったので頑張って続けます。やめるやめる詐欺みたいになっちゃってごめんなさい…。
+            </Box>
+          </Alert>
+        )}
       </Field>
 
       <Field sx={{ mb: tab === TabValue.lgtms ? 0 : 2 }}>
