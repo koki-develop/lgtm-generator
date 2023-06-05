@@ -2,7 +2,7 @@
   "name": "lgtm-generator-frontend",
   "license": "MIT",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "scripts": {
     "dev": "next dev",
