@@ -1,4 +1,3 @@
-import { Alert, Box } from '@mui/material';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import Field from '@/components/utils/Field';
@@ -29,17 +28,6 @@ const Home: React.FC = React.memo(() => {
 
   return (
     <Layout>
-      <Field>
-        {locale === 'ja' && (
-          <Alert severity='error'>
-            <Box sx={{ textDecoration: 'line-through' }}>{t.ALERT}</Box>
-            <Box>
-              って思ってたんですけど惜しんでくださるコメントがあって嬉しかったので頑張って続けます。やめるやめる詐欺みたいになっちゃってごめんなさい…。
-            </Box>
-          </Alert>
-        )}
-      </Field>
-
       <Field sx={{ mb: tab === TabValue.lgtms ? 0 : 2 }}>
         <Tabs value={tab} onChange={handleChangeTab} />
       </Field>
