@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo } from 'react';
 import Field from '@/components/utils/Field';
-import { useTranslate } from '@/hooks/translateHooks';
 import Layout from '@/components/Layout';
 import FavoritesPanel from './FavoritesPanel';
 import LgtmsPanel from './LgtmsPanel';
@@ -10,8 +9,6 @@ import Tabs, { TabValue } from './Tabs';
 
 const Home: React.FC = React.memo(() => {
   const router = useRouter();
-
-  const { t, locale } = useTranslate();
 
   const tab = useMemo(() => {
     return Object.values(TabValue).find(v => v === router.query.tab) || 'lgtms';
