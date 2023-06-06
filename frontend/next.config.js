@@ -17,10 +17,4 @@ const config = {
   },
 };
 
-module.exports = (() => {
-  if (process.env.NEXT_PUBLIC_STAGE !== 'prod') {
-    return config;
-  }
-
-  return config;
-})();
+module.exports = config;
