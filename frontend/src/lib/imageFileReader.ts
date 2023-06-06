@@ -1,4 +1,3 @@
-import { loadImage, createCanvas } from 'canvas';
 import { useCallback, useState } from 'react';
 import { useToast } from '@/components/providers/ToastProvider';
 import { useTranslate } from '@/hooks/translateHooks';
@@ -47,32 +46,36 @@ export class ImageFileReader {
     imageFile: ImageFile,
     sideLength: number,
   ): Promise<ImageFile> {
-    const image = await loadImage(imageFile.dataUrl);
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      throw new Error('Failed to create canvas');
+    }
+
+    const image = new Image();
+    image.src = imageFile.dataUrl;
+    await new Promise<void>((resolve, reject) => {
+      image.onload = () => {
+        resolve();
+      };
+      image.onerror = err => {
+        reject(err);
+      };
+    });
 
     const [destWidth, destHeight] = this.calcSize(
       image.width,
       image.height,
       sideLength,
     );
-    const canvas = createCanvas(destWidth, destHeight);
-    const context = canvas.getContext('2d');
-    context.drawImage(
-      image,
-      0,
-      0,
-      image.width,
-      image.height,
-      0,
-      0,
-      destWidth,
-      destHeight,
-    );
-    const dataUrl = canvas.toDataURL('image/png');
+    canvas.width = destWidth;
+    canvas.height = destHeight;
+    ctx.drawImage(image, 0, 0, destWidth, destHeight);
 
     return {
       ...imageFile,
       type: 'image/png',
-      dataUrl,
+      dataUrl: canvas.toDataURL('image/png'),
     };
   }
 
