@@ -1,5 +1,9 @@
 import createCache, { EmotionCache, Options } from '@emotion/cache';
 
+/*
+ * https://github.com/mui/material-ui/blob/master/examples/material-next-ts/src/createEmotionCache.ts
+ */
+
 const isBrowser = typeof document !== 'undefined';
 
 export const createEmotionCache = (): EmotionCache => {
