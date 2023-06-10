@@ -16,6 +16,7 @@
     "@emotion/react": "11.10.5",
     "@emotion/server": "11.10.0",
     "@emotion/styled": "11.10.5",
+    "@fontsource/archivo-black": "^5.0.3",
     "@mui/icons-material": "5.11.16",
     "@mui/material": "5.13.4",
     "@mui/styles": "5.13.2",
