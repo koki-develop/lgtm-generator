@@ -2,8 +2,19 @@ import { Box, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import React from 'react';
 import Link from '@/components/utils/Link';
-import { useTranslate } from '@/hooks/translateHooks';
+import { createTranslate } from '@/hooks/i18n';
 import { Routes } from '@/routes';
+
+const useTranslate = createTranslate({
+  precautions: {
+    ja: '利用上の注意',
+    en: 'Precautions',
+  },
+  privacy_policy: {
+    ja: 'プライバシーポリシー',
+    en: 'Privacy Policy',
+  },
+});
 
 const LinkListItem = styled('li')(({ theme }) => ({
   marginBottom: theme.spacing(1),
@@ -34,10 +45,10 @@ const Footer: React.FC = React.memo(() => {
           </Link>
         </LinkListItem>
         <LinkListItem>
-          <Link href={Routes.precautions}>{t.PRECAUTIONS}</Link>
+          <Link href={Routes.precautions}>{t('precautions')}</Link>
         </LinkListItem>
         <LinkListItem>
-          <Link href={Routes.privacyPolicy}>{t.PRIVACY_POLICY}</Link>
+          <Link href={Routes.privacyPolicy}>{t('privacy_policy')}</Link>
         </LinkListItem>
       </ul>
     </Box>
