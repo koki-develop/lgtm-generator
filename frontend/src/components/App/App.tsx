@@ -1,5 +1,5 @@
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import { ThemeProvider } from '@mui/material';
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
@@ -30,6 +30,7 @@ const App: React.FC<MyAppProps> = props => {
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <ToastProvider>
           <RecoilRoot>
             <Component {...pageProps} />

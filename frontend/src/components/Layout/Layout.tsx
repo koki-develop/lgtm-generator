@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
 import React from 'react';
 import Meta from '@/components/utils/Meta';
 import Footer from './Footer';
@@ -28,7 +27,6 @@ const LayoutContent: React.FC<LayoutProps> = React.memo(props => {
       }}
     >
       <Meta title={title} />
-      <CssBaseline />
       <Header />
       <Container component='main' maxWidth='lg' sx={{ pt: 4 }}>
         {children}
