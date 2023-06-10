@@ -11,12 +11,6 @@ type LayoutProps = {
 };
 
 const Layout: React.FC<LayoutProps> = React.memo(props => {
-  return <LayoutContent {...props} />;
-});
-
-Layout.displayName = 'Layout';
-
-const LayoutContent: React.FC<LayoutProps> = React.memo(props => {
   const { children, title } = props;
 
   return (
@@ -36,6 +30,6 @@ const LayoutContent: React.FC<LayoutProps> = React.memo(props => {
   );
 });
 
-LayoutContent.displayName = 'LayoutContent';
+Layout.displayName = 'Layout';
 
 export default Layout;
