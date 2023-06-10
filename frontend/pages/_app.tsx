@@ -1,4 +1,4 @@
 import App from '@/components/App';
-import '../styles/global.scss';
+import '@fontsource/archivo-black';
 
 export default App;

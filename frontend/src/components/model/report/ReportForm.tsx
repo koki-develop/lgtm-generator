@@ -11,7 +11,7 @@ import LoadableButton from '@/components/utils/LoadableButton';
 import ModalCard from '@/components/utils/ModalCard';
 import { useSendReport } from '@/hooks/reportHooks';
 import { useTranslate } from '@/hooks/translateHooks';
-import { ReportType } from '@/types/report';
+import { ReportType } from '@/models/report';
 
 const StyledImage = styled('img')({});
 

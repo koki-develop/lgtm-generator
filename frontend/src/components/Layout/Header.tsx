@@ -16,7 +16,6 @@ import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/router';
 import React, { useCallback, useMemo, useState } from 'react';
 import Link from '@/components/utils/Link';
-import { useTranslate } from '@/hooks/translateHooks';
 import { Routes } from '@/routes';
 
 type TranslateListItemProps = {
@@ -29,7 +28,7 @@ const TranslateListItem: React.FC<TranslateListItemProps> = React.memo(
   props => {
     const { text, locale, onClick } = props;
     const router = useRouter();
-    const { locale: currentLocale } = useTranslate();
+    const currentLocale = router.locale;
 
     const selected = useMemo(() => {
       return currentLocale === locale;
@@ -61,7 +60,6 @@ const TranslateListItem: React.FC<TranslateListItemProps> = React.memo(
 TranslateListItem.displayName = 'TranslateListItem';
 
 const Header: React.FC = React.memo(() => {
-  const { t } = useTranslate();
   const theme = useTheme();
 
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
@@ -92,14 +90,14 @@ const Header: React.FC = React.memo(() => {
             <Typography
               component='h1'
               sx={theme => ({
-                fontFamily: 'ArchivoBlack',
+                fontFamily: 'Archivo Black',
                 fontSize: theme => theme.typography.h4.fontSize,
                 [theme.breakpoints.down('sm')]: {
                   fontSize: theme => theme.typography.h5.fontSize,
                 },
               })}
             >
-              {t.APP_NAME}
+              LGTM Generator
             </Typography>
           </Link>
         </Box>

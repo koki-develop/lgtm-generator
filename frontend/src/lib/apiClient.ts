@@ -1,9 +1,9 @@
 import axios from 'axios';
 import urlJoin from 'url-join';
 import { UnsupportedImageFormatError } from '@/lib/errors';
-import { Image } from '@/types/image';
-import { Lgtm } from '@/types/lgtm';
-import { Report, ReportType } from '@/types/report';
+import { Image } from '@/models/image';
+import { Lgtm } from '@/models/lgtm';
+import { Report, ReportType } from '@/models/report';
 
 type ReportRaw = {
   id: string;

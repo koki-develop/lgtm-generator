@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 import { DataStorage } from '@/lib/dataStorage';
-import { Image } from '@/types/image';
-import { Lgtm } from '@/types/lgtm';
+import { Image } from '@/models/image';
+import { Lgtm } from '@/models/lgtm';
 
 export const lgtmsState = atom<Lgtm[]>({
   key: 'lgtmsState',

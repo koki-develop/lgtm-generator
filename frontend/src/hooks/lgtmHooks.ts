@@ -5,7 +5,7 @@ import { ApiClient } from '@/lib/apiClient';
 import { DataStorage } from '@/lib/dataStorage';
 import { UnsupportedImageFormatError } from '@/lib/errors';
 import { lgtmsState, favoriteIdsState } from '@/recoil/atoms';
-import { Lgtm } from '@/types/lgtm';
+import { Lgtm } from '@/models/lgtm';
 import { useTranslate } from './translateHooks';
 
 export const useLgtms = (): Lgtm[] => {
