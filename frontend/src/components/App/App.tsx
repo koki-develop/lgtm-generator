@@ -1,8 +1,10 @@
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { ThemeProvider } from '@mui/material';
 import { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import { RecoilRoot } from 'recoil';
+import { theme } from '@/components/Layout/theme';
 import ToastProvider from '@/components/providers/ToastProvider';
 import { createEmotionCache } from '@/lib/emotion';
 
@@ -27,11 +29,13 @@ const App: React.FC<MyAppProps> = props => {
 
   return (
     <CacheProvider value={emotionCache}>
-      <ToastProvider>
-        <RecoilRoot>
-          <Component {...pageProps} />
-        </RecoilRoot>
-      </ToastProvider>
+      <ThemeProvider theme={theme}>
+        <ToastProvider>
+          <RecoilRoot>
+            <Component {...pageProps} />
+          </RecoilRoot>
+        </ToastProvider>
+      </ThemeProvider>
     </CacheProvider>
   );
 };
