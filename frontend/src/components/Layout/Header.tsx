@@ -92,7 +92,7 @@ const Header: React.FC = React.memo(() => {
             <Typography
               component='h1'
               sx={theme => ({
-                fontFamily: 'ArchivoBlack',
+                fontFamily: 'Archivo Black',
                 fontSize: theme => theme.typography.h4.fontSize,
                 [theme.breakpoints.down('sm')]: {
                   fontSize: theme => theme.typography.h5.fontSize,
