@@ -7,7 +7,7 @@ import Loading from '@/components/utils/Loading';
 import { useImages, useSearchImages } from '@/hooks/imageHooks';
 import { useCreateLgtmFromUrl } from '@/hooks/lgtmHooks';
 import { useTranslate } from '@/hooks/translateHooks';
-import { Image } from '@/types/image';
+import { Image } from '@/models/image';
 import ImageCardList from '../../model/image/ImageCardList';
 import ConfirmForm from '../../model/lgtm/LgtmForm';
 
