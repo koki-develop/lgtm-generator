@@ -10,6 +10,6 @@
     "remove": "serverless remove --verbose"
   },
   "devDependencies": {
-    "serverless": "3.27.0"
+    "serverless": "3.32.2"
   }
 }

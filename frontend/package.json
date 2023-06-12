@@ -12,10 +12,10 @@
     "fmt": "yarn lint --fix && prettier --write ."
   },
   "dependencies": {
-    "@emotion/cache": "11.10.5",
-    "@emotion/react": "11.10.5",
-    "@emotion/server": "11.10.0",
-    "@emotion/styled": "11.10.5",
+    "@emotion/cache": "11.11.0",
+    "@emotion/react": "11.11.1",
+    "@emotion/server": "11.11.0",
+    "@emotion/styled": "11.11.0",
     "@fontsource/archivo-black": "^5.0.3",
     "@mui/icons-material": "5.11.16",
     "@mui/material": "5.13.4",
@@ -26,14 +26,14 @@
     "notistack": "2.0.8",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "recoil": "0.7.6",
+    "recoil": "0.7.7",
     "ts-custom-error": "3.3.1",
     "url-join": "5.0.0",
     "uuid": "9.0.0"
   },
   "devDependencies": {
     "@types/gtag.js": "0.0.12",
-    "@types/node": "18.16.16",
+    "@types/node": "18.16.17",
     "@types/react": "18.2.9",
     "@types/url-join": "4.0.1",
     "@types/uuid": "9.0.2",
@@ -47,7 +47,7 @@
     "eslint-plugin-react": "7.32.2",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-unused-imports": "2.0.0",
-    "next-sitemap": "3.1.49",
+    "next-sitemap": "3.1.55",
     "prettier": "2.8.8",
     "sass": "1.57.1",
     "typescript": "4.9.5"
