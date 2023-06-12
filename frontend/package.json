@@ -12,10 +12,10 @@
     "fmt": "yarn lint --fix && prettier --write ."
   },
   "dependencies": {
-    "@emotion/cache": "11.10.5",
-    "@emotion/react": "11.10.5",
-    "@emotion/server": "11.10.0",
-    "@emotion/styled": "11.10.5",
+    "@emotion/cache": "11.11.0",
+    "@emotion/react": "11.11.1",
+    "@emotion/server": "11.11.0",
+    "@emotion/styled": "11.11.0",
     "@fontsource/archivo-black": "^5.0.3",
     "@mui/icons-material": "5.11.16",
     "@mui/material": "5.13.4",
