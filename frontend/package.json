@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@types/gtag.js": "0.0.12",
-    "@types/node": "18.16.16",
+    "@types/node": "18.16.17",
     "@types/react": "18.2.9",
     "@types/url-join": "4.0.1",
     "@types/uuid": "9.0.2",
