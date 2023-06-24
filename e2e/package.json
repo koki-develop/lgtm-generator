@@ -9,7 +9,7 @@
     "start:dev": "cypress run --config-file cypress.dev.config.ts"
   },
   "devDependencies": {
-    "@types/node": "18.16.17",
+    "@types/node": "18.16.18",
     "cypress": "10.11.0",
     "cypress-file-upload": "5.0.8",
     "prettier": "2.8.8",
